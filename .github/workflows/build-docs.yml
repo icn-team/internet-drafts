@@ -17,8 +17,8 @@ jobs:
       with:
           login-server: hub.docker.com
           username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }
-      - name: 'build markdown'    
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: 'build internet drafts'    
         shell: bash
         run: |
             docker run -v $PWD:/workspace icnteam/internet-drafts:latest bash -c "cd /workspace; make"
