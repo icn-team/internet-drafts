@@ -24,7 +24,7 @@ jobs:
       shell: bash
       run: |
         docker run -v $PWD:/workspace icnteam/internet-drafts:latest bash -c "cd /workspace; make; make pdf"
-        mdkir -p public; mv *.pdf *.html *.txt public; cd public;
+        mkdir -p public; mv *.pdf *.html *.txt public; cd public;
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
       with:
