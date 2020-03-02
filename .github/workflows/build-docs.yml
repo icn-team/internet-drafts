@@ -23,4 +23,15 @@ jobs:
     - name: 'build internet drafts'
       shell: bash
       run: |
-        docker run -v $PWD:/workspace icnteam/internet-drafts:latest bash -c "cd /workspace; make"
+        docker run -v $PWD:/workspace icnteam/internet-drafts:latest bash -c "cd /workspace; make; make pdf"
+    - name: 'pub to gh-pages'
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add *.html *.txt *.pdf
+        git stash; git checkout gh-pages; git stash pop; git add *.pdf
+        git commit -m "Add changes" -a
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GH_TOKEN }}
