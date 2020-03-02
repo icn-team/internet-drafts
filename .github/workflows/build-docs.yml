@@ -28,7 +28,7 @@ jobs:
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-        git add *.html *.txt *.pdf
+        git add -f *.html *.txt *.pdf
         git stash; git checkout gh-pages; git stash pop; git add *.pdf
         git commit -m "Add changes" -a
     - name: Push changes
