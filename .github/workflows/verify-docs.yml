@@ -5,7 +5,7 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
+  verify:
 
     runs-on: ubuntu-latest
     
@@ -22,9 +22,3 @@ jobs:
       shell: bash
       run: |
         docker run -v $PWD:/workspace icnteam/internet-drafts:latest bash -c "cd /workspace; make; make pdf"
-        mkdir -p public; cp -f *.pdf *.html *.txt *.png public/
-    - name: Deploy
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GH_TOKEN }}
-
