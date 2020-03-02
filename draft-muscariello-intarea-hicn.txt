@@ -49,6 +49,15 @@ Copyright Notice
    Copyright (c) 2020 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
+
+
+
+
+Muscariello, et al.     Expires 3 September 2020                [Page 1]
+
+Internet-Draft                    hICN                        March 2020
+
+
    This document is subject to BCP 78 and the IETF Trust's Legal
    Provisions Relating to IETF Documents (https://trustee.ietf.org/
    license-info) in effect on the date of publication of this document.
@@ -60,28 +69,28 @@ Copyright Notice
 
 Table of Contents
 
-   1.  Introduction
-       1.1.  Notational Conventions
-   2.  Architecture
-       2.1.  End-points
-       2.2.  Naming
-             2.2.1.  Name prefix
-             2.2.2.  Name Suffix
-       2.3.  Packet Format
-             2.3.1.  Interest Packet
-             2.3.2.  Data Packet
-       2.4.  Packet cache
-       2.5.  Forwarding
-             2.5.1.  Interest Path
-             2.5.2.  Data Path
-   3.  Security
-   4.  The End-host model and End-to-End considerations
-   5.  IANA Considerations
-   6.  Acknowledgements
-   7.  References
-       7.1.  Normative References
-       7.2.  Informative References
-   Authors' Addresses
+   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
+     1.1.  Notational Conventions  . . . . . . . . . . . . . . . . .   3
+   2.  Architecture  . . . . . . . . . . . . . . . . . . . . . . . .   3
+     2.1.  End-points  . . . . . . . . . . . . . . . . . . . . . . .   6
+     2.2.  Naming  . . . . . . . . . . . . . . . . . . . . . . . . .   7
+       2.2.1.  Name prefix . . . . . . . . . . . . . . . . . . . . .   7
+       2.2.2.  Name Suffix . . . . . . . . . . . . . . . . . . . . .   8
+     2.3.  Packet Format . . . . . . . . . . . . . . . . . . . . . .   8
+       2.3.1.  Interest Packet . . . . . . . . . . . . . . . . . . .   8
+       2.3.2.  Data Packet . . . . . . . . . . . . . . . . . . . . .   9
+     2.4.  Packet cache  . . . . . . . . . . . . . . . . . . . . . .  12
+     2.5.  Forwarding  . . . . . . . . . . . . . . . . . . . . . . .  12
+       2.5.1.  Interest Path . . . . . . . . . . . . . . . . . . . .  13
+       2.5.2.  Data Path . . . . . . . . . . . . . . . . . . . . . .  14
+   3.  Security  . . . . . . . . . . . . . . . . . . . . . . . . . .  15
+   4.  The End-host model and End-to-End considerations  . . . . . .  18
+   5.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  19
+   6.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  19
+   7.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  19
+     7.1.  Normative References  . . . . . . . . . . . . . . . . . .  19
+     7.2.  Informative References  . . . . . . . . . . . . . . . . .  20
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  21
 
 1.  Introduction
 
@@ -96,6 +105,14 @@ Table of Contents
    There are some basic design principles behind the hICN architecture
    that are implemented by the design reported below that can be
    summarized as follows:
+
+
+
+
+Muscariello, et al.     Expires 3 September 2020                [Page 2]
+
+Internet-Draft                    hICN                        March 2020
+
 
    *  (i) the network can transport many different kinds of applications
       as IPv6, i.e. hICN can serve content-distribution or real-time
@@ -127,6 +144,31 @@ Table of Contents
    have a special meaning as defined in [RFC2119].
 
 2.  Architecture
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Muscariello, et al.     Expires 3 September 2020                [Page 3]
+
+Internet-Draft                    hICN                        March 2020
+
 
    +---------------------+
    |                     | Data packets
@@ -176,6 +218,14 @@ Table of Contents
    packet cache for both requests and replies.  The packet cache is a
    mandatory component that is added to the usual IPv6 packet processing
    pipeline.  Requests and replies carry an immutable data name end-to-
+
+
+
+Muscariello, et al.     Expires 3 September 2020                [Page 4]
+
+Internet-Draft                    hICN                        March 2020
+
+
    end, in packet header fields as described in the following sections.
    Moreover, requests and replies carry locators as mutable packet
    header fields.  A locator, i.e. an interface identifier, is changed
@@ -224,6 +274,14 @@ Table of Contents
 
    The producer and consumer sockets can implement different types of
    services such as stream or datagram, reliable or unreliable.  In all
+
+
+
+Muscariello, et al.     Expires 3 September 2020                [Page 5]
+
+Internet-Draft                    hICN                        March 2020
+
+
    cases all transport services are connection-less, meaning that a
    producer transport service produces named data in a socket memory
    that is accessible by any valid request coming from one or multiple
@@ -272,6 +330,14 @@ Table of Contents
    The consumer socket, on the other end, always performs reassembly of
    Data Packets, hash integrity verification and signature verification.
    This is common to all architectures in (h)ICN.  The usual assumption
+
+
+
+Muscariello, et al.     Expires 3 September 2020                [Page 6]
+
+Internet-Draft                    hICN                        March 2020
+
+
    is that the producer socket uses an authentic-able identity while
    using namespaces that it has been assigned.  The end-point must be
    able to manage the mapping of her identity and the allocated
@@ -320,6 +386,14 @@ Table of Contents
    SHOULD be globally routable.  The data identifier is encoded in 64
    bits.  An application can use several identifiers if needed.
 
+
+
+
+Muscariello, et al.     Expires 3 September 2020                [Page 7]
+
+Internet-Draft                    hICN                        March 2020
+
+
    From the description given above, the name prefix is a location
    independent name encoded in an IPv6 address.
 
@@ -354,6 +428,28 @@ Table of Contents
 
 2.3.1.  Interest Packet
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Muscariello, et al.     Expires 3 September 2020                [Page 8]
+
+Internet-Draft                    hICN                        March 2020
+
+
    0                   1                   2                   3
    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -387,6 +483,28 @@ Table of Contents
    Name Prefix:          128-bit name prefix of the intended service.
 
 2.3.2.  Data Packet
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Muscariello, et al.     Expires 3 September 2020                [Page 9]
+
+Internet-Draft                    hICN                        March 2020
+
 
    0                   1                   2                   3
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -436,6 +554,14 @@ Table of Contents
    |           Checksum            |             Lifetime          |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
+
+
+
+Muscariello, et al.     Expires 3 September 2020               [Page 10]
+
+Internet-Draft                    hICN                        March 2020
+
+
          Figure 6: Transport header for data and interest packets.
 
    Name Suffix:       32-bit name-suffix of the packet
@@ -484,6 +610,14 @@ Table of Contents
    |           Checksum            |             Lifetime          |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
+
+
+
+Muscariello, et al.     Expires 3 September 2020               [Page 11]
+
+Internet-Draft                    hICN                        March 2020
+
+
        Figure 7: Transport header for data and interest packets using
                                 UDP header.
 
@@ -529,6 +663,16 @@ Table of Contents
    identifier written in the source or destination address field, for
    interest or data packets respectively, is modified at the egress of
    the router as reported below.
+
+
+
+
+
+
+Muscariello, et al.     Expires 3 September 2020               [Page 12]
+
+Internet-Draft                    hICN                        March 2020
+
 
 2.5.1.  Interest Path
 
@@ -579,6 +723,13 @@ Table of Contents
    <---------+ <----+     |
              +------------+
 
+
+
+Muscariello, et al.     Expires 3 September 2020               [Page 13]
+
+Internet-Draft                    hICN                        March 2020
+
+
       Figure 8: The interest packet hits a matching data packet in the
                                packet cache.
 
@@ -625,6 +776,15 @@ Table of Contents
        packet's next-hop.
 
    2.  No matching is an interest packet and the D is dropped.
+
+
+
+
+
+Muscariello, et al.     Expires 3 September 2020               [Page 14]
+
+Internet-Draft                    hICN                        March 2020
+
 
        RX
        Data   +-----------+
@@ -675,6 +835,13 @@ Table of Contents
 
    When using IP AH, the signature is computed over
 
+
+
+Muscariello, et al.     Expires 3 September 2020               [Page 15]
+
+Internet-Draft                    hICN                        March 2020
+
+
    *  (i)IP or extension header fields either immutable in transit or
       that are predictable in value upon arrival at the consumer,
 
@@ -723,6 +890,14 @@ Table of Contents
    the consumer. hICN cryptographic hashes of data packets are then
    computed instead of signatures.  The hashes are computed on immutable
    fields as explained above when using the IP AH.  Moreover, the
+
+
+
+Muscariello, et al.     Expires 3 September 2020               [Page 16]
+
+Internet-Draft                    hICN                        March 2020
+
+
    manifest must be signed to guarantee a level of security equivalent
    to packet-wise signatures.  When the producer uses the manifest data
    packets do not carry the AH which is carried by the transport
@@ -760,6 +935,24 @@ Table of Contents
      Figure 14: The transport manifest, generated by the producer end-
         point for the consumer end-point, contains names, integrity
         hashes and is signed with the producer end-point private key
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Muscariello, et al.     Expires 3 September 2020               [Page 17]
+
+Internet-Draft                    hICN                        March 2020
+
 
    Version:          8-bit index to indicate which validation algorithm
                      must be used to verify the signature.
@@ -808,6 +1001,15 @@ Table of Contents
    Theres is also an analogy between IPv6 anycast and the hICN interest
    forwarding path, where multiple interfaces make use of the same IPv6
    (anycast) address.  Multiple instances of the same applications can
+
+
+
+
+Muscariello, et al.     Expires 3 September 2020               [Page 18]
+
+Internet-Draft                    hICN                        March 2020
+
+
    then run at different end-points to eventually reply to the same
    request.
 
@@ -854,6 +1056,15 @@ Table of Contents
    [RFC4302]  Kent, S., "IP Authentication Header", RFC 4302,
               DOI 10.17487/RFC4302, December 2005,
               <https://www.rfc-editor.org/info/rfc4302>.
+
+
+
+
+
+Muscariello, et al.     Expires 3 September 2020               [Page 19]
+
+Internet-Draft                    hICN                        March 2020
+
 
    [RFC6830]  Farinacci, D., Fuller, V., Meyer, D., and D. Lewis, "The
               Locator/ID Separation Protocol (LISP)", RFC 6830,
@@ -903,6 +1114,14 @@ Table of Contents
               Computing Vol. 17, pp. 1696-1709, July 2018,
               <https://doi.org/10.1109/tmc.2017.2734658>.
 
+
+
+
+Muscariello, et al.     Expires 3 September 2020               [Page 20]
+
+Internet-Draft                    hICN                        March 2020
+
+
    [NDN]      Zhang, L., Afanasyev, A., Burke, J., Jacobson, V., claffy,
               k., Crowley, P., Papadopoulos, C., Wang, L., and B. Zhang,
               "Named data networking", DOI 10.1145/2656877.2656887, ACM
@@ -950,7 +1169,64 @@ Authors' Addresses
    Email: augjorda@cisco.com
 
 
+
+
+
+
+Muscariello, et al.     Expires 3 September 2020               [Page 21]
+
+Internet-Draft                    hICN                        March 2020
+
+
    Michele Papalini
    Cisco Systems Inc.
 
    Email: mpapal@cisco.com
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Muscariello, et al.     Expires 3 September 2020               [Page 22]

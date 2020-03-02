@@ -50,6 +50,14 @@ Status of This Memo
    This Internet-Draft is submitted in full conformance with the
    provisions of BCP 78 and BCP 79.
 
+
+
+
+Muscariello & CarofiglioExpires 3 September 2020                [Page 1]
+
+Internet-Draft               hICN-transport                   March 2020
+
+
    Internet-Drafts are working documents of the Internet Engineering
    Task Force (IETF).  Note that other groups may also distribute
    working documents as Internet-Drafts.  The list of current Internet-
@@ -78,24 +86,33 @@ Copyright Notice
 
 Table of Contents
 
-   1.  Introduction
-       1.1.  Problem and Scope
-       1.2.  Related work
-       1.3.  Reference ICN architecture: hICN
-       1.4.  Terminology
-       1.5.  Notational Conventions
-   2.  Transport framework architecture
-       2.1.  Application APIs
-       2.2.  Flow identification
-       2.3.  Loss detection and control
-   3.  Coexistance with non-ICN transport
-   4.  Examples of application
-   5.  Security considerations
-       5.1.  Consumer
-   6.  References
-       6.1.  Normative References
-       6.2.  Informative References
-   Authors' Addresses
+   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   3
+     1.1.  Problem and Scope . . . . . . . . . . . . . . . . . . . .   3
+     1.2.  Related work  . . . . . . . . . . . . . . . . . . . . . .   3
+     1.3.  Reference ICN architecture: hICN  . . . . . . . . . . . .   5
+     1.4.  Terminology . . . . . . . . . . . . . . . . . . . . . . .   6
+     1.5.  Notational Conventions  . . . . . . . . . . . . . . . . .   6
+   2.  Transport framework architecture  . . . . . . . . . . . . . .   6
+     2.1.  Application APIs  . . . . . . . . . . . . . . . . . . . .   7
+     2.2.  Flow identification . . . . . . . . . . . . . . . . . . .   8
+     2.3.  Loss detection and control  . . . . . . . . . . . . . . .   9
+   3.  Coexistance with non-ICN transport  . . . . . . . . . . . . .   9
+   4.  Examples of application . . . . . . . . . . . . . . . . . . .   9
+   5.  Security considerations . . . . . . . . . . . . . . . . . . .   9
+     5.1.  Consumer  . . . . . . . . . . . . . . . . . . . . . . . .   9
+   6.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   9
+     6.1.  Normative References  . . . . . . . . . . . . . . . . . .   9
+     6.2.  Informative References  . . . . . . . . . . . . . . . . .  10
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  12
+
+
+
+
+
+Muscariello & CarofiglioExpires 3 September 2020                [Page 2]
+
+Internet-Draft               hICN-transport                   March 2020
+
 
 1.  Introduction
 
@@ -145,6 +162,14 @@ Table of Contents
    give a discussion of such work in three aspects.RTT-based congestion
    control:Some designs, for instanceICP [3] and ICTP [19], rely on a
    single round trip time (RTT)estimator at the receiver to predict
+
+
+
+Muscariello & CarofiglioExpires 3 September 2020                [Page 3]
+
+Internet-Draft               hICN-transport                   March 2020
+
+
    network status which arenot suitable for CCN because CCN flows may
    have multiplesources and multiple paths.  To adapt to CCN's
    multipathnature, authors in [5], [6] propose per-route transport
@@ -193,6 +218,14 @@ Table of Contents
    The loss detection relieson the expected set of data.  An equivalent
    of duplicate ACKin ICTP is the out-of-order received segments, i.e. a
    gap inthe flow of data.  In NetInf TP the order of reception is non-
+
+
+
+Muscariello & CarofiglioExpires 3 September 2020                [Page 4]
+
+Internet-Draft               hICN-transport                   March 2020
+
+
    sequential and loss detection relies on the number of
    receivedsegments after a particular request has been
    issued.Carofiglioet al.propose the Interest Control Protocol (ICP)as
@@ -240,6 +273,15 @@ Table of Contents
    Hybrid ICN is an architecture that brings ICN into IPv6 as described
    in [1].  By doing that, hicn allows to generalize IPv6 networking by
    using location-independent name-based networking.  This is made
+
+
+
+
+Muscariello & CarofiglioExpires 3 September 2020                [Page 5]
+
+Internet-Draft               hICN-transport                   March 2020
+
+
    either at the network layer and at the transport layer by also
    providing name-based sockets to applications.
 
@@ -287,6 +329,14 @@ Table of Contents
    which is an absolute quantity and requires reasonable synchronization
    to UTC.  In case the manifest is not used by the producer, the
    expiration time is carried by the TCP timestamp option.
+
+
+
+
+Muscariello & CarofiglioExpires 3 September 2020                [Page 6]
+
+Internet-Draft               hICN-transport                   March 2020
+
 
    \subsection{Socket API}\label{subsec:socket-api} We use substantially
    unaltered the INET6 socket API for \hicn{} with the twofold advantage
@@ -336,6 +386,14 @@ Table of Contents
    ones.  The system calls of \hicn{} socket API are based on the socket
    interface extensions for IPv6 \cite{rfc3493}. Both consumer and
    producer sockets bind to a socket address (\sa{}), which is
+
+
+
+Muscariello & CarofiglioExpires 3 September 2020                [Page 7]
+
+Internet-Draft               hICN-transport                   March 2020
+
+
    initialized by specifying address family \af and name prefix.  The
    range of addresses stated by the name prefix tells the namespace in
    which a producer socket is allowed to publish data and a consumer
@@ -382,6 +440,15 @@ Table of Contents
    RAAQM paragraph
 
    Other proposals
+
+
+
+
+
+Muscariello & CarofiglioExpires 3 September 2020                [Page 8]
+
+Internet-Draft               hICN-transport                   March 2020
+
 
 2.3.  Loss detection and control
 
@@ -432,6 +499,13 @@ Table of Contents
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/info/rfc2119>.
 
+
+
+Muscariello & CarofiglioExpires 3 September 2020                [Page 9]
+
+Internet-Draft               hICN-transport                   March 2020
+
+
    [RFC3031]  Rosen, E., Viswanathan, A., and R. Callon, "Multiprotocol
               Label Switching Architecture", RFC 3031,
               DOI 10.17487/RFC3031, January 2001,
@@ -475,41 +549,47 @@ Table of Contents
 
    [I-D.irtf-icnrg-ccnxmessages]
               Mosko, M., Solis, I., and C. Wood, "CCNx Messages in TLV
-              Format", draft-irtf-icnrg-ccnxmessages-09 (work in
-              progress), 24 January 2019,
+              Format", Work in Progress, Internet-Draft, draft-irtf-
+              icnrg-ccnxmessages-09, 24 January 2019,
               <http://www.ietf.org/internet-drafts/draft-irtf-icnrg-
               ccnxmessages-09.txt>.
 
+
+
+
+Muscariello & CarofiglioExpires 3 September 2020               [Page 10]
+
+Internet-Draft               hICN-transport                   March 2020
+
+
    [I-D.irtf-icnrg-ccnxsemantics]
-              Mosko, M., Solis, I., and C. Wood, "CCNx Semantics",
-              draft-irtf-icnrg-ccnxsemantics-10 (work in progress), 24
-              January 2019,
-              <http://www.ietf.org/internet-drafts/draft-irtf-icnrg-
-              ccnxsemantics-10.txt>.
+              Mosko, M., Solis, I., and C. Wood, "CCNx Semantics", Work
+              in Progress, Internet-Draft, draft-irtf-icnrg-
+              ccnxsemantics-10, 24 January 2019, <http://www.ietf.org/
+              internet-drafts/draft-irtf-icnrg-ccnxsemantics-10.txt>.
 
    [I-D.irtf-icnrg-mapme]
               Auge, J., Carofiglio, G., Muscariello, L., and M.
               Papalini, "MAP-Me : Managing Anchorless Mobility in
-              Content Centric Networking", draft-irtf-icnrg-mapme-04
-              (work in progress), 3 November 2019,
+              Content Centric Networking", Work in Progress, Internet-
+              Draft, draft-irtf-icnrg-mapme-04, 3 November 2019,
               <http://www.ietf.org/internet-drafts/draft-irtf-icnrg-
               mapme-04.txt>.
 
    [I-D.irtf-icnrg-terminology]
               Wissingh, B., Wood, C., Afanasyev, A., Zhang, L., Oran,
               D., and C. Tschudin, "Information-Centric Networking
-              (ICN): CCNx and NDN Terminology", draft-irtf-icnrg-
-              terminology-08 (work in progress), 17 January 2020,
-              <http://www.ietf.org/internet-drafts/draft-irtf-icnrg-
-              terminology-08.txt>.
+              (ICN): CCNx and NDN Terminology", Work in Progress,
+              Internet-Draft, draft-irtf-icnrg-terminology-08, 17
+              January 2020, <http://www.ietf.org/internet-drafts/draft-
+              irtf-icnrg-terminology-08.txt>.
 
    [I-D.muscariello-intarea-hicn]
               Muscariello, L., Carofiglio, G., Auge, J., and M.
-              Papalini, "Hybrid Information-Centric Networking", draft-
-              muscariello-intarea-hicn-03 (work in progress), 30 October
-              2019,
-              <http://www.ietf.org/internet-drafts/draft-muscariello-
-              intarea-hicn-03.txt>.
+              Papalini, "Hybrid Information-Centric Networking", Work in
+              Progress, Internet-Draft, draft-muscariello-intarea-hicn-
+              03, 30 October 2019, <http://www.ietf.org/internet-drafts/
+              draft-muscariello-intarea-hicn-03.txt>.
 
    [MAN]      Baugher, M., Davie, B., Narayanan, A., and D. Oran, "Self-
               verifying names for read-only named data",
@@ -529,6 +609,14 @@ Table of Contents
               "Named data networking", DOI 10.1145/2656877.2656887, ACM
               SIGCOMM Computer Communication Review Vol. 44, pp. 66-73,
               July 2014, <https://doi.org/10.1145/2656877.2656887>.
+
+
+
+
+Muscariello & CarofiglioExpires 3 September 2020               [Page 11]
+
+Internet-Draft               hICN-transport                   March 2020
+
 
    [RAQ]      Carofiglio, G., Gallo, M., Muscariello, L., Papalini, M.,
               and S. Wang, "Optimal multipath congestion control and
@@ -557,3 +645,28 @@ Authors' Addresses
    Cisco Systems Inc.
 
    Email: gcarofig@cisco.com
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Muscariello & CarofiglioExpires 3 September 2020               [Page 12]

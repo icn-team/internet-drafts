@@ -50,6 +50,14 @@ Copyright Notice
    This document is subject to BCP 78 and the IETF Trust's Legal
    Provisions Relating to IETF Documents (https://trustee.ietf.org/
    license-info) in effect on the date of publication of this document.
+
+
+
+Augé, et al.            Expires 3 September 2020                [Page 1]
+
+Internet-Draft      Anchorless mobility through hICN          March 2020
+
+
    Please review these documents carefully, as they describe your rights
    and restrictions with respect to this document.  Code Components
    extracted from this document must include Simplified BSD License text
@@ -58,46 +66,53 @@ Copyright Notice
 
 Table of Contents
 
-   1.  Introduction
-   2.  Locators, identifiers and anchorless mobility management
-       2.1.  Terminology
-       2.2.  Towards locator-independent network architectures
-       2.3.  Information-Centric Networking (ICN)
-       2.4.  Hybrid-ICN overview
-   3.  Hybrid-ICN Anchorless Mobility Management (hICN-AMM)
-       3.1.  Consumer mobility in hICN
-   4.  Producer mobility architectures
-       4.1.  Producer mobility in hICN
-   5.  Protocol description
-       5.1.  Signalization messages; acknowledgements and
-             retransmission
-       5.2.  Dynamic face creation and producer-triggered
-             advertisements
-       5.3.  Update protocol
-             5.3.1.  Illustration
-             5.3.2.  Message content
-             5.3.3.  Processing at network routers
-       5.4.  Notifications and scoped discovery
-             5.4.1.  Notification processing
-             5.4.2.  Illustration
-   6.  Benefits
-       6.1.  Overview
-       6.2.  Simplicity, scalability, efficiency
-       6.3.  Reduced latency through caching
-       6.4.  Improved reliability through caching
-       6.5.  Local mobility and recovery from common cache
-       6.6.  Additional reliability through consumer multihoming
-       6.7.  Bandwidth aggregation with consumer multihoming
-       6.8.  Traffic and signalization offload
-   7.  Implementation considerations
-       7.1.  Interaction with non-hICN enabled routers
-       7.2.  Security considerations
-       7.3.  Discussion
-   8.  IANA Considerations
-   9.  References
-       9.1.  Normative References
-       9.2.  Informative References
-   Authors' Addresses
+   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   3
+   2.  Locators, identifiers and anchorless mobility management  . .   3
+     2.1.  Terminology . . . . . . . . . . . . . . . . . . . . . . .   4
+     2.2.  Towards locator-independent network architectures . . . .   4
+     2.3.  Information-Centric Networking (ICN)  . . . . . . . . . .   6
+     2.4.  Hybrid-ICN overview . . . . . . . . . . . . . . . . . . .   6
+   3.  Hybrid-ICN Anchorless Mobility Management (hICN-AMM)  . . . .   6
+     3.1.  Consumer mobility in hICN . . . . . . . . . . . . . . . .   7
+   4.  Producer mobility architectures . . . . . . . . . . . . . . .   7
+     4.1.  Producer mobility in hICN . . . . . . . . . . . . . . . .   8
+   5.  Protocol description  . . . . . . . . . . . . . . . . . . . .   8
+     5.1.  Signalization messages; acknowledgements and
+           retransmission  . . . . . . . . . . . . . . . . . . . . .   8
+     5.2.  Dynamic face creation and producer-triggered
+           advertisements  . . . . . . . . . . . . . . . . . . . . .   9
+     5.3.  Update protocol . . . . . . . . . . . . . . . . . . . . .   9
+       5.3.1.  Illustration  . . . . . . . . . . . . . . . . . . . .  10
+       5.3.2.  Message content . . . . . . . . . . . . . . . . . . .  11
+       5.3.3.  Processing at network routers . . . . . . . . . . . .  11
+     5.4.  Notifications and scoped discovery  . . . . . . . . . . .  12
+       5.4.1.  Notification processing . . . . . . . . . . . . . . .  12
+       5.4.2.  Illustration  . . . . . . . . . . . . . . . . . . . .  12
+   6.  Benefits  . . . . . . . . . . . . . . . . . . . . . . . . . .  14
+     6.1.  Overview  . . . . . . . . . . . . . . . . . . . . . . . .  14
+     6.2.  Simplicity, scalability, efficiency . . . . . . . . . . .  14
+     6.3.  Reduced latency through caching . . . . . . . . . . . . .  15
+     6.4.  Improved reliability through caching  . . . . . . . . . .  16
+     6.5.  Local mobility and recovery from common cache . . . . . .  17
+     6.6.  Additional reliability through consumer multihoming . . .  18
+     6.7.  Bandwidth aggregation with consumer multihoming . . . . .  20
+     6.8.  Traffic and signalization offload . . . . . . . . . . . .  21
+   7.  Implementation considerations . . . . . . . . . . . . . . . .  22
+     7.1.  Interaction with non-hICN enabled routers . . . . . . . .  23
+     7.2.  Security considerations . . . . . . . . . . . . . . . . .  23
+     7.3.  Discussion  . . . . . . . . . . . . . . . . . . . . . . .  23
+   8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  24
+   9.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  24
+     9.1.  Normative References  . . . . . . . . . . . . . . . . . .  24
+     9.2.  Informative References  . . . . . . . . . . . . . . . . .  25
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  27
+
+
+
+Augé, et al.            Expires 3 September 2020                [Page 2]
+
+Internet-Draft      Anchorless mobility through hICN          March 2020
+
 
 1.  Introduction
 
@@ -145,6 +160,16 @@ Table of Contents
 
 2.  Locators, identifiers and anchorless mobility management
 
+
+
+
+
+
+Augé, et al.            Expires 3 September 2020                [Page 3]
+
+Internet-Draft      Anchorless mobility through hICN          March 2020
+
+
 2.1.  Terminology
 
    The consideration of mobility in network design shares the challenges
@@ -160,47 +185,46 @@ Table of Contents
    attempt to reconcile those interpretations and propose a unifying
    terminology used throughout this document.
 
-   Anchor                An anchor refers to a specialized node or
-                         service, possibly distributed, functionally
-                         required by a network architecture for
-                         forwarding or mobility.  This is in contrast to
-                         decentralized architectures.  Configuration of
-                         these anchors, including their location, will
-                         directly affect the overall scheme performance.
-                         We follow the classic distinction between
-                         control plane and user (or data, or forwarding)
-                         plane to distinguish control-plane anchors and
-                         user-plane anchors.
+   Anchor  An anchor refers to a specialized node or service, possibly
+      distributed, functionally required by a network architecture for
+      forwarding or mobility.  This is in contrast to decentralized
+      architectures.  Configuration of these anchors, including their
+      location, will directly affect the overall scheme performance.  We
+      follow the classic distinction between control plane and user (or
+      data, or forwarding) plane to distinguish control-plane anchors
+      and user-plane anchors.
 
-   User-plane anchor     A user-plane anchor is a node through which
-                         traffic is forced to pass.  An example of such
-                         anchor is the indirection point in Mobile IP.
+   User-plane anchor  A user-plane anchor is a node through which
+      traffic is forced to pass.  An example of such anchor is the
+      indirection point in Mobile IP.
 
    Control-plane anchor  A control-plane anchor refers to a node that is
-                         not responsible for carrying traffic, but is
-                         needed for the operation of the forwarding and/
-                         or the mobility architecture.  An example of
-                         such anchor is the resolution or mapping
-                         service of LISP.  We remark that while not
-                         being on path, such anchors might affect the
-                         performance of the user-plane due to resolution
-                         delays or indirection (following a mapping
-                         cache miss for instance).
+      not responsible for carrying traffic, but is needed for the
+      operation of the forwarding and/or the mobility architecture.  An
+      example of such anchor is the resolution or mapping service of
+      LISP.  We remark that while not being on path, such anchors might
+      affect the performance of the user-plane due to resolution delays
+      or indirection (following a mapping cache miss for instance).
 
-   Anchorless            This term qualifies approaches that do not
-                         involve any user-plane not control-plane
-                         anchor.  The challenge for such full anchorless
-                         approaches are exacerbated during mobilty of
-                         both end points at the same time, as they
-                         cannot rely on any stable anchor point to
-                         preserve connectivity.  Nor they can rely on
-                         routing mechanism that would be the source of
-                         overhead and instability.
+   Anchorless  This term qualifies approaches that do not involve any
+      user-plane not control-plane anchor.  The challenge for such full
+      anchorless approaches are exacerbated during mobilty of both end
+      points at the same time, as they cannot rely on any stable anchor
+      point to preserve connectivity.  Nor they can rely on routing
+      mechanism that would be the source of overhead and instability.
 
 2.2.  Towards locator-independent network architectures
 
    We distinguish network architectures based on their use of location
    independent identifiers (or names) and locators for forwarding.
+
+
+
+
+Augé, et al.            Expires 3 September 2020                [Page 4]
+
+Internet-Draft      Anchorless mobility through hICN          March 2020
+
 
    *Locator-based architectures*
 
@@ -249,6 +273,15 @@ Table of Contents
 
    The work done around Information-Centric Networking (ICN) falls into
    such class of approaches that we refer to as purely ID-based, also
+
+
+
+
+Augé, et al.            Expires 3 September 2020                [Page 5]
+
+Internet-Draft      Anchorless mobility through hICN          March 2020
+
+
    known as name-based [I-D.irtf-icnrg-terminology], although as we will
    see, mobility management often departs from this principle.
 
@@ -295,6 +328,15 @@ Table of Contents
    this document.  Due to the pull based nature of hICN architecture, we
    distinguish consumer and producer nodes, for which mobility is
    handled differently
+
+
+
+
+
+Augé, et al.            Expires 3 September 2020                [Page 6]
+
+Internet-Draft      Anchorless mobility through hICN          March 2020
+
 
 3.1.  Consumer mobility in hICN
 
@@ -343,6 +385,15 @@ Table of Contents
    *  _Tracing-based_ solutions allow the mobile node to create a hop-
       by-hop forwarding reverse path from its RV back to itself by
       propagating and keeping alive traces stored by all involved
+
+
+
+
+Augé, et al.            Expires 3 September 2020                [Page 7]
+
+Internet-Draft      Anchorless mobility through hICN          March 2020
+
+
       routers.  Forwarding to the new location is enabled without
       tunneling.
 
@@ -390,6 +441,15 @@ Table of Contents
    producer as the destination, plus the sequence number allowing the
    producer to match which update has been acknowledged.
 
+
+
+
+
+Augé, et al.            Expires 3 September 2020                [Page 8]
+
+Internet-Draft      Anchorless mobility through hICN          March 2020
+
+
    Pending signalization interests that are not acknowledged are
    retransmitted after a given timeout.
 
@@ -436,6 +496,15 @@ Table of Contents
    packet will be forwarded based on the now-stale FIB entries, and will
    update forwarding entries to point to the ingress interfaces of each
    traversed router.
+
+
+
+
+
+Augé, et al.            Expires 3 September 2020                [Page 9]
+
+Internet-Draft      Anchorless mobility through hICN          March 2020
+
 
 5.3.1.  Illustration
 
@@ -485,6 +554,14 @@ Table of Contents
 
    Through this process, MAP-Me trades-off path optimality for a fast,
    lightweight and loop-free forwarding update.  It has been shown in
+
+
+
+Augé, et al.            Expires 3 September 2020               [Page 10]
+
+Internet-Draft      Anchorless mobility through hICN          March 2020
+
+
    [MAPME] that stretch is bounded and typically kept low in scenarios
    of interest.  This results from the fact that MAP-Me operations
    preserve the initial structure of the forwarding tree/DAG (direct
@@ -533,6 +610,14 @@ Table of Contents
    *  If the packet carries a lower sequence number than the one in the
       FIB, FIB entry is not updated as it already stores 'fresher
       information'.  To advertise the latest update through the path
+
+
+
+Augé, et al.            Expires 3 September 2020               [Page 11]
+
+Internet-Draft      Anchorless mobility through hICN          March 2020
+
+
       followed by the packet, this one is re-sent through the
       originating face after having updated its sequence number with the
       value stored in FIB.
@@ -565,6 +650,29 @@ Table of Contents
 
    Figure 2 illustrate such as situation where an Interest is sent to
    the producer before it had the time to complete the update.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Augé, et al.            Expires 3 September 2020               [Page 12]
+
+Internet-Draft      Anchorless mobility through hICN          March 2020
+
 
        P (radio link) AR1             AR2             GW          Internet
        |               |               |               |              |
@@ -612,6 +720,15 @@ Table of Contents
 
    7.  The Data packet follows the reverse path to the consumer as
        usual.
+
+
+
+
+
+Augé, et al.            Expires 3 September 2020               [Page 13]
+
+Internet-Draft      Anchorless mobility through hICN          March 2020
+
 
 6.  Benefits
 
@@ -661,6 +778,14 @@ Table of Contents
 
    This is particularly interesting considering that most mobile users
    are consumers only (e.g. linear video distribution, or large scale
+
+
+
+Augé, et al.            Expires 3 September 2020               [Page 14]
+
+Internet-Draft      Anchorless mobility through hICN          March 2020
+
+
    video conferencing where we typically have few presenters and most
    users are simply consumers).
 
@@ -699,6 +824,23 @@ Table of Contents
    We represent in Figure 4 a simple data flow between the different
    entities involved in the communication between the mobile node M, and
    a remote producer available over the Internet.
+
+
+
+
+
+
+
+
+
+
+
+
+
+Augé, et al.            Expires 3 September 2020               [Page 15]
+
+Internet-Draft      Anchorless mobility through hICN          March 2020
+
 
        C              AR1             AR2             GW          Internet
        |               |               |               |              |
@@ -745,6 +887,17 @@ Table of Contents
    scenario with a lossy channel (eg.  WiFi) between the mobile and the
    first access router.
 
+
+
+
+
+
+
+Augé, et al.            Expires 3 September 2020               [Page 16]
+
+Internet-Draft      Anchorless mobility through hICN          March 2020
+
+
        C (radio link) AR1             AR2             GW          Internet
        |               |               |               |              |
    1   |~~~~~~~X       |               |               |              |
@@ -788,6 +941,18 @@ Table of Contents
    transport protocol, so that only losses due to congestion are exposed
    to it, and don't perturb the feedback loop by unnecessarily reducing
    the transfer rate.
+
+
+
+
+
+
+
+
+Augé, et al.            Expires 3 September 2020               [Page 17]
+
+Internet-Draft      Anchorless mobility through hICN          March 2020
+
 
        C (radio link) AR1             AR2             GW          Internet
        |               |               |               |              |
@@ -834,6 +999,16 @@ Table of Contents
 
    Figure 7 illustrates a fallback to LTE which can be performed
    transparently for the application.
+
+
+
+
+
+
+Augé, et al.            Expires 3 September 2020               [Page 18]
+
+Internet-Draft      Anchorless mobility through hICN          March 2020
+
 
       C          WiFi          GW         LTE enB        PGW       Internet
       |            |            |            |            |            |
@@ -883,6 +1058,14 @@ Table of Contents
    switching rates in the order of a second, not even considering
    optimization occurring from network support.
 
+
+
+
+Augé, et al.            Expires 3 September 2020               [Page 19]
+
+Internet-Draft      Anchorless mobility through hICN          March 2020
+
+
    Mobility is handled transparently at the network layer with very fast
    handover times, due to the connection-less property of hICN.  This
    makes it possible to offer reliable WiFi connectivity, besides its
@@ -930,6 +1113,15 @@ Table of Contents
 
    Fine grained control from the application allows fully exploiting
    available bandwidth, resulting in an aggregated throughput equal to
+
+
+
+
+Augé, et al.            Expires 3 September 2020               [Page 20]
+
+Internet-Draft      Anchorless mobility through hICN          March 2020
+
+
    the sum of access throughputs, which is hard to achieve with existing
    solutions.
 
@@ -961,6 +1153,30 @@ Table of Contents
    The data flow represented in Figure 9 illustrates the communication
    between a consumer connected to AR3, and a mobile producer moving
    from AR1 to AR2.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Augé, et al.            Expires 3 September 2020               [Page 21]
+
+Internet-Draft      Anchorless mobility through hICN          March 2020
+
 
    C         P         AR1        AR2        AR3         GW  X    Internet
    |         |          |          |          |          |   X         |
@@ -1003,6 +1219,20 @@ Table of Contents
    consequence is also a more robust and reliable network.
 
 7.  Implementation considerations
+
+
+
+
+
+
+
+
+
+
+Augé, et al.            Expires 3 September 2020               [Page 22]
+
+Internet-Draft      Anchorless mobility through hICN          March 2020
+
 
 7.1.  Interaction with non-hICN enabled routers
 
@@ -1053,6 +1283,13 @@ Table of Contents
    the support of mobility for a multihomed producer, is left for future
    updates of the present document.
 
+
+
+Augé, et al.            Expires 3 September 2020               [Page 23]
+
+Internet-Draft      Anchorless mobility through hICN          March 2020
+
+
    Similarly, the proposed producer mobility solution is appropriate for
    the management of micro-mobility; its extension to multiple domains
    is out of scope.
@@ -1100,6 +1337,15 @@ Table of Contents
               <https://www.rfc-editor.org/info/rfc6115>.
 
    [RFC6301]  Zhu, Z., Wakikawa, R., and L. Zhang, "A Survey of Mobility
+
+
+
+
+Augé, et al.            Expires 3 September 2020               [Page 24]
+
+Internet-Draft      Anchorless mobility through hICN          March 2020
+
+
               Support in the Internet", RFC 6301, DOI 10.17487/RFC6301,
               July 2011, <https://www.rfc-editor.org/info/rfc6301>.
 
@@ -1133,48 +1379,55 @@ Table of Contents
    [I-D.auge-dmm-hicn-mobility-deployment-options]
               Auge, J., Carofiglio, G., Muscariello, L., and M.
               Papalini, "Anchorless mobility management through hICN
-              (hICN-AMM): Deployment options", draft-auge-dmm-hicn-
-              mobility-deployment-options-03 (work in progress), 6
-              January 2020,
-              <http://www.ietf.org/internet-drafts/draft-auge-dmm-hicn-
-              mobility-deployment-options-03.txt>.
+              (hICN-AMM): Deployment options", Work in Progress,
+              Internet-Draft, draft-auge-dmm-hicn-mobility-deployment-
+              options-03, 6 January 2020, <http://www.ietf.org/internet-
+              drafts/draft-auge-dmm-hicn-mobility-deployment-options-
+              03.txt>.
 
    [I-D.herbert-intarea-ila]
               Herbert, T. and P. Lapukhov, "Identifier-locator
-              addressing for IPv6", draft-herbert-intarea-ila-01 (work
-              in progress), 5 March 2018,
+              addressing for IPv6", Work in Progress, Internet-Draft,
+              draft-herbert-intarea-ila-01, 5 March 2018,
               <http://www.ietf.org/internet-drafts/draft-herbert-
               intarea-ila-01.txt>.
 
    [I-D.irtf-icnrg-mapme]
               Auge, J., Carofiglio, G., Muscariello, L., and M.
+
+
+
+Augé, et al.            Expires 3 September 2020               [Page 25]
+
+Internet-Draft      Anchorless mobility through hICN          March 2020
+
+
               Papalini, "MAP-Me : Managing Anchorless Mobility in
-              Content Centric Networking", draft-irtf-icnrg-mapme-04
-              (work in progress), 3 November 2019,
+              Content Centric Networking", Work in Progress, Internet-
+              Draft, draft-irtf-icnrg-mapme-04, 3 November 2019,
               <http://www.ietf.org/internet-drafts/draft-irtf-icnrg-
               mapme-04.txt>.
 
    [I-D.irtf-icnrg-terminology]
               Wissingh, B., Wood, C., Afanasyev, A., Zhang, L., Oran,
               D., and C. Tschudin, "Information-Centric Networking
-              (ICN): CCNx and NDN Terminology", draft-irtf-icnrg-
-              terminology-08 (work in progress), 17 January 2020,
-              <http://www.ietf.org/internet-drafts/draft-irtf-icnrg-
-              terminology-08.txt>.
+              (ICN): CCNx and NDN Terminology", Work in Progress,
+              Internet-Draft, draft-irtf-icnrg-terminology-08, 17
+              January 2020, <http://www.ietf.org/internet-drafts/draft-
+              irtf-icnrg-terminology-08.txt>.
 
    [I-D.muscariello-intarea-hicn]
               Muscariello, L., Carofiglio, G., Auge, J., and M.
-              Papalini, "Hybrid Information-Centric Networking", draft-
-              muscariello-intarea-hicn-03 (work in progress), 30 October
-              2019,
-              <http://www.ietf.org/internet-drafts/draft-muscariello-
-              intarea-hicn-03.txt>.
+              Papalini, "Hybrid Information-Centric Networking", Work in
+              Progress, Internet-Draft, draft-muscariello-intarea-hicn-
+              03, 30 October 2019, <http://www.ietf.org/internet-drafts/
+              draft-muscariello-intarea-hicn-03.txt>.
 
    [I-D.vonhugo-5gangip-ip-issues]
               Hugo, D. and B. Sarikaya, "Review on issues in discussion
               of next generation converged networks (5G) from an IP
-              point of view", draft-vonhugo-5gangip-ip-issues-03 (work
-              in progress), 13 March 2017,
+              point of view", Work in Progress, Internet-Draft, draft-
+              vonhugo-5gangip-ip-issues-03, 13 March 2017,
               <http://www.ietf.org/internet-drafts/draft-vonhugo-
               5gangip-ip-issues-03.txt>.
 
@@ -1198,6 +1451,13 @@ Table of Contents
               Communications Magazine Vol. 55, pp. 101-107, May 2017,
               <https://doi.org/10.1109/mcom.2017.1600938>.
 
+
+
+Augé, et al.            Expires 3 September 2020               [Page 26]
+
+Internet-Draft      Anchorless mobility through hICN          March 2020
+
+
    [SEC]      Compagno, A., Zeng, X., Muscariello, L., Carofiglio, G.,
               and J. Augé, "Secure producer mobility in information-
               centric network", DOI 10.1145/3125719.3125725, Proceedings
@@ -1218,7 +1478,7 @@ Table of Contents
               <https://doi.org/10.1186/s13638-016-0715-0>.
 
    [SURVEYCC] Ren, Y., Li, J., Shi, S., Li, L., Wang, G., and B. Zhang,
-              "Congestion control in named data networking – A survey",
+              "Congestion control in named data networking - A survey",
               DOI 10.1016/j.comcom.2016.04.017, Computer
               Communications Vol. 86, pp. 1-11, July 2016,
               <https://doi.org/10.1016/j.comcom.2016.04.017>.
@@ -1232,27 +1492,35 @@ Table of Contents
               Applications - NoM '12, 2012,
               <https://doi.org/10.1145/2248361.2248363>.
 
-   [TS23.501] 3gpp-23.501, "Technical Specification Group Services and
-              System Aspects; System Architecture for the 5G System
-              (Rel.15)", March 2020.
+   [TS23.501] "Technical Specification Group Services and System
+              Aspects; System Architecture for the 5G System (Rel.15)",
+              n.d..
 
-   [TS29.274] 3gpp-29.274, "3GPP Evolved Packet System (EPS); Evolved
-              General Packet Radio Service (GPRS) Tunnelling Protocol
-              for Control plane (GTPv2-C); Stage 3", March 2020.
+   [TS29.274] "3GPP Evolved Packet System (EPS); Evolved General Packet
+              Radio Service (GPRS) Tunnelling Protocol for Control plane
+              (GTPv2-C); Stage 3", n.d..
 
 Authors' Addresses
 
-   Cisco Systems
    Jordan Augé
+   Cisco Systems
    11, rue Camille Desmoulins
    92130 Issy-les-Moulineaux
+
+
+
+Augé, et al.            Expires 3 September 2020               [Page 27]
+
+Internet-Draft      Anchorless mobility through hICN          March 2020
+
+
    France
 
    Email: augjorda@cisco.com
 
 
-   Cisco Systems
    Giovanna Carofiglio
+   Cisco Systems
    11, rue Camille Desmoulins
    92130 Issy-les-Moulineaux
    France
@@ -1260,8 +1528,8 @@ Authors' Addresses
    Email: gcarofig@cisco.com
 
 
-   Cisco Systems
    Luca Muscariello
+   Cisco Systems
    11, rue Camille Desmoulins
    92130 Issy-les-Moulineaux
    France
@@ -1269,10 +1537,32 @@ Authors' Addresses
    Email: lumuscar@cisco.com
 
 
-   Cisco Systems
    Michele Papalini
+   Cisco Systems
    11, rue Camille Desmoulins
    92130 Issy-les-Moulineaux
    France
 
    Email: micpapal@cisco.com
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Augé, et al.            Expires 3 September 2020               [Page 28]

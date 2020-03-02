@@ -2,13 +2,14 @@
 <html lang="en" class="Internet-Draft">
 <head>
 <meta charset="utf-8">
-<meta name="scripts" content="Common,Latin">
+<meta content="Common,Latin" name="scripts">
+<meta content="initial-scale=1.0" name="viewport">
 <title>Anchorless mobility through hICN</title>
-<meta name="author" content="Jordan Augé">
-<meta name="author" content="Giovanna Carofiglio">
-<meta name="author" content="Luca Muscariello">
-<meta name="author" content="Michele Papalini">
-<meta name="description" content="
+<meta content="Jordan Augé" name="author">
+<meta content="Giovanna Carofiglio" name="author">
+<meta content="Luca Muscariello" name="author">
+<meta content="Michele Papalini" name="author">
+<meta content="
        This document first discusses the use of locators and identifiers in mobility
 management architectures, and their implication on various anchorless
 properties. A new architecture is then proposed that is purely based on
@@ -17,11 +18,12 @@ identifiers, and more specifically names as defined in Hybrid-ICN (hICN)
 the end-point sends data (data producer) or the end-point receives data (data
 consumer). These two cases are taken into account entirely to provide anchorless
 mobility management in hICN. 
-    ">
-<meta name="generator" content="xml2rfc 2.19.1">
-<meta name="keyword" content="Hybrid ICN">
-<link rel="alternate" type="application/rfc+xml" href="draft-auge-dmm-hicn-mobility.xml">
-<link rel="license" href="#copyright">
+    " name="description">
+<meta content="xml2rfc 2.40.1" name="generator">
+<meta content="Hybrid ICN" name="keyword">
+<meta content="draft-auge-dmm-hicn-mobility-03" name="ietf.draft">
+<link href="draft-auge-dmm-hicn-mobility.xml" rel="alternate" type="application/rfc+xml">
+<link href="#copyright" rel="license">
 <style type="text/css">@import url('https://martinthomson.github.io/i-d-template/fonts.css');
 
 html {
@@ -819,9 +821,10 @@ table.left {
   font-size: 0.9em;
 }
 </style>
-<link rel="stylesheet" href="rfc-local.css" type="text/css">
+<link href="rfc-local.css" rel="stylesheet" type="text/css">
 </head>
 <body>
+<script src="metadata.min.js"></script>
 <table class="ears">
 <thead><tr>
 <td class="left">Internet-Draft</td>
@@ -834,7 +837,8 @@ table.left {
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
-<div class="document-information">
+<div id="external-metadata" class="document-information"></div>
+<div id="internal-metadata" class="document-information">
 <dl id="identifiers">
 <dt class="label-workgroup">Workgroup:</dt>
 <dd class="workgroup">DMM Working Group</dd>
@@ -888,23 +892,19 @@ mobility management in hICN.<a href="#section-abstract-1" class="pilcrow">¶</a>
         </h2>
 <p id="section-boilerplate.1-1">
         This Internet-Draft is submitted in full conformance with the
-        provisions of BCP 78 and BCP 79.
-        <a href="#section-boilerplate.1-1" class="pilcrow">¶</a></p>
+        provisions of BCP 78 and BCP 79.<a href="#section-boilerplate.1-1" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-2">
         Internet-Drafts are working documents of the Internet Engineering Task
         Force (IETF). Note that other groups may also distribute working
         documents as Internet-Drafts. The list of current Internet-Drafts is
-        at <span><a href="https://datatracker.ietf.org/drafts/current/">https://datatracker.ietf.org/drafts/current/</a></span>.
-        <a href="#section-boilerplate.1-2" class="pilcrow">¶</a></p>
+        at <span><a href="https://datatracker.ietf.org/drafts/current/">https://datatracker.ietf.org/drafts/current/</a></span>.<a href="#section-boilerplate.1-2" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-3">
         Internet-Drafts are draft documents valid for a maximum of six months
         and may be updated, replaced, or obsoleted by other documents at any
         time. It is inappropriate to use Internet-Drafts as reference
-        material or to cite them other than as "work in progress."
-        <a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
+        material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 3 September 2020.
-        <a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 3 September 2020.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -914,8 +914,7 @@ mobility management in hICN.<a href="#section-abstract-1" class="pilcrow">¶</a>
         </h2>
 <p id="section-boilerplate.2-1">
             Copyright (c) 2020 IETF Trust and the persons identified as the
-            document authors. All rights reserved.
-        <a href="#section-boilerplate.2-1" class="pilcrow">¶</a></p>
+            document authors. All rights reserved.<a href="#section-boilerplate.2-1" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.2-2">
             This document is subject to BCP 78 and the IETF Trust's Legal
             Provisions Relating to IETF Documents
@@ -925,156 +924,155 @@ mobility management in hICN.<a href="#section-abstract-1" class="pilcrow">¶</a>
             respect to this document. Code Components extracted from this
             document must include Simplified BSD License text as described in
             Section 4.e of the Trust Legal Provisions and are provided without
-            warranty as described in the Simplified BSD License.
-        <a href="#section-boilerplate.2-2" class="pilcrow">¶</a></p>
+            warranty as described in the Simplified BSD License.<a href="#section-boilerplate.2-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="toc">
-<section id="section-boilerplate.3">
+<section id="section-toc.1">
         <a href="#" onclick="scroll(0,0)" class="toplink">▲</a><h2 id="name-table-of-contents">
 <a href="#name-table-of-contents" class="section-name selfRef">Table of Contents</a>
         </h2>
 <nav class="toc"><ul class="toc ulEmpty">
-<li class="toc ulEmpty" id="section-boilerplate.3-1.1">
-            <p id="section-boilerplate.3-1.1.1"><a href="#section-1" class="xref">1</a>.  <a href="#name-introduction" class="xref">Introduction</a><a href="#section-boilerplate.3-1.1.1" class="pilcrow">¶</a></p>
+<li class="toc ulEmpty" id="section-toc.1-1.1">
+            <p id="section-toc.1-1.1.1"><a href="#section-1" class="xref">1</a>.  <a href="#name-introduction" class="xref">Introduction</a><a href="#section-toc.1-1.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="toc ulEmpty" id="section-boilerplate.3-1.2">
-            <p id="section-boilerplate.3-1.2.1"><a href="#section-2" class="xref">2</a>.  <a href="#name-locators-identifiers-and-an" class="xref">Locators, identifiers and anchorless mobility management</a><a href="#section-boilerplate.3-1.2.1" class="pilcrow">¶</a></p>
+<li class="toc ulEmpty" id="section-toc.1-1.2">
+            <p id="section-toc.1-1.2.1"><a href="#section-2" class="xref">2</a>.  <a href="#name-locators-identifiers-and-an" class="xref">Locators, identifiers and anchorless mobility management</a><a href="#section-toc.1-1.2.1" class="pilcrow">¶</a></p>
 <ul class="toc ulEmpty">
-<li class="toc ulEmpty" id="section-boilerplate.3-1.2.2.1">
-                <p id="section-boilerplate.3-1.2.2.1.1"><a href="#section-2.1" class="xref">2.1</a>.  <a href="#name-terminology" class="xref">Terminology</a><a href="#section-boilerplate.3-1.2.2.1.1" class="pilcrow">¶</a></p>
+<li class="toc ulEmpty" id="section-toc.1-1.2.2.1">
+                <p id="section-toc.1-1.2.2.1.1"><a href="#section-2.1" class="xref">2.1</a>.  <a href="#name-terminology" class="xref">Terminology</a><a href="#section-toc.1-1.2.2.1.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="toc ulEmpty" id="section-boilerplate.3-1.2.2.2">
-                <p id="section-boilerplate.3-1.2.2.2.1"><a href="#section-2.2" class="xref">2.2</a>.  <a href="#name-towards-locator-independent" class="xref">Towards locator-independent network architectures</a><a href="#section-boilerplate.3-1.2.2.2.1" class="pilcrow">¶</a></p>
+<li class="toc ulEmpty" id="section-toc.1-1.2.2.2">
+                <p id="section-toc.1-1.2.2.2.1"><a href="#section-2.2" class="xref">2.2</a>.  <a href="#name-towards-locator-independent" class="xref">Towards locator-independent network architectures</a><a href="#section-toc.1-1.2.2.2.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="toc ulEmpty" id="section-boilerplate.3-1.2.2.3">
-                <p id="section-boilerplate.3-1.2.2.3.1"><a href="#section-2.3" class="xref">2.3</a>.  <a href="#name-information-centric-network" class="xref">Information-Centric Networking (ICN)</a><a href="#section-boilerplate.3-1.2.2.3.1" class="pilcrow">¶</a></p>
+<li class="toc ulEmpty" id="section-toc.1-1.2.2.3">
+                <p id="section-toc.1-1.2.2.3.1"><a href="#section-2.3" class="xref">2.3</a>.  <a href="#name-information-centric-network" class="xref">Information-Centric Networking (ICN)</a><a href="#section-toc.1-1.2.2.3.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="toc ulEmpty" id="section-boilerplate.3-1.2.2.4">
-                <p id="section-boilerplate.3-1.2.2.4.1"><a href="#section-2.4" class="xref">2.4</a>.  <a href="#name-hybrid-icn-overview" class="xref">Hybrid-ICN overview</a><a href="#section-boilerplate.3-1.2.2.4.1" class="pilcrow">¶</a></p>
+<li class="toc ulEmpty" id="section-toc.1-1.2.2.4">
+                <p id="section-toc.1-1.2.2.4.1"><a href="#section-2.4" class="xref">2.4</a>.  <a href="#name-hybrid-icn-overview" class="xref">Hybrid-ICN overview</a><a href="#section-toc.1-1.2.2.4.1" class="pilcrow">¶</a></p>
 </li>
-            </ul>
+</ul>
 </li>
-          <li class="toc ulEmpty" id="section-boilerplate.3-1.3">
-            <p id="section-boilerplate.3-1.3.1"><a href="#section-3" class="xref">3</a>.  <a href="#name-hybrid-icn-anchorless-mobil" class="xref">Hybrid-ICN Anchorless Mobility Management (hICN-AMM)</a><a href="#section-boilerplate.3-1.3.1" class="pilcrow">¶</a></p>
+<li class="toc ulEmpty" id="section-toc.1-1.3">
+            <p id="section-toc.1-1.3.1"><a href="#section-3" class="xref">3</a>.  <a href="#name-hybrid-icn-anchorless-mobil" class="xref">Hybrid-ICN Anchorless Mobility Management (hICN-AMM)</a><a href="#section-toc.1-1.3.1" class="pilcrow">¶</a></p>
 <ul class="toc ulEmpty">
-<li class="toc ulEmpty" id="section-boilerplate.3-1.3.2.1">
-                <p id="section-boilerplate.3-1.3.2.1.1"><a href="#section-3.1" class="xref">3.1</a>.  <a href="#name-consumer-mobility-in-hicn" class="xref">Consumer mobility in hICN</a><a href="#section-boilerplate.3-1.3.2.1.1" class="pilcrow">¶</a></p>
+<li class="toc ulEmpty" id="section-toc.1-1.3.2.1">
+                <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="xref">3.1</a>.  <a href="#name-consumer-mobility-in-hicn" class="xref">Consumer mobility in hICN</a><a href="#section-toc.1-1.3.2.1.1" class="pilcrow">¶</a></p>
 </li>
-            </ul>
+</ul>
 </li>
-          <li class="toc ulEmpty" id="section-boilerplate.3-1.4">
-            <p id="section-boilerplate.3-1.4.1"><a href="#section-4" class="xref">4</a>.  <a href="#name-producer-mobility-architect" class="xref">Producer mobility architectures</a><a href="#section-boilerplate.3-1.4.1" class="pilcrow">¶</a></p>
+<li class="toc ulEmpty" id="section-toc.1-1.4">
+            <p id="section-toc.1-1.4.1"><a href="#section-4" class="xref">4</a>.  <a href="#name-producer-mobility-architect" class="xref">Producer mobility architectures</a><a href="#section-toc.1-1.4.1" class="pilcrow">¶</a></p>
 <ul class="toc ulEmpty">
-<li class="toc ulEmpty" id="section-boilerplate.3-1.4.2.1">
-                <p id="section-boilerplate.3-1.4.2.1.1"><a href="#section-4.1" class="xref">4.1</a>.  <a href="#name-producer-mobility-in-hicn" class="xref">Producer mobility in hICN</a><a href="#section-boilerplate.3-1.4.2.1.1" class="pilcrow">¶</a></p>
+<li class="toc ulEmpty" id="section-toc.1-1.4.2.1">
+                <p id="section-toc.1-1.4.2.1.1"><a href="#section-4.1" class="xref">4.1</a>.  <a href="#name-producer-mobility-in-hicn" class="xref">Producer mobility in hICN</a><a href="#section-toc.1-1.4.2.1.1" class="pilcrow">¶</a></p>
 </li>
-            </ul>
+</ul>
 </li>
-          <li class="toc ulEmpty" id="section-boilerplate.3-1.5">
-            <p id="section-boilerplate.3-1.5.1"><a href="#section-5" class="xref">5</a>.  <a href="#name-protocol-description" class="xref">Protocol description</a><a href="#section-boilerplate.3-1.5.1" class="pilcrow">¶</a></p>
+<li class="toc ulEmpty" id="section-toc.1-1.5">
+            <p id="section-toc.1-1.5.1"><a href="#section-5" class="xref">5</a>.  <a href="#name-protocol-description" class="xref">Protocol description</a><a href="#section-toc.1-1.5.1" class="pilcrow">¶</a></p>
 <ul class="toc ulEmpty">
-<li class="toc ulEmpty" id="section-boilerplate.3-1.5.2.1">
-                <p id="section-boilerplate.3-1.5.2.1.1"><a href="#section-5.1" class="xref">5.1</a>.  <a href="#name-signalization-messages-ackn" class="xref">Signalization messages; acknowledgements and retransmission</a><a href="#section-boilerplate.3-1.5.2.1.1" class="pilcrow">¶</a></p>
+<li class="toc ulEmpty" id="section-toc.1-1.5.2.1">
+                <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="xref">5.1</a>.  <a href="#name-signalization-messages-ackn" class="xref">Signalization messages; acknowledgements and retransmission</a><a href="#section-toc.1-1.5.2.1.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="toc ulEmpty" id="section-boilerplate.3-1.5.2.2">
-                <p id="section-boilerplate.3-1.5.2.2.1"><a href="#section-5.2" class="xref">5.2</a>.  <a href="#name-dynamic-face-creation-and-p" class="xref">Dynamic face creation and producer-triggered advertisements</a><a href="#section-boilerplate.3-1.5.2.2.1" class="pilcrow">¶</a></p>
+<li class="toc ulEmpty" id="section-toc.1-1.5.2.2">
+                <p id="section-toc.1-1.5.2.2.1"><a href="#section-5.2" class="xref">5.2</a>.  <a href="#name-dynamic-face-creation-and-p" class="xref">Dynamic face creation and producer-triggered advertisements</a><a href="#section-toc.1-1.5.2.2.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="toc ulEmpty" id="section-boilerplate.3-1.5.2.3">
-                <p id="section-boilerplate.3-1.5.2.3.1"><a href="#section-5.3" class="xref">5.3</a>.  <a href="#name-update-protocol" class="xref">Update protocol</a><a href="#section-boilerplate.3-1.5.2.3.1" class="pilcrow">¶</a></p>
+<li class="toc ulEmpty" id="section-toc.1-1.5.2.3">
+                <p id="section-toc.1-1.5.2.3.1"><a href="#section-5.3" class="xref">5.3</a>.  <a href="#name-update-protocol" class="xref">Update protocol</a><a href="#section-toc.1-1.5.2.3.1" class="pilcrow">¶</a></p>
 <ul class="toc ulEmpty">
-<li class="toc ulEmpty" id="section-boilerplate.3-1.5.2.3.2.1">
-                    <p id="section-boilerplate.3-1.5.2.3.2.1.1"><a href="#section-5.3.1" class="xref">5.3.1</a>.  <a href="#name-illustration" class="xref">Illustration</a><a href="#section-boilerplate.3-1.5.2.3.2.1.1" class="pilcrow">¶</a></p>
+<li class="toc ulEmpty" id="section-toc.1-1.5.2.3.2.1">
+                    <p id="section-toc.1-1.5.2.3.2.1.1"><a href="#section-5.3.1" class="xref">5.3.1</a>.  <a href="#name-illustration" class="xref">Illustration</a><a href="#section-toc.1-1.5.2.3.2.1.1" class="pilcrow">¶</a></p>
 </li>
-                  <li class="toc ulEmpty" id="section-boilerplate.3-1.5.2.3.2.2">
-                    <p id="section-boilerplate.3-1.5.2.3.2.2.1"><a href="#section-5.3.2" class="xref">5.3.2</a>.  <a href="#name-message-content" class="xref">Message content</a><a href="#section-boilerplate.3-1.5.2.3.2.2.1" class="pilcrow">¶</a></p>
+<li class="toc ulEmpty" id="section-toc.1-1.5.2.3.2.2">
+                    <p id="section-toc.1-1.5.2.3.2.2.1"><a href="#section-5.3.2" class="xref">5.3.2</a>.  <a href="#name-message-content" class="xref">Message content</a><a href="#section-toc.1-1.5.2.3.2.2.1" class="pilcrow">¶</a></p>
 </li>
-                  <li class="toc ulEmpty" id="section-boilerplate.3-1.5.2.3.2.3">
-                    <p id="section-boilerplate.3-1.5.2.3.2.3.1"><a href="#section-5.3.3" class="xref">5.3.3</a>.  <a href="#name-processing-at-network-route" class="xref">Processing at network routers</a><a href="#section-boilerplate.3-1.5.2.3.2.3.1" class="pilcrow">¶</a></p>
+<li class="toc ulEmpty" id="section-toc.1-1.5.2.3.2.3">
+                    <p id="section-toc.1-1.5.2.3.2.3.1"><a href="#section-5.3.3" class="xref">5.3.3</a>.  <a href="#name-processing-at-network-route" class="xref">Processing at network routers</a><a href="#section-toc.1-1.5.2.3.2.3.1" class="pilcrow">¶</a></p>
 </li>
-                </ul>
+</ul>
 </li>
-              <li class="toc ulEmpty" id="section-boilerplate.3-1.5.2.4">
-                <p id="section-boilerplate.3-1.5.2.4.1"><a href="#section-5.4" class="xref">5.4</a>.  <a href="#name-notifications-and-scoped-di" class="xref">Notifications and scoped discovery</a><a href="#section-boilerplate.3-1.5.2.4.1" class="pilcrow">¶</a></p>
+<li class="toc ulEmpty" id="section-toc.1-1.5.2.4">
+                <p id="section-toc.1-1.5.2.4.1"><a href="#section-5.4" class="xref">5.4</a>.  <a href="#name-notifications-and-scoped-di" class="xref">Notifications and scoped discovery</a><a href="#section-toc.1-1.5.2.4.1" class="pilcrow">¶</a></p>
 <ul class="toc ulEmpty">
-<li class="toc ulEmpty" id="section-boilerplate.3-1.5.2.4.2.1">
-                    <p id="section-boilerplate.3-1.5.2.4.2.1.1"><a href="#section-5.4.1" class="xref">5.4.1</a>.  <a href="#name-notification-processing" class="xref">Notification processing</a><a href="#section-boilerplate.3-1.5.2.4.2.1.1" class="pilcrow">¶</a></p>
+<li class="toc ulEmpty" id="section-toc.1-1.5.2.4.2.1">
+                    <p id="section-toc.1-1.5.2.4.2.1.1"><a href="#section-5.4.1" class="xref">5.4.1</a>.  <a href="#name-notification-processing" class="xref">Notification processing</a><a href="#section-toc.1-1.5.2.4.2.1.1" class="pilcrow">¶</a></p>
 </li>
-                  <li class="toc ulEmpty" id="section-boilerplate.3-1.5.2.4.2.2">
-                    <p id="section-boilerplate.3-1.5.2.4.2.2.1"><a href="#section-5.4.2" class="xref">5.4.2</a>.  <a href="#name-illustration-2" class="xref">Illustration</a><a href="#section-boilerplate.3-1.5.2.4.2.2.1" class="pilcrow">¶</a></p>
+<li class="toc ulEmpty" id="section-toc.1-1.5.2.4.2.2">
+                    <p id="section-toc.1-1.5.2.4.2.2.1"><a href="#section-5.4.2" class="xref">5.4.2</a>.  <a href="#name-illustration-2" class="xref">Illustration</a><a href="#section-toc.1-1.5.2.4.2.2.1" class="pilcrow">¶</a></p>
 </li>
-                </ul>
+</ul>
 </li>
-            </ul>
+</ul>
 </li>
-          <li class="toc ulEmpty" id="section-boilerplate.3-1.6">
-            <p id="section-boilerplate.3-1.6.1"><a href="#section-6" class="xref">6</a>.  <a href="#name-benefits" class="xref">Benefits</a><a href="#section-boilerplate.3-1.6.1" class="pilcrow">¶</a></p>
+<li class="toc ulEmpty" id="section-toc.1-1.6">
+            <p id="section-toc.1-1.6.1"><a href="#section-6" class="xref">6</a>.  <a href="#name-benefits" class="xref">Benefits</a><a href="#section-toc.1-1.6.1" class="pilcrow">¶</a></p>
 <ul class="toc ulEmpty">
-<li class="toc ulEmpty" id="section-boilerplate.3-1.6.2.1">
-                <p id="section-boilerplate.3-1.6.2.1.1"><a href="#section-6.1" class="xref">6.1</a>.  <a href="#name-overview" class="xref">Overview</a><a href="#section-boilerplate.3-1.6.2.1.1" class="pilcrow">¶</a></p>
+<li class="toc ulEmpty" id="section-toc.1-1.6.2.1">
+                <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="xref">6.1</a>.  <a href="#name-overview" class="xref">Overview</a><a href="#section-toc.1-1.6.2.1.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="toc ulEmpty" id="section-boilerplate.3-1.6.2.2">
-                <p id="section-boilerplate.3-1.6.2.2.1"><a href="#section-6.2" class="xref">6.2</a>.  <a href="#name-simplicity-scalability-effi" class="xref">Simplicity, scalability, efficiency</a><a href="#section-boilerplate.3-1.6.2.2.1" class="pilcrow">¶</a></p>
+<li class="toc ulEmpty" id="section-toc.1-1.6.2.2">
+                <p id="section-toc.1-1.6.2.2.1"><a href="#section-6.2" class="xref">6.2</a>.  <a href="#name-simplicity-scalability-effi" class="xref">Simplicity, scalability, efficiency</a><a href="#section-toc.1-1.6.2.2.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="toc ulEmpty" id="section-boilerplate.3-1.6.2.3">
-                <p id="section-boilerplate.3-1.6.2.3.1"><a href="#section-6.3" class="xref">6.3</a>.  <a href="#name-reduced-latency-through-cac" class="xref">Reduced latency through caching</a><a href="#section-boilerplate.3-1.6.2.3.1" class="pilcrow">¶</a></p>
+<li class="toc ulEmpty" id="section-toc.1-1.6.2.3">
+                <p id="section-toc.1-1.6.2.3.1"><a href="#section-6.3" class="xref">6.3</a>.  <a href="#name-reduced-latency-through-cac" class="xref">Reduced latency through caching</a><a href="#section-toc.1-1.6.2.3.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="toc ulEmpty" id="section-boilerplate.3-1.6.2.4">
-                <p id="section-boilerplate.3-1.6.2.4.1"><a href="#section-6.4" class="xref">6.4</a>.  <a href="#name-improved-reliability-throug" class="xref">Improved reliability through caching</a><a href="#section-boilerplate.3-1.6.2.4.1" class="pilcrow">¶</a></p>
+<li class="toc ulEmpty" id="section-toc.1-1.6.2.4">
+                <p id="section-toc.1-1.6.2.4.1"><a href="#section-6.4" class="xref">6.4</a>.  <a href="#name-improved-reliability-throug" class="xref">Improved reliability through caching</a><a href="#section-toc.1-1.6.2.4.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="toc ulEmpty" id="section-boilerplate.3-1.6.2.5">
-                <p id="section-boilerplate.3-1.6.2.5.1"><a href="#section-6.5" class="xref">6.5</a>.  <a href="#name-local-mobility-and-recovery" class="xref">Local mobility and recovery from common cache</a><a href="#section-boilerplate.3-1.6.2.5.1" class="pilcrow">¶</a></p>
+<li class="toc ulEmpty" id="section-toc.1-1.6.2.5">
+                <p id="section-toc.1-1.6.2.5.1"><a href="#section-6.5" class="xref">6.5</a>.  <a href="#name-local-mobility-and-recovery" class="xref">Local mobility and recovery from common cache</a><a href="#section-toc.1-1.6.2.5.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="toc ulEmpty" id="section-boilerplate.3-1.6.2.6">
-                <p id="section-boilerplate.3-1.6.2.6.1"><a href="#section-6.6" class="xref">6.6</a>.  <a href="#name-additional-reliability-thro" class="xref">Additional reliability through consumer multihoming</a><a href="#section-boilerplate.3-1.6.2.6.1" class="pilcrow">¶</a></p>
+<li class="toc ulEmpty" id="section-toc.1-1.6.2.6">
+                <p id="section-toc.1-1.6.2.6.1"><a href="#section-6.6" class="xref">6.6</a>.  <a href="#name-additional-reliability-thro" class="xref">Additional reliability through consumer multihoming</a><a href="#section-toc.1-1.6.2.6.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="toc ulEmpty" id="section-boilerplate.3-1.6.2.7">
-                <p id="section-boilerplate.3-1.6.2.7.1"><a href="#section-6.7" class="xref">6.7</a>.  <a href="#name-bandwidth-aggregation-with-" class="xref">Bandwidth aggregation with consumer multihoming</a><a href="#section-boilerplate.3-1.6.2.7.1" class="pilcrow">¶</a></p>
+<li class="toc ulEmpty" id="section-toc.1-1.6.2.7">
+                <p id="section-toc.1-1.6.2.7.1"><a href="#section-6.7" class="xref">6.7</a>.  <a href="#name-bandwidth-aggregation-with-" class="xref">Bandwidth aggregation with consumer multihoming</a><a href="#section-toc.1-1.6.2.7.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="toc ulEmpty" id="section-boilerplate.3-1.6.2.8">
-                <p id="section-boilerplate.3-1.6.2.8.1"><a href="#section-6.8" class="xref">6.8</a>.  <a href="#name-traffic-and-signalization-o" class="xref">Traffic and signalization offload</a><a href="#section-boilerplate.3-1.6.2.8.1" class="pilcrow">¶</a></p>
+<li class="toc ulEmpty" id="section-toc.1-1.6.2.8">
+                <p id="section-toc.1-1.6.2.8.1"><a href="#section-6.8" class="xref">6.8</a>.  <a href="#name-traffic-and-signalization-o" class="xref">Traffic and signalization offload</a><a href="#section-toc.1-1.6.2.8.1" class="pilcrow">¶</a></p>
 </li>
-            </ul>
+</ul>
 </li>
-          <li class="toc ulEmpty" id="section-boilerplate.3-1.7">
-            <p id="section-boilerplate.3-1.7.1"><a href="#section-7" class="xref">7</a>.  <a href="#name-implementation-consideratio" class="xref">Implementation considerations</a><a href="#section-boilerplate.3-1.7.1" class="pilcrow">¶</a></p>
+<li class="toc ulEmpty" id="section-toc.1-1.7">
+            <p id="section-toc.1-1.7.1"><a href="#section-7" class="xref">7</a>.  <a href="#name-implementation-consideratio" class="xref">Implementation considerations</a><a href="#section-toc.1-1.7.1" class="pilcrow">¶</a></p>
 <ul class="toc ulEmpty">
-<li class="toc ulEmpty" id="section-boilerplate.3-1.7.2.1">
-                <p id="section-boilerplate.3-1.7.2.1.1"><a href="#section-7.1" class="xref">7.1</a>.  <a href="#name-interaction-with-non-hicn-e" class="xref">Interaction with non-hICN enabled routers</a><a href="#section-boilerplate.3-1.7.2.1.1" class="pilcrow">¶</a></p>
+<li class="toc ulEmpty" id="section-toc.1-1.7.2.1">
+                <p id="section-toc.1-1.7.2.1.1"><a href="#section-7.1" class="xref">7.1</a>.  <a href="#name-interaction-with-non-hicn-e" class="xref">Interaction with non-hICN enabled routers</a><a href="#section-toc.1-1.7.2.1.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="toc ulEmpty" id="section-boilerplate.3-1.7.2.2">
-                <p id="section-boilerplate.3-1.7.2.2.1"><a href="#section-7.2" class="xref">7.2</a>.  <a href="#name-security-considerations" class="xref">Security considerations</a><a href="#section-boilerplate.3-1.7.2.2.1" class="pilcrow">¶</a></p>
+<li class="toc ulEmpty" id="section-toc.1-1.7.2.2">
+                <p id="section-toc.1-1.7.2.2.1"><a href="#section-7.2" class="xref">7.2</a>.  <a href="#name-security-considerations" class="xref">Security considerations</a><a href="#section-toc.1-1.7.2.2.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="toc ulEmpty" id="section-boilerplate.3-1.7.2.3">
-                <p id="section-boilerplate.3-1.7.2.3.1"><a href="#section-7.3" class="xref">7.3</a>.  <a href="#name-discussion" class="xref">Discussion</a><a href="#section-boilerplate.3-1.7.2.3.1" class="pilcrow">¶</a></p>
+<li class="toc ulEmpty" id="section-toc.1-1.7.2.3">
+                <p id="section-toc.1-1.7.2.3.1"><a href="#section-7.3" class="xref">7.3</a>.  <a href="#name-discussion" class="xref">Discussion</a><a href="#section-toc.1-1.7.2.3.1" class="pilcrow">¶</a></p>
 </li>
-            </ul>
+</ul>
 </li>
-          <li class="toc ulEmpty" id="section-boilerplate.3-1.8">
-            <p id="section-boilerplate.3-1.8.1"><a href="#section-8" class="xref">8</a>.  <a href="#name-iana-considerations" class="xref">IANA Considerations</a><a href="#section-boilerplate.3-1.8.1" class="pilcrow">¶</a></p>
+<li class="toc ulEmpty" id="section-toc.1-1.8">
+            <p id="section-toc.1-1.8.1"><a href="#section-8" class="xref">8</a>.  <a href="#name-iana-considerations" class="xref">IANA Considerations</a><a href="#section-toc.1-1.8.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="toc ulEmpty" id="section-boilerplate.3-1.9">
-            <p id="section-boilerplate.3-1.9.1"><a href="#section-9" class="xref">9</a>.  <a href="#name-references" class="xref">References</a><a href="#section-boilerplate.3-1.9.1" class="pilcrow">¶</a></p>
+<li class="toc ulEmpty" id="section-toc.1-1.9">
+            <p id="section-toc.1-1.9.1"><a href="#section-9" class="xref">9</a>.  <a href="#name-references" class="xref">References</a><a href="#section-toc.1-1.9.1" class="pilcrow">¶</a></p>
 <ul class="toc ulEmpty">
-<li class="toc ulEmpty" id="section-boilerplate.3-1.9.2.1">
-                <p id="section-boilerplate.3-1.9.2.1.1"><a href="#section-9.1" class="xref">9.1</a>.  <a href="#name-normative-references" class="xref">Normative References</a><a href="#section-boilerplate.3-1.9.2.1.1" class="pilcrow">¶</a></p>
+<li class="toc ulEmpty" id="section-toc.1-1.9.2.1">
+                <p id="section-toc.1-1.9.2.1.1"><a href="#section-9.1" class="xref">9.1</a>.  <a href="#name-normative-references" class="xref">Normative References</a><a href="#section-toc.1-1.9.2.1.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="toc ulEmpty" id="section-boilerplate.3-1.9.2.2">
-                <p id="section-boilerplate.3-1.9.2.2.1"><a href="#section-9.2" class="xref">9.2</a>.  <a href="#name-informative-references" class="xref">Informative References</a><a href="#section-boilerplate.3-1.9.2.2.1" class="pilcrow">¶</a></p>
+<li class="toc ulEmpty" id="section-toc.1-1.9.2.2">
+                <p id="section-toc.1-1.9.2.2.1"><a href="#section-9.2" class="xref">9.2</a>.  <a href="#name-informative-references" class="xref">Informative References</a><a href="#section-toc.1-1.9.2.2.1" class="pilcrow">¶</a></p>
 </li>
-            </ul>
+</ul>
 </li>
-          <li class="toc ulEmpty" id="section-boilerplate.3-1.10">
-            <p id="section-boilerplate.3-1.10.1"><a href="#section-appendix.a" class="xref"></a>  <a href="#name-authors-addresses" class="xref">Authors' Addresses</a><a href="#section-boilerplate.3-1.10.1" class="pilcrow">¶</a></p>
+<li class="toc ulEmpty" id="section-toc.1-1.10">
+            <p id="section-toc.1-1.10.1"><a href="#section-appendix.a" class="xref"></a><a href="#name-authors-addresses" class="xref">Authors' Addresses</a><a href="#section-toc.1-1.10.1" class="pilcrow">¶</a></p>
 </li>
-        </ul>
+</ul>
 </nav>
 </section>
 </div>
 <div id="introduction">
 <section id="section-1">
       <h2 id="name-introduction">
-<a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
+<a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
 <p id="section-1-1">New usages of the network and the rapid growth of the Mobile Internet calls to
 reconsider the way we deploy and operate IP networks, where mobility is not
@@ -1113,12 +1111,12 @@ preserving the simplicity and end-to-end design of the current Internet.<a href=
 <div id="locators-identifiers-and-anchorless-mobility-management">
 <section id="section-2">
       <h2 id="name-locators-identifiers-and-an">
-<a href="#section-2" class="section-number selfRef">2. </a><a href="#name-locators-identifiers-and-an" class="section-name selfRef">Locators, identifiers and anchorless mobility management</a>
+<a href="#section-2" class="section-number selfRef">2. </a><a href="#name-locators-identifiers-and-an" class="section-name selfRef">Locators, identifiers and anchorless mobility management</a>
       </h2>
 <div id="terminology">
 <section id="section-2.1">
         <h3 id="name-terminology">
-<a href="#section-2.1" class="section-number selfRef">2.1. </a><a href="#name-terminology" class="section-name selfRef">Terminology</a>
+<a href="#section-2.1" class="section-number selfRef">2.1. </a><a href="#name-terminology" class="section-name selfRef">Terminology</a>
         </h3>
 <p id="section-2.1-1">The consideration of mobility in network design shares the challenges raised for
 routing for instance in <span>[<a href="#RFC6115" class="xref">RFC6115</a>]</span>, where the terminology for locators and
@@ -1132,40 +1130,44 @@ attempt to reconcile those interpretations and propose a unifying terminology
 used throughout this document.<a href="#section-2.1-2" class="pilcrow">¶</a></p>
 <dl class="dlParallel" id="section-2.1-3">
           <dt id="section-2.1-3.1">Anchor</dt>
-          <dd id="section-2.1-3.2">
+<dd id="section-2.1-3.2">
   An anchor refers to a specialized node or service, possibly distributed,
 functionally required by a network architecture for forwarding or mobility. This
 is in contrast to decentralized architectures. Configuration of these
 anchors, including their location, will directly affect the overall scheme
 performance. We follow the classic distinction between control plane and user
 (or data, or forwarding) plane to distinguish control-plane anchors and
-user-plane anchors.</dd>
-          <dt id="section-2.1-3.3">User-plane anchor</dt>
-          <dd id="section-2.1-3.4">
+user-plane anchors.<a href="#section-2.1-3.2" class="pilcrow">¶</a>
+</dd>
+<dt id="section-2.1-3.3">User-plane anchor</dt>
+<dd id="section-2.1-3.4">
   A user-plane anchor is a node through which traffic is forced to pass.
-An example of such anchor is the indirection point in Mobile IP.</dd>
-          <dt id="section-2.1-3.5">Control-plane anchor</dt>
-          <dd id="section-2.1-3.6">
+An example of such anchor is the indirection point in Mobile IP.<a href="#section-2.1-3.4" class="pilcrow">¶</a>
+</dd>
+<dt id="section-2.1-3.5">Control-plane anchor</dt>
+<dd id="section-2.1-3.6">
   A control-plane anchor refers to a node that is not responsible for carrying
 traffic, but is needed for the operation of the forwarding and/or the
 mobility architecture. An example of such anchor is the resolution or mapping
 service of LISP. We remark that while not being on path, such anchors might
 affect the performance of the user-plane due to resolution delays or indirection
-(following a mapping cache miss for instance).</dd>
-          <dt id="section-2.1-3.7">Anchorless</dt>
-          <dd id="section-2.1-3.8">
+(following a mapping cache miss for instance).<a href="#section-2.1-3.6" class="pilcrow">¶</a>
+</dd>
+<dt id="section-2.1-3.7">Anchorless</dt>
+<dd id="section-2.1-3.8">
   This term qualifies approaches that do not involve any user-plane not
 control-plane anchor. The challenge for such full anchorless approaches are
 exacerbated during mobilty of both end points at the same time, as they cannot
 rely on any stable anchor point to preserve connectivity. Nor they can rely on
-routing mechanism that would be the source of overhead and instability.</dd>
-        </dl>
+routing mechanism that would be the source of overhead and instability.<a href="#section-2.1-3.8" class="pilcrow">¶</a>
+</dd>
+</dl>
 </section>
 </div>
 <div id="towards-locator-independent-network-architectures">
 <section id="section-2.2">
         <h3 id="name-towards-locator-independent">
-<a href="#section-2.2" class="section-number selfRef">2.2. </a><a href="#name-towards-locator-independent" class="section-name selfRef">Towards locator-independent network architectures</a>
+<a href="#section-2.2" class="section-number selfRef">2.2. </a><a href="#name-towards-locator-independent" class="section-name selfRef">Towards locator-independent network architectures</a>
         </h3>
 <p id="section-2.2-1">We distinguish network architectures based on their use of location independent
 identifiers (or names) and locators for forwarding.<a href="#section-2.2-1" class="pilcrow">¶</a></p>
@@ -1209,7 +1211,7 @@ often departs from this principle.<a href="#section-2.2-11" class="pilcrow">¶</
 <div id="information-centric-networking-icn">
 <section id="section-2.3">
         <h3 id="name-information-centric-network">
-<a href="#section-2.3" class="section-number selfRef">2.3. </a><a href="#name-information-centric-network" class="section-name selfRef">Information-Centric Networking (ICN)</a>
+<a href="#section-2.3" class="section-number selfRef">2.3. </a><a href="#name-information-centric-network" class="section-name selfRef">Information-Centric Networking (ICN)</a>
         </h3>
 <p id="section-2.3-1">ICN is a new networking paradigm centering network communication around
 named data, rather that host location. Network operations are driven by
@@ -1224,27 +1226,27 @@ on hICN <span>[<a href="#I-D.muscariello-intarea-hicn" class="xref">I-D.muscarie
 <div id="hybrid-icn-overview">
 <section id="section-2.4">
         <h3 id="name-hybrid-icn-overview">
-<a href="#section-2.4" class="section-number selfRef">2.4. </a><a href="#name-hybrid-icn-overview" class="section-name selfRef">Hybrid-ICN overview</a>
+<a href="#section-2.4" class="section-number selfRef">2.4. </a><a href="#name-hybrid-icn-overview" class="section-name selfRef">Hybrid-ICN overview</a>
         </h3>
 <p id="section-2.4-1">Hybrid ICN (hICN) is an ICN architecture that defines integration of ICN
 semantics within IPv6.
 The goal of hICN is to ease ICN insertion in existing IP infrastructure by:<a href="#section-2.4-1" class="pilcrow">¶</a></p>
-<ol type="1" start="1" class="normal" id="section-2.4-2">
+<ol start="1" type="1" class="normal type-1" id="section-2.4-2">
           <li id="section-2.4-2.1">selective insertion of hICN capabilities in a few network nodes at the edge
 (no need for pervasive fully hICN network deployments);<a href="#section-2.4-2.1" class="pilcrow">¶</a>
 </li>
-          <li id="section-2.4-2.2">guaranteed transparent interconnection with hICN-unaware IPv6 nodes, without
+<li id="section-2.4-2.2">guaranteed transparent interconnection with hICN-unaware IPv6 nodes, without
 using overlays;<a href="#section-2.4-2.2" class="pilcrow">¶</a>
 </li>
-          <li id="section-2.4-2.3">minor modification to existing IP routers/endpoints;<a href="#section-2.4-2.3" class="pilcrow">¶</a>
+<li id="section-2.4-2.3">minor modification to existing IP routers/endpoints;<a href="#section-2.4-2.3" class="pilcrow">¶</a>
 </li>
-          <li id="section-2.4-2.4">re-use of existing IP control plane (e.g. for routing of IP prefixes carrying
+<li id="section-2.4-2.4">re-use of existing IP control plane (e.g. for routing of IP prefixes carrying
 ID-semantics) along with performing mobility management and caching operations
 in forwarding plane;<a href="#section-2.4-2.4" class="pilcrow">¶</a>
 </li>
-          <li id="section-2.4-2.5">fallback capability to tradition IP network/transport layer.<a href="#section-2.4-2.5" class="pilcrow">¶</a>
+<li id="section-2.4-2.5">fallback capability to tradition IP network/transport layer.<a href="#section-2.4-2.5" class="pilcrow">¶</a>
 </li>
-        </ol>
+</ol>
 <p id="section-2.4-3">hICN architecture is described in <span>[<a href="#I-D.muscariello-intarea-hicn" class="xref">I-D.muscariello-intarea-hicn</a>]</span>.<a href="#section-2.4-3" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1253,7 +1255,7 @@ in forwarding plane;<a href="#section-2.4-2.4" class="pilcrow">¶</a>
 <div id="hybrid-icn-anchorless-mobility-management-hicn-amm">
 <section id="section-3">
       <h2 id="name-hybrid-icn-anchorless-mobil">
-<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-hybrid-icn-anchorless-mobil" class="section-name selfRef">Hybrid-ICN Anchorless Mobility Management (hICN-AMM)</a>
+<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-hybrid-icn-anchorless-mobil" class="section-name selfRef">Hybrid-ICN Anchorless Mobility Management (hICN-AMM)</a>
       </h2>
 <p id="section-3-1">hICN, together with MAP-Me <span>[<a href="#I-D.irtf-icnrg-mapme" class="xref">I-D.irtf-icnrg-mapme</a>]</span>, forms the basis for the mobility management
 architecture we describe in the rest of this document. Due to the pull based
@@ -1262,7 +1264,7 @@ which mobility is handled differently<a href="#section-3-1" class="pilcrow">¶</
 <div id="consumer-mobility-in-hicn">
 <section id="section-3.1">
         <h3 id="name-consumer-mobility-in-hicn">
-<a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-consumer-mobility-in-hicn" class="section-name selfRef">Consumer mobility in hICN</a>
+<a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-consumer-mobility-in-hicn" class="section-name selfRef">Consumer mobility in hICN</a>
         </h3>
 <p id="section-3.1-1">The consumer end-point is the logical communication termination that receives data.
 Due to the pull-based and connection-less properties of hICN
@@ -1279,7 +1281,7 @@ cope with eventual disruptions and path variations caused by the mobility event.
 <div id="producer-mobility-architectures">
 <section id="section-4">
       <h2 id="name-producer-mobility-architect">
-<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-producer-mobility-architect" class="section-name selfRef">Producer mobility architectures</a>
+<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-producer-mobility-architect" class="section-name selfRef">Producer mobility architectures</a>
       </h2>
 <p id="section-4-1">The producer end-point is the logical communication termination that sends data.
 Producer mobility is not natively supported by the architecture, rather handled
@@ -1302,27 +1304,27 @@ this mapping updated, the producer signals every movement to the mapping system.
 Once the resolution is performed, packets can be correctly routed directly to
 the producer.<a href="#section-4-3.1" class="pilcrow">¶</a>
 </li>
-        <li id="section-4-3.2">
+<li id="section-4-3.2">
           <em>Anchor-based</em> proposals are inspired by Mobile IP, and maintain a mapping at
 network-layer by using a stable home address advertised by a rendez-vous node,
 or anchor. This acts as a relay, forwarding through tunneling both interests
 to the producer, and data packets coming back.<a href="#section-4-3.2" class="pilcrow">¶</a>
 </li>
-        <li id="section-4-3.3">
+<li id="section-4-3.3">
           <em>Tracing-based</em> solutions allow the mobile node to create a hop-by-hop
 forwarding reverse path from its RV back to itself by propagating and keeping
 alive traces stored by all involved routers. Forwarding to the new location is
 enabled without tunneling.<a href="#section-4-3.3" class="pilcrow">¶</a>
 </li>
-        <li id="section-4-3.4">
+<li id="section-4-3.4">
           <em>Anchorless</em> approaches allow the mobile nodes to advertise their mobility to
 the network without requiring any specific node to act as a rendez-vous point.<a href="#section-4-3.4" class="pilcrow">¶</a>
 </li>
-      </ul>
+</ul>
 <div id="producer-mobility-in-hicn">
 <section id="section-4.1">
         <h3 id="name-producer-mobility-in-hicn">
-<a href="#section-4.1" class="section-number selfRef">4.1. </a><a href="#name-producer-mobility-in-hicn" class="section-name selfRef">Producer mobility in hICN</a>
+<a href="#section-4.1" class="section-number selfRef">4.1. </a><a href="#name-producer-mobility-in-hicn" class="section-name selfRef">Producer mobility in hICN</a>
         </h3>
 <p id="section-4.1-1">In an hICN network, regular routing protocols such as BGP, ISIS or OSPF can be
 used for propagating all prefix announcements and populate routers' FIBs.
@@ -1348,12 +1350,12 @@ relying on typical control plane messaging.<a href="#section-4.1-3" class="pilcr
 <div id="protocol-description">
 <section id="section-5">
       <h2 id="name-protocol-description">
-<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-protocol-description" class="section-name selfRef">Protocol description</a>
+<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-protocol-description" class="section-name selfRef">Protocol description</a>
       </h2>
 <div id="signalization-messages-acknowledgements-and-retransmission">
 <section id="section-5.1">
         <h3 id="name-signalization-messages-ackn">
-<a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-signalization-messages-ackn" class="section-name selfRef">Signalization messages; acknowledgements and retransmission</a>
+<a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-signalization-messages-ackn" class="section-name selfRef">Signalization messages; acknowledgements and retransmission</a>
         </h3>
 <p id="section-5.1-1">Signalization messages follow hICN design principles and use data plane packets
 for signalization. Signalization messages and acknowledgement are respectively
@@ -1370,7 +1372,7 @@ after a given timeout.<a href="#section-5.1-2" class="pilcrow">¶</a></p>
 <div id="dynamic-face-creation-and-producer-triggered-advertisements">
 <section id="section-5.2">
         <h3 id="name-dynamic-face-creation-and-p">
-<a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-dynamic-face-creation-and-p" class="section-name selfRef">Dynamic face creation and producer-triggered advertisements</a>
+<a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-dynamic-face-creation-and-p" class="section-name selfRef">Dynamic face creation and producer-triggered advertisements</a>
         </h3>
 <p id="section-5.2-1">The producer is responsible for mobility updates and should be hICN-enabled. It
 stores a sequence number incremented at each mobility event.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
@@ -1383,14 +1385,14 @@ packets to be sent to the joined network.<a href="#section-5.2-2" class="pilcrow
 <li id="section-5.2-4.1">the name prefix as the destination address, plus a field indicating the
 associated prefix length;<a href="#section-5.2-4.1" class="pilcrow">¶</a>
 </li>
-          <li id="section-5.2-4.2">the locator of the producer as the source address, that will serve for
+<li id="section-5.2-4.2">the locator of the producer as the source address, that will serve for
 receiving acknowledgements;<a href="#section-5.2-4.2" class="pilcrow">¶</a>
 </li>
-          <li id="section-5.2-4.3">a sequence number sequentially increased by the producer after each movement;<a href="#section-5.2-4.3" class="pilcrow">¶</a>
+<li id="section-5.2-4.3">a sequence number sequentially increased by the producer after each movement;<a href="#section-5.2-4.3" class="pilcrow">¶</a>
 </li>
-          <li id="section-5.2-4.4">a security token (see <a href="#sec-security" class="xref">Section 7.2</a>).<a href="#section-5.2-4.4" class="pilcrow">¶</a>
+<li id="section-5.2-4.4">a security token (see <a href="#sec-security" class="xref">Section 7.2</a>).<a href="#section-5.2-4.4" class="pilcrow">¶</a>
 </li>
-        </ul>
+</ul>
 <p id="section-5.2-5">Upon producer departures from a PoA, the corresponding face is destroyed. If
 this leads to the removal of the last next hop, then faces that were previously
 saved are restored in FIB to preserve the original forwarding tree and thus
@@ -1400,7 +1402,7 @@ global connectivity.<a href="#section-5.2-5" class="pilcrow">¶</a></p>
 <div id="update-protocol">
 <section id="section-5.3">
         <h3 id="name-update-protocol">
-<a href="#section-5.3" class="section-number selfRef">5.3. </a><a href="#name-update-protocol" class="section-name selfRef">Update protocol</a>
+<a href="#section-5.3" class="section-number selfRef">5.3. </a><a href="#name-update-protocol" class="section-name selfRef">Update protocol</a>
         </h3>
 <p id="section-5.3-1">Based on the information transmitted in the packet, and its local the network's
 local policy, the network might decide to update its forwarding state to reflect
@@ -1414,27 +1416,27 @@ interfaces of each traversed router.<a href="#section-5.3-2" class="pilcrow">¶<
 <div id="illustration">
 <section id="section-5.3.1">
           <h4 id="name-illustration">
-<a href="#section-5.3.1" class="section-number selfRef">5.3.1. </a><a href="#name-illustration" class="section-name selfRef">Illustration</a>
+<a href="#section-5.3.1" class="section-number selfRef">5.3.1. </a><a href="#name-illustration" class="section-name selfRef">Illustration</a>
           </h4>
 <p id="section-5.3.1-1">{fig-mapme-update}} illustrates the situation of a P moving between access
 routers AR1 and AR2 while serving user requests:<a href="#section-5.3.1-1" class="pilcrow">¶</a></p>
-<ol type="1" start="1" class="normal" id="section-5.3.1-2">
+<ol start="1" type="1" class="normal type-1" id="section-5.3.1-2">
             <li id="section-5.3.1-2.1">A first interest towards the producer originates from remote. The producer
 answers with a Data packet.<a href="#section-5.3.1-2.1" class="pilcrow">¶</a>
 </li>
-            <li id="section-5.3.1-2.2">Following this, the producer detaches from AR1 and moves to AR2.<a href="#section-5.3.1-2.2" class="pilcrow">¶</a>
+<li id="section-5.3.1-2.2">Following this, the producer detaches from AR1 and moves to AR2.<a href="#section-5.3.1-2.2" class="pilcrow">¶</a>
 </li>
-            <li id="section-5.3.1-2.3">As soon as it is attached to AR2, the producer sends an Interest Update
+<li id="section-5.3.1-2.3">As soon as it is attached to AR2, the producer sends an Interest Update
 towards its own prefix, which is forwarded from AR2 following the FIB towards
 AR1 (one of its former positions in the general case).<a href="#section-5.3.1-2.3" class="pilcrow">¶</a>
 </li>
-            <li id="section-5.3.1-2.4">At each hop, the message fixes the FIB to point towards the ingress face,
+<li id="section-5.3.1-2.4">At each hop, the message fixes the FIB to point towards the ingress face,
 until the message cannot be further forwarded in AR1.<a href="#section-5.3.1-2.4" class="pilcrow">¶</a>
 </li>
-            <li id="section-5.3.1-2.5">A subsequent message from remote will follow the updated FIB and correctly
+<li id="section-5.3.1-2.5">A subsequent message from remote will follow the updated FIB and correctly
 reach the producer's new location in AR2.<a href="#section-5.3.1-2.5" class="pilcrow">¶</a>
 </li>
-          </ol>
+</ol>
 <span id="name-signalization-during-produc"></span><div id="fig-mapme-update">
 <figure id="figure-1">
             <div class="artwork art-text alignLeft" id="section-5.3.1-3.1">
@@ -1462,7 +1464,7 @@ reach the producer's new location in AR2.<a href="#section-5.3.1-2.5" class="pil
     |               |               |               |              |
 </pre>
 </div>
-<figcaption><a href="#figure-1">Figure 1</a>:
+<figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
 <a href="#name-signalization-during-produc" class="selfRef">Signalization during producer mobility (MAP-Me)</a>
             </figcaption></figure>
 </div>
@@ -1481,27 +1483,27 @@ relocated for instance.<a href="#section-5.3.1-5" class="pilcrow">¶</a></p>
 <div id="message-content">
 <section id="section-5.3.2">
           <h4 id="name-message-content">
-<a href="#section-5.3.2" class="section-number selfRef">5.3.2. </a><a href="#name-message-content" class="section-name selfRef">Message content</a>
+<a href="#section-5.3.2" class="section-number selfRef">5.3.2. </a><a href="#name-message-content" class="section-name selfRef">Message content</a>
           </h4>
 <p id="section-5.3.2-1">The update messages should contain :<a href="#section-5.3.2-1" class="pilcrow">¶</a></p>
 <ul>
 <li id="section-5.3.2-2.1">the name prefix as the destination address, plus a field indicating the
 associated prefix length;<a href="#section-5.3.2-2.1" class="pilcrow">¶</a>
 </li>
-            <li id="section-5.3.2-2.2">the locator of the producer as the source address, that will serve for
+<li id="section-5.3.2-2.2">the locator of the producer as the source address, that will serve for
 receiving acknowledgements;<a href="#section-5.3.2-2.2" class="pilcrow">¶</a>
 </li>
-            <li id="section-5.3.2-2.3">a sequence number sequentially increased by the producer after each movement;<a href="#section-5.3.2-2.3" class="pilcrow">¶</a>
+<li id="section-5.3.2-2.3">a sequence number sequentially increased by the producer after each movement;<a href="#section-5.3.2-2.3" class="pilcrow">¶</a>
 </li>
-            <li id="section-5.3.2-2.4">an optional security token.<a href="#section-5.3.2-2.4" class="pilcrow">¶</a>
+<li id="section-5.3.2-2.4">an optional security token.<a href="#section-5.3.2-2.4" class="pilcrow">¶</a>
 </li>
-          </ul>
+</ul>
 </section>
 </div>
 <div id="processing-at-network-routers">
 <section id="section-5.3.3">
           <h4 id="name-processing-at-network-route">
-<a href="#section-5.3.3" class="section-number selfRef">5.3.3. </a><a href="#name-processing-at-network-route" class="section-name selfRef">Processing at network routers</a>
+<a href="#section-5.3.3" class="section-number selfRef">5.3.3. </a><a href="#name-processing-at-network-route" class="section-name selfRef">Processing at network routers</a>
           </h4>
 <p id="section-5.3.3-1">At the reception of advertisement/update packets, each router performs a
 name-based Longest Prefix Match lookup in FIB to compare sequence number from
@@ -1512,17 +1514,17 @@ next hops associated to the lower sequence number in FIB are used to
 forward it further and temporarily stored to avoid loss of such information before completion of the
 acknowledgement process.<a href="#section-5.3.3-2.1" class="pilcrow">¶</a>
 </li>
-            <li id="section-5.3.3-2.2">If the packet carries the same sequence number as in the FIB, its originating
+<li id="section-5.3.3-2.2">If the packet carries the same sequence number as in the FIB, its originating
 face is added to the existing ones in FIB without additional packet processing
 or propagation. This may occur in presence of multiple forwarding paths.<a href="#section-5.3.3-2.2" class="pilcrow">¶</a>
 </li>
-            <li id="section-5.3.3-2.3">If the packet carries a lower sequence number than the one in the FIB, FIB
+<li id="section-5.3.3-2.3">If the packet carries a lower sequence number than the one in the FIB, FIB
 entry is not updated as it already stores 'fresher information'.  To advertise
 the latest update through the path followed by the packet, this one is re-sent
 through the originating face after having updated its sequence number with the
 value stored in FIB.<a href="#section-5.3.3-2.3" class="pilcrow">¶</a>
 </li>
-          </ul>
+</ul>
 </section>
 </div>
 </section>
@@ -1530,7 +1532,7 @@ value stored in FIB.<a href="#section-5.3.3-2.3" class="pilcrow">¶</a>
 <div id="notifications-and-scoped-discovery">
 <section id="section-5.4">
         <h3 id="name-notifications-and-scoped-di">
-<a href="#section-5.4" class="section-number selfRef">5.4. </a><a href="#name-notifications-and-scoped-di" class="section-name selfRef">Notifications and scoped discovery</a>
+<a href="#section-5.4" class="section-number selfRef">5.4. </a><a href="#name-notifications-and-scoped-di" class="section-name selfRef">Notifications and scoped discovery</a>
         </h3>
 <p id="section-5.4-1">The update protocol is responsible for reestablishing global connectivity with
 minimal changes to the FIBs. In order to further improve the reactivity of the
@@ -1542,7 +1544,7 @@ events, or to delay updates when possible.<a href="#section-5.4-1" class="pilcro
 <div id="notification-processing">
 <section id="section-5.4.1">
           <h4 id="name-notification-processing">
-<a href="#section-5.4.1" class="section-number selfRef">5.4.1. </a><a href="#name-notification-processing" class="section-name selfRef">Notification processing</a>
+<a href="#section-5.4.1" class="section-number selfRef">5.4.1. </a><a href="#name-notification-processing" class="section-name selfRef">Notification processing</a>
           </h4>
 <p id="section-5.4.1-1">Upon receiving a valid advertisement, the point-of-attachment will remember the
 presence of the producer, update its corresponding FIB entry but send no update.
@@ -1557,7 +1559,7 @@ producer within a few hops.<a href="#section-5.4.1-2" class="pilcrow">¶</a></p>
 <div id="illustration-1">
 <section id="section-5.4.2">
           <h4 id="name-illustration-2">
-<a href="#section-5.4.2" class="section-number selfRef">5.4.2. </a><a href="#name-illustration-2" class="section-name selfRef">Illustration</a>
+<a href="#section-5.4.2" class="section-number selfRef">5.4.2. </a><a href="#name-illustration-2" class="section-name selfRef">Illustration</a>
           </h4>
 <p id="section-5.4.2-1"><a href="#fig-mapme-discovery" class="xref">Figure 2</a> illustrate such as situation where an Interest is sent
 to the producer before it had the time to complete the update.<a href="#section-5.4.2-1" class="pilcrow">¶</a></p>
@@ -1589,32 +1591,32 @@ to the producer before it had the time to complete the update.<a href="#section-
     |               |               |               |              |
 </pre>
 </div>
-<figcaption><a href="#figure-2">Figure 2</a>:
+<figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
 <a href="#name-scoped-discovery-during-pro" class="selfRef">Scoped discovery during producer mobility</a>
             </figcaption></figure>
 </div>
-<ol type="1" start="1" class="normal" id="section-5.4.2-3">
+<ol start="1" type="1" class="normal type-1" id="section-5.4.2-3">
             <li id="section-5.4.2-3.1">A first interest towards the producer originates from remote. The producer
 answers with a Data packet.<a href="#section-5.4.2-3.1" class="pilcrow">¶</a>
 </li>
-            <li id="section-5.4.2-3.2">Following this, the producer detaches from AR1 and moves to AR2.<a href="#section-5.4.2-3.2" class="pilcrow">¶</a>
+<li id="section-5.4.2-3.2">Following this, the producer detaches from AR1 and moves to AR2.<a href="#section-5.4.2-3.2" class="pilcrow">¶</a>
 </li>
-            <li id="section-5.4.2-3.3">A subsequent message from remote arrives before the update could take place,
+<li id="section-5.4.2-3.3">A subsequent message from remote arrives before the update could take place,
 and is thus forwarded to AR1.<a href="#section-5.4.2-3.3" class="pilcrow">¶</a>
 </li>
-            <li id="section-5.4.2-3.4">AR1 has no valid face anymore towards the producer, and enters discovery mode
+<li id="section-5.4.2-3.4">AR1 has no valid face anymore towards the producer, and enters discovery mode
 by broadcasting the interest to neighbours.<a href="#section-5.4.2-3.4" class="pilcrow">¶</a>
 </li>
-            <li id="section-5.4.2-3.5">In the meantime, we assume the notification reaches AR2.<a href="#section-5.4.2-3.5" class="pilcrow">¶</a>
+<li id="section-5.4.2-3.5">In the meantime, we assume the notification reaches AR2.<a href="#section-5.4.2-3.5" class="pilcrow">¶</a>
 </li>
-            <li id="section-5.4.2-3.6">Because the producer is attached to AR2, the producer can be directly
+<li id="section-5.4.2-3.6">Because the producer is attached to AR2, the producer can be directly
 reachable. Otherwise, AR2 would iterate the discovery to neighbours only if
 it had more recent information about the producer location than its
 predecessor (based on sequencing of regular Interests and Interest Updates).<a href="#section-5.4.2-3.6" class="pilcrow">¶</a>
 </li>
-            <li id="section-5.4.2-3.7">The Data packet follows the reverse path to the consumer as usual.<a href="#section-5.4.2-3.7" class="pilcrow">¶</a>
+<li id="section-5.4.2-3.7">The Data packet follows the reverse path to the consumer as usual.<a href="#section-5.4.2-3.7" class="pilcrow">¶</a>
 </li>
-          </ol>
+</ol>
 </section>
 </div>
 </section>
@@ -1624,7 +1626,7 @@ predecessor (based on sequencing of regular Interests and Interest Updates).<a h
 <div id="benefits">
 <section id="section-6">
       <h2 id="name-benefits">
-<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-benefits" class="section-name selfRef">Benefits</a>
+<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-benefits" class="section-name selfRef">Benefits</a>
       </h2>
 <p id="section-6-1">We now review the potential benefits of the general architecture we have
 presented using features from the hICN data plane for supporting consumer and
@@ -1632,7 +1634,7 @@ producer mobility.<a href="#section-6-1" class="pilcrow">¶</a></p>
 <div id="overview">
 <section id="section-6.1">
         <h3 id="name-overview">
-<a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-overview" class="section-name selfRef">Overview</a>
+<a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-overview" class="section-name selfRef">Overview</a>
         </h3>
 <p id="section-6.1-1"><strong>Native mobility</strong> : This mobility management process follows and exploits
 hICN design principles. It makes producer mobility native in the
@@ -1658,7 +1660,7 @@ robust to disconnectivity events.<a href="#section-6.1-3" class="pilcrow">¶</a>
 <div id="simplicity-scalability-efficiency">
 <section id="section-6.2">
         <h3 id="name-simplicity-scalability-effi">
-<a href="#section-6.2" class="section-number selfRef">6.2. </a><a href="#name-simplicity-scalability-effi" class="section-name selfRef">Simplicity, scalability, efficiency</a>
+<a href="#section-6.2" class="section-number selfRef">6.2. </a><a href="#name-simplicity-scalability-effi" class="section-name selfRef">Simplicity, scalability, efficiency</a>
         </h3>
 <p id="section-6.2-1">As emerges from the points raised in the previous section, consumer mobility is
 transparently supported by an hICN network in virtue of the pull-based model and the
@@ -1681,7 +1683,7 @@ currently moving.<a href="#section-6.2-3" class="pilcrow">¶</a></p>
 <div id="reduced-latency-through-caching">
 <section id="section-6.3">
         <h3 id="name-reduced-latency-through-cac">
-<a href="#section-6.3" class="section-number selfRef">6.3. </a><a href="#name-reduced-latency-through-cac" class="section-name selfRef">Reduced latency through caching</a>
+<a href="#section-6.3" class="section-number selfRef">6.3. </a><a href="#name-reduced-latency-through-cac" class="section-name selfRef">Reduced latency through caching</a>
         </h3>
 <p id="section-6.3-1">While this is not strictly linked to mobility, we first illustrate the benefits
 of caching content close to the edge to reduce user latencies. This is
@@ -1707,7 +1709,7 @@ into AP or eNB when it makes more sense.<a href="#section-6.3-2" class="pilcrow"
              +-----+
 </pre>
 </div>
-<figcaption><a href="#figure-3">Figure 3</a>:
+<figcaption><a href="#figure-3" class="selfRef">Figure 3</a>:
 <a href="#name-simple-topology-with-a-mult" class="selfRef">Simple topology with a multi-homed consumer</a>
           </figcaption></figure>
 </div>
@@ -1741,29 +1743,29 @@ LEGEND:
 
 </pre>
 </div>
-<figcaption><a href="#figure-4">Figure 4</a>:
+<figcaption><a href="#figure-4" class="selfRef">Figure 4</a>:
 <a href="#name-reduced-latency-through-cach" class="selfRef">Reduced latency through caching</a>
           </figcaption></figure>
 </div>
 <p id="section-6.3-6">Numbers on the left refer to the following comments relative to the data flow:<a href="#section-6.3-6" class="pilcrow">¶</a></p>
-<ol type="1" start="1" class="normal" id="section-6.3-7">
+<ol start="1" type="1" class="normal type-1" id="section-6.3-7">
           <li id="section-6.3-7.1">The consumer issues a first interest towards name prefix X, which is transported
 up to the producer. A Data packet comes back following the reverse path and
 populating intermediate caches. Latency of the exchange can be seen by the
 distance between lines on the vertical axis.<a href="#section-6.3-7.1" class="pilcrow">¶</a>
 </li>
-          <li id="section-6.3-7.2">The consumer now requests content B, which has previously been requested by
+<li id="section-6.3-7.2">The consumer now requests content B, which has previously been requested by
 another consumer located on the same gateway. Interest B thus hits the cache,
 refreshes the entry, and allows a lower round-trip latency to content both for
 consumer C and any subsequent request of the same content.<a href="#section-6.3-7.2" class="pilcrow">¶</a>
 </li>
-        </ol>
+</ol>
 </section>
 </div>
 <div id="improved-reliability-through-caching">
 <section id="section-6.4">
         <h3 id="name-improved-reliability-throug">
-<a href="#section-6.4" class="section-number selfRef">6.4. </a><a href="#name-improved-reliability-throug" class="section-name selfRef">Improved reliability through caching</a>
+<a href="#section-6.4" class="section-number selfRef">6.4. </a><a href="#name-improved-reliability-throug" class="section-name selfRef">Improved reliability through caching</a>
         </h3>
 <p id="section-6.4-1">Mobile networks might consist in unreliable access technologies, such as WiFi,
 responsible for packet losses. <a href="#fig-loss-cache" class="xref">Figure 5</a> considers a similar scenario
@@ -1788,30 +1790,30 @@ with a lossy channel (eg. WiFi) between the mobile and the first access router.<
     |               |               |               |              |
 </pre>
 </div>
-<figcaption><a href="#figure-5">Figure 5</a>:
+<figcaption><a href="#figure-5" class="selfRef">Figure 5</a>:
 <a href="#name-iu-propagation-example" class="selfRef">IU propagation example</a>
           </figcaption></figure>
 </div>
-<ol type="1" start="1" class="normal" id="section-6.4-3">
+<ol start="1" type="1" class="normal type-1" id="section-6.4-3">
           <li id="section-6.4-3.1">The first issued interest is lost due to bad radio conditions.<a href="#section-6.4-3.1" class="pilcrow">¶</a>
 </li>
-          <li id="section-6.4-3.2">Upon detection (either after a timeout, the consumer can just reissue the lost
+<li id="section-6.4-3.2">Upon detection (either after a timeout, the consumer can just reissue the lost
 Interest.<a href="#section-6.4-3.2" class="pilcrow">¶</a>
 </li>
-          <li id="section-6.4-3.3">This time the remote producer successfully replies but the Data packet is
+<li id="section-6.4-3.3">This time the remote producer successfully replies but the Data packet is
 lost on the radio link.<a href="#section-6.4-3.3" class="pilcrow">¶</a>
 </li>
-          <li id="section-6.4-3.4">Upon a similar detection, the consumer can reissue the lost Interest that
+<li id="section-6.4-3.4">Upon a similar detection, the consumer can reissue the lost Interest that
 will hit a locally stored copy at the router where the loss occurred (or again
 use a detection mechanism to retransmit the Data packet).<a href="#section-6.4-3.4" class="pilcrow">¶</a>
 </li>
-        </ol>
+</ol>
 </section>
 </div>
 <div id="local-mobility-and-recovery-from-common-cache">
 <section id="section-6.5">
         <h3 id="name-local-mobility-and-recovery">
-<a href="#section-6.5" class="section-number selfRef">6.5. </a><a href="#name-local-mobility-and-recovery" class="section-name selfRef">Local mobility and recovery from common cache</a>
+<a href="#section-6.5" class="section-number selfRef">6.5. </a><a href="#name-local-mobility-and-recovery" class="section-name selfRef">Local mobility and recovery from common cache</a>
         </h3>
 <p id="section-6.5-1">The same mechanism can be used to recover from mobility losses after the
 consumer reconnects to the new network as the content will already be available
@@ -1844,32 +1846,32 @@ perturb the feedback loop by unnecessarily reducing the transfer rate.<a href="#
     |               |               |               |              |
 </pre>
 </div>
-<figcaption><a href="#figure-6">Figure 6</a>:
+<figcaption><a href="#figure-6" class="selfRef">Figure 6</a>:
 <a href="#name-iu-propagation-example-2" class="selfRef">IU propagation example</a>
           </figcaption></figure>
 </div>
-<ol type="1" start="1" class="normal" id="section-6.5-4">
+<ol start="1" type="1" class="normal type-1" id="section-6.5-4">
           <li id="section-6.5-4.1">The consumer issues an interest before moving to a new location<a href="#section-6.5-4.1" class="pilcrow">¶</a>
 </li>
-          <li id="section-6.5-4.2">It detaches from the first Access Router AR1<a href="#section-6.5-4.2" class="pilcrow">¶</a>
+<li id="section-6.5-4.2">It detaches from the first Access Router AR1<a href="#section-6.5-4.2" class="pilcrow">¶</a>
 </li>
-          <li id="section-6.5-4.3">This causes the returning data packet to be lost as there is no more a valid
+<li id="section-6.5-4.3">This causes the returning data packet to be lost as there is no more a valid
 face towards the consumer.<a href="#section-6.5-4.3" class="pilcrow">¶</a>
 </li>
-          <li id="section-6.5-4.4">The consumer has finished attachment to the new access router AR2.<a href="#section-6.5-4.4" class="pilcrow">¶</a>
+<li id="section-6.5-4.4">The consumer has finished attachment to the new access router AR2.<a href="#section-6.5-4.4" class="pilcrow">¶</a>
 </li>
-          <li id="section-6.5-4.5">It can retransmit pending interests immediately.<a href="#section-6.5-4.5" class="pilcrow">¶</a>
+<li id="section-6.5-4.5">It can retransmit pending interests immediately.<a href="#section-6.5-4.5" class="pilcrow">¶</a>
 </li>
-          <li id="section-6.5-4.6">The interests will hit the cache at the first junction point between AR1 and
+<li id="section-6.5-4.6">The interests will hit the cache at the first junction point between AR1 and
 AR2 which have previously seen the data packet coming back.<a href="#section-6.5-4.6" class="pilcrow">¶</a>
 </li>
-        </ol>
+</ol>
 </section>
 </div>
 <div id="additional-reliability-through-consumer-multihoming">
 <section id="section-6.6">
         <h3 id="name-additional-reliability-thro">
-<a href="#section-6.6" class="section-number selfRef">6.6. </a><a href="#name-additional-reliability-thro" class="section-name selfRef">Additional reliability through consumer multihoming</a>
+<a href="#section-6.6" class="section-number selfRef">6.6. </a><a href="#name-additional-reliability-thro" class="section-name selfRef">Additional reliability through consumer multihoming</a>
         </h3>
 <p id="section-6.6-1">Because mobility is implemented at layer 3 and is thus agnostic to the physical
 layer, this allows a mobile consumer to seamlessly switch to a different access
@@ -1902,18 +1904,18 @@ transparently for the application.<a href="#section-6.6-2" class="pilcrow">¶</a
    |            |            |            |            |            |
 </pre>
 </div>
-<figcaption><a href="#figure-7">Figure 7</a></figcaption></figure>
+<figcaption><a href="#figure-7" class="selfRef">Figure 7</a></figcaption></figure>
 </div>
-<ol type="1" start="1" class="normal" id="section-6.6-4">
+<ol start="1" type="1" class="normal type-1" id="section-6.6-4">
           <li id="section-6.6-4.1">First interest is sent on the WiFi link.<a href="#section-6.6-4.1" class="pilcrow">¶</a>
 </li>
-          <li id="section-6.6-4.2">WiFi unavailability due to failure for instance.<a href="#section-6.6-4.2" class="pilcrow">¶</a>
+<li id="section-6.6-4.2">WiFi unavailability due to failure for instance.<a href="#section-6.6-4.2" class="pilcrow">¶</a>
 </li>
-          <li id="section-6.6-4.3">The application seamlessly switches to the LTE link.<a href="#section-6.6-4.3" class="pilcrow">¶</a>
+<li id="section-6.6-4.3">The application seamlessly switches to the LTE link.<a href="#section-6.6-4.3" class="pilcrow">¶</a>
 </li>
-          <li id="section-6.6-4.4">Upon recovery, the traffic can be brought back on the WiFi interface.<a href="#section-6.6-4.4" class="pilcrow">¶</a>
+<li id="section-6.6-4.4">Upon recovery, the traffic can be brought back on the WiFi interface.<a href="#section-6.6-4.4" class="pilcrow">¶</a>
 </li>
-        </ol>
+</ol>
 <p id="section-6.6-5">hICN handles consumer mobility from one access to the other (e.g.  WiFi to LTE
 or vice-versa) without any a-priori knowledge of the multiple networks to use as
 it is the case of MPTCP or QUIC approaches. Moving rate and congestion control
@@ -1937,7 +1939,7 @@ network access to the other.<a href="#section-6.6-8" class="pilcrow">¶</a></p>
 <div id="bandwidth-aggregation-with-consumer-multihoming">
 <section id="section-6.7">
         <h3 id="name-bandwidth-aggregation-with-">
-<a href="#section-6.7" class="section-number selfRef">6.7. </a><a href="#name-bandwidth-aggregation-with-" class="section-name selfRef">Bandwidth aggregation with consumer multihoming</a>
+<a href="#section-6.7" class="section-number selfRef">6.7. </a><a href="#name-bandwidth-aggregation-with-" class="section-name selfRef">Bandwidth aggregation with consumer multihoming</a>
         </h3>
 <p id="section-6.7-1">Bandwidth aggregation can be realized dynamically through a congestion-aware
 load-balancing forwarding strategy at the client, with no a priori knowledge of
@@ -1972,8 +1974,7 @@ axis have not been respected here for readability.<a href="#section-6.7-3" class
    |&lt;-----------|            |            |            |            |
    |            |            |            |            |            |
    |            |            |            |            |            |
-</pre>
-<a href="#section-6.7-4" class="pilcrow">¶</a>
+</pre><a href="#section-6.7-4" class="pilcrow">¶</a>
 </div>
 <p id="section-6.7-5">Fine grained control from the application allows fully exploiting available
 bandwidth, resulting in an aggregated throughput equal to the sum of access
@@ -1983,7 +1984,7 @@ throughputs, which is hard to achieve with existing solutions.<a href="#section-
 <div id="traffic-and-signalization-offload">
 <section id="section-6.8">
         <h3 id="name-traffic-and-signalization-o">
-<a href="#section-6.8" class="section-number selfRef">6.8. </a><a href="#name-traffic-and-signalization-o" class="section-name selfRef">Traffic and signalization offload</a>
+<a href="#section-6.8" class="section-number selfRef">6.8. </a><a href="#name-traffic-and-signalization-o" class="section-name selfRef">Traffic and signalization offload</a>
         </h3>
 <p id="section-6.8-1">As a natural consequence of its anchorless behavior, an hICN network can
 continue to operate in disconnected mode, for local mobility, even though no
@@ -2009,7 +2010,7 @@ on the link between the gateway (GW) and the Internet.<a href="#section-6.8-2" c
 +-----+      +-----+
 </pre>
 </div>
-<figcaption><a href="#figure-8">Figure 8</a>:
+<figcaption><a href="#figure-8" class="selfRef">Figure 8</a>:
 <a href="#name-access-network-disconnected" class="selfRef">Access network disconnected from core</a>
           </figcaption></figure>
 </div>
@@ -2048,7 +2049,7 @@ C         P         AR1        AR2        AR3         GW  X    Internet
 |         |          |          |          |          |   X         |
 </pre>
 </div>
-<figcaption><a href="#figure-9">Figure 9</a>:
+<figcaption><a href="#figure-9" class="selfRef">Figure 9</a>:
 <a href="#name-anchorless-mobility-in-netw" class="selfRef">Anchorless mobility in network disconnected from core</a>
           </figcaption></figure>
 </div>
@@ -2068,12 +2069,12 @@ and reliable network.<a href="#section-6.8-6" class="pilcrow">¶</a></p>
 <div id="implementation-considerations">
 <section id="section-7">
       <h2 id="name-implementation-consideratio">
-<a href="#section-7" class="section-number selfRef">7. </a><a href="#name-implementation-consideratio" class="section-name selfRef">Implementation considerations</a>
+<a href="#section-7" class="section-number selfRef">7. </a><a href="#name-implementation-consideratio" class="section-name selfRef">Implementation considerations</a>
       </h2>
 <div id="interaction-with-non-hicn-enabled-routers">
 <section id="section-7.1">
         <h3 id="name-interaction-with-non-hicn-e">
-<a href="#section-7.1" class="section-number selfRef">7.1. </a><a href="#name-interaction-with-non-hicn-e" class="section-name selfRef">Interaction with non-hICN enabled routers</a>
+<a href="#section-7.1" class="section-number selfRef">7.1. </a><a href="#name-interaction-with-non-hicn-e" class="section-name selfRef">Interaction with non-hICN enabled routers</a>
         </h3>
 <p id="section-7.1-1">The realization of the architecture in a partial hICN deployment where some
 routers are not extended to support hICN mechanisms requires either to introduce
@@ -2087,10 +2088,10 @@ as part of the payload; verification is deferred to the next hICN node which
 should send the packet backwards in case of verification failure to fix the
 incorrect path update.<a href="#section-7.1-3.1" class="pilcrow">¶</a>
 </li>
-          <li id="section-7.1-3.2">multipath is not supported in the pure-IP part of the network (which is
+<li id="section-7.1-3.2">multipath is not supported in the pure-IP part of the network (which is
 the expected behaviour)<a href="#section-7.1-3.2" class="pilcrow">¶</a>
 </li>
-        </ul>
+</ul>
 <p id="section-7.1-4">Identified concerns might be about the unexpected use of such protocols, the
 lack of available implementation for NDProxy, and security aspect related to
 redirect messages. The latter shares the fate of source routing, which has long
@@ -2103,7 +2104,7 @@ reconsidering such aspects.<a href="#section-7.1-4" class="pilcrow">¶</a></p>
 <div id="sec-security">
 <section id="section-7.2">
         <h3 id="name-security-considerations">
-<a href="#section-7.2" class="section-number selfRef">7.2. </a><a href="#name-security-considerations" class="section-name selfRef">Security considerations</a>
+<a href="#section-7.2" class="section-number selfRef">7.2. </a><a href="#name-security-considerations" class="section-name selfRef">Security considerations</a>
         </h3>
 <p id="section-7.2-1">As indicated in previous sections, signalization messages transmitted across
 trust boundaries must be secured. The choice of the solution will intimately
@@ -2119,7 +2120,7 @@ can be applied to MAP-Me and fits its design principles.<a href="#section-7.2-3"
 <div id="discussion">
 <section id="section-7.3">
         <h3 id="name-discussion">
-<a href="#section-7.3" class="section-number selfRef">7.3. </a><a href="#name-discussion" class="section-name selfRef">Discussion</a>
+<a href="#section-7.3" class="section-number selfRef">7.3. </a><a href="#name-discussion" class="section-name selfRef">Discussion</a>
         </h3>
 <p id="section-7.3-1">Both consumer and producer mobility support multiple paths, however the support
 of mobility for a multihomed producer, is left for future updates of the present
@@ -2133,144 +2134,117 @@ management of micro-mobility; its extension to multiple domains is out of scope.
 <div id="iana">
 <section id="section-8">
       <h2 id="name-iana-considerations">
-<a href="#section-8" class="section-number selfRef">8. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
+<a href="#section-8" class="section-number selfRef">8. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
       </h2>
 <p id="section-8-1">This memo includes no request to IANA.<a href="#section-8-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <section id="section-9">
       <h2 id="name-references">
-<a href="#section-9" class="section-number selfRef">9. </a><a href="#name-references" class="section-name selfRef">References</a>
+<a href="#section-9" class="section-number selfRef">9. </a><a href="#name-references" class="section-name selfRef">References</a>
       </h2>
 <section id="section-9.1">
         <h3 id="name-normative-references">
-<a href="#section-9.1" class="section-number selfRef">9.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+<a href="#section-9.1" class="section-number selfRef">9.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
         </h3>
 <dl class="references">
 <dt id="RFC3344">[RFC3344]</dt>
-        <dd>
-<span class="refAuthor">Perkins, C., Ed.</span>, <span class="refTitle">"IP Mobility Support for IPv4"</span>, <span class="seriesInfo">RFC 3344</span>, <span class="seriesInfo">DOI 10.17487/RFC3344</span>, <time datetime="2002-08">August 2002</time>
-          <span>, &lt;<a href="https://www.rfc-editor.org/info/rfc3344">https://www.rfc-editor.org/info/rfc3344</a>&gt;</span>. </dd>
+<dd>
+<span class="refAuthor">Perkins, C., Ed.</span>, <span class="refTitle">"IP Mobility Support for IPv4"</span>, <span class="seriesInfo">RFC 3344</span>, <span class="seriesInfo">DOI 10.17487/RFC3344</span>, <time datetime="2002-08">August 2002</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc3344">https://www.rfc-editor.org/info/rfc3344</a>&gt;</span>. </dd>
 <dt id="RFC3775">[RFC3775]</dt>
-        <dd>
-<span class="refAuthor">Johnson, D.</span><span class="refAuthor">, Perkins, C.</span><span class="refAuthor">, and J. Arkko</span>, <span class="refTitle">"Mobility Support in IPv6"</span>, <span class="seriesInfo">RFC 3775</span>, <span class="seriesInfo">DOI 10.17487/RFC3775</span>, <time datetime="2004-06">June 2004</time>
-            <span>, &lt;<a href="https://www.rfc-editor.org/info/rfc3775">https://www.rfc-editor.org/info/rfc3775</a>&gt;</span>. </dd>
+<dd>
+<span class="refAuthor">Johnson, D.</span><span class="refAuthor">, Perkins, C.</span><span class="refAuthor">, and J. Arkko</span>, <span class="refTitle">"Mobility Support in IPv6"</span>, <span class="seriesInfo">RFC 3775</span>, <span class="seriesInfo">DOI 10.17487/RFC3775</span>, <time datetime="2004-06">June 2004</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc3775">https://www.rfc-editor.org/info/rfc3775</a>&gt;</span>. </dd>
 <dt id="RFC3971">[RFC3971]</dt>
-        <dd>
-<span class="refAuthor">Arkko, J., Ed.</span><span class="refAuthor">, Kempf, J.</span><span class="refAuthor">, Zill, B.</span><span class="refAuthor">, and P. Nikander</span>, <span class="refTitle">"SEcure Neighbor Discovery (SEND)"</span>, <span class="seriesInfo">RFC 3971</span>, <span class="seriesInfo">DOI 10.17487/RFC3971</span>, <time datetime="2005-03">March 2005</time>
-            <span>, &lt;<a href="https://www.rfc-editor.org/info/rfc3971">https://www.rfc-editor.org/info/rfc3971</a>&gt;</span>. </dd>
+<dd>
+<span class="refAuthor">Arkko, J., Ed.</span><span class="refAuthor">, Kempf, J.</span><span class="refAuthor">, Zill, B.</span><span class="refAuthor">, and P. Nikander</span>, <span class="refTitle">"SEcure Neighbor Discovery (SEND)"</span>, <span class="seriesInfo">RFC 3971</span>, <span class="seriesInfo">DOI 10.17487/RFC3971</span>, <time datetime="2005-03">March 2005</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc3971">https://www.rfc-editor.org/info/rfc3971</a>&gt;</span>. </dd>
 <dt id="RFC4302">[RFC4302]</dt>
-        <dd>
-<span class="refAuthor">Kent, S.</span>, <span class="refTitle">"IP Authentication Header"</span>, <span class="seriesInfo">RFC 4302</span>, <span class="seriesInfo">DOI 10.17487/RFC4302</span>, <time datetime="2005-12">December 2005</time>
-            <span>, &lt;<a href="https://www.rfc-editor.org/info/rfc4302">https://www.rfc-editor.org/info/rfc4302</a>&gt;</span>. </dd>
+<dd>
+<span class="refAuthor">Kent, S.</span>, <span class="refTitle">"IP Authentication Header"</span>, <span class="seriesInfo">RFC 4302</span>, <span class="seriesInfo">DOI 10.17487/RFC4302</span>, <time datetime="2005-12">December 2005</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc4302">https://www.rfc-editor.org/info/rfc4302</a>&gt;</span>. </dd>
 <dt id="RFC4423">[RFC4423]</dt>
-        <dd>
-<span class="refAuthor">Moskowitz, R.</span><span class="refAuthor"> and P. Nikander</span>, <span class="refTitle">"Host Identity Protocol (HIP) Architecture"</span>, <span class="seriesInfo">RFC 4423</span>, <span class="seriesInfo">DOI 10.17487/RFC4423</span>, <time datetime="2006-05">May 2006</time>
-            <span>, &lt;<a href="https://www.rfc-editor.org/info/rfc4423">https://www.rfc-editor.org/info/rfc4423</a>&gt;</span>. </dd>
+<dd>
+<span class="refAuthor">Moskowitz, R.</span><span class="refAuthor"> and P. Nikander</span>, <span class="refTitle">"Host Identity Protocol (HIP) Architecture"</span>, <span class="seriesInfo">RFC 4423</span>, <span class="seriesInfo">DOI 10.17487/RFC4423</span>, <time datetime="2006-05">May 2006</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc4423">https://www.rfc-editor.org/info/rfc4423</a>&gt;</span>. </dd>
 <dt id="RFC5533">[RFC5533]</dt>
-        <dd>
-<span class="refAuthor">Nordmark, E.</span><span class="refAuthor"> and M. Bagnulo</span>, <span class="refTitle">"Shim6: Level 3 Multihoming Shim Protocol for IPv6"</span>, <span class="seriesInfo">RFC 5533</span>, <span class="seriesInfo">DOI 10.17487/RFC5533</span>, <time datetime="2009-06">June 2009</time>
-            <span>, &lt;<a href="https://www.rfc-editor.org/info/rfc5533">https://www.rfc-editor.org/info/rfc5533</a>&gt;</span>. </dd>
+<dd>
+<span class="refAuthor">Nordmark, E.</span><span class="refAuthor"> and M. Bagnulo</span>, <span class="refTitle">"Shim6: Level 3 Multihoming Shim Protocol for IPv6"</span>, <span class="seriesInfo">RFC 5533</span>, <span class="seriesInfo">DOI 10.17487/RFC5533</span>, <time datetime="2009-06">June 2009</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc5533">https://www.rfc-editor.org/info/rfc5533</a>&gt;</span>. </dd>
 <dt id="RFC5909">[RFC5909]</dt>
-        <dd>
-<span class="refAuthor">Combes, J-M.</span><span class="refAuthor">, Krishnan, S.</span><span class="refAuthor">, and G. Daley</span>, <span class="refTitle">"Securing Neighbor Discovery Proxy: Problem Statement"</span>, <span class="seriesInfo">RFC 5909</span>, <span class="seriesInfo">DOI 10.17487/RFC5909</span>, <time datetime="2010-07">July 2010</time>
-            <span>, &lt;<a href="https://www.rfc-editor.org/info/rfc5909">https://www.rfc-editor.org/info/rfc5909</a>&gt;</span>. </dd>
+<dd>
+<span class="refAuthor">Combes, J-M.</span><span class="refAuthor">, Krishnan, S.</span><span class="refAuthor">, and G. Daley</span>, <span class="refTitle">"Securing Neighbor Discovery Proxy: Problem Statement"</span>, <span class="seriesInfo">RFC 5909</span>, <span class="seriesInfo">DOI 10.17487/RFC5909</span>, <time datetime="2010-07">July 2010</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc5909">https://www.rfc-editor.org/info/rfc5909</a>&gt;</span>. </dd>
 <dt id="RFC6115">[RFC6115]</dt>
-        <dd>
-<span class="refAuthor">Li, T., Ed.</span>, <span class="refTitle">"Recommendation for a Routing Architecture"</span>, <span class="seriesInfo">RFC 6115</span>, <span class="seriesInfo">DOI 10.17487/RFC6115</span>, <time datetime="2011-02">February 2011</time>
-            <span>, &lt;<a href="https://www.rfc-editor.org/info/rfc6115">https://www.rfc-editor.org/info/rfc6115</a>&gt;</span>. </dd>
+<dd>
+<span class="refAuthor">Li, T., Ed.</span>, <span class="refTitle">"Recommendation for a Routing Architecture"</span>, <span class="seriesInfo">RFC 6115</span>, <span class="seriesInfo">DOI 10.17487/RFC6115</span>, <time datetime="2011-02">February 2011</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc6115">https://www.rfc-editor.org/info/rfc6115</a>&gt;</span>. </dd>
 <dt id="RFC6301">[RFC6301]</dt>
-        <dd>
-<span class="refAuthor">Zhu, Z.</span><span class="refAuthor">, Wakikawa, R.</span><span class="refAuthor">, and L. Zhang</span>, <span class="refTitle">"A Survey of Mobility Support in the Internet"</span>, <span class="seriesInfo">RFC 6301</span>, <span class="seriesInfo">DOI 10.17487/RFC6301</span>, <time datetime="2011-07">July 2011</time>
-            <span>, &lt;<a href="https://www.rfc-editor.org/info/rfc6301">https://www.rfc-editor.org/info/rfc6301</a>&gt;</span>. </dd>
+<dd>
+<span class="refAuthor">Zhu, Z.</span><span class="refAuthor">, Wakikawa, R.</span><span class="refAuthor">, and L. Zhang</span>, <span class="refTitle">"A Survey of Mobility Support in the Internet"</span>, <span class="seriesInfo">RFC 6301</span>, <span class="seriesInfo">DOI 10.17487/RFC6301</span>, <time datetime="2011-07">July 2011</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc6301">https://www.rfc-editor.org/info/rfc6301</a>&gt;</span>. </dd>
 <dt id="RFC6496">[RFC6496]</dt>
-        <dd>
-<span class="refAuthor">Krishnan, S.</span><span class="refAuthor">, Laganier, J.</span><span class="refAuthor">, Bonola, M.</span><span class="refAuthor">, and A. Garcia-Martinez</span>, <span class="refTitle">"Secure Proxy ND Support for SEcure Neighbor Discovery (SEND)"</span>, <span class="seriesInfo">RFC 6496</span>, <span class="seriesInfo">DOI 10.17487/RFC6496</span>, <time datetime="2012-02">February 2012</time>
-            <span>, &lt;<a href="https://www.rfc-editor.org/info/rfc6496">https://www.rfc-editor.org/info/rfc6496</a>&gt;</span>. </dd>
+<dd>
+<span class="refAuthor">Krishnan, S.</span><span class="refAuthor">, Laganier, J.</span><span class="refAuthor">, Bonola, M.</span><span class="refAuthor">, and A. Garcia-Martinez</span>, <span class="refTitle">"Secure Proxy ND Support for SEcure Neighbor Discovery (SEND)"</span>, <span class="seriesInfo">RFC 6496</span>, <span class="seriesInfo">DOI 10.17487/RFC6496</span>, <time datetime="2012-02">February 2012</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc6496">https://www.rfc-editor.org/info/rfc6496</a>&gt;</span>. </dd>
 <dt id="RFC6740">[RFC6740]</dt>
-        <dd>
-<span class="refAuthor">Atkinson, RJ.</span><span class="refAuthor"> and SN. Bhatti</span>, <span class="refTitle">"Identifier-Locator Network Protocol (ILNP) Architectural Description"</span>, <span class="seriesInfo">RFC 6740</span>, <span class="seriesInfo">DOI 10.17487/RFC6740</span>, <time datetime="2012-11">November 2012</time>
-            <span>, &lt;<a href="https://www.rfc-editor.org/info/rfc6740">https://www.rfc-editor.org/info/rfc6740</a>&gt;</span>. </dd>
+<dd>
+<span class="refAuthor">Atkinson, RJ.</span><span class="refAuthor"> and SN. Bhatti</span>, <span class="refTitle">"Identifier-Locator Network Protocol (ILNP) Architectural Description"</span>, <span class="seriesInfo">RFC 6740</span>, <span class="seriesInfo">DOI 10.17487/RFC6740</span>, <time datetime="2012-11">November 2012</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc6740">https://www.rfc-editor.org/info/rfc6740</a>&gt;</span>. </dd>
 <dt id="RFC6830">[RFC6830]</dt>
-        <dd>
-<span class="refAuthor">Farinacci, D.</span><span class="refAuthor">, Fuller, V.</span><span class="refAuthor">, Meyer, D.</span><span class="refAuthor">, and D. Lewis</span>, <span class="refTitle">"The Locator/ID Separation Protocol (LISP)"</span>, <span class="seriesInfo">RFC 6830</span>, <span class="seriesInfo">DOI 10.17487/RFC6830</span>, <time datetime="2013-01">January 2013</time>
-            <span>, &lt;<a href="https://www.rfc-editor.org/info/rfc6830">https://www.rfc-editor.org/info/rfc6830</a>&gt;</span>. </dd>
+<dd>
+<span class="refAuthor">Farinacci, D.</span><span class="refAuthor">, Fuller, V.</span><span class="refAuthor">, Meyer, D.</span><span class="refAuthor">, and D. Lewis</span>, <span class="refTitle">"The Locator/ID Separation Protocol (LISP)"</span>, <span class="seriesInfo">RFC 6830</span>, <span class="seriesInfo">DOI 10.17487/RFC6830</span>, <time datetime="2013-01">January 2013</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc6830">https://www.rfc-editor.org/info/rfc6830</a>&gt;</span>. </dd>
 <dt id="RFC7476">[RFC7476]</dt>
-      <dd>
-<span class="refAuthor">Pentikousis, K., Ed.</span><span class="refAuthor">, Ohlman, B.</span><span class="refAuthor">, Corujo, D.</span><span class="refAuthor">, Boggia, G.</span><span class="refAuthor">, Tyson, G.</span><span class="refAuthor">, Davies, E.</span><span class="refAuthor">, Molinaro, A.</span><span class="refAuthor">, and S. Eum</span>, <span class="refTitle">"Information-Centric Networking: Baseline Scenarios"</span>, <span class="seriesInfo">RFC 7476</span>, <span class="seriesInfo">DOI 10.17487/RFC7476</span>, <time datetime="2015-03">March 2015</time>
-            <span>, &lt;<a href="https://www.rfc-editor.org/info/rfc7476">https://www.rfc-editor.org/info/rfc7476</a>&gt;</span>. </dd>
+<dd>
+<span class="refAuthor">Pentikousis, K., Ed.</span><span class="refAuthor">, Ohlman, B.</span><span class="refAuthor">, Corujo, D.</span><span class="refAuthor">, Boggia, G.</span><span class="refAuthor">, Tyson, G.</span><span class="refAuthor">, Davies, E.</span><span class="refAuthor">, Molinaro, A.</span><span class="refAuthor">, and S. Eum</span>, <span class="refTitle">"Information-Centric Networking: Baseline Scenarios"</span>, <span class="seriesInfo">RFC 7476</span>, <span class="seriesInfo">DOI 10.17487/RFC7476</span>, <time datetime="2015-03">March 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc7476">https://www.rfc-editor.org/info/rfc7476</a>&gt;</span>. </dd>
 </dl>
 </section>
 <section id="section-9.2">
         <h3 id="name-informative-references">
-<a href="#section-9.2" class="section-number selfRef">9.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
+<a href="#section-9.2" class="section-number selfRef">9.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
         </h3>
 <dl class="references">
 <dt id="DATAPLANE">[DATAPLANE]</dt>
-        <dd>
+<dd>
 <span class="refAuthor">J, .</span><span class="refAuthor">, A, .</span><span class="refAuthor">, A, .</span><span class="refAuthor">, B, .</span><span class="refAuthor">, M, .</span><span class="refAuthor">, and . S</span>, <span class="refTitle">"Ensuring connectivity via data plane mechanisms."</span>, <time datetime="2013">2013</time>. </dd>
 <dt id="I-D.auge-dmm-hicn-mobility-deployment-options">[I-D.auge-dmm-hicn-mobility-deployment-options]</dt>
-        <dd>
-<span class="refAuthor">Auge, J.</span><span class="refAuthor">, Carofiglio, G.</span><span class="refAuthor">, Muscariello, L.</span><span class="refAuthor">, and M. Papalini</span>, <span class="refTitle">"Anchorless mobility management through hICN (hICN-AMM): Deployment options"</span>, <span class="seriesInfo">Internet-Draft draft-auge-dmm-hicn-mobility-deployment-options-03</span>, <time datetime="2020-01-06">6 January 2020</time>
-            <span>, &lt;<a href="http://www.ietf.org/internet-drafts/draft-auge-dmm-hicn-mobility-deployment-options-03.txt">http://www.ietf.org/internet-drafts/draft-auge-dmm-hicn-mobility-deployment-options-03.txt</a>&gt;</span>. </dd>
+<dd>
+<span class="refAuthor">Auge, J.</span><span class="refAuthor">, Carofiglio, G.</span><span class="refAuthor">, Muscariello, L.</span><span class="refAuthor">, and M. Papalini</span>, <span class="refTitle">"Anchorless mobility management through hICN (hICN-AMM): Deployment options"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-auge-dmm-hicn-mobility-deployment-options-03</span>, <time datetime="2020-01-06">6 January 2020</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-auge-dmm-hicn-mobility-deployment-options-03.txt">http://www.ietf.org/internet-drafts/draft-auge-dmm-hicn-mobility-deployment-options-03.txt</a>&gt;</span>. </dd>
 <dt id="I-D.herbert-intarea-ila">[I-D.herbert-intarea-ila]</dt>
-        <dd>
-<span class="refAuthor">Herbert, T.</span><span class="refAuthor"> and P. Lapukhov</span>, <span class="refTitle">"Identifier-locator addressing for IPv6"</span>, <span class="seriesInfo">Internet-Draft draft-herbert-intarea-ila-01</span>, <time datetime="2018-03-05">5 March 2018</time>
-            <span>, &lt;<a href="http://www.ietf.org/internet-drafts/draft-herbert-intarea-ila-01.txt">http://www.ietf.org/internet-drafts/draft-herbert-intarea-ila-01.txt</a>&gt;</span>. </dd>
+<dd>
+<span class="refAuthor">Herbert, T.</span><span class="refAuthor"> and P. Lapukhov</span>, <span class="refTitle">"Identifier-locator addressing for IPv6"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-herbert-intarea-ila-01</span>, <time datetime="2018-03-05">5 March 2018</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-herbert-intarea-ila-01.txt">http://www.ietf.org/internet-drafts/draft-herbert-intarea-ila-01.txt</a>&gt;</span>. </dd>
 <dt id="I-D.irtf-icnrg-mapme">[I-D.irtf-icnrg-mapme]</dt>
-        <dd>
-<span class="refAuthor">Auge, J.</span><span class="refAuthor">, Carofiglio, G.</span><span class="refAuthor">, Muscariello, L.</span><span class="refAuthor">, and M. Papalini</span>, <span class="refTitle">"MAP-Me : Managing Anchorless Mobility in Content Centric Networking"</span>, <span class="seriesInfo">Internet-Draft draft-irtf-icnrg-mapme-04</span>, <time datetime="2019-11-03">3 November 2019</time>
-            <span>, &lt;<a href="http://www.ietf.org/internet-drafts/draft-irtf-icnrg-mapme-04.txt">http://www.ietf.org/internet-drafts/draft-irtf-icnrg-mapme-04.txt</a>&gt;</span>. </dd>
+<dd>
+<span class="refAuthor">Auge, J.</span><span class="refAuthor">, Carofiglio, G.</span><span class="refAuthor">, Muscariello, L.</span><span class="refAuthor">, and M. Papalini</span>, <span class="refTitle">"MAP-Me : Managing Anchorless Mobility in Content Centric Networking"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-irtf-icnrg-mapme-04</span>, <time datetime="2019-11-03">3 November 2019</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-irtf-icnrg-mapme-04.txt">http://www.ietf.org/internet-drafts/draft-irtf-icnrg-mapme-04.txt</a>&gt;</span>. </dd>
 <dt id="I-D.irtf-icnrg-terminology">[I-D.irtf-icnrg-terminology]</dt>
-        <dd>
-<span class="refAuthor">Wissingh, B.</span><span class="refAuthor">, Wood, C.</span><span class="refAuthor">, Afanasyev, A.</span><span class="refAuthor">, Zhang, L.</span><span class="refAuthor">, Oran, D.</span><span class="refAuthor">, and C. Tschudin</span>, <span class="refTitle">"Information-Centric Networking (ICN): CCNx and NDN Terminology"</span>, <span class="seriesInfo">Internet-Draft draft-irtf-icnrg-terminology-08</span>, <time datetime="2020-01-17">17 January 2020</time>
-            <span>, &lt;<a href="http://www.ietf.org/internet-drafts/draft-irtf-icnrg-terminology-08.txt">http://www.ietf.org/internet-drafts/draft-irtf-icnrg-terminology-08.txt</a>&gt;</span>. </dd>
+<dd>
+<span class="refAuthor">Wissingh, B.</span><span class="refAuthor">, Wood, C.</span><span class="refAuthor">, Afanasyev, A.</span><span class="refAuthor">, Zhang, L.</span><span class="refAuthor">, Oran, D.</span><span class="refAuthor">, and C. Tschudin</span>, <span class="refTitle">"Information-Centric Networking (ICN): CCNx and NDN Terminology"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-irtf-icnrg-terminology-08</span>, <time datetime="2020-01-17">17 January 2020</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-irtf-icnrg-terminology-08.txt">http://www.ietf.org/internet-drafts/draft-irtf-icnrg-terminology-08.txt</a>&gt;</span>. </dd>
 <dt id="I-D.muscariello-intarea-hicn">[I-D.muscariello-intarea-hicn]</dt>
-        <dd>
-<span class="refAuthor">Muscariello, L.</span><span class="refAuthor">, Carofiglio, G.</span><span class="refAuthor">, Auge, J.</span><span class="refAuthor">, and M. Papalini</span>, <span class="refTitle">"Hybrid Information-Centric Networking"</span>, <span class="seriesInfo">Internet-Draft draft-muscariello-intarea-hicn-03</span>, <time datetime="2019-10-30">30 October 2019</time>
-            <span>, &lt;<a href="http://www.ietf.org/internet-drafts/draft-muscariello-intarea-hicn-03.txt">http://www.ietf.org/internet-drafts/draft-muscariello-intarea-hicn-03.txt</a>&gt;</span>. </dd>
+<dd>
+<span class="refAuthor">Muscariello, L.</span><span class="refAuthor">, Carofiglio, G.</span><span class="refAuthor">, Auge, J.</span><span class="refAuthor">, and M. Papalini</span>, <span class="refTitle">"Hybrid Information-Centric Networking"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-muscariello-intarea-hicn-03</span>, <time datetime="2019-10-30">30 October 2019</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-muscariello-intarea-hicn-03.txt">http://www.ietf.org/internet-drafts/draft-muscariello-intarea-hicn-03.txt</a>&gt;</span>. </dd>
 <dt id="I-D.vonhugo-5gangip-ip-issues">[I-D.vonhugo-5gangip-ip-issues]</dt>
-        <dd>
-<span class="refAuthor">Hugo, D.</span><span class="refAuthor"> and B. Sarikaya</span>, <span class="refTitle">"Review on issues in discussion of next generation converged networks (5G) from an IP point of view"</span>, <span class="seriesInfo">Internet-Draft draft-vonhugo-5gangip-ip-issues-03</span>, <time datetime="2017-03-13">13 March 2017</time>
-            <span>, &lt;<a href="http://www.ietf.org/internet-drafts/draft-vonhugo-5gangip-ip-issues-03.txt">http://www.ietf.org/internet-drafts/draft-vonhugo-5gangip-ip-issues-03.txt</a>&gt;</span>. </dd>
+<dd>
+<span class="refAuthor">Hugo, D.</span><span class="refAuthor"> and B. Sarikaya</span>, <span class="refTitle">"Review on issues in discussion of next generation converged networks (5G) from an IP point of view"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-vonhugo-5gangip-ip-issues-03</span>, <time datetime="2017-03-13">13 March 2017</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-vonhugo-5gangip-ip-issues-03.txt">http://www.ietf.org/internet-drafts/draft-vonhugo-5gangip-ip-issues-03.txt</a>&gt;</span>. </dd>
 <dt id="KITE">[KITE]</dt>
-        <dd>
-<span class="refAuthor">Zhang, Y.</span><span class="refAuthor">, Zhang, H.</span><span class="refAuthor">, and L. Zhang</span>, <span class="refTitle">"Kite"</span>, <span class="seriesInfo">DOI 10.1145/2660129.2660159</span>, <span class="seriesInfo">Proceedings of the 1st international conference on Information-centric networking - INC '14</span>, <time datetime="2014">2014</time>
-          <span>, &lt;<a href="https://doi.org/10.1145/2660129.2660159">https://doi.org/10.1145/2660129.2660159</a>&gt;</span>. </dd>
+<dd>
+<span class="refAuthor">Zhang, Y.</span><span class="refAuthor">, Zhang, H.</span><span class="refAuthor">, and L. Zhang</span>, <span class="refTitle">"Kite"</span>, <span class="seriesInfo">DOI 10.1145/2660129.2660159</span>, <span class="seriesInfo">Proceedings of the 1st international conference on Information-centric networking - INC '14</span>, <time datetime="2014">2014</time>, <span>&lt;<a href="https://doi.org/10.1145/2660129.2660159">https://doi.org/10.1145/2660129.2660159</a>&gt;</span>. </dd>
 <dt id="MAPME">[MAPME]</dt>
-        <dd>
-<span class="refAuthor">Auge, J.</span><span class="refAuthor">, Carofiglio, G.</span><span class="refAuthor">, Grassi, G.</span><span class="refAuthor">, Muscariello, L.</span><span class="refAuthor">, Pau, G.</span><span class="refAuthor">, and X. Zeng</span>, <span class="refTitle">"MAP-Me: Managing Anchor-Less Producer Mobility in Content-Centric Networks"</span>, <span class="seriesInfo">DOI 10.1109/tnsm.2018.2796720</span>, <span class="seriesInfo">IEEE Transactions on Network and Service Management Vol. 15, pp. 596-610</span>, <time datetime="2018-06">June 2018</time>
-          <span>, &lt;<a href="https://doi.org/10.1109/tnsm.2018.2796720">https://doi.org/10.1109/tnsm.2018.2796720</a>&gt;</span>. </dd>
+<dd>
+<span class="refAuthor">Auge, J.</span><span class="refAuthor">, Carofiglio, G.</span><span class="refAuthor">, Grassi, G.</span><span class="refAuthor">, Muscariello, L.</span><span class="refAuthor">, Pau, G.</span><span class="refAuthor">, and X. Zeng</span>, <span class="refTitle">"MAP-Me: Managing Anchor-Less Producer Mobility in Content-Centric Networks"</span>, <span class="seriesInfo">DOI 10.1109/tnsm.2018.2796720</span>, <span class="seriesInfo">IEEE Transactions on Network and Service Management Vol. 15, pp. 596-610</span>, <time datetime="2018-06">June 2018</time>, <span>&lt;<a href="https://doi.org/10.1109/tnsm.2018.2796720">https://doi.org/10.1109/tnsm.2018.2796720</a>&gt;</span>. </dd>
 <dt id="ravindran20175g">[ravindran20175g]</dt>
-        <dd>
-<span class="refAuthor">Ravindran, R.</span><span class="refAuthor">, Chakraborti, A.</span><span class="refAuthor">, Amin, S.</span><span class="refAuthor">, Azgin, A.</span><span class="refAuthor">, and G. Wang</span>, <span class="refTitle">"5G-ICN: Delivering ICN Services over 5G Using Network Slicing"</span>, <span class="seriesInfo">DOI 10.1109/mcom.2017.1600938</span>, <span class="seriesInfo">IEEE Communications Magazine Vol. 55, pp. 101-107</span>, <time datetime="2017-05">May 2017</time>
-          <span>, &lt;<a href="https://doi.org/10.1109/mcom.2017.1600938">https://doi.org/10.1109/mcom.2017.1600938</a>&gt;</span>. </dd>
+<dd>
+<span class="refAuthor">Ravindran, R.</span><span class="refAuthor">, Chakraborti, A.</span><span class="refAuthor">, Amin, S.</span><span class="refAuthor">, Azgin, A.</span><span class="refAuthor">, and G. Wang</span>, <span class="refTitle">"5G-ICN: Delivering ICN Services over 5G Using Network Slicing"</span>, <span class="seriesInfo">DOI 10.1109/mcom.2017.1600938</span>, <span class="seriesInfo">IEEE Communications Magazine Vol. 55, pp. 101-107</span>, <time datetime="2017-05">May 2017</time>, <span>&lt;<a href="https://doi.org/10.1109/mcom.2017.1600938">https://doi.org/10.1109/mcom.2017.1600938</a>&gt;</span>. </dd>
 <dt id="SEC">[SEC]</dt>
-        <dd>
-<span class="refAuthor">Compagno, A.</span><span class="refAuthor">, Zeng, X.</span><span class="refAuthor">, Muscariello, L.</span><span class="refAuthor">, Carofiglio, G.</span><span class="refAuthor">, and J. Augé</span>, <span class="refTitle">"Secure producer mobility in information-centric network"</span>, <span class="seriesInfo">DOI 10.1145/3125719.3125725</span>, <span class="seriesInfo">Proceedings of the 4th ACM Conference on Information-Centric Networking - ICN '17</span>, <time datetime="2017">2017</time>
-          <span>, &lt;<a href="https://doi.org/10.1145/3125719.3125725">https://doi.org/10.1145/3125719.3125725</a>&gt;</span>. </dd>
+<dd>
+<span class="refAuthor">Compagno, A.</span><span class="refAuthor">, Zeng, X.</span><span class="refAuthor">, Muscariello, L.</span><span class="refAuthor">, Carofiglio, G.</span><span class="refAuthor">, and J. Augé</span>, <span class="refTitle">"Secure producer mobility in information-centric network"</span>, <span class="seriesInfo">DOI 10.1145/3125719.3125725</span>, <span class="seriesInfo">Proceedings of the 4th ACM Conference on Information-Centric Networking - ICN '17</span>, <time datetime="2017">2017</time>, <span>&lt;<a href="https://doi.org/10.1145/3125719.3125725">https://doi.org/10.1145/3125719.3125725</a>&gt;</span>. </dd>
 <dt id="SURVEY1">[SURVEY1]</dt>
-        <dd>
-<span class="refAuthor">Zhang, Y.</span><span class="refAuthor">, Afanasyev, A.</span><span class="refAuthor">, Burke, J.</span><span class="refAuthor">, and L. Zhang</span>, <span class="refTitle">"A survey of mobility support in Named Data Networking"</span>, <span class="seriesInfo">DOI 10.1109/infcomw.2016.7562050</span>, <span class="seriesInfo">2016 IEEE Conference on Computer Communications Workshops (INFOCOM WKSHPS)</span>, <time datetime="2016-04">April 2016</time>
-          <span>, &lt;<a href="https://doi.org/10.1109/infcomw.2016.7562050">https://doi.org/10.1109/infcomw.2016.7562050</a>&gt;</span>. </dd>
+<dd>
+<span class="refAuthor">Zhang, Y.</span><span class="refAuthor">, Afanasyev, A.</span><span class="refAuthor">, Burke, J.</span><span class="refAuthor">, and L. Zhang</span>, <span class="refTitle">"A survey of mobility support in Named Data Networking"</span>, <span class="seriesInfo">DOI 10.1109/infcomw.2016.7562050</span>, <span class="seriesInfo">2016 IEEE Conference on Computer Communications Workshops (INFOCOM WKSHPS)</span>, <time datetime="2016-04">April 2016</time>, <span>&lt;<a href="https://doi.org/10.1109/infcomw.2016.7562050">https://doi.org/10.1109/infcomw.2016.7562050</a>&gt;</span>. </dd>
 <dt id="SURVEY2">[SURVEY2]</dt>
-        <dd>
-<span class="refAuthor">Feng, B.</span><span class="refAuthor">, Zhou, H.</span><span class="refAuthor">, and Q. Xu</span>, <span class="refTitle">"Mobility support in Named Data Networking: a survey"</span>, <span class="seriesInfo">DOI 10.1186/s13638-016-0715-0</span>, <span class="seriesInfo">EURASIP Journal on Wireless Communications and Networking Vol. 2016</span>, <time datetime="2016-09">September 2016</time>
-          <span>, &lt;<a href="https://doi.org/10.1186/s13638-016-0715-0">https://doi.org/10.1186/s13638-016-0715-0</a>&gt;</span>. </dd>
+<dd>
+<span class="refAuthor">Feng, B.</span><span class="refAuthor">, Zhou, H.</span><span class="refAuthor">, and Q. Xu</span>, <span class="refTitle">"Mobility support in Named Data Networking: a survey"</span>, <span class="seriesInfo">DOI 10.1186/s13638-016-0715-0</span>, <span class="seriesInfo">EURASIP Journal on Wireless Communications and Networking Vol. 2016</span>, <time datetime="2016-09">September 2016</time>, <span>&lt;<a href="https://doi.org/10.1186/s13638-016-0715-0">https://doi.org/10.1186/s13638-016-0715-0</a>&gt;</span>. </dd>
 <dt id="SURVEYCC">[SURVEYCC]</dt>
-        <dd>
-<span class="refAuthor">Ren, Y.</span><span class="refAuthor">, Li, J.</span><span class="refAuthor">, Shi, S.</span><span class="refAuthor">, Li, L.</span><span class="refAuthor">, Wang, G.</span><span class="refAuthor">, and B. Zhang</span>, <span class="refTitle">"Congestion control in named data networking – A survey"</span>, <span class="seriesInfo">DOI 10.1016/j.comcom.2016.04.017</span>, <span class="seriesInfo">Computer Communications Vol. 86, pp. 1-11</span>, <time datetime="2016-07">July 2016</time>
-          <span>, &lt;<a href="https://doi.org/10.1016/j.comcom.2016.04.017">https://doi.org/10.1016/j.comcom.2016.04.017</a>&gt;</span>. </dd>
+<dd>
+<span class="refAuthor">Ren, Y.</span><span class="refAuthor">, Li, J.</span><span class="refAuthor">, Shi, S.</span><span class="refAuthor">, Li, L.</span><span class="refAuthor">, Wang, G.</span><span class="refAuthor">, and B. Zhang</span>, <span class="refTitle">"Congestion control in named data networking - A survey"</span>, <span class="seriesInfo">DOI 10.1016/j.comcom.2016.04.017</span>, <span class="seriesInfo">Computer Communications Vol. 86, pp. 1-11</span>, <time datetime="2016-07">July 2016</time>, <span>&lt;<a href="https://doi.org/10.1016/j.comcom.2016.04.017">https://doi.org/10.1016/j.comcom.2016.04.017</a>&gt;</span>. </dd>
 <dt id="SURVEYICN">[SURVEYICN]</dt>
-        <dd>
-<span class="refAuthor">Tyson, G.</span><span class="refAuthor">, Sastry, N.</span><span class="refAuthor">, Rimac, I.</span><span class="refAuthor">, Cuevas, R.</span><span class="refAuthor">, and A. Mauthe</span>, <span class="refTitle">"A survey of mobility in information-centric networks"</span>, <span class="seriesInfo">DOI 10.1145/2248361.2248363</span>, <span class="seriesInfo">Proceedings of the 1st ACM workshop on Emerging Name-Oriented Mobile Networking Design - Architecture, Algorithms, and Applications - NoM '12</span>, <time datetime="2012">2012</time>
-          <span>, &lt;<a href="https://doi.org/10.1145/2248361.2248363">https://doi.org/10.1145/2248361.2248363</a>&gt;</span>. </dd>
+<dd>
+<span class="refAuthor">Tyson, G.</span><span class="refAuthor">, Sastry, N.</span><span class="refAuthor">, Rimac, I.</span><span class="refAuthor">, Cuevas, R.</span><span class="refAuthor">, and A. Mauthe</span>, <span class="refTitle">"A survey of mobility in information-centric networks"</span>, <span class="seriesInfo">DOI 10.1145/2248361.2248363</span>, <span class="seriesInfo">Proceedings of the 1st ACM workshop on Emerging Name-Oriented Mobile Networking Design - Architecture, Algorithms, and Applications - NoM '12</span>, <time datetime="2012">2012</time>, <span>&lt;<a href="https://doi.org/10.1145/2248361.2248363">https://doi.org/10.1145/2248361.2248363</a>&gt;</span>. </dd>
 <dt id="TS23.501">[TS23.501]</dt>
-        <dd>
-<span class="refAuthor"></span>, <span class="refTitle">"Technical Specification Group Services and System Aspects; System Architecture for the 5G System (Rel.15)"</span>, <time datetime="2020-03">March 2020</time>. </dd>
+<dd>
+<span class="refTitle">"Technical Specification Group Services and System Aspects; System Architecture for the 5G System (Rel.15)"</span>, <time datetime="n.d.">n.d.</time>. </dd>
 <dt id="TS29.274">[TS29.274]</dt>
-      <dd>
-<span class="refAuthor"></span>, <span class="refTitle">"3GPP Evolved Packet System (EPS); Evolved General Packet Radio Service (GPRS) Tunnelling Protocol for Control plane (GTPv2-C); Stage 3"</span>, <time datetime="2020-03">March 2020</time>. </dd>
+<dd>
+<span class="refTitle">"3GPP Evolved Packet System (EPS); Evolved General Packet Radio Service (GPRS) Tunnelling Protocol for Control plane (GTPv2-C); Stage 3"</span>, <time datetime="n.d.">n.d.</time>. </dd>
 </dl>
 </section>
 </section>
@@ -2280,8 +2254,8 @@ management of micro-mobility; its extension to multiple domains is out of scope.
 <a href="#name-authors-addresses" class="section-name selfRef">Authors' Addresses</a>
       </h2>
 <address class="vcard">
-        <div dir="auto" class="left"><span class="org">Cisco Systems</span></div>
-<div dir="auto" class="left"><span class="fn nameRole">Jordan Augé</span></div>
+        <div dir="auto" class="left"><span class="fn nameRole">Jordan Augé</span></div>
+<div dir="auto" class="left"><span class="org">Cisco Systems</span></div>
 <div dir="auto" class="left"><span class="street-address">11, rue Camille Desmoulins</span></div>
 <div dir="auto" class="left">
 <span class="postal-code">92130</span> <span class="locality">Issy-les-Moulineaux</span>
@@ -2293,8 +2267,8 @@ management of micro-mobility; its extension to multiple domains is out of scope.
 </div>
 </address>
 <address class="vcard">
-        <div dir="auto" class="left"><span class="org">Cisco Systems</span></div>
-<div dir="auto" class="left"><span class="fn nameRole">Giovanna Carofiglio</span></div>
+        <div dir="auto" class="left"><span class="fn nameRole">Giovanna Carofiglio</span></div>
+<div dir="auto" class="left"><span class="org">Cisco Systems</span></div>
 <div dir="auto" class="left"><span class="street-address">11, rue Camille Desmoulins</span></div>
 <div dir="auto" class="left">
 <span class="postal-code">92130</span> <span class="locality">Issy-les-Moulineaux</span>
@@ -2306,8 +2280,8 @@ management of micro-mobility; its extension to multiple domains is out of scope.
 </div>
 </address>
 <address class="vcard">
-        <div dir="auto" class="left"><span class="org">Cisco Systems</span></div>
-<div dir="auto" class="left"><span class="fn nameRole">Luca Muscariello</span></div>
+        <div dir="auto" class="left"><span class="fn nameRole">Luca Muscariello</span></div>
+<div dir="auto" class="left"><span class="org">Cisco Systems</span></div>
 <div dir="auto" class="left"><span class="street-address">11, rue Camille Desmoulins</span></div>
 <div dir="auto" class="left">
 <span class="postal-code">92130</span> <span class="locality">Issy-les-Moulineaux</span>
@@ -2319,8 +2293,8 @@ management of micro-mobility; its extension to multiple domains is out of scope.
 </div>
 </address>
 <address class="vcard">
-        <div dir="auto" class="left"><span class="org">Cisco Systems</span></div>
-<div dir="auto" class="left"><span class="fn nameRole">Michele Papalini</span></div>
+        <div dir="auto" class="left"><span class="fn nameRole">Michele Papalini</span></div>
+<div dir="auto" class="left"><span class="org">Cisco Systems</span></div>
 <div dir="auto" class="left"><span class="street-address">11, rue Camille Desmoulins</span></div>
 <div dir="auto" class="left">
 <span class="postal-code">92130</span> <span class="locality">Issy-les-Moulineaux</span>
@@ -2333,802 +2307,13 @@ management of micro-mobility; its extension to multiple domains is out of scope.
 </address>
 </section>
 </div>
-<script>@import url('https://martinthomson.github.io/i-d-template/fonts.css');
-
-html {
-  --background-color: #fff;
-  --text-color: #222;
-  --title-color: #191919;
-  --link-color: #2a6496;
-  --highlight-color: #f9f9f9;
-  --line-color: #eee;
-  --small-font-size: 14.5px;
-}
-body {
-  max-width: 624px;
-  margin: 75px auto;
-  padding: 0 5px;
-  color: var(--text-color);
-  background-color: var(--background-color);
-  font: 16px/22px "Lora", serif;
-  scroll-behavior: smooth;
-}
-
-.ears {
-  display: none;
-}
-
-/* headings */
-#title, h1, h2, h3, h4, h5, h6 {
-  font-family: "Cabin Condensed", sans-serif;
-  font-weight: 600;
-  margin: 0.8em 0 0.3em;
-  font-size-adjust: 0.5;
-  color: var(--title-color);
-}
-#title {
-  padding: 1em 0 0.2em;
-  font-size: 32px;
-  line-height: 40px;
-  clear: both;
-}
-h1, h2, h3 {
-  font-size: 22px;
-  line-height: 26px;
-}
-h4, h5, h6 {
-  font-size: 18px;
-  line-height: 22px;
-}
-
-/* general structure */
-.author {
-  padding-bottom: 0.3em;
-}
-#abstract+p, #abstract+p code, #abstract+p samp, #abstract+p tt {
-  font-size: 18px;
-  line-height: 24px;
-}
-p {
-  padding: 0;
-  margin: 0.5em 0;
-  text-align: left;
-}
-div, span {
-  position: relative;
-}
-div {
-  margin: 0;
-}
-.alignRight.art-text {
-  background-color: var(--highlight-color);
-  border: 1px solid var(--line-color);
-  border-radius: 3px;
-  padding: 0.5em 1em 0;
-  margin-bottom: 0.5em;
-}
-.alignRight.art-text pre {
-  padding: 0;
-  width: auto;
-}
-.alignRight {
-  margin: 1em 0;
-}
-.alignRight > *:first-child {
-  border: none;
-  margin: 0;
-  float: right;
-  clear: both;
-}
-.alignRight > *:nth-child(2) {
-  clear: both;
-  display: block;
-  border: none;
-}
-svg {
-  display: block;
-}
-.alignCenter.art-text {
-  background-color: var(--highlight-color);
-  border: 1px solid var(--line-color);
-  border-radius: 3px;
-  padding: 0.5em 1em 0;
-  margin-bottom: 0.5em;
-}
-.alignCenter.art-text pre {
-  padding: 0;
-  width: auto;
-}
-.alignCenter {
-  margin: 1em 0;
-}
-.alignCenter > *:first-child {
-  border: none;
-  /* this isn't optimal, but it's an existence proof.  PrinceXML doesn't
-     support flexbox yet.
-  */
-  display: table;
-  margin: 0 auto;
-}
-
-/* lists */
-ol, ul {
-  padding: 0;
-  margin: 0 0 1em 2em;
-}
-ol ol, ul ul, ol ul, ul ol {
-  margin-left: 1em;
-}
-li {
-  margin: 0 0 0.25em 0;
-}
-.ulCompact li {
-  margin: 0;
-}
-ul.empty, .ulEmpty {
-  list-style-type: none;
-}
-ul.empty li, .ulEmpty li {
-  margin-top: 0.5em;
-}
-ul.compact, .ulCompact,
-ol.compact, .olCompact {
-  line-height: 100%;
-  margin: 0 0 0 2em;
-}
-
-/* definition lists */
-dl {
-}
-dl > dt {
-  float: left;
-  margin-right: 1em;
-}
-dl > dd {
-  margin-bottom: .8em;
-  min-height: 1.3em;
-}
-dl.compact > dd, .dlCompact > dd {
-  margin-bottom: 0em;
-}
-dl > dd > dl {
-  margin-top: 0.5em;
-  margin-bottom: 0em;
-}
-
-/* links */
-a, a[href].selfRef:hover {
-  text-decoration: none;
-}
-a[href].selfRef {
-  color: var(--text-color);
-}
-a[href] {
-  color: var(--link-color);
-}
-a[href]:hover {
-  text-decoration: underline;
-}
-a[href].selfRef:hover {
-  background-color: var(--highlight-color);
-}
-
-/* Figures */
-tt, code, pre {
-  background-color: var(--highlight-color);
-  font: 14px/22px 'Oxygen Mono', monospace;
-}
-pre {
-  border: 1px solid var(--line-color);
-  line-height: 17px;
-  margin: 5px;
-  padding: 5px;
-}
-img {
-  max-width: 100%;
-}
-figure {
-  margin: 0.5em 0;
-}
-figure blockquote {
-  margin: 0.8em 0.4em 0.4em;
-}
-figcaption, caption {
-  font-style: italic;
-  margin: 0.5em 1.5em;
-  text-align: left;
-}
-@media screen {
-  pre {
-    display: inline-block;
-    overflow-x: auto;
-    max-width: 100%;
-    width: calc(100% - 22px - 1em);
-  }
-  figure pre {
-    display: block;
-    width: calc(100% - 25px);
-  }
-  pre + .pilcrow {
-    display: inline-block;
-    vertical-align: text-bottom;
-    padding-bottom: 8px;
-  }
-  table {
-    display: inline-block;
-    overflow-x: auto;
-  }
-}
-
-/* aside, blockquote */
-aside, blockquote {
-  margin-left: 0;
-  padding: 0 2em;
-  font-style: italic;
-}
-blockquote {
-  background-color: var(--highlight-color);
-  border: 1px solid var(--line-color);
-  border-radius: 3px;
-  margin: 1em 0;
-}
-cite {
-  display: block;
-  text-align: right;
-  font-style: italic;
-}
-
-/* tables */
-table {
-  width: 100%;
-  margin: 0 0 1em;
-  border-collapse: collapse;
-  border: 1px solid var(--line-color);
-}
-th, td {
-  text-align: left;
-  vertical-align: top;
-  padding: 0.5em 0.75em;
-}
-th {
-  text-align: left;
-  background-color: #eee;
-}
-tr:nth-child(2n) > td {
-  background-color: var(--background-color);
-}
-tr:nth-child(2n+1) > td {
-  background-color: var(--highlight-color);
-}
-thead+tbody tr:nth-child(2n) > td {
-  background-color: var(--highlight-color);
-}
-thead+tbody tr:nth-child(2n+1) > td {
-  background-color: var(--background-color);
-}
-table caption {
-  font-style: italic;
-  margin: 0.3em 0;
-  padding: 0;
-  text-align: left;
-}
-table p {
-  /* XXX to avoid bottom margin on table row signifiers. If paragraphs should
-     be allowed within tables more generally, it would be far better to select on a class. */
-  margin: 0;
-}
-
-/* pilcrow */
-a.pilcrow {
-  margin-left: 3px;
-  visibility: hidden;
-  user-select: none;
-}
-a.pilcrow[href] { color: #ddd; }
-a.pilcrow[href]:hover { text-decoration: none; }
-@media screen {
-  :hover > a.pilcrow {
-    visibility: visible;
-  }
-  a.pilcrow:hover {
-    background-color: transparent;
-  }
-}
-
-/* misc */
-hr {
-  border: 0;
-  border-top: 1px solid var(--line-color);
-}
-.bcp14 {
-  font-variant: small-caps;
-}
-
-.role {
-  font-variant: all-small-caps;
-}
-
-/* info block */
-#identifiers {
-  margin: 0;
-  font-size: var(--small-font-size);
-  line-height: 18px;
-  --identifier-width: 8em;
-}
-#identifiers dt {
-  width: var(--identifier-width);
-  margin: 0;
-  clear: left;
-  float: left;
-  text-align: right;
-}
-#identifiers dd {
-  margin: 0 0 0 calc(1em + var(--identifier-width));
-  min-width: 5em;
-}
-#identifiers .authors .author {
-  display: inline-block;
-  margin-right: 1.5em;
-}
-#identifiers .authors .org {
-  font-style: italic;
-}
-
-/* The prepared/rendered info at the very bottom of the page */
-.docInfo {
-  color: #999;
-  font-size: 0.9em;
-  font-style: italic;
-  margin-top: 2em;
-}
-.docInfo .prepared {
-  float: left;
-}
-.docInfo .prepared {
-  float: right;
-}
-
-/* table of contents */
-#toc {
-  padding: 0.75em 0 2em 0;
-  margin-bottom: 1em;
-}
-#toc nav ul {
-  margin: 0 0.5em 0 0;
-  padding: 0;
-  list-style: none;
-}
-#toc nav li {
-  line-height: 1.3em;
-  margin: 0.75em 0;
-  padding-left: 1.2em;
-  text-indent: -1.2em;
-}
-/* references */
-.references dt {
-  text-align: right;
-  font-weight: bold;
-  min-width: 7em;
-}
-.references dd {
-  margin-left: 8em;
-  overflow: auto;
-}
-
-.refInstance {
-  margin-bottom: 1.25em;
-}
-
-.references .ascii {
-  margin-bottom: 0.25em;
-}
-
-/* index */
-.index ul {
-  margin: 0 0 0 1em;
-  padding: 0;
-  list-style: none;
-}
-.index ul ul {
-  margin: 0;
-}
-.index li {
-  margin: 0;
-  text-indent: -2em;
-  padding-left: 2em;
-  padding-bottom: 5px;
-}
-.indexIndex {
-  margin: 0.5em 0 1em;
-}
-.index a {
-  font-weight: 700;
-}
-/* make the index two-column on all but the smallest screens */
-@media (min-width: 600px) {
-  .index ul {
-    column-count: 2;
-    column-gap: 20px;
-  }
-  .index ul ul {
-    column-count: 1;
-    column-gap: 0;
-  }
-}
-
-/* authors */
-address.vcard {
-  font-style: normal;
-  margin: 1em 0;
-}
-address.vcard .nameRole {
-  font-weight: 700;
-  margin-left: 0;
-}
-address.vcard .label {
-  margin: 0.5em 0;
-}
-address.vcard .type {
-  display: none;
-}
-.alternative-contact {
-  margin: 1.5em 0 1em;
-}
-hr.addr {
-  border-top: 1px dashed;
-  margin: 0;
-  color: #ddd;
-  max-width: calc(100% - 16px);
-}
-@media (min-width: 600px) {
-  #authors-addresses {
-    display: relative;
-    padding: 32px 0 0;
-    column-count: 2;
-    column-gap: 20px;
-  }
-  #name-authors-addresses {
-    position: absolute;
-    top: 0px;
-    column-span: all;
-  }
-  /* hack for break-inside: avoid-column */
-  #authors-addresses address {
-    display: inline-block;
-  }
-}
-
-/* temporary notes */
-.rfcEditorRemove::before {
-  position: absolute;
-  top: 0.2em;
-  right: 0.2em;
-  padding: 0.2em;
-  content: "The RFC Editor will remove this note";
-  color: #b76427;
-  background-color: rgba(249, 232, 105, 0.3);
-}
-.rfcEditorRemove {
-  position: relative;
-  padding-top: 1.8em;
-  background-color: rgba(249, 232, 105, 0.3);
-  border-radius: 3px;
-}
-.cref {
-  background-color: rgba(249, 232, 105, 0.3);
-  padding: 2px 4px;
-}
-.crefSource {
-  font-style: italic;
-}
-/* alternative layout for smaller screens */
-@media screen and (max-width: 953px) {
-  #toc {
-    position: fixed;
-    z-index: 2;
-    top: 0;
-    right: 0;
-    padding: 0;
-    margin: 0;
-    border-bottom: 1px solid #ccc;
-    opacity: 0.9; /* TODO fix when Henrik takes the patch. */
-  }
-  #toc.active {
-      opacity: 1;
-  }
-  #toc h2 {
-    margin: 0;
-    padding: 2px 0 2px 6px;
-    padding-right: 1em;
-    font-size: 18px;
-    line-height: 24px;
-    min-width: 190px;
-    text-align: right;
-    background-color: #444;
-    color: white;
-    cursor: pointer;
-  }
-  #toc h2::before { /* css hamburger */
-    float: right;
-    position: relative;
-    width: 1em;
-    height: 1px;
-    left: -164px;
-    margin: 8px 0 0 0;
-    background: white none repeat scroll 0 0;
-    box-shadow: 0 4px 0 0 white, 0 8px 0 0 white;
-    content: "";
-  }
-  #toc nav {
-    display: none;
-    background-color: var(--background-color);
-    padding: 0.5em 1em 1em;
-    overflow: auto;
-    overscroll-behavior: contain;
-    height: calc(100vh - 48px);
-    border-left: 1px solid #ddd;
-  }
-  #toc.active nav {
-    display: block;
-  }
-  /* Make the collapsed ToC header render white on gray also when it's a link */
-  #toc h2 a,
-  #toc h2 a:link,
-  #toc h2 a:focus,
-  #toc h2 a:hover,
-  #toc a.toplink,
-  #toc a.toplink:hover {
-    color: white;
-    background-color: #444;
-    text-decoration: none;
-  }
-  #toc a.toplink {
-    margin-top: 2px;
-  }
-}
-
-/* alternative layout for wide screens */
-@media screen and (min-width: 954px) {
-  body {
-    padding-right: 380px;
-  }
-  #toc {
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    right: calc(50vw - 480px);
-    width: 312px;
-    margin: 0;
-    padding: 0;
-    z-index: 1;
-  }
-  #toc h2 {
-    margin: 0;
-    padding: 0.25em 1em 1em 0;
-  }
-  #toc nav {
-    display: block;
-    height: calc(90vh - 84px);
-    bottom: 0;
-    padding: 0.5em 0 2em;
-    overflow: auto;
-    overscroll-behavior: contain;
-    scrollbar-width: thin;
-  }
-  #toc nav > ul  {
-    margin-bottom: 2em;
-  }
-  #toc ul {
-    margin: 0 0 0 4px;
-    font-size: var(--small-font-size);
-  }
-  #toc ul p, #toc ul li {
-    margin: 2px 0;
-    line-height: 22px;
-  }
-  img { /* future proofing */
-    max-width: 100%;
-    height: auto;
-  }
-}
-
-/* pagination */
-@media print {
-  body {
-    width: 100%;
-  }
-  p {
-    orphans: 3;
-    widows: 3;
-  }
-  #n-copyright-notice {
-    border-bottom: none;
-  }
-  #toc, #n-introduction {
-    page-break-before: always;
-  }
-  #toc {
-    border-top: none;
-    padding-top: 0;
-  }
-  figure, pre {
-    page-break-inside: avoid;
-  }
-  figure {
-    overflow: scroll;
-  }
-  h1, h2, h3, h4, h5, h6 {
-    page-break-after: avoid;
-  }
-  h2+*, h3+*, h4+*, h5+*, h6+* {
-    page-break-before: avoid;
-  }
-  pre {
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    font-size: 10pt;
-  }
-  table {
-    border: 1px solid #ddd;
-  }
-  td {
-    border-top: 1px solid #ddd;
-  }
-}
-
-@page :first {
-  padding-top: 0;
-  @top-left {
-    content: normal;
-    border: none;
-  }
-  @top-center {
-    content: normal;
-    border: none;
-  }
-  @top-right {
-    content: normal;
-    border: none;
-  }
-}
-
-@page {
-  size: A4;
-  margin-bottom: 45mm;
-  padding-top: 20px;
-}
-
-/* Changes introduced to fix issues found during implementation */
-
-/* Separate body from document info even without intervening H1 */
-section {
-  clear: both;
-}
-
-/* Top align author divs, to avoid names without organization dropping level with org names */
-.author {
-  vertical-align: top;
-}
-
-/* Style section numbers with more space between number and title */
-.section-number {
-  padding-right: 0.5em;
-}
-
-/* Add styling for a link in the ToC that points to the top of the document */
-a.toplink {
-  float: right;
-  margin: 8px 0.5em 0;
-}
-
-/* Fix the dl styling to match the RFC 7992 attributes */
-dl > dt,
-dl.dlParallel > dt {
-  float: left;
-  margin-right: 1em;
-}
-dl.dlNewline > dt {
-  float: none;
-}
-
-/* Provide styling for table cell text alignment */
-table td.text-left,
-table th.text-left {
-  text-align: left;
-}
-table td.text-center,
-table th.text-center {
-  text-align: center;
-}
-table td.text-right,
-table th.text-right {
-  text-align: right;
-}
-
-/* Make the alternative author contact information look less like just another
-   author, and group it closer with the primary author contact information */
-.alternative-contact {
-  margin: 0.5em 0 0.25em 0;
-}
-address .non-ascii {
-  margin: 0 0 0 2em;
-}
-
-/* With it being possible to set tables with alignment
-  left, center, and right, { width: 100%; } does not make sense */
-table {
-  width: auto;
-}
-
-/* Avoid reference text that sits in a block with very wide left margin,
-   because of a long floating dt label.*/
-.references dd {
-  overflow: visible;
-}
-
-/* Control caption placement */
-caption {
-  caption-side: bottom;
-}
-
-/* Limit the width of the author address vcard, so names in right-to-left
-   script don't end up on the other side of the page. */
-
-address.vcard {
-  max-width: 20em;
-  margin-right: auto;
-}
-
-/* For address alignment dependent on LTR or RTL scripts */
-address div.left {
-  text-align: left;
-}
-address div.right {
-  text-align: right;
-}
-
-/* Provide table alignment support.  We can't use the alignX classes above
-   since they do unwanted things with caption and other styling. */
-table.right {
- margin-left: auto;
- margin-right: 0;
-}
-table.center {
- margin-left: auto;
- margin-right: auto;
-}
-table.left {
- margin-left: 0;
- margin-right: auto;
-}
-
-/* Give the table caption label the same styling as the figcaption */
-
-@media print {
-  .toplink {
-    display: none;
-  }
-
-  /* avoid overwriting the top border line with the ToC header */
-  #toc {
-    padding-top: 1px;
-  }
-
-  /* Avoid page breaks inside dl and author address entries */
-  dd {
-    page-break-before: avoid;
-  }
-  .vcard {
-    page-break-inside: avoid;
-  }
-
-}
-/* Tweak the bcp14 keyword presentation */
-.bcp14 {
-  font-variant: small-caps;
-  font-weight: bold;
-  font-size: 0.9em;
-}
+<script>const toc = document.getElementById("toc");
+toc.querySelector("h2").addEventListener("click", e => {
+  toc.classList.toggle("active");
+});
+toc.querySelector("nav").addEventListener("click", e => {
+  toc.classList.remove("active");
+});
 </script>
 </body>
 </html>

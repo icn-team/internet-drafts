@@ -49,6 +49,15 @@ Copyright Notice
    Copyright (c) 2019 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
+
+
+
+
+Augé, et al.              Expires 4 April 2020                  [Page 1]
+
+Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
+
+
    This document is subject to BCP 78 and the IETF Trust's Legal
    Provisions Relating to IETF Documents (https://trustee.ietf.org/
    license-info) in effect on the date of publication of this document.
@@ -60,37 +69,50 @@ Copyright Notice
 
 Table of Contents
 
-   1.  Introduction
-   2.  MAP-Me overview
-       2.1.  Anchor-less mobility management
-       2.2.  Design principles
-       2.3.  MAP-Me protocols
-   3.  Update protocol
-       3.1.  Rationale
-       3.2.  Update propagation
-       3.3.  Concurrent updates
-   4.  Notification protocol and scoped discovery
-       4.1.  Interest Notification
-       4.2.  Scoped discovery
-       4.3.  Full approach
-   5.  Implementation
-       5.1.  MAP-Me messages
-       5.2.  Data structures and temporary state
-       5.3.  Algorithm description
-             5.3.1.  Producer attachment and face creation
-             5.3.2.  IU/IN transmission at producer
-             5.3.3.  IU/IN transmission at network routers
-             5.3.4.  Reliable transmission
-             5.3.5.  Consumer request forwarding in case of
-                     producer discovery
-             5.3.6.  Producer departure and face destruction
-   6.  Security considerations
-   7.  Acknowledgements
-   8.  IANA Considerations
-   9.  References
-       9.1.  Normative References
-       9.2.  Informative References
-   Authors' Addresses
+   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   3
+   2.  MAP-Me overview . . . . . . . . . . . . . . . . . . . . . . .   4
+     2.1.  Anchor-less mobility management . . . . . . . . . . . . .   4
+     2.2.  Design principles . . . . . . . . . . . . . . . . . . . .   4
+     2.3.  MAP-Me protocols  . . . . . . . . . . . . . . . . . . . .   5
+   3.  Update protocol . . . . . . . . . . . . . . . . . . . . . . .   6
+     3.1.  Rationale . . . . . . . . . . . . . . . . . . . . . . . .   6
+     3.2.  Update propagation  . . . . . . . . . . . . . . . . . . .   6
+     3.3.  Concurrent updates  . . . . . . . . . . . . . . . . . . .  10
+   4.  Notification protocol and scoped discovery  . . . . . . . . .  12
+     4.1.  Interest Notification . . . . . . . . . . . . . . . . . .  12
+     4.2.  Scoped discovery  . . . . . . . . . . . . . . . . . . . .  13
+     4.3.  Full approach . . . . . . . . . . . . . . . . . . . . . .  13
+   5.  Implementation  . . . . . . . . . . . . . . . . . . . . . . .  13
+     5.1.  MAP-Me messages . . . . . . . . . . . . . . . . . . . . .  13
+     5.2.  Data structures and temporary state . . . . . . . . . . .  14
+     5.3.  Algorithm description . . . . . . . . . . . . . . . . . .  14
+       5.3.1.  Producer attachment and face creation . . . . . . . .  15
+       5.3.2.  IU/IN transmission at producer  . . . . . . . . . . .  15
+       5.3.3.  IU/IN transmission at network routers . . . . . . . .  15
+       5.3.4.  Reliable transmission . . . . . . . . . . . . . . . .  16
+       5.3.5.  Consumer request forwarding in case of producer
+               discovery . . . . . . . . . . . . . . . . . . . . . .  17
+       5.3.6.  Producer departure and face destruction . . . . . . .  18
+   6.  Security considerations . . . . . . . . . . . . . . . . . . .  18
+   7.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  18
+   8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  18
+   9.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  18
+     9.1.  Normative References  . . . . . . . . . . . . . . . . . .  18
+     9.2.  Informative References  . . . . . . . . . . . . . . . . .  18
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  20
+
+
+
+
+
+
+
+
+
+Augé, et al.              Expires 4 April 2020                  [Page 2]
+
+Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
+
 
 1.  Introduction
 
@@ -140,6 +162,14 @@ Table of Contents
    ICN in general) literature to go beyond the traditional IP
    approaches, by using the existing CCN/NDN request/data packet
    structures to trace producer movements and to dynamically build a
+
+
+
+Augé, et al.              Expires 4 April 2020                  [Page 3]
+
+Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
+
+
    reverse-forwarding path (see [SURVEY16b] for a survey).  They still
    rely on a stable home address to inform about producer movements or
    on buffering of incoming requests at the producer's previous point of
@@ -188,6 +218,14 @@ Table of Contents
 
       -  *Control Plane Agnostic* : MAP-Me _is control-plane agnostic as
          it does not rely on routing updates or path computation_, which
+
+
+
+Augé, et al.              Expires 4 April 2020                  [Page 4]
+
+Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
+
+
          would be too slow and too costly, but rather works at a faster
          timescale propagating forwarding updates on a single path.  It
          also leverages real-time notifications left as breadcrumbs by
@@ -236,6 +274,14 @@ Table of Contents
 
    MAP-Me is composed of:
 
+
+
+
+Augé, et al.              Expires 4 April 2020                  [Page 5]
+
+Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
+
+
    *  an Update protocol, detailed in Section 3, which is the central
       component of the proposal;
 
@@ -282,6 +328,16 @@ Table of Contents
    the name prefix /p, and on which any IU initiated by the producer
    will propagate.
 
+
+
+
+
+
+Augé, et al.              Expires 4 April 2020                  [Page 6]
+
+Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
+
+
                             +---+                        +---+
                             | 0 | P0                      | 0 | P0
                             +---+                         +---+
@@ -310,6 +366,33 @@ Table of Contents
                      (a)                       (b)
 
                       Figure 1: IU propagation example
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Augé, et al.              Expires 4 April 2020                  [Page 7]
+
+Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
+
 
                                                    .................
                             +---+               ...       +---+     ..
@@ -340,6 +423,32 @@ Table of Contents
                      (a)                       (b)
 
                       Figure 2: IU propagation example
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Augé, et al.              Expires 4 April 2020                  [Page 8]
+
+Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
+
 
                             +---+
                             | 1 | P1
@@ -384,6 +493,18 @@ Table of Contents
    updates have the effect of extending the newly connected subtree : at
    every step, an additional router and its predecessors are included in
    the connected subtree.
+
+
+
+
+
+
+
+
+Augé, et al.              Expires 4 April 2020                  [Page 9]
+
+Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
+
 
 3.3.  Concurrent updates
 
@@ -431,6 +552,16 @@ Table of Contents
 
                                   Figure 4
 
+
+
+
+
+
+Augé, et al.              Expires 4 April 2020                 [Page 10]
+
+Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
+
+
                             +---+                      +---+
                             | 2 | P0                   | 2 | P2
                             +---+                      +---+
@@ -474,6 +605,18 @@ Table of Contents
    locations.  This allows to minimize disconnectivity time and reduce
    link load, which are the main factors affecting user flow
    performance, as shown in [MAPME] evaluations.
+
+
+
+
+
+
+
+
+Augé, et al.              Expires 4 April 2020                 [Page 11]
+
+Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
+
 
 4.  Notification protocol and scoped discovery
 
@@ -521,6 +664,16 @@ Table of Contents
    combination of both IU and IN allows to control the trade-off between
    protocol reactivity and stability of forwarding re-convergence.
 
+
+
+
+
+
+Augé, et al.              Expires 4 April 2020                 [Page 12]
+
+Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
+
+
 4.2.  Scoped discovery
 
    The extension of MAP-Me with notifications relies on a local
@@ -567,6 +720,15 @@ Table of Contents
    their corresponding acknowledgements.
 
    Two new optional fields are introduced in a CCN/NDN Interest header:
+
+
+
+
+
+Augé, et al.              Expires 4 April 2020                 [Page 13]
+
+Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
+
 
    *  an "Interest Type" (T) used to specify one of the four types of
       messages: Interest Update (IU), Interest Notification (IN), and as
@@ -616,6 +778,14 @@ Table of Contents
 
 5.3.  Algorithm description
 
+
+
+
+Augé, et al.              Expires 4 April 2020                 [Page 14]
+
+Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
+
+
 5.3.1.  Producer attachment and face creation
 
    MAP-Me operations are triggered by a change of adjacencies in the
@@ -664,6 +834,14 @@ Table of Contents
 
    The operations in the forwarding pipeline for IU/IN processing are
    reported in Figure 7, where we make use of the following primitives:
+
+
+
+Augé, et al.              Expires 4 April 2020                 [Page 15]
+
+Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
+
+
    - Send(Interest, Face) is used to send the specified Interest on the
    specified Face. - ProcessTFIB() sends an IU for all flagged entries
    in the TFIB, using the latest sequence number stored in the FIB
@@ -711,6 +889,14 @@ Table of Contents
    retransmissions are performed and the entry will be checked again in
    the next slot.  When no entry has to be monitored, the process can
    sleep until the next mobility event.
+
+
+
+
+Augé, et al.              Expires 4 April 2020                 [Page 16]
+
+Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
+
 
 5.3.5.  Consumer request forwarding in case of producer discovery
 
@@ -760,6 +946,14 @@ Table of Contents
    It is worth observing that the discovery process is initiated only in
    the case of no valid next hop, and not every time a notification is
    found in a router.  This is important to guarantee that the
+
+
+
+Augé, et al.              Expires 4 April 2020                 [Page 17]
+
+Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
+
+
    notification/discovery process does not affect IU propagation and
    completion.
 
@@ -807,6 +1001,15 @@ Table of Contents
    [KITE]     Zhang, Y., Zhang, H., and L. Zhang, "Kite",
               DOI 10.1145/2660129.2660159, Proceedings of the 1st
               international conference on Information-centric networking
+
+
+
+
+Augé, et al.              Expires 4 April 2020                 [Page 18]
+
+Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
+
+
               - INC '14, 2014,
               <https://doi.org/10.1145/2660129.2660159>.
 
@@ -855,6 +1058,14 @@ Table of Contents
               Feng, B., Zhou, H., and Q. Xu, "Mobility support in Named
               Data Networking: a survey", DOI 10.1186/s13638-016-0715-0,
               EURASIP Journal on Wireless Communications and
+
+
+
+Augé, et al.              Expires 4 April 2020                 [Page 19]
+
+Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
+
+
               Networking Vol. 2016, September 2016,
               <https://doi.org/10.1186/s13638-016-0715-0>.
 
@@ -875,8 +1086,8 @@ Table of Contents
 
 Authors' Addresses
 
-   Cisco Systems Inc.
    Jordan Augé (editor)
+   Cisco Systems Inc.
    11, rue Camille Desmoulins
    92130 Issy-les-Moulineaux
    France
@@ -884,8 +1095,8 @@ Authors' Addresses
    Email: augjorda@cisco.com
 
 
-   Cisco Systems Inc.
    Giovanna Carofiglio
+   Cisco Systems Inc.
    11, rue Camille Desmoulins
    92130 Issy-les-Moulineaux
    France
@@ -893,8 +1104,8 @@ Authors' Addresses
    Email: gcarofig@cisco.com
 
 
-   Cisco Systems Inc.
    Luca Muscariello
+   Cisco Systems Inc.
    11, rue Camille Desmoulins
    92130 Issy-les-Moulineaux
    France
@@ -902,10 +1113,64 @@ Authors' Addresses
    Email: lumuscar@cisco.com
 
 
-   Cisco Systems Inc.
+
+
+
+
+Augé, et al.              Expires 4 April 2020                 [Page 20]
+
+Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
+
+
    Michele Papalini
+   Cisco Systems Inc.
    11, rue Camille Desmoulins
    92130 Issy-les-Moulineaux
    France
 
    Email: micpapal@cisco.com
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Augé, et al.              Expires 4 April 2020                 [Page 21]

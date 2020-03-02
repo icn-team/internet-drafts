@@ -49,14 +49,23 @@ Copyright Notice
    as described in Section 4.e of the Trust Legal Provisions and are
    provided without warranty as described in the Simplified BSD License.
 
+
+
+
+
+Muscariello & CarofiglioExpires 3 September 2020                [Page 1]
+
+Internet-Draft             hICN Applicability                 March 2020
+
+
 Table of Contents
 
-   1.  Introduction
-       1.1.  Notational Conventions
-   2.  References
-       2.1.  Normative References
-       2.2.  Informative References
-   Authors' Addresses
+   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
+     1.1.  Notational Conventions  . . . . . . . . . . . . . . . . .   2
+   2.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   2
+     2.1.  Normative References  . . . . . . . . . . . . . . . . . .   2
+     2.2.  Informative References  . . . . . . . . . . . . . . . . .   3
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   5
 
 1.  Introduction
 
@@ -98,6 +107,13 @@ Table of Contents
               Applications", STD 64, RFC 3550, DOI 10.17487/RFC3550,
               July 2003, <https://www.rfc-editor.org/info/rfc3550>.
 
+
+
+Muscariello & CarofiglioExpires 3 September 2020                [Page 2]
+
+Internet-Draft             hICN Applicability                 March 2020
+
+
    [RFC3587]  Hinden, R., Deering, S., and E. Nordmark, "IPv6 Global
               Unicast Address Format", RFC 3587, DOI 10.17487/RFC3587,
               August 2003, <https://www.rfc-editor.org/info/rfc3587>.
@@ -131,41 +147,47 @@ Table of Contents
 
    [I-D.irtf-icnrg-ccnxmessages]
               Mosko, M., Solis, I., and C. Wood, "CCNx Messages in TLV
-              Format", draft-irtf-icnrg-ccnxmessages-09 (work in
-              progress), 24 January 2019,
+              Format", Work in Progress, Internet-Draft, draft-irtf-
+              icnrg-ccnxmessages-09, 24 January 2019,
               <http://www.ietf.org/internet-drafts/draft-irtf-icnrg-
               ccnxmessages-09.txt>.
 
    [I-D.irtf-icnrg-ccnxsemantics]
-              Mosko, M., Solis, I., and C. Wood, "CCNx Semantics",
-              draft-irtf-icnrg-ccnxsemantics-10 (work in progress), 24
-              January 2019,
-              <http://www.ietf.org/internet-drafts/draft-irtf-icnrg-
-              ccnxsemantics-10.txt>.
+              Mosko, M., Solis, I., and C. Wood, "CCNx Semantics", Work
+              in Progress, Internet-Draft, draft-irtf-icnrg-
+              ccnxsemantics-10, 24 January 2019, <http://www.ietf.org/
+              internet-drafts/draft-irtf-icnrg-ccnxsemantics-10.txt>.
 
    [I-D.irtf-icnrg-mapme]
               Auge, J., Carofiglio, G., Muscariello, L., and M.
               Papalini, "MAP-Me : Managing Anchorless Mobility in
-              Content Centric Networking", draft-irtf-icnrg-mapme-04
-              (work in progress), 3 November 2019,
+              Content Centric Networking", Work in Progress, Internet-
+
+
+
+Muscariello & CarofiglioExpires 3 September 2020                [Page 3]
+
+Internet-Draft             hICN Applicability                 March 2020
+
+
+              Draft, draft-irtf-icnrg-mapme-04, 3 November 2019,
               <http://www.ietf.org/internet-drafts/draft-irtf-icnrg-
               mapme-04.txt>.
 
    [I-D.irtf-icnrg-terminology]
               Wissingh, B., Wood, C., Afanasyev, A., Zhang, L., Oran,
               D., and C. Tschudin, "Information-Centric Networking
-              (ICN): CCNx and NDN Terminology", draft-irtf-icnrg-
-              terminology-08 (work in progress), 17 January 2020,
-              <http://www.ietf.org/internet-drafts/draft-irtf-icnrg-
-              terminology-08.txt>.
+              (ICN): CCNx and NDN Terminology", Work in Progress,
+              Internet-Draft, draft-irtf-icnrg-terminology-08, 17
+              January 2020, <http://www.ietf.org/internet-drafts/draft-
+              irtf-icnrg-terminology-08.txt>.
 
    [I-D.muscariello-intarea-hicn]
               Muscariello, L., Carofiglio, G., Auge, J., and M.
-              Papalini, "Hybrid Information-Centric Networking", draft-
-              muscariello-intarea-hicn-03 (work in progress), 30 October
-              2019,
-              <http://www.ietf.org/internet-drafts/draft-muscariello-
-              intarea-hicn-03.txt>.
+              Papalini, "Hybrid Information-Centric Networking", Work in
+              Progress, Internet-Draft, draft-muscariello-intarea-hicn-
+              03, 30 October 2019, <http://www.ietf.org/internet-drafts/
+              draft-muscariello-intarea-hicn-03.txt>.
 
    [MAN]      Baugher, M., Davie, B., Narayanan, A., and D. Oran, "Self-
               verifying names for read-only named data",
@@ -196,6 +218,14 @@ Table of Contents
    [WLD]      Carofiglio, G., Muscariello, L., Papalini, M., Rozhnova,
               N., and X. Zeng, "Leveraging ICN In-network Control for
               Loss Detection and Recovery in Wireless Mobile networks",
+
+
+
+Muscariello & CarofiglioExpires 3 September 2020                [Page 4]
+
+Internet-Draft             hICN Applicability                 March 2020
+
+
               DOI 10.1145/2984356.2984361, Proceedings of the 2016
               conference on 3rd ACM Conference on Information-Centric
               Networking - ACM-ICN '16, 2016,
@@ -213,3 +243,38 @@ Authors' Addresses
    Cisco Systems Inc.
 
    Email: gcarofig@cisco.com
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Muscariello & CarofiglioExpires 3 September 2020                [Page 5]
