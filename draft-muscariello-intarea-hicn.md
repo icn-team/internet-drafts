@@ -5,7 +5,7 @@ docname: draft-muscariello-intarea-hicn-03
 date:
 category: info
 
-ipr:
+ipr: trust200902
 area: Internet Area
 workgroup: Internet Area WG
 keyword: Internet-Draft

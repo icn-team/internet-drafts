@@ -4,7 +4,7 @@ docname: draft-auge-dmm-hicn-mobility-03
 date: 
 category: info
 
-ipr:
+ipr: trust200902
 area: general
 workgroup: DMM Working Group
 keyword: Internet-Draft

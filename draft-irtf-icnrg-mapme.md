@@ -5,7 +5,7 @@ docname: draft-irtf-icnrg-mapme-04
 date: 2019-10
 category: info
 
-ipr:
+ipr: trust200902
 area: general
 workgroup: icnrg
 keyword: Internet-Draft

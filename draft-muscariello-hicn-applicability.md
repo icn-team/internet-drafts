@@ -5,7 +5,7 @@ docname: draft-muscariello-hicn-applicability-latest
 date:
 category: info
 
-ipr:
+ipr: trust200902
 area:
 workgroup:
 keyword: Internet-Draft
