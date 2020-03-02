@@ -1,0 +1,2829 @@
+<!DOCTYPE html>
+<html lang="en" class="Internet-Draft">
+<head>
+<meta charset="utf-8">
+<meta name="scripts" content="Common,Latin">
+<title>Hybrid Information-Centric Networking</title>
+<meta name="author" content="Luca Muscariello">
+<meta name="author" content="Giovanna Carofiglio">
+<meta name="author" content="Jordan Augé">
+<meta name="author" content="Michele Papalini">
+<meta name="description" content="
+       This document describes the hybrid information-centric networking (hICN) architecture
+for IPv6. The specifications describe a way to implement information-networking functionalities
+into IPv6. The objective is to use IPv6 without creating overlays with a new packet
+format as an additional encapsulation. The intent of the present design is 
+to  introduce some IPv6 routers in the network with additional packet processing operations to
+implement ICN functions. Moreover, the current design is tightly integrated into IPv6 to 
+allow easy interconnection to IPv6 networks with the additional design objective to exploit 
+existing IPv6 protocols as much as possible as they are, or extend them where needed. 
+    ">
+<meta name="generator" content="xml2rfc 2.19.1">
+<meta name="keyword" content="Internet-Draft">
+<link rel="alternate" type="application/rfc+xml" href="draft-muscariello-intarea-hicn.xml">
+<link rel="license" href="#copyright">
+<style type="text/css">@import url('https://martinthomson.github.io/i-d-template/fonts.css');
+
+html {
+  --background-color: #fff;
+  --text-color: #222;
+  --title-color: #191919;
+  --link-color: #2a6496;
+  --highlight-color: #f9f9f9;
+  --line-color: #eee;
+  --small-font-size: 14.5px;
+}
+body {
+  max-width: 624px;
+  margin: 75px auto;
+  padding: 0 5px;
+  color: var(--text-color);
+  background-color: var(--background-color);
+  font: 16px/22px "Lora", serif;
+  scroll-behavior: smooth;
+}
+
+.ears {
+  display: none;
+}
+
+/* headings */
+#title, h1, h2, h3, h4, h5, h6 {
+  font-family: "Cabin Condensed", sans-serif;
+  font-weight: 600;
+  margin: 0.8em 0 0.3em;
+  font-size-adjust: 0.5;
+  color: var(--title-color);
+}
+#title {
+  padding: 1em 0 0.2em;
+  font-size: 32px;
+  line-height: 40px;
+  clear: both;
+}
+h1, h2, h3 {
+  font-size: 22px;
+  line-height: 26px;
+}
+h4, h5, h6 {
+  font-size: 18px;
+  line-height: 22px;
+}
+
+/* general structure */
+.author {
+  padding-bottom: 0.3em;
+}
+#abstract+p, #abstract+p code, #abstract+p samp, #abstract+p tt {
+  font-size: 18px;
+  line-height: 24px;
+}
+p {
+  padding: 0;
+  margin: 0.5em 0;
+  text-align: left;
+}
+div, span {
+  position: relative;
+}
+div {
+  margin: 0;
+}
+.alignRight.art-text {
+  background-color: var(--highlight-color);
+  border: 1px solid var(--line-color);
+  border-radius: 3px;
+  padding: 0.5em 1em 0;
+  margin-bottom: 0.5em;
+}
+.alignRight.art-text pre {
+  padding: 0;
+  width: auto;
+}
+.alignRight {
+  margin: 1em 0;
+}
+.alignRight > *:first-child {
+  border: none;
+  margin: 0;
+  float: right;
+  clear: both;
+}
+.alignRight > *:nth-child(2) {
+  clear: both;
+  display: block;
+  border: none;
+}
+svg {
+  display: block;
+}
+.alignCenter.art-text {
+  background-color: var(--highlight-color);
+  border: 1px solid var(--line-color);
+  border-radius: 3px;
+  padding: 0.5em 1em 0;
+  margin-bottom: 0.5em;
+}
+.alignCenter.art-text pre {
+  padding: 0;
+  width: auto;
+}
+.alignCenter {
+  margin: 1em 0;
+}
+.alignCenter > *:first-child {
+  border: none;
+  /* this isn't optimal, but it's an existence proof.  PrinceXML doesn't
+     support flexbox yet.
+  */
+  display: table;
+  margin: 0 auto;
+}
+
+/* lists */
+ol, ul {
+  padding: 0;
+  margin: 0 0 1em 2em;
+}
+ol ol, ul ul, ol ul, ul ol {
+  margin-left: 1em;
+}
+li {
+  margin: 0 0 0.25em 0;
+}
+.ulCompact li {
+  margin: 0;
+}
+ul.empty, .ulEmpty {
+  list-style-type: none;
+}
+ul.empty li, .ulEmpty li {
+  margin-top: 0.5em;
+}
+ul.compact, .ulCompact,
+ol.compact, .olCompact {
+  line-height: 100%;
+  margin: 0 0 0 2em;
+}
+
+/* definition lists */
+dl {
+}
+dl > dt {
+  float: left;
+  margin-right: 1em;
+}
+dl > dd {
+  margin-bottom: .8em;
+  min-height: 1.3em;
+}
+dl.compact > dd, .dlCompact > dd {
+  margin-bottom: 0em;
+}
+dl > dd > dl {
+  margin-top: 0.5em;
+  margin-bottom: 0em;
+}
+
+/* links */
+a, a[href].selfRef:hover {
+  text-decoration: none;
+}
+a[href].selfRef {
+  color: var(--text-color);
+}
+a[href] {
+  color: var(--link-color);
+}
+a[href]:hover {
+  text-decoration: underline;
+}
+a[href].selfRef:hover {
+  background-color: var(--highlight-color);
+}
+
+/* Figures */
+tt, code, pre {
+  background-color: var(--highlight-color);
+  font: 14px/22px 'Oxygen Mono', monospace;
+}
+pre {
+  border: 1px solid var(--line-color);
+  line-height: 17px;
+  margin: 5px;
+  padding: 5px;
+}
+img {
+  max-width: 100%;
+}
+figure {
+  margin: 0.5em 0;
+}
+figure blockquote {
+  margin: 0.8em 0.4em 0.4em;
+}
+figcaption, caption {
+  font-style: italic;
+  margin: 0.5em 1.5em;
+  text-align: left;
+}
+@media screen {
+  pre {
+    display: inline-block;
+    overflow-x: auto;
+    max-width: 100%;
+    width: calc(100% - 22px - 1em);
+  }
+  figure pre {
+    display: block;
+    width: calc(100% - 25px);
+  }
+  pre + .pilcrow {
+    display: inline-block;
+    vertical-align: text-bottom;
+    padding-bottom: 8px;
+  }
+  table {
+    display: inline-block;
+    overflow-x: auto;
+  }
+}
+
+/* aside, blockquote */
+aside, blockquote {
+  margin-left: 0;
+  padding: 0 2em;
+  font-style: italic;
+}
+blockquote {
+  background-color: var(--highlight-color);
+  border: 1px solid var(--line-color);
+  border-radius: 3px;
+  margin: 1em 0;
+}
+cite {
+  display: block;
+  text-align: right;
+  font-style: italic;
+}
+
+/* tables */
+table {
+  width: 100%;
+  margin: 0 0 1em;
+  border-collapse: collapse;
+  border: 1px solid var(--line-color);
+}
+th, td {
+  text-align: left;
+  vertical-align: top;
+  padding: 0.5em 0.75em;
+}
+th {
+  text-align: left;
+  background-color: #eee;
+}
+tr:nth-child(2n) > td {
+  background-color: var(--background-color);
+}
+tr:nth-child(2n+1) > td {
+  background-color: var(--highlight-color);
+}
+thead+tbody tr:nth-child(2n) > td {
+  background-color: var(--highlight-color);
+}
+thead+tbody tr:nth-child(2n+1) > td {
+  background-color: var(--background-color);
+}
+table caption {
+  font-style: italic;
+  margin: 0.3em 0;
+  padding: 0;
+  text-align: left;
+}
+table p {
+  /* XXX to avoid bottom margin on table row signifiers. If paragraphs should
+     be allowed within tables more generally, it would be far better to select on a class. */
+  margin: 0;
+}
+
+/* pilcrow */
+a.pilcrow {
+  margin-left: 3px;
+  visibility: hidden;
+  user-select: none;
+}
+a.pilcrow[href] { color: #ddd; }
+a.pilcrow[href]:hover { text-decoration: none; }
+@media screen {
+  :hover > a.pilcrow {
+    visibility: visible;
+  }
+  a.pilcrow:hover {
+    background-color: transparent;
+  }
+}
+
+/* misc */
+hr {
+  border: 0;
+  border-top: 1px solid var(--line-color);
+}
+.bcp14 {
+  font-variant: small-caps;
+}
+
+.role {
+  font-variant: all-small-caps;
+}
+
+/* info block */
+#identifiers {
+  margin: 0;
+  font-size: var(--small-font-size);
+  line-height: 18px;
+  --identifier-width: 8em;
+}
+#identifiers dt {
+  width: var(--identifier-width);
+  margin: 0;
+  clear: left;
+  float: left;
+  text-align: right;
+}
+#identifiers dd {
+  margin: 0 0 0 calc(1em + var(--identifier-width));
+  min-width: 5em;
+}
+#identifiers .authors .author {
+  display: inline-block;
+  margin-right: 1.5em;
+}
+#identifiers .authors .org {
+  font-style: italic;
+}
+
+/* The prepared/rendered info at the very bottom of the page */
+.docInfo {
+  color: #999;
+  font-size: 0.9em;
+  font-style: italic;
+  margin-top: 2em;
+}
+.docInfo .prepared {
+  float: left;
+}
+.docInfo .prepared {
+  float: right;
+}
+
+/* table of contents */
+#toc {
+  padding: 0.75em 0 2em 0;
+  margin-bottom: 1em;
+}
+#toc nav ul {
+  margin: 0 0.5em 0 0;
+  padding: 0;
+  list-style: none;
+}
+#toc nav li {
+  line-height: 1.3em;
+  margin: 0.75em 0;
+  padding-left: 1.2em;
+  text-indent: -1.2em;
+}
+/* references */
+.references dt {
+  text-align: right;
+  font-weight: bold;
+  min-width: 7em;
+}
+.references dd {
+  margin-left: 8em;
+  overflow: auto;
+}
+
+.refInstance {
+  margin-bottom: 1.25em;
+}
+
+.references .ascii {
+  margin-bottom: 0.25em;
+}
+
+/* index */
+.index ul {
+  margin: 0 0 0 1em;
+  padding: 0;
+  list-style: none;
+}
+.index ul ul {
+  margin: 0;
+}
+.index li {
+  margin: 0;
+  text-indent: -2em;
+  padding-left: 2em;
+  padding-bottom: 5px;
+}
+.indexIndex {
+  margin: 0.5em 0 1em;
+}
+.index a {
+  font-weight: 700;
+}
+/* make the index two-column on all but the smallest screens */
+@media (min-width: 600px) {
+  .index ul {
+    column-count: 2;
+    column-gap: 20px;
+  }
+  .index ul ul {
+    column-count: 1;
+    column-gap: 0;
+  }
+}
+
+/* authors */
+address.vcard {
+  font-style: normal;
+  margin: 1em 0;
+}
+address.vcard .nameRole {
+  font-weight: 700;
+  margin-left: 0;
+}
+address.vcard .label {
+  margin: 0.5em 0;
+}
+address.vcard .type {
+  display: none;
+}
+.alternative-contact {
+  margin: 1.5em 0 1em;
+}
+hr.addr {
+  border-top: 1px dashed;
+  margin: 0;
+  color: #ddd;
+  max-width: calc(100% - 16px);
+}
+@media (min-width: 600px) {
+  #authors-addresses {
+    display: relative;
+    padding: 32px 0 0;
+    column-count: 2;
+    column-gap: 20px;
+  }
+  #name-authors-addresses {
+    position: absolute;
+    top: 0px;
+    column-span: all;
+  }
+  /* hack for break-inside: avoid-column */
+  #authors-addresses address {
+    display: inline-block;
+  }
+}
+
+/* temporary notes */
+.rfcEditorRemove::before {
+  position: absolute;
+  top: 0.2em;
+  right: 0.2em;
+  padding: 0.2em;
+  content: "The RFC Editor will remove this note";
+  color: #b76427;
+  background-color: rgba(249, 232, 105, 0.3);
+}
+.rfcEditorRemove {
+  position: relative;
+  padding-top: 1.8em;
+  background-color: rgba(249, 232, 105, 0.3);
+  border-radius: 3px;
+}
+.cref {
+  background-color: rgba(249, 232, 105, 0.3);
+  padding: 2px 4px;
+}
+.crefSource {
+  font-style: italic;
+}
+/* alternative layout for smaller screens */
+@media screen and (max-width: 953px) {
+  #toc {
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    right: 0;
+    padding: 0;
+    margin: 0;
+    border-bottom: 1px solid #ccc;
+    opacity: 0.9; /* TODO fix when Henrik takes the patch. */
+  }
+  #toc.active {
+      opacity: 1;
+  }
+  #toc h2 {
+    margin: 0;
+    padding: 2px 0 2px 6px;
+    padding-right: 1em;
+    font-size: 18px;
+    line-height: 24px;
+    min-width: 190px;
+    text-align: right;
+    background-color: #444;
+    color: white;
+    cursor: pointer;
+  }
+  #toc h2::before { /* css hamburger */
+    float: right;
+    position: relative;
+    width: 1em;
+    height: 1px;
+    left: -164px;
+    margin: 8px 0 0 0;
+    background: white none repeat scroll 0 0;
+    box-shadow: 0 4px 0 0 white, 0 8px 0 0 white;
+    content: "";
+  }
+  #toc nav {
+    display: none;
+    background-color: var(--background-color);
+    padding: 0.5em 1em 1em;
+    overflow: auto;
+    overscroll-behavior: contain;
+    height: calc(100vh - 48px);
+    border-left: 1px solid #ddd;
+  }
+  #toc.active nav {
+    display: block;
+  }
+  /* Make the collapsed ToC header render white on gray also when it's a link */
+  #toc h2 a,
+  #toc h2 a:link,
+  #toc h2 a:focus,
+  #toc h2 a:hover,
+  #toc a.toplink,
+  #toc a.toplink:hover {
+    color: white;
+    background-color: #444;
+    text-decoration: none;
+  }
+  #toc a.toplink {
+    margin-top: 2px;
+  }
+}
+
+/* alternative layout for wide screens */
+@media screen and (min-width: 954px) {
+  body {
+    padding-right: 380px;
+  }
+  #toc {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    right: calc(50vw - 480px);
+    width: 312px;
+    margin: 0;
+    padding: 0;
+    z-index: 1;
+  }
+  #toc h2 {
+    margin: 0;
+    padding: 0.25em 1em 1em 0;
+  }
+  #toc nav {
+    display: block;
+    height: calc(90vh - 84px);
+    bottom: 0;
+    padding: 0.5em 0 2em;
+    overflow: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+  }
+  #toc nav > ul  {
+    margin-bottom: 2em;
+  }
+  #toc ul {
+    margin: 0 0 0 4px;
+    font-size: var(--small-font-size);
+  }
+  #toc ul p, #toc ul li {
+    margin: 2px 0;
+    line-height: 22px;
+  }
+  img { /* future proofing */
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* pagination */
+@media print {
+  body {
+    width: 100%;
+  }
+  p {
+    orphans: 3;
+    widows: 3;
+  }
+  #n-copyright-notice {
+    border-bottom: none;
+  }
+  #toc, #n-introduction {
+    page-break-before: always;
+  }
+  #toc {
+    border-top: none;
+    padding-top: 0;
+  }
+  figure, pre {
+    page-break-inside: avoid;
+  }
+  figure {
+    overflow: scroll;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+  }
+  h2+*, h3+*, h4+*, h5+*, h6+* {
+    page-break-before: avoid;
+  }
+  pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 10pt;
+  }
+  table {
+    border: 1px solid #ddd;
+  }
+  td {
+    border-top: 1px solid #ddd;
+  }
+}
+
+@page :first {
+  padding-top: 0;
+  @top-left {
+    content: normal;
+    border: none;
+  }
+  @top-center {
+    content: normal;
+    border: none;
+  }
+  @top-right {
+    content: normal;
+    border: none;
+  }
+}
+
+@page {
+  size: A4;
+  margin-bottom: 45mm;
+  padding-top: 20px;
+}
+
+/* Changes introduced to fix issues found during implementation */
+
+/* Separate body from document info even without intervening H1 */
+section {
+  clear: both;
+}
+
+/* Top align author divs, to avoid names without organization dropping level with org names */
+.author {
+  vertical-align: top;
+}
+
+/* Style section numbers with more space between number and title */
+.section-number {
+  padding-right: 0.5em;
+}
+
+/* Add styling for a link in the ToC that points to the top of the document */
+a.toplink {
+  float: right;
+  margin: 8px 0.5em 0;
+}
+
+/* Fix the dl styling to match the RFC 7992 attributes */
+dl > dt,
+dl.dlParallel > dt {
+  float: left;
+  margin-right: 1em;
+}
+dl.dlNewline > dt {
+  float: none;
+}
+
+/* Provide styling for table cell text alignment */
+table td.text-left,
+table th.text-left {
+  text-align: left;
+}
+table td.text-center,
+table th.text-center {
+  text-align: center;
+}
+table td.text-right,
+table th.text-right {
+  text-align: right;
+}
+
+/* Make the alternative author contact information look less like just another
+   author, and group it closer with the primary author contact information */
+.alternative-contact {
+  margin: 0.5em 0 0.25em 0;
+}
+address .non-ascii {
+  margin: 0 0 0 2em;
+}
+
+/* With it being possible to set tables with alignment
+  left, center, and right, { width: 100%; } does not make sense */
+table {
+  width: auto;
+}
+
+/* Avoid reference text that sits in a block with very wide left margin,
+   because of a long floating dt label.*/
+.references dd {
+  overflow: visible;
+}
+
+/* Control caption placement */
+caption {
+  caption-side: bottom;
+}
+
+/* Limit the width of the author address vcard, so names in right-to-left
+   script don't end up on the other side of the page. */
+
+address.vcard {
+  max-width: 20em;
+  margin-right: auto;
+}
+
+/* For address alignment dependent on LTR or RTL scripts */
+address div.left {
+  text-align: left;
+}
+address div.right {
+  text-align: right;
+}
+
+/* Provide table alignment support.  We can't use the alignX classes above
+   since they do unwanted things with caption and other styling. */
+table.right {
+ margin-left: auto;
+ margin-right: 0;
+}
+table.center {
+ margin-left: auto;
+ margin-right: auto;
+}
+table.left {
+ margin-left: 0;
+ margin-right: auto;
+}
+
+/* Give the table caption label the same styling as the figcaption */
+
+@media print {
+  .toplink {
+    display: none;
+  }
+
+  /* avoid overwriting the top border line with the ToC header */
+  #toc {
+    padding-top: 1px;
+  }
+
+  /* Avoid page breaks inside dl and author address entries */
+  dd {
+    page-break-before: avoid;
+  }
+  .vcard {
+    page-break-inside: avoid;
+  }
+
+}
+/* Tweak the bcp14 keyword presentation */
+.bcp14 {
+  font-variant: small-caps;
+  font-weight: bold;
+  font-size: 0.9em;
+}
+</style>
+<link rel="stylesheet" href="rfc-local.css" type="text/css">
+</head>
+<body>
+<table class="ears">
+<thead><tr>
+<td class="left">Internet-Draft</td>
+<td class="center">hICN</td>
+<td class="right">March 2020</td>
+</tr></thead>
+<tfoot><tr>
+<td class="left">Muscariello, et al.</td>
+<td class="center">Expires 3 September 2020</td>
+<td class="right">[Page]</td>
+</tr></tfoot>
+</table>
+<div class="document-information">
+<dl id="identifiers">
+<dt class="label-workgroup">Workgroup:</dt>
+<dd class="workgroup">Internet Area WG</dd>
+<dt class="label-internet-draft">Internet-Draft:</dt>
+<dd class="internet-draft">draft-muscariello-intarea-hicn-03</dd>
+<dt class="label-published">Published:</dt>
+<dd class="published">
+<time datetime="2020-03-02" class="published">2 March 2020</time>
+    </dd>
+<dt class="label-intended-status">Intended Status:</dt>
+<dd class="intended-status">Informational</dd>
+<dt class="label-expires">Expires:</dt>
+<dd class="expires"><time datetime="2020-09-03">3 September 2020</time></dd>
+<dt class="label-authors">Authors:</dt>
+<dd class="authors">
+<div class="author">
+      <div class="author-name">L. Muscariello</div>
+<div class="org">Cisco Systems Inc.</div>
+</div>
+<div class="author">
+      <div class="author-name">G. Carofiglio</div>
+<div class="org">Cisco Systems Inc.</div>
+</div>
+<div class="author">
+      <div class="author-name">J. Augé</div>
+<div class="org">Cisco Systems Inc.</div>
+</div>
+<div class="author">
+      <div class="author-name">M. Papalini</div>
+<div class="org">Cisco Systems Inc.</div>
+</div>
+</dd>
+</dl>
+</div>
+<h1 id="title">Hybrid Information-Centric Networking</h1>
+<section id="section-abstract">
+      <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
+<p id="section-abstract-1">This document describes the hybrid information-centric networking (hICN) architecture
+for IPv6. The specifications describe a way to implement information-networking functionalities
+into IPv6. The objective is to use IPv6 without creating overlays with a new packet
+format as an additional encapsulation. The intent of the present design is 
+to  introduce some IPv6 routers in the network with additional packet processing operations to
+implement ICN functions. Moreover, the current design is tightly integrated into IPv6 to 
+allow easy interconnection to IPv6 networks with the additional design objective to exploit 
+existing IPv6 protocols as much as possible as they are, or extend them where needed.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+</section>
+<div id="status-of-memo">
+<section id="section-boilerplate.1">
+        <h2 id="name-status-of-this-memo">
+<a href="#name-status-of-this-memo" class="section-name selfRef">Status of This Memo</a>
+        </h2>
+<p id="section-boilerplate.1-1">
+        This Internet-Draft is submitted in full conformance with the
+        provisions of BCP 78 and BCP 79.
+        <a href="#section-boilerplate.1-1" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-2">
+        Internet-Drafts are working documents of the Internet Engineering Task
+        Force (IETF). Note that other groups may also distribute working
+        documents as Internet-Drafts. The list of current Internet-Drafts is
+        at <span><a href="https://datatracker.ietf.org/drafts/current/">https://datatracker.ietf.org/drafts/current/</a></span>.
+        <a href="#section-boilerplate.1-2" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-3">
+        Internet-Drafts are draft documents valid for a maximum of six months
+        and may be updated, replaced, or obsoleted by other documents at any
+        time. It is inappropriate to use Internet-Drafts as reference
+        material or to cite them other than as "work in progress."
+        <a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-4">
+        This Internet-Draft will expire on 3 September 2020.
+        <a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="copyright">
+<section id="section-boilerplate.2">
+        <h2 id="name-copyright-notice">
+<a href="#name-copyright-notice" class="section-name selfRef">Copyright Notice</a>
+        </h2>
+<p id="section-boilerplate.2-1">
+            Copyright (c) 2020 IETF Trust and the persons identified as the
+            document authors. All rights reserved.
+        <a href="#section-boilerplate.2-1" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.2-2">
+            This document is subject to BCP 78 and the IETF Trust's Legal
+            Provisions Relating to IETF Documents
+            (<span><a href="https://trustee.ietf.org/license-info">https://trustee.ietf.org/license-info</a></span>) in effect on the date of
+            publication of this document. Please review these documents
+            carefully, as they describe your rights and restrictions with
+            respect to this document. Code Components extracted from this
+            document must include Simplified BSD License text as described in
+            Section 4.e of the Trust Legal Provisions and are provided without
+            warranty as described in the Simplified BSD License.
+        <a href="#section-boilerplate.2-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="toc">
+<section id="section-boilerplate.3">
+        <a href="#" onclick="scroll(0,0)" class="toplink">▲</a><h2 id="name-table-of-contents">
+<a href="#name-table-of-contents" class="section-name selfRef">Table of Contents</a>
+        </h2>
+<nav class="toc"><ul class="toc ulEmpty">
+<li class="toc ulEmpty" id="section-boilerplate.3-1.1">
+            <p id="section-boilerplate.3-1.1.1"><a href="#section-1" class="xref">1</a>.  <a href="#name-introduction" class="xref">Introduction</a><a href="#section-boilerplate.3-1.1.1" class="pilcrow">¶</a></p>
+<ul class="toc ulEmpty">
+<li class="toc ulEmpty" id="section-boilerplate.3-1.1.2.1">
+                <p id="section-boilerplate.3-1.1.2.1.1"><a href="#section-1.1" class="xref">1.1</a>.  <a href="#name-notational-conventions" class="xref">Notational Conventions</a><a href="#section-boilerplate.3-1.1.2.1.1" class="pilcrow">¶</a></p>
+</li>
+            </ul>
+</li>
+          <li class="toc ulEmpty" id="section-boilerplate.3-1.2">
+            <p id="section-boilerplate.3-1.2.1"><a href="#section-2" class="xref">2</a>.  <a href="#name-architecture" class="xref">Architecture</a><a href="#section-boilerplate.3-1.2.1" class="pilcrow">¶</a></p>
+<ul class="toc ulEmpty">
+<li class="toc ulEmpty" id="section-boilerplate.3-1.2.2.1">
+                <p id="section-boilerplate.3-1.2.2.1.1"><a href="#section-2.1" class="xref">2.1</a>.  <a href="#name-end-points" class="xref">End-points</a><a href="#section-boilerplate.3-1.2.2.1.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="toc ulEmpty" id="section-boilerplate.3-1.2.2.2">
+                <p id="section-boilerplate.3-1.2.2.2.1"><a href="#section-2.2" class="xref">2.2</a>.  <a href="#name-naming" class="xref">Naming</a><a href="#section-boilerplate.3-1.2.2.2.1" class="pilcrow">¶</a></p>
+<ul class="toc ulEmpty">
+<li class="toc ulEmpty" id="section-boilerplate.3-1.2.2.2.2.1">
+                    <p id="section-boilerplate.3-1.2.2.2.2.1.1"><a href="#section-2.2.1" class="xref">2.2.1</a>.  <a href="#name-name-prefix" class="xref">Name prefix</a><a href="#section-boilerplate.3-1.2.2.2.2.1.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="toc ulEmpty" id="section-boilerplate.3-1.2.2.2.2.2">
+                    <p id="section-boilerplate.3-1.2.2.2.2.2.1"><a href="#section-2.2.2" class="xref">2.2.2</a>.  <a href="#name-name-suffix" class="xref">Name Suffix</a><a href="#section-boilerplate.3-1.2.2.2.2.2.1" class="pilcrow">¶</a></p>
+</li>
+                </ul>
+</li>
+              <li class="toc ulEmpty" id="section-boilerplate.3-1.2.2.3">
+                <p id="section-boilerplate.3-1.2.2.3.1"><a href="#section-2.3" class="xref">2.3</a>.  <a href="#name-packet-format" class="xref">Packet Format</a><a href="#section-boilerplate.3-1.2.2.3.1" class="pilcrow">¶</a></p>
+<ul class="toc ulEmpty">
+<li class="toc ulEmpty" id="section-boilerplate.3-1.2.2.3.2.1">
+                    <p id="section-boilerplate.3-1.2.2.3.2.1.1"><a href="#section-2.3.1" class="xref">2.3.1</a>.  <a href="#name-interest-packet" class="xref">Interest Packet</a><a href="#section-boilerplate.3-1.2.2.3.2.1.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="toc ulEmpty" id="section-boilerplate.3-1.2.2.3.2.2">
+                    <p id="section-boilerplate.3-1.2.2.3.2.2.1"><a href="#section-2.3.2" class="xref">2.3.2</a>.  <a href="#name-data-packet" class="xref">Data Packet</a><a href="#section-boilerplate.3-1.2.2.3.2.2.1" class="pilcrow">¶</a></p>
+</li>
+                </ul>
+</li>
+              <li class="toc ulEmpty" id="section-boilerplate.3-1.2.2.4">
+                <p id="section-boilerplate.3-1.2.2.4.1"><a href="#section-2.4" class="xref">2.4</a>.  <a href="#name-packet-cache" class="xref">Packet cache</a><a href="#section-boilerplate.3-1.2.2.4.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="toc ulEmpty" id="section-boilerplate.3-1.2.2.5">
+                <p id="section-boilerplate.3-1.2.2.5.1"><a href="#section-2.5" class="xref">2.5</a>.  <a href="#name-forwarding" class="xref">Forwarding</a><a href="#section-boilerplate.3-1.2.2.5.1" class="pilcrow">¶</a></p>
+<ul class="toc ulEmpty">
+<li class="toc ulEmpty" id="section-boilerplate.3-1.2.2.5.2.1">
+                    <p id="section-boilerplate.3-1.2.2.5.2.1.1"><a href="#section-2.5.1" class="xref">2.5.1</a>.  <a href="#name-interest-path" class="xref">Interest Path</a><a href="#section-boilerplate.3-1.2.2.5.2.1.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="toc ulEmpty" id="section-boilerplate.3-1.2.2.5.2.2">
+                    <p id="section-boilerplate.3-1.2.2.5.2.2.1"><a href="#section-2.5.2" class="xref">2.5.2</a>.  <a href="#name-data-path" class="xref">Data Path</a><a href="#section-boilerplate.3-1.2.2.5.2.2.1" class="pilcrow">¶</a></p>
+</li>
+                </ul>
+</li>
+            </ul>
+</li>
+          <li class="toc ulEmpty" id="section-boilerplate.3-1.3">
+            <p id="section-boilerplate.3-1.3.1"><a href="#section-3" class="xref">3</a>.  <a href="#name-security" class="xref">Security</a><a href="#section-boilerplate.3-1.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="toc ulEmpty" id="section-boilerplate.3-1.4">
+            <p id="section-boilerplate.3-1.4.1"><a href="#section-4" class="xref">4</a>.  <a href="#name-the-end-host-model-and-end-" class="xref">The End-host model and End-to-End considerations</a><a href="#section-boilerplate.3-1.4.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="toc ulEmpty" id="section-boilerplate.3-1.5">
+            <p id="section-boilerplate.3-1.5.1"><a href="#section-5" class="xref">5</a>.  <a href="#name-iana-considerations" class="xref">IANA Considerations</a><a href="#section-boilerplate.3-1.5.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="toc ulEmpty" id="section-boilerplate.3-1.6">
+            <p id="section-boilerplate.3-1.6.1"><a href="#section-6" class="xref">6</a>.  <a href="#name-acknowledgements" class="xref">Acknowledgements</a><a href="#section-boilerplate.3-1.6.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="toc ulEmpty" id="section-boilerplate.3-1.7">
+            <p id="section-boilerplate.3-1.7.1"><a href="#section-7" class="xref">7</a>.  <a href="#name-references" class="xref">References</a><a href="#section-boilerplate.3-1.7.1" class="pilcrow">¶</a></p>
+<ul class="toc ulEmpty">
+<li class="toc ulEmpty" id="section-boilerplate.3-1.7.2.1">
+                <p id="section-boilerplate.3-1.7.2.1.1"><a href="#section-7.1" class="xref">7.1</a>.  <a href="#name-normative-references" class="xref">Normative References</a><a href="#section-boilerplate.3-1.7.2.1.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="toc ulEmpty" id="section-boilerplate.3-1.7.2.2">
+                <p id="section-boilerplate.3-1.7.2.2.1"><a href="#section-7.2" class="xref">7.2</a>.  <a href="#name-informative-references" class="xref">Informative References</a><a href="#section-boilerplate.3-1.7.2.2.1" class="pilcrow">¶</a></p>
+</li>
+            </ul>
+</li>
+          <li class="toc ulEmpty" id="section-boilerplate.3-1.8">
+            <p id="section-boilerplate.3-1.8.1"><a href="#section-appendix.a" class="xref"></a>  <a href="#name-authors-addresses" class="xref">Authors' Addresses</a><a href="#section-boilerplate.3-1.8.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+</nav>
+</section>
+</div>
+<div id="introduction">
+<section id="section-1">
+      <h2 id="name-introduction">
+<a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
+      </h2>
+<p id="section-1-1">The  objective of this document is to describe hybrid ICN, a network protocol 
+that integrates ICN in IPv6, at a minimum cost in terms of required modifications 
+in end-points and routers and in a way to guarantee transparent interconnection 
+with IP without using overlays.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-2">The ICN reference design used in this document is CCNx as  described in
+<span>[<a href="#RFC8569" class="xref">RFC8569</a>]</span> and <span>[<a href="#RFC8609" class="xref">RFC8609</a>]</span>. 
+IPv6 is used as described in <span>[<a href="#RFC8200" class="xref">RFC8200</a>]</span>.<a href="#section-1-2" class="pilcrow">¶</a></p>
+<p id="section-1-3">There are some basic design principles behind the hICN architecture that are 
+implemented by the design reported below that can be summarized as follows:<a href="#section-1-3" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-1-4.1">(i) the network can transport many different kinds of applications as IPv6, i.e. hICN can serve
+content-distribution or real-time applications, to cite examples
+ with very different requirements. hICN is not a content-distribution network;<a href="#section-1-4.1" class="pilcrow">¶</a>
+</li>
+        <li id="section-1-4.2">(ii) it provides connection-less
+and location independent communications by identifying data with unique
+global names, instead of naming network interfaces (locator) or end-hosts (end-host identifiers)
+as in LISP <span>[<a href="#RFC6830" class="xref">RFC6830</a>]</span>.<a href="#section-1-4.2" class="pilcrow">¶</a>
+</li>
+        <li id="section-1-4.3">(iii) data is retrieved 
+by an end-point by issuing requests and a
+node accepts a data packet from an ingress interface if and only if at least 
+one matching request packet is stored in the local cache of the node, otherwise
+the data packet is dropped;<a href="#section-1-4.3" class="pilcrow">¶</a>
+</li>
+        <li id="section-1-4.4">(iv) basic security services are provided
+by the architecture: authenticity of the data producer and data integrity.
+A cryptographic signature over a security envelop 
+is computed by the producer (using its own private key) and must be verified by the consumer 
+(using the producer's public key).
+The security envelop can be as small as a single data packet or 
+cover groups of packets using the technique of the transport manifest <span>[<a href="#MAN" class="xref">MAN</a>]</span>.<a href="#section-1-4.4" class="pilcrow">¶</a>
+</li>
+      </ul>
+<div id="notational-conventions">
+<section id="section-1.1">
+        <h3 id="name-notational-conventions">
+<a href="#section-1.1" class="section-number selfRef">1.1. </a><a href="#name-notational-conventions" class="section-name selfRef">Notational Conventions</a>
+        </h3>
+<p id="section-1.1-1">The words "MUST", "MUST NOT", "SHOULD", and "MAY" are used in this document.
+It's not shouting; when these words are capitalized, they have a special
+meaning as defined in <span>[<a href="#RFC2119" class="xref">RFC2119</a>]</span>.<a href="#section-1.1-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="architecture">
+<section id="section-2">
+      <h2 id="name-architecture">
+<a href="#section-2" class="section-number selfRef">2. </a><a href="#name-architecture" class="section-name selfRef">Architecture</a>
+      </h2>
+<span id="name-general-overview-of-an-hicn"></span><div id="fig-general-arch">
+<figure id="figure-1">
+        <div class="artwork art-text alignLeft" id="section-2-1.1">
+<pre>
++---------------------+
+|                     | Data packets
+| End-host            |           +-----------+          +-----------+
+|                     +-------&gt;   |           |          |           |
+| +------------+      |           |   IPv6    |          |   hICN    |
+| | Producer   |      +-----------+   router  +----------+   router  |
+| | end-point  |      |           |           |          |           |
+| +------------+      | &lt;------+  +----+------+          +------+----+
+|                     |                |                        |
++---------------------+  Interest      |                        |
+                         packets       |                        |
+                                       |                        |
+                                       |                        |
+                                       |                        |
+                                  +----+------+            +----+------+
+                                  |           |            |           |
+                                  |   hICN    |            |   IPv6    |
+                 +----------------+   router  +------------+   network |
+         +   ^   |                |           |            |           |
+         |   |   |                +-----------+            +--------+--+
+         |   |   |                                                  |
+         v   |   |                                                  |
+             |   |                                                  |
+    +---------------------+    Interest packets                     |
+    | +------------+      | +--------&gt;            +-----------+     |
+    | | Consumer   |      |                       |           |     |
+    | | end-point  |      +-----------------------+   hICN    +-----+
+    | +------------+      |                       |   router  |
+    |                     |    &lt;-------+          |           |
+    | End-host            |                       +-----------+
+    |                     |     Data packets
+    +---------------------+
+</pre>
+</div>
+<figcaption><a href="#figure-1">Figure 1</a>:
+<a href="#name-general-overview-of-an-hicn" class="selfRef">General overview of an hICN end-to-end communication.</a>
+        </figcaption></figure>
+</div>
+<p id="section-2-2">The communication model described in this document covers the transport
+and the network layer.<a href="#section-2-2" class="pilcrow">¶</a></p>
+<p id="section-2-3">The network layer includes the forwarding plane only and does not 
+consider the routing plane. hICN network layer is about using the IPv6 
+FIB to determine a next hop router to forward requests 
+or using a local packet cache to determine if an incoming request can
+be satisfied locally. The hICN forwarding plane takes care of forwarding
+replies  by using information stored in cached requests. The packet pipeline
+of an hICN node always includes a lookup in a packet cache for both requests
+and replies. The packet cache is a mandatory component that is added to the usual
+IPv6 packet processing pipeline. Requests and replies carry an immutable 
+data name end-to-end, in packet header fields as described in the following
+sections. Moreover, requests and replies  carry locators as mutable packet header
+fields. A locator, i.e. an interface identifier, is changed every time a packet is sent
+to another hICN node. A detailed description of how locators are modified
+along the path between end-points is reported in the following sections.<a href="#section-2-3" class="pilcrow">¶</a></p>
+<p id="section-2-4">It is assumed that existing routing 
+protocols, working for IPv6, should be reused as much as possible as they are. 
+Improvements to existing routing protocols are out of scope and might be developed in
+other documents  to better exploit features made available by the hICN
+forwarding plane. For instance, hICN forwarding plane can take advantage of the ability
+of a  routing protocol to provide multiple routes for a given destination 
+or more generally compute routes for destinations that are multi-instantiated <span>[<a href="#MIR" class="xref">MIR</a>]</span>.
+This topic is important but out of scope for this document.<a href="#section-2-4" class="pilcrow">¶</a></p>
+<p id="section-2-5">The hICN network architecture can run on top of any link-layer that supports IPv6.
+hICN data names are globally routable names which are visible
+to the transport layer end-points. Conversely, the transport layer has no visibility of addresses of 
+network interfaces.
+The network layer forwards two kinds of protocol data units: the request and the
+reply, called interest and data packets.<a href="#section-2-5" class="pilcrow">¶</a></p>
+<p id="section-2-6">The hICN network layer offers a communication service to the transport layer 
+in the end-points by means of a local unidirectional channel that we call local 
+or application face. This channel is used by the transport layer to send requests and receive
+replies or to send replies upon receptions of requests.<a href="#section-2-6" class="pilcrow">¶</a></p>
+<p id="section-2-7">A transport end-point is always bound to a unidirectional channel that is used to
+either send data or receive data. The former end-point is called
+data producer while the latter data consumer. The producer end-point
+produces data under a location independent name, which is an 
+IPv6 prefix. A consumer end-point fetches data by using the non ambiguous
+name as provided by the producer.  The producer end-point is responsible 
+for managing the usage of the prefix in terms of provisioning, association to
+applications and its revocation.<a href="#section-2-7" class="pilcrow">¶</a></p>
+<p id="section-2-8">The transport end-point offers two kinds of services to applications: a producer
+and a consumer service. The service is instantiated in the application by
+opening communication sockets with an API to perform basic transport service
+operations: allocation, initialization, configuration, data transmission and reception.<a href="#section-2-8" class="pilcrow">¶</a></p>
+<p id="section-2-9">The producer and consumer sockets can implement different types of services
+such as stream or datagram, reliable or unreliable.
+In all cases all transport services are connection-less, meaning that
+a producer transport service produces named data in a socket memory that is
+accessible by any valid request coming from one or multiple consumers.
+The consumer, on the other hand, retrieve named data using  location independent
+names which are not tied to any interface identifier (also called locator).
+This transport model allows to implement reliable consumer mobility without
+any special mobility management protocol. hICN supports communication of multi-homed
+end-hosts without any special treatment in the transport layer.
+The hICN network layer can also implement robust usage of multi-path
+forwarding in IPv6 networks as balanced request/reply flows self-stabilize
+network congestion see <span>[<a href="#CCN" class="xref">CCN</a>]</span>,<span>[<a href="#NDN" class="xref">NDN</a>]</span>, <span>[<a href="#RAQ" class="xref">RAQ</a>]</span> .<a href="#section-2-9" class="pilcrow">¶</a></p>
+<p id="section-2-10">A data packet is an IPv6 packet with a transport layer header
+carrying data from an application that produces data.
+An interest packet is an IPv6 packet with a transport layer header
+and is used to unambiguously fetch a data packet from a producer end
+point.<a href="#section-2-10" class="pilcrow">¶</a></p>
+<div id="end-points">
+<section id="section-2.1">
+        <h3 id="name-end-points">
+<a href="#section-2.1" class="section-number selfRef">2.1. </a><a href="#name-end-points" class="section-name selfRef">End-points</a>
+        </h3>
+<p id="section-2.1-1">In hICN we introduce two new kinds of endpoints: the producer and the consumer.
+We identify two kind of communication sockets each with a specific API: the
+producer and consumer sockets. These socket types are designed to exchange data
+in a multi-point to multi-point manner.
+In (h)ICN we have the same concept that is applied to a network where memories
+are distributed across the communication path. The first memory in the path is
+the production buffer of the producer end-point that forges Data Packets and
+copies them into a shared memory isolated into a namespace. Consumer sockets can
+retrieve data from such memory by using the (h)ICN network layer.
+The model just described is an inter-process communication example (IPC) that
+requires data to cross a communication network by using a transport protocol.<a href="#section-2.1-1" class="pilcrow">¶</a></p>
+<p id="section-2.1-2">The way consumers and producers synchronize depends on application requirements
+and the transport layer exposes a variety of services: stream/datagram,
+reliable/unreliable, with or without latency budgets etc. Independently of the
+specific requirements of the applications, producer sockets always perform data
+segmentation from the upper layer into Data Packets, as well as compute 
+digital signatures on the packet security envelop. This envelop can
+also be computed across a group of packets, by including a cryptographic hash of
+each packet into the transport manifest, and eventually signing only such
+manifest.<a href="#section-2.1-2" class="pilcrow">¶</a></p>
+<p id="section-2.1-3">The consumer socket, on the other end, always performs reassembly of Data
+Packets, hash integrity verification and signature verification. This is common
+to all architectures in (h)ICN. The usual assumption is that the producer socket
+uses an authentic-able identity while using namespaces that it has been
+assigned. The end-point must be able to manage the mapping of her identity and
+the allocated namespace by issuing digital certificates about the mapping. The
+consumer end-point must retrieve the associated certificate to perform the basic
+operations. It is out of scope for this document how to design and implement a
+scalable system to perform such certificate operations.<a href="#section-2.1-3" class="pilcrow">¶</a></p>
+<p id="section-2.1-4">A detailed description of transport end-points is out of scope for this document.
+A detailed description of transport end-points is out of scope for this document
+but more details can be found in <span>[<a href="#TRA" class="xref">TRA</a>]</span>.<a href="#section-2.1-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="naming">
+<section id="section-2.2">
+        <h3 id="name-naming">
+<a href="#section-2.2" class="section-number selfRef">2.2. </a><a href="#name-naming" class="section-name selfRef">Naming</a>
+        </h3>
+<p id="section-2.2-1">In hICN, two name components are defined: the name prefix and the name suffix.
+The name prefix is used to identify an application object, a service or 
+in general an application level source of data in the network. 
+This is incarnated by a listening socket that binds to the name prefix.
+The name suffix is used to index segmented data within the scope of the 
+name prefix  used by the application.<a href="#section-2.2-1" class="pilcrow">¶</a></p>
+<p id="section-2.2-2">For instance an RTP <span>[<a href="#RFC3550" class="xref">RFC3550</a>]</span> source with a given SSRC can be mapped 
+into a name prefix.  Single RTP sequence numbers can be mapped into name suffixes.
+For example an HTTP server can listen to a name prefix to serve HTTP requests.
+An HTTP reply with large payload with require the transport layer to segment 
+the application data unit according to an MTU. Name suffixes are used to
+index each segment in the socket stream.<a href="#section-2.2-2" class="pilcrow">¶</a></p>
+<p id="section-2.2-3">More details about how to use hICN to transport HTTP or RTP will be given
+in a different document.<a href="#section-2.2-3" class="pilcrow">¶</a></p>
+<div id="name-prefix">
+<section id="section-2.2.1">
+          <h4 id="name-name-prefix">
+<a href="#section-2.2.1" class="section-number selfRef">2.2.1. </a><a href="#name-name-prefix" class="section-name selfRef">Name prefix</a>
+          </h4>
+<p id="section-2.2.1-1">The format of an hICN name prefix is the following:<a href="#section-2.2.1-1" class="pilcrow">¶</a></p>
+<span id="name-hicn-ipv6-name-prefix"></span><div id="fig-name-prefix">
+<figure id="figure-2">
+            <div class="artwork art-text alignLeft" id="section-2.2.1-2.1">
+<pre>
+|            64 bits             |        64 bits                |
++--------------------------------+-------------------------------+
+|           routable prefix      |       data identifier         |
++----------------------------------------------------------------+
+      
+</pre>
+</div>
+<figcaption><a href="#figure-2">Figure 2</a>:
+<a href="#name-hicn-ipv6-name-prefix" class="selfRef">hICN IPv6 name prefix.</a>
+            </figcaption></figure>
+</div>
+<p id="section-2.2.1-3">It is composed of a routable IPv6 /64 prefix as per <span>[<a href="#RFC3587" class="xref">RFC3587</a>]</span> which
+SHOULD be globally routable. The data identifier is encoded in 64 bits.
+An application can use several identifiers if needed.<a href="#section-2.2.1-3" class="pilcrow">¶</a></p>
+<p id="section-2.2.1-4">From the description given above, the name prefix is a location independent 
+name encoded in an IPv6 address.<a href="#section-2.2.1-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="name-suffix">
+<section id="section-2.2.2">
+          <h4 id="name-name-suffix">
+<a href="#section-2.2.2" class="section-number selfRef">2.2.2. </a><a href="#name-name-suffix" class="section-name selfRef">Name Suffix</a>
+          </h4>
+<p id="section-2.2.2-1">The name suffix is used by the transport layer protocol to index segments.
+The segment MUST be indexed in the end-points and in the network with the same
+suffix. This implies that there is one transport segment per IP packet and that
+IP fragmentation is not allowed. Extension to allow secure fragmentation are
+possible, such as <span>[<a href="#FRA" class="xref">FRA</a>]</span> but they are out of scope for this document.
+It is up to the producer end-point to determine how to perform segmentation
+depending on the use case. An MTU path discovery protocol for hICN is out of 
+scope of this document and additional work is required to extend existing protocols
+or design new ones.<a href="#section-2.2.2-1" class="pilcrow">¶</a></p>
+<span id="name-hicn-name-suffix"></span><div id="fig-name-suffix">
+<figure id="figure-3">
+            <div class="artwork art-text alignLeft" id="section-2.2.2-2.1">
+<pre>
+            |            32 bits         | 
+            +-----------------------------
+            |           name suffix      |      
+            +-----------------------------
+      
+</pre>
+</div>
+<figcaption><a href="#figure-3">Figure 3</a>:
+<a href="#name-hicn-name-suffix" class="selfRef">hICN name suffix.</a>
+            </figcaption></figure>
+</div>
+</section>
+</div>
+</section>
+</div>
+<div id="packet-format">
+<section id="section-2.3">
+        <h3 id="name-packet-format">
+<a href="#section-2.3" class="section-number selfRef">2.3. </a><a href="#name-packet-format" class="section-name selfRef">Packet Format</a>
+        </h3>
+<p id="section-2.3-1">Two protocol data units are defined below: the interest (request)
+and the data (reply).<a href="#section-2.3-1" class="pilcrow">¶</a></p>
+<p id="section-2.3-2">They are composed of a network and transport header. The transport header is
+the same for both packet types while the network header is slightly different.<a href="#section-2.3-2" class="pilcrow">¶</a></p>
+<div id="interest-packet">
+<section id="section-2.3.1">
+          <h4 id="name-interest-packet">
+<a href="#section-2.3.1" class="section-number selfRef">2.3.1. </a><a href="#name-interest-packet" class="section-name selfRef">Interest Packet</a>
+          </h4>
+<span id="name-ipv6-interest-packet-l3-hea"></span><div id="fig-interest">
+<figure id="figure-4">
+            <div class="artwork art-text alignLeft" id="section-2.3.1-1.1">
+<pre>
+0                   1                   2                   3
+0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|Version| Traffic Class |             Flow Label                |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|         Payload Length        |  Next Header  |   Hop Limit   |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                                                               |
++                                                               +
+|                                                               |
++                         Source Address                        +
+|                                                               |
++                                                               +
+|                                                               |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                                                               |
++                                                               +
+|                                                               |
++                          Name Prefix                          +
+|                                                               |
++                                                               +
+|                                                               |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+                  Interest Packet Header Format
+</pre>
+</div>
+<figcaption><a href="#figure-4">Figure 4</a>:
+<a href="#name-ipv6-interest-packet-l3-hea" class="selfRef">IPv6 interest packet L3 header.</a>
+            </figcaption></figure>
+</div>
+<div class="artwork art-text alignLeft" id="section-2.3.1-2">
+<pre>
+Source Address:       128-bit address of the originator of the packet
+                      (possibly not the end-host but a previous hICN node).
+
+Name Prefix:          128-bit name prefix of the intended service.
+</pre>
+<a href="#section-2.3.1-2" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+<div id="data-packet">
+<section id="section-2.3.2">
+          <h4 id="name-data-packet">
+<a href="#section-2.3.2" class="section-number selfRef">2.3.2. </a><a href="#name-data-packet" class="section-name selfRef">Data Packet</a>
+          </h4>
+<span id="name-ipv6-data-packet-l3-header"></span><div id="fig-data">
+<figure id="figure-5">
+            <div class="artwork art-text alignLeft" id="section-2.3.2-1.1">
+<pre>
+
+0                   1                   2                   3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|Version| Traffic Class |             Flow Label                |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|         Payload Length        |  Next Header  |   Hop Limit   |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                                                               |
++                                                               +
+|                                                               |
++                         Name Prefix                           +
+|                                                               |
++                                                               +
+|                                                               |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                                                               |
++                                                               +
+|                                                               |
++                     Destination Address                       +
+|                                                               |
++                                                               +
+|                                                               |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+                  Data Packet Header Format
+</pre>
+</div>
+<figcaption><a href="#figure-5">Figure 5</a>:
+<a href="#name-ipv6-data-packet-l3-header" class="selfRef">IPv6 data packet L3 header.</a>
+            </figcaption></figure>
+</div>
+<div class="artwork art-text alignLeft" id="section-2.3.2-2">
+<pre>
+Name Prefix:          128-bit name prefix of the intended service.
+
+Source Address:       128-bit address of the destination of the packet
+                      (possibly not the end-host but the next hICN node).
+</pre>
+<a href="#section-2.3.2-2" class="pilcrow">¶</a>
+</div>
+<span id="name-transport-header-for-data-a"></span><div id="fig-transport">
+<figure id="figure-6">
+            <div class="artwork art-text alignLeft" id="section-2.3.2-3.1">
+<pre>
+0                   1                   2                   3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|          Source Port          |       Destination Port        |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                          Name Suffix                          |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                           Path Label                          |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|  Data |   Time    |M|A|S|R|S|F|        Loss Detection         |
+| Offset|   Scale   |A|C|I|S|Y|I|         and Recovery          |
+|       |           |N|K|G|T|N|N|                               |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|           Checksum            |             Lifetime          |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+</pre>
+</div>
+<figcaption><a href="#figure-6">Figure 6</a>:
+<a href="#name-transport-header-for-data-a" class="selfRef">Transport header for data and interest packets.</a>
+            </figcaption></figure>
+</div>
+<div class="artwork art-text alignLeft" id="section-2.3.2-4">
+<pre>
+Name Suffix:       32-bit name-suffix of the packet  
+                   (possibly not the end-host but a previous hICN node).
+
+Path Label:        32-bit label used to carry an encoding of the path
+                   between the consumer and data responder, be it an
+                   intermediate  node or the producer end-point. 
+
+Time Scale:        6-bit natural number in the range 1-64 used as a scaling 
+                   factor for time calculations. If not null it is used
+                   to scale lifetime. 
+
+Manifest:          flag to indicate the packet carries a transport manifest
+                   in the payload.
+
+Signature:         flag to indicate the packet carries an authentication
+                   header with a signature. Interest packet do not carry
+                   signatures.
+
+Loss Detection:    16-bit natural number used to implement data 
+and Recovery       sequencing on per adjacency basis to detect an 
+                   recover losses using the mechanism WLDR described 
+                   in {{WLD}}.
+
+Lifetime:          16-bit unsigned integer to carry the packet lifetime in
+                   milliseconds.  
+
+Checksum:          Updated using RFC 1624.
+</pre>
+<a href="#section-2.3.2-4" class="pilcrow">¶</a>
+</div>
+<span id="name-transport-header-for-data-an"></span><div id="fig-transport-udp">
+<figure id="figure-7">
+            <div class="artwork art-text alignLeft" id="section-2.3.2-5.1">
+<pre>
+0                   1                   2                   3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|          Source Port          |       Destination Port        |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|             Length            |            Checksum           |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                          Name Suffix                          |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                           Path Label                          |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|  Data |   Time    |M|A|S|R|S|F|        Loss Detection         |
+| Offset|   Scale   |A|C|I|S|Y|I|         and Recovery          |
+|       |           |N|K|G|T|N|N|                               |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|           Checksum            |             Lifetime          |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+</pre>
+</div>
+<figcaption><a href="#figure-7">Figure 7</a>:
+<a href="#name-transport-header-for-data-an" class="selfRef">Transport header for data and interest packets using UDP header.</a>
+            </figcaption></figure>
+</div>
+<p id="section-2.3.2-6">Both transport headers can be used to carry name suffix information.<a href="#section-2.3.2-6" class="pilcrow">¶</a></p>
+<p id="section-2.3.2-7">The following sections describe the components of an hICN node 
+and the packet processing operations.<a href="#section-2.3.2-7" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="packet-cache">
+<section id="section-2.4">
+        <h3 id="name-packet-cache">
+<a href="#section-2.4" class="section-number selfRef">2.4. </a><a href="#name-packet-cache" class="section-name selfRef">Packet cache</a>
+        </h3>
+<p id="section-2.4-1">The packet cache is a router local memory used to temporarily store requests and reply.
+The simplest incarnation of the packet cache MUST index packets by full name, i.e.
+the concatenation of the name prefix and suffix.
+Insertion and deletion of packets in the cache is described below.<a href="#section-2.4-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="forwarding">
+<section id="section-2.5">
+        <h3 id="name-forwarding">
+<a href="#section-2.5" class="section-number selfRef">2.5. </a><a href="#name-forwarding" class="section-name selfRef">Forwarding</a>
+        </h3>
+<p id="section-2.5-1">The forwarding path in hICN is composed of two components: the interest and 
+data path. Requests and replies are processed at the hICN node 
+in a different way. Both forwarding paths require
+a packet cache to be incorporated into the router. The  cache 
+is used to temporarily store requests and replies for a relatively short
+amount of time.<a href="#section-2.5-1" class="pilcrow">¶</a></p>
+<p id="section-2.5-2">By caching a request in an hICN node, the reply can be transmitted back 
+to the right nodes as the source address field in the interest 
+contains the interface identifier of the hICN node 
+having transmitted the request.  Replies are optionally cached if needed.<a href="#section-2.5-2" class="pilcrow">¶</a></p>
+<p id="section-2.5-3">This means that the interest forwarding path is based on lookups in the IP FIB
+just like any other IP packet, with the additional processing due to a cache lookup
+to check if the actual reply is already present in the local cache for expedited
+reply.<a href="#section-2.5-3" class="pilcrow">¶</a></p>
+<p id="section-2.5-4">On the other hand, data packet forwarding is similar to label swapping <span>[<a href="#RFC3031" class="xref">RFC3031</a>]</span>, being the packet 
+name identifier (prefix plus suffix) the forwarding label. The next hop for the reply in transit
+is indeed selected by using information in a cached matching request.<a href="#section-2.5-4" class="pilcrow">¶</a></p>
+<p id="section-2.5-5">The name prefix in the packet header is never modified along the path for both
+requests and replies, while the locator, i.e. the interface identifier 
+written in the source or destination address field, for
+interest or data packets respectively, is modified at the egress of the router
+as reported below.<a href="#section-2.5-5" class="pilcrow">¶</a></p>
+<div id="interest-path">
+<section id="section-2.5.1">
+          <h4 id="name-interest-path">
+<a href="#section-2.5.1" class="section-number selfRef">2.5.1. </a><a href="#name-interest-path" class="section-name selfRef">Interest Path</a>
+          </h4>
+<p id="section-2.5.1-1">At the router ingress the incoming interest packet I is parsed to obtain the name prefix and the name suffix.
+An exact match look up is made in the packet cache using the full packet name as key.
+Based on the outcome of the lookup the following options are possible:<a href="#section-2.5.1-1" class="pilcrow">¶</a></p>
+<ol type="1" start="1" class="normal" id="section-2.5.1-2">
+            <li id="section-2.5.1-2.1">
+              <p id="section-2.5.1-2.1.1">at least one match is found.  <a href="#section-2.5.1-2.1.1" class="pilcrow">¶</a></p>
+<p id="section-2.5.1-2.1.2">
+1.1. If one match is a data packet D, other matches are ignored, and D is prepared for transmission by setting D's<a href="#section-2.5.1-2.1.2" class="pilcrow">¶</a></p>
+<p id="section-2.5.1-2.1.3">
+ destination address with I's source address. D is passed to the egress to further processing before transmission.
+ For instance the next-hop MAY be selected  by using the router IPv6 FIB (longest prefix match). 
+ The IPv6 FIB lookup MIGHT be saved
+ in case the next-hop can be derived directly from information previously derived by processing the incoming 
+ interest packet I. I is eventually dropped.  <a href="#section-2.5.1-2.1.3" class="pilcrow">¶</a></p>
+<p id="section-2.5.1-2.1.4">
+1.2. There is one or multiple matches and all are interest packets.  <a href="#section-2.5.1-2.1.4" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-2.5.1-2.1.5.1">One matching interest has the same source address and I is classified as duplicate and further processed as 
+duplicate.<a href="#section-2.5.1-2.1.5.1" class="pilcrow">¶</a>
+</li>
+                <li id="section-2.5.1-2.1.5.2">Matching interest packets have different source addresses and I is classified as filtered and stored in 
+the cache.<a href="#section-2.5.1-2.1.5.2" class="pilcrow">¶</a>
+</li>
+              </ul>
+</li>
+            <li id="section-2.5.1-2.2">a match is not found and I passed to the egress for further processing to determine the next-hop by using 
+ the router IP FIB.<a href="#section-2.5.1-2.2" class="pilcrow">¶</a>
+</li>
+          </ol>
+<p id="section-2.5.1-3">Notice that the destination address field in the interest packet is polymorphic as it has two different types
+ based on the data structured it is looked-up against. It has the type of a location independent name while used to find
+ a match in the packet cache and it has an address prefix type to find the next-hop in the IPv6 FIB.
+Polymorphism is transparent for the forwarding plane while it has several implications in the control plane.<a href="#section-2.5.1-3" class="pilcrow">¶</a></p>
+<span id="name-the-interest-packet-hits-a-"></span><div id="fig-interest-data-hit">
+<figure id="figure-8">
+            <div class="artwork art-text alignLeft" id="section-2.5.1-4.1">
+<pre>
+           Packet Cache
+ RX       +------------+
+ Interest |            | Translation Operation
++---------&gt; Data Hit   | IPv6Hdr(Data).DstAddr:= IPv6Hdr(Interest).SrcAddr 
+ TX       |      +     |
+ Data     |      |     |
+&lt;---------+ &lt;----+     |  
+          +------------+
+</pre>
+</div>
+<figcaption><a href="#figure-8">Figure 8</a>:
+<a href="#name-the-interest-packet-hits-a-" class="selfRef">The interest packet hits a matching data packet in the packet cache.</a>
+            </figcaption></figure>
+</div>
+<span id="name-the-interest-packet-finds-n"></span><div id="fig-interest-data-interest-miss">
+<figure id="figure-9">
+            <div class="artwork art-text alignLeft" id="section-2.5.1-5.1">
+<pre>
+          +----------------+    +--------+
+ Interest |                |    |        | Egress NIC
+  +-------&gt; Data Miss      +---&gt;+ IP FIB |+-----&gt;
+          |                |    |        | Translation Operation
+          | Interest Miss  |    |        | IPv6Hdr(Interest).SrcAddr:= NIC.Addr
+          |                |    |        |
+          +----------------+    +--------+
+          
+</pre>
+</div>
+<figcaption><a href="#figure-9">Figure 9</a>:
+<a href="#name-the-interest-packet-finds-n" class="selfRef">The interest packet finds no match in the packet cache and is processed to find a next-hop.</a>
+            </figcaption></figure>
+</div>
+<span id="name-the-interest-packet-hits-an"></span><div id="fig-interest-hit">
+<figure id="figure-10">
+            <div class="artwork art-text alignLeft" id="section-2.5.1-6.1">
+<pre>
+                                 Same src addr
+         Packet Cache            +-----------+
+         +--------------+        | Duplicate |
+Interest |              |        +-----^-----+
+ +-------&gt; Data Miss    |              |
+         | Interest Hit +--------------&gt;-+
+         |              |              |
+         +--------------+              |
+                                 +-----v-----+
+                                 |Filtered   |
+                                 +-----------+
+                                 Different src addr
+          
+</pre>
+</div>
+<figcaption><a href="#figure-10">Figure 10</a>:
+<a href="#name-the-interest-packet-hits-an" class="selfRef">The interest packet hits an interest packet in the packet cache.</a>
+            </figcaption></figure>
+</div>
+</section>
+</div>
+<div id="data-path">
+<section id="section-2.5.2">
+          <h4 id="name-data-path">
+<a href="#section-2.5.2" class="section-number selfRef">2.5.2. </a><a href="#name-data-path" class="section-name selfRef">Data Path</a>
+          </h4>
+<p id="section-2.5.2-1">At the router ingress the incoming data packet D is parsed to obtain the name prefix and the name suffix.
+An exact match look up is made in the packet cache using the full packet name as key.
+Based on the outcome of the lookup the following options are possible:<a href="#section-2.5.2-1" class="pilcrow">¶</a></p>
+<ol type="1" start="1" class="normal" id="section-2.5.2-2">
+            <li id="section-2.5.2-2.1">one or multiple matching interest packets are found
+ 1.1. The data packet D is cloned to have as many copies as the number of matching interests including D. 
+ The destination address field of each copy of D is set with the source address field of each interest packet.
+ All copies are passed to the egress to further processing before transmission in order to find each data packet's 
+ next-hop.<a href="#section-2.5.2-2.1" class="pilcrow">¶</a>
+</li>
+            <li id="section-2.5.2-2.2">No matching is an interest packet and the D is dropped.<a href="#section-2.5.2-2.2" class="pilcrow">¶</a>
+</li>
+          </ol>
+<span id="name-the-data-packet-hits-an-int"></span><div id="fig-data-hit">
+<figure id="figure-11">
+            <div class="artwork art-text alignLeft" id="section-2.5.2-3.1">
+<pre>
+    RX
+    Data   +-----------+
++--------&gt; | Interest  |
+           | Hit       |
+           |  +        |
+           +-----------+
+              |
+              |
+              |
+              |       Translation Operation
+              |       +------&gt;
+              |       | IPv6Hdr(Data[1]).DstAddr:=IPv6Hdr(Interest[1]).SrcAddr
+              |       | TX Data[1]
+              +-----&gt; |
+                      |  ...
+                      |
+                      |
+                      |  IPv6Hdr(Data[N]).DstAddr:=IPv6Hdr(Interest[N]).SrcAddr
+                      |  TX Data[N]
+                      +------&gt;
+
+
+
+</pre>
+</div>
+<figcaption><a href="#figure-11">Figure 11</a>:
+<a href="#name-the-data-packet-hits-an-int" class="selfRef">The data packet hits an interest packet in the packet cache.</a>
+            </figcaption></figure>
+</div>
+<span id="name-the-data-packet-is-drop-in-"></span><div id="fig-data-no-hit">
+<figure id="figure-12">
+            <div class="artwork art-text alignLeft" id="section-2.5.2-4.1">
+<pre>
+  RX             Packet Cache
+  Data      +------------------+ Drop Data
++----------&gt;+   Interest Miss  +------&gt;
+            |   OR Data hit    |
+            +------------------+
+</pre>
+</div>
+<figcaption><a href="#figure-12">Figure 12</a>:
+<a href="#name-the-data-packet-is-drop-in-" class="selfRef">The data packet is drop in case no interest match is found in the packet cache.</a>
+            </figcaption></figure>
+</div>
+</section>
+</div>
+</section>
+</div>
+</section>
+</div>
+<div id="security">
+<section id="section-3">
+      <h2 id="name-security">
+<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-security" class="section-name selfRef">Security</a>
+      </h2>
+<p id="section-3-1">hICN inherits ICN data-centric security model:
+integrity, data-origin authenticity and confidentiality are tied to
+the content rather than to the channel. 
+Integrity and data-origin authenticity are provided
+through a digital signature computed by the producer and included in
+each data packet. Integrity and data-origin authenticity are provided in two ways
+using two approaches: the first one based on IP Authenticated Header
+<span>[<a href="#RFC4302" class="xref">RFC4302</a>]</span> and the second one based on transport manifests.
+Notice that the IP AH is not used as an IPv6 extension header as it is appended
+after the transport header. However the choice of the IP AH has been made
+in order to exploit existing protocol implementations in the end-points.<a href="#section-3-1" class="pilcrow">¶</a></p>
+<p id="section-3-2">When using IP AH, the signature is computed over<a href="#section-3-2" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-3-3.1">(i)IP or extension
+header fields either immutable in transit or that 
+are predictable in value upon arrival at the consumer,<a href="#section-3-3.1" class="pilcrow">¶</a>
+</li>
+        <li id="section-3-3.2">(ii) the AH
+header with the signature field set to zero. We recall that in hICN
+the destination header field is not immutable nor predictable and must be set
+to zero for the signature computation. We also point out 
+the AH in placed after the TCP header in order to prevent any kind of filtering from
+network devices such as middleboxes.<a href="#section-3-3.2" class="pilcrow">¶</a>
+</li>
+      </ul>
+<span id="name-the-ip-authentication-heade"></span><div id="fig-ah">
+<figure id="figure-13">
+        <div class="artwork art-text alignLeft" id="section-3-4.1">
+<pre>
+0                   1                   2                   3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|  Next Header  |  Payload Len  |    ValidAlg   |               |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                          Timestamp                            |
+|                                                               |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+/                                                               /
+/                            KeyID                              / 
+/                                                               /
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+/                                                               /
+/                           Signature                           /
+/                                                               /
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+</pre>
+</div>
+<figcaption><a href="#figure-13">Figure 13</a>:
+<a href="#name-the-ip-authentication-heade" class="selfRef">The IP authentication header appended after the transport header to carry packet signatures.</a>
+        </figcaption></figure>
+</div>
+<div class="artwork art-text alignLeft" id="section-3-5">
+<pre>
+ValidAlg:          8-bit index to indicate which validation algorithm
+                   must be used to verify the signature. 
+
+Timestamp:         64-bit time stamp that indicates the validity of the
+                   signature.
+
+KeyID:             256-bit key identifier.
+
+Signature:         Variable length field that carries the cryptographic
+                   signature of the security envelope.
+                   It is 128 bytes for RSA-1024, 256 bytes for RSA-2048,
+                   56 bytes for EDCSA 192, 72 bytes for ECDSA 256.
+</pre>
+<a href="#section-3-5" class="pilcrow">¶</a>
+</div>
+<p id="section-3-6">The transport manifest  is a L4 entity computed 
+at the producer which contains the list of names of a group of data packets to convey 
+to  the consumer. hICN cryptographic hashes of data packets are then computed instead 
+of signatures. The hashes are computed on immutable fields as explained above when using the
+IP AH. Moreover, the manifest must be signed to guarantee a level of security 
+equivalent to packet-wise signatures.
+When the producer uses the manifest data packets do not carry the AH which is carried
+by the transport manifest only.<a href="#section-3-6" class="pilcrow">¶</a></p>
+<p id="section-3-7">hICN is oblivious of the trust model adopted by consumers and works with 
+any of the existing proposals.<a href="#section-3-7" class="pilcrow">¶</a></p>
+<span id="name-the-transport-manifest-gene"></span><div id="fig-man">
+<figure id="figure-14">
+        <div class="artwork art-text alignLeft" id="section-3-8.1">
+<pre>
+0                   1                   2                   3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|Version| MType |HashAlg|NextStr|     Flags     |NumberOfEntries|
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                                                               |
++                                                               +
+|                                                               |
++                             Prefix                            +
+|                                                               |
++                                                               +
+|                                                               |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                           Name-suffix[1]                      |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                           Hash Value[1]                       |
+|                                                               |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+                               . . . 
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                           Name-suffix[NumberOfEntries]        |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                           Hash Value [NumberOfEntries]        |
+|                                                               |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+</pre>
+</div>
+<figcaption><a href="#figure-14">Figure 14</a>:
+<a href="#name-the-transport-manifest-gene" class="selfRef">The transport manifest, generated by the producer end-point for the consumer end-point, contains names, integrity hashes and is signed with the producer end-point private key</a>
+        </figcaption></figure>
+</div>
+<div class="artwork art-text alignLeft" id="section-3-9">
+<pre>
+Version:          8-bit index to indicate which validation algorithm
+                  must be used to verify the signature. 
+
+MType:            64-bit time stamp that indicates the validity of the
+                  signature.
+
+HashAlg:          256-bit key identifier.
+
+NextStr:          Encode an operator use to predict the name-suffix
+                  sequence  
+
+Flags:            Flags.
+
+NumberOfEntries:  8-bit field that encodes the number of packets indexed
+                  in the manifest.
+
+Name-prefix:      128-bit field carrying the name-prefix common to all
+                  packets indexed in the manifest.
+                  
+Name-suffix:      32-bit field carrying the name-suffix.
+
+Hash-value:       256-bit field carrying the SHA-256 hash of the packet
+                  security envelop.  
+</pre>
+<a href="#section-3-9" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+<div id="the-end-host-model-and-end-to-end-considerations">
+<section id="section-4">
+      <h2 id="name-the-end-host-model-and-end-">
+<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-the-end-host-model-and-end-" class="section-name selfRef">The End-host model and End-to-End considerations</a>
+      </h2>
+<p id="section-4-1">In hICN the end-host model is very similar to a regular IPv6 end-host with some extensions.
+An end-host is capable of opening consumer and producer transport end-points, one
+to receive data and one to send data under a given name prefix.
+The end-host continues to identify interfaces using IPv6 addresses (locators or
+routing locators, RLOCs, using LISP terminology), just like any IPv6 router.
+In addition to that, transport end-points bind to location-independent names,
+similar to LISP end-point identifiers (EIDs). However, instead of using name prefixes to
+identify end-hosts only, in hICN a name prefix is used to identify a data source.<a href="#section-4-1" class="pilcrow">¶</a></p>
+<p id="section-4-2">There is an analogy between IPv6 multicast and the hICN data forwarding path for
+one-to-many communications, as the IPv6 multicast group address identifies data that group members
+receive from a single sender. Notice that in hICN a data packet transmission stores the
+identifiers in the source address field while in IPv6 multicast it is stored in the
+destination address field.<a href="#section-4-2" class="pilcrow">¶</a></p>
+<p id="section-4-3">Theres is also an analogy between IPv6 anycast and the hICN interest forwarding path,
+where multiple interfaces make use of the same
+IPv6 (anycast) address. Multiple instances of the same applications can then run at
+different end-points to eventually reply to the same request.<a href="#section-4-3" class="pilcrow">¶</a></p>
+<p id="section-4-4">An hICN network node behaves as an end-host consumer end-point for the upstream producer end-point
+as all replies are forced to flow back to the same hICN that transmitted the requests.
+An hICN network node may be able to reply to a request on behalf of a end-point producer,
+in that case that hICN node behaves as an end-host for the consumer end-point.<a href="#section-4-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="iana-considerations">
+<section id="section-5">
+      <h2 id="name-iana-considerations">
+<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
+      </h2>
+<p id="section-5-1">There are no IANA considerations in this specification.<a href="#section-5-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="acknowledgements">
+<section id="section-6">
+      <h2 id="name-acknowledgements">
+<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-acknowledgements" class="section-name selfRef">Acknowledgements</a>
+      </h2>
+<p id="section-6-1">The authors would like to thank David Ward, David Oran, Paul Polakos, Mark Townsley, 
+Mauro Sardara and Alberto Compagno
+for suggestions on how to improve the architecture and the current document.<a href="#section-6-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<section id="section-7">
+      <h2 id="name-references">
+<a href="#section-7" class="section-number selfRef">7. </a><a href="#name-references" class="section-name selfRef">References</a>
+      </h2>
+<section id="section-7.1">
+        <h3 id="name-normative-references">
+<a href="#section-7.1" class="section-number selfRef">7.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+        </h3>
+<dl class="references">
+<dt id="RFC2119">[RFC2119]</dt>
+        <dd>
+<span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03">March 1997</time>
+            <span>, &lt;<a href="https://www.rfc-editor.org/info/rfc2119">https://www.rfc-editor.org/info/rfc2119</a>&gt;</span>. </dd>
+<dt id="RFC3031">[RFC3031]</dt>
+        <dd>
+<span class="refAuthor">Rosen, E.</span><span class="refAuthor">, Viswanathan, A.</span><span class="refAuthor">, and R. Callon</span>, <span class="refTitle">"Multiprotocol Label Switching Architecture"</span>, <span class="seriesInfo">RFC 3031</span>, <span class="seriesInfo">DOI 10.17487/RFC3031</span>, <time datetime="2001-01">January 2001</time>
+            <span>, &lt;<a href="https://www.rfc-editor.org/info/rfc3031">https://www.rfc-editor.org/info/rfc3031</a>&gt;</span>. </dd>
+<dt id="RFC3550">[RFC3550]</dt>
+        <dd>
+<span class="refAuthor">Schulzrinne, H.</span><span class="refAuthor">, Casner, S.</span><span class="refAuthor">, Frederick, R.</span><span class="refAuthor">, and V. Jacobson</span>, <span class="refTitle">"RTP: A Transport Protocol for Real-Time Applications"</span>, <span class="seriesInfo">STD 64</span>, <span class="seriesInfo">RFC 3550</span>, <span class="seriesInfo">DOI 10.17487/RFC3550</span>, <time datetime="2003-07">July 2003</time>
+            <span>, &lt;<a href="https://www.rfc-editor.org/info/rfc3550">https://www.rfc-editor.org/info/rfc3550</a>&gt;</span>. </dd>
+<dt id="RFC3587">[RFC3587]</dt>
+        <dd>
+<span class="refAuthor">Hinden, R.</span><span class="refAuthor">, Deering, S.</span><span class="refAuthor">, and E. Nordmark</span>, <span class="refTitle">"IPv6 Global Unicast Address Format"</span>, <span class="seriesInfo">RFC 3587</span>, <span class="seriesInfo">DOI 10.17487/RFC3587</span>, <time datetime="2003-08">August 2003</time>
+            <span>, &lt;<a href="https://www.rfc-editor.org/info/rfc3587">https://www.rfc-editor.org/info/rfc3587</a>&gt;</span>. </dd>
+<dt id="RFC4302">[RFC4302]</dt>
+        <dd>
+<span class="refAuthor">Kent, S.</span>, <span class="refTitle">"IP Authentication Header"</span>, <span class="seriesInfo">RFC 4302</span>, <span class="seriesInfo">DOI 10.17487/RFC4302</span>, <time datetime="2005-12">December 2005</time>
+            <span>, &lt;<a href="https://www.rfc-editor.org/info/rfc4302">https://www.rfc-editor.org/info/rfc4302</a>&gt;</span>. </dd>
+<dt id="RFC6830">[RFC6830]</dt>
+        <dd>
+<span class="refAuthor">Farinacci, D.</span><span class="refAuthor">, Fuller, V.</span><span class="refAuthor">, Meyer, D.</span><span class="refAuthor">, and D. Lewis</span>, <span class="refTitle">"The Locator/ID Separation Protocol (LISP)"</span>, <span class="seriesInfo">RFC 6830</span>, <span class="seriesInfo">DOI 10.17487/RFC6830</span>, <time datetime="2013-01">January 2013</time>
+            <span>, &lt;<a href="https://www.rfc-editor.org/info/rfc6830">https://www.rfc-editor.org/info/rfc6830</a>&gt;</span>. </dd>
+<dt id="RFC8200">[RFC8200]</dt>
+        <dd>
+<span class="refAuthor">Deering, S.</span><span class="refAuthor"> and R. Hinden</span>, <span class="refTitle">"Internet Protocol, Version 6 (IPv6) Specification"</span>, <span class="seriesInfo">STD 86</span>, <span class="seriesInfo">RFC 8200</span>, <span class="seriesInfo">DOI 10.17487/RFC8200</span>, <time datetime="2017-07">July 2017</time>
+            <span>, &lt;<a href="https://www.rfc-editor.org/info/rfc8200">https://www.rfc-editor.org/info/rfc8200</a>&gt;</span>. </dd>
+<dt id="RFC8569">[RFC8569]</dt>
+        <dd>
+<span class="refAuthor">Mosko, M.</span><span class="refAuthor">, Solis, I.</span><span class="refAuthor">, and C. Wood</span>, <span class="refTitle">"Content-Centric Networking (CCNx) Semantics"</span>, <span class="seriesInfo">RFC 8569</span>, <span class="seriesInfo">DOI 10.17487/RFC8569</span>, <time datetime="2019-07">July 2019</time>
+            <span>, &lt;<a href="https://www.rfc-editor.org/info/rfc8569">https://www.rfc-editor.org/info/rfc8569</a>&gt;</span>. </dd>
+<dt id="RFC8609">[RFC8609]</dt>
+      <dd>
+<span class="refAuthor">Mosko, M.</span><span class="refAuthor">, Solis, I.</span><span class="refAuthor">, and C. Wood</span>, <span class="refTitle">"Content-Centric Networking (CCNx) Messages in TLV Format"</span>, <span class="seriesInfo">RFC 8609</span>, <span class="seriesInfo">DOI 10.17487/RFC8609</span>, <time datetime="2019-07">July 2019</time>
+            <span>, &lt;<a href="https://www.rfc-editor.org/info/rfc8609">https://www.rfc-editor.org/info/rfc8609</a>&gt;</span>. </dd>
+</dl>
+</section>
+<section id="section-7.2">
+        <h3 id="name-informative-references">
+<a href="#section-7.2" class="section-number selfRef">7.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
+        </h3>
+<dl class="references">
+<dt id="CCN">[CCN]</dt>
+        <dd>
+<span class="refAuthor">Jacobson, V.</span><span class="refAuthor">, Smetters, D.</span><span class="refAuthor">, Thornton, J.</span><span class="refAuthor">, Plass, M.</span><span class="refAuthor">, Briggs, N.</span><span class="refAuthor">, and R. Braynard</span>, <span class="refTitle">"Networking named content"</span>, <span class="seriesInfo">DOI 10.1145/1658939.1658941</span>, <span class="seriesInfo">Proceedings of the 5th international conference on Emerging networking experiments and technologies - CoNEXT '09</span>, <time datetime="2009">2009</time>
+          <span>, &lt;<a href="https://doi.org/10.1145/1658939.1658941">https://doi.org/10.1145/1658939.1658941</a>&gt;</span>. </dd>
+<dt id="FRA">[FRA]</dt>
+        <dd>
+<span class="refAuthor">Mosko, M.</span><span class="refAuthor"> and C. Wood</span>, <span class="refTitle">"Secure Fragmentation for Content Centric Networking"</span>, <span class="seriesInfo">DOI 10.1109/mass.2015.51</span>, <span class="seriesInfo">2015 IEEE 12th International Conference on Mobile Ad Hoc and Sensor Systems</span>, <time datetime="2015-10">October 2015</time>
+          <span>, &lt;<a href="https://doi.org/10.1109/mass.2015.51">https://doi.org/10.1109/mass.2015.51</a>&gt;</span>. </dd>
+<dt id="MAN">[MAN]</dt>
+        <dd>
+<span class="refAuthor">Baugher, M.</span><span class="refAuthor">, Davie, B.</span><span class="refAuthor">, Narayanan, A.</span><span class="refAuthor">, and D. Oran</span>, <span class="refTitle">"Self-verifying names for read-only named data"</span>, <span class="seriesInfo">DOI 10.1109/infcomw.2012.6193505</span>, <span class="seriesInfo">2012 Proceedings IEEE INFOCOM Workshops</span>, <time datetime="2012-03">March 2012</time>
+          <span>, &lt;<a href="https://doi.org/10.1109/infcomw.2012.6193505">https://doi.org/10.1109/infcomw.2012.6193505</a>&gt;</span>. </dd>
+<dt id="MIR">[MIR]</dt>
+        <dd>
+<span class="refAuthor">Garcia-Luna-Aceves, J.</span><span class="refAuthor">, Martinez-Castillo, J.</span><span class="refAuthor">, and R. Menchaca-Mendez</span>, <span class="refTitle">"Routing to Multi-Instantiated Destinations: Principles, Practice, and Applications"</span>, <span class="seriesInfo">DOI 10.1109/tmc.2017.2734658</span>, <span class="seriesInfo">IEEE Transactions on Mobile Computing Vol. 17, pp. 1696-1709</span>, <time datetime="2018-07">July 2018</time>
+          <span>, &lt;<a href="https://doi.org/10.1109/tmc.2017.2734658">https://doi.org/10.1109/tmc.2017.2734658</a>&gt;</span>. </dd>
+<dt id="NDN">[NDN]</dt>
+        <dd>
+<span class="refAuthor">Zhang, L.</span><span class="refAuthor">, Afanasyev, A.</span><span class="refAuthor">, Burke, J.</span><span class="refAuthor">, Jacobson, V.</span><span class="refAuthor">, claffy, k.</span><span class="refAuthor">, Crowley, P.</span><span class="refAuthor">, Papadopoulos, C.</span><span class="refAuthor">, Wang, L.</span><span class="refAuthor">, and B. Zhang</span>, <span class="refTitle">"Named data networking"</span>, <span class="seriesInfo">DOI 10.1145/2656877.2656887</span>, <span class="seriesInfo">ACM SIGCOMM Computer Communication Review Vol. 44, pp. 66-73</span>, <time datetime="2014-07">July 2014</time>
+          <span>, &lt;<a href="https://doi.org/10.1145/2656877.2656887">https://doi.org/10.1145/2656877.2656887</a>&gt;</span>. </dd>
+<dt id="RAQ">[RAQ]</dt>
+        <dd>
+<span class="refAuthor">Carofiglio, G.</span><span class="refAuthor">, Gallo, M.</span><span class="refAuthor">, Muscariello, L.</span><span class="refAuthor">, Papalini, M.</span><span class="refAuthor">, and S. Wang</span>, <span class="refTitle">"Optimal multipath congestion control and request forwarding in Information-Centric Networks"</span>, <span class="seriesInfo">DOI 10.1109/icnp.2013.6733576</span>, <span class="seriesInfo">2013 21st IEEE International Conference on Network Protocols (ICNP)</span>, <time datetime="2013-10">October 2013</time>
+          <span>, &lt;<a href="https://doi.org/10.1109/icnp.2013.6733576">https://doi.org/10.1109/icnp.2013.6733576</a>&gt;</span>. </dd>
+<dt id="TRA">[TRA]</dt>
+        <dd>
+<span class="refAuthor">Sardara, M.</span><span class="refAuthor">, Muscariello, L.</span><span class="refAuthor">, and A. Compagno</span>, <span class="refTitle">"A transport layer and socket API for (h)ICN"</span>, <span class="seriesInfo">DOI 10.1145/3267955.3267972</span>, <span class="seriesInfo">Proceedings of the 5th ACM Conference on Information-Centric Networking - ICN '18</span>, <time datetime="2018">2018</time>
+          <span>, &lt;<a href="https://doi.org/10.1145/3267955.3267972">https://doi.org/10.1145/3267955.3267972</a>&gt;</span>. </dd>
+<dt id="WLD">[WLD]</dt>
+      <dd>
+<span class="refAuthor">Carofiglio, G.</span><span class="refAuthor">, Muscariello, L.</span><span class="refAuthor">, Papalini, M.</span><span class="refAuthor">, Rozhnova, N.</span><span class="refAuthor">, and X. Zeng</span>, <span class="refTitle">"Leveraging ICN In-network Control for Loss Detection and Recovery in Wireless Mobile networks"</span>, <span class="seriesInfo">DOI 10.1145/2984356.2984361</span>, <span class="seriesInfo">Proceedings of the 2016 conference on 3rd ACM Conference on Information-Centric Networking - ACM-ICN '16</span>, <time datetime="2016">2016</time>
+          <span>, &lt;<a href="https://doi.org/10.1145/2984356.2984361">https://doi.org/10.1145/2984356.2984361</a>&gt;</span>. </dd>
+</dl>
+</section>
+</section>
+<div id="authors-addresses">
+<section id="section-appendix.a">
+      <h2 id="name-authors-addresses">
+<a href="#name-authors-addresses" class="section-name selfRef">Authors' Addresses</a>
+      </h2>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Luca Muscariello</span></div>
+<div dir="auto" class="left"><span class="org">Cisco Systems Inc.</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:lumuscar@cisco.com" class="email">lumuscar@cisco.com</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Giovanna Carofiglio</span></div>
+<div dir="auto" class="left"><span class="org">Cisco Systems Inc.</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:gcarofig@cisco.com" class="email">gcarofig@cisco.com</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Jordan Augé</span></div>
+<div dir="auto" class="left"><span class="org">Cisco Systems Inc.</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:augjorda@cisco.com" class="email">augjorda@cisco.com</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Michele Papalini</span></div>
+<div dir="auto" class="left"><span class="org">Cisco Systems Inc.</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:mpapal@cisco.com" class="email">mpapal@cisco.com</a>
+</div>
+</address>
+</section>
+</div>
+<script>@import url('https://martinthomson.github.io/i-d-template/fonts.css');
+
+html {
+  --background-color: #fff;
+  --text-color: #222;
+  --title-color: #191919;
+  --link-color: #2a6496;
+  --highlight-color: #f9f9f9;
+  --line-color: #eee;
+  --small-font-size: 14.5px;
+}
+body {
+  max-width: 624px;
+  margin: 75px auto;
+  padding: 0 5px;
+  color: var(--text-color);
+  background-color: var(--background-color);
+  font: 16px/22px "Lora", serif;
+  scroll-behavior: smooth;
+}
+
+.ears {
+  display: none;
+}
+
+/* headings */
+#title, h1, h2, h3, h4, h5, h6 {
+  font-family: "Cabin Condensed", sans-serif;
+  font-weight: 600;
+  margin: 0.8em 0 0.3em;
+  font-size-adjust: 0.5;
+  color: var(--title-color);
+}
+#title {
+  padding: 1em 0 0.2em;
+  font-size: 32px;
+  line-height: 40px;
+  clear: both;
+}
+h1, h2, h3 {
+  font-size: 22px;
+  line-height: 26px;
+}
+h4, h5, h6 {
+  font-size: 18px;
+  line-height: 22px;
+}
+
+/* general structure */
+.author {
+  padding-bottom: 0.3em;
+}
+#abstract+p, #abstract+p code, #abstract+p samp, #abstract+p tt {
+  font-size: 18px;
+  line-height: 24px;
+}
+p {
+  padding: 0;
+  margin: 0.5em 0;
+  text-align: left;
+}
+div, span {
+  position: relative;
+}
+div {
+  margin: 0;
+}
+.alignRight.art-text {
+  background-color: var(--highlight-color);
+  border: 1px solid var(--line-color);
+  border-radius: 3px;
+  padding: 0.5em 1em 0;
+  margin-bottom: 0.5em;
+}
+.alignRight.art-text pre {
+  padding: 0;
+  width: auto;
+}
+.alignRight {
+  margin: 1em 0;
+}
+.alignRight > *:first-child {
+  border: none;
+  margin: 0;
+  float: right;
+  clear: both;
+}
+.alignRight > *:nth-child(2) {
+  clear: both;
+  display: block;
+  border: none;
+}
+svg {
+  display: block;
+}
+.alignCenter.art-text {
+  background-color: var(--highlight-color);
+  border: 1px solid var(--line-color);
+  border-radius: 3px;
+  padding: 0.5em 1em 0;
+  margin-bottom: 0.5em;
+}
+.alignCenter.art-text pre {
+  padding: 0;
+  width: auto;
+}
+.alignCenter {
+  margin: 1em 0;
+}
+.alignCenter > *:first-child {
+  border: none;
+  /* this isn't optimal, but it's an existence proof.  PrinceXML doesn't
+     support flexbox yet.
+  */
+  display: table;
+  margin: 0 auto;
+}
+
+/* lists */
+ol, ul {
+  padding: 0;
+  margin: 0 0 1em 2em;
+}
+ol ol, ul ul, ol ul, ul ol {
+  margin-left: 1em;
+}
+li {
+  margin: 0 0 0.25em 0;
+}
+.ulCompact li {
+  margin: 0;
+}
+ul.empty, .ulEmpty {
+  list-style-type: none;
+}
+ul.empty li, .ulEmpty li {
+  margin-top: 0.5em;
+}
+ul.compact, .ulCompact,
+ol.compact, .olCompact {
+  line-height: 100%;
+  margin: 0 0 0 2em;
+}
+
+/* definition lists */
+dl {
+}
+dl > dt {
+  float: left;
+  margin-right: 1em;
+}
+dl > dd {
+  margin-bottom: .8em;
+  min-height: 1.3em;
+}
+dl.compact > dd, .dlCompact > dd {
+  margin-bottom: 0em;
+}
+dl > dd > dl {
+  margin-top: 0.5em;
+  margin-bottom: 0em;
+}
+
+/* links */
+a, a[href].selfRef:hover {
+  text-decoration: none;
+}
+a[href].selfRef {
+  color: var(--text-color);
+}
+a[href] {
+  color: var(--link-color);
+}
+a[href]:hover {
+  text-decoration: underline;
+}
+a[href].selfRef:hover {
+  background-color: var(--highlight-color);
+}
+
+/* Figures */
+tt, code, pre {
+  background-color: var(--highlight-color);
+  font: 14px/22px 'Oxygen Mono', monospace;
+}
+pre {
+  border: 1px solid var(--line-color);
+  line-height: 17px;
+  margin: 5px;
+  padding: 5px;
+}
+img {
+  max-width: 100%;
+}
+figure {
+  margin: 0.5em 0;
+}
+figure blockquote {
+  margin: 0.8em 0.4em 0.4em;
+}
+figcaption, caption {
+  font-style: italic;
+  margin: 0.5em 1.5em;
+  text-align: left;
+}
+@media screen {
+  pre {
+    display: inline-block;
+    overflow-x: auto;
+    max-width: 100%;
+    width: calc(100% - 22px - 1em);
+  }
+  figure pre {
+    display: block;
+    width: calc(100% - 25px);
+  }
+  pre + .pilcrow {
+    display: inline-block;
+    vertical-align: text-bottom;
+    padding-bottom: 8px;
+  }
+  table {
+    display: inline-block;
+    overflow-x: auto;
+  }
+}
+
+/* aside, blockquote */
+aside, blockquote {
+  margin-left: 0;
+  padding: 0 2em;
+  font-style: italic;
+}
+blockquote {
+  background-color: var(--highlight-color);
+  border: 1px solid var(--line-color);
+  border-radius: 3px;
+  margin: 1em 0;
+}
+cite {
+  display: block;
+  text-align: right;
+  font-style: italic;
+}
+
+/* tables */
+table {
+  width: 100%;
+  margin: 0 0 1em;
+  border-collapse: collapse;
+  border: 1px solid var(--line-color);
+}
+th, td {
+  text-align: left;
+  vertical-align: top;
+  padding: 0.5em 0.75em;
+}
+th {
+  text-align: left;
+  background-color: #eee;
+}
+tr:nth-child(2n) > td {
+  background-color: var(--background-color);
+}
+tr:nth-child(2n+1) > td {
+  background-color: var(--highlight-color);
+}
+thead+tbody tr:nth-child(2n) > td {
+  background-color: var(--highlight-color);
+}
+thead+tbody tr:nth-child(2n+1) > td {
+  background-color: var(--background-color);
+}
+table caption {
+  font-style: italic;
+  margin: 0.3em 0;
+  padding: 0;
+  text-align: left;
+}
+table p {
+  /* XXX to avoid bottom margin on table row signifiers. If paragraphs should
+     be allowed within tables more generally, it would be far better to select on a class. */
+  margin: 0;
+}
+
+/* pilcrow */
+a.pilcrow {
+  margin-left: 3px;
+  visibility: hidden;
+  user-select: none;
+}
+a.pilcrow[href] { color: #ddd; }
+a.pilcrow[href]:hover { text-decoration: none; }
+@media screen {
+  :hover > a.pilcrow {
+    visibility: visible;
+  }
+  a.pilcrow:hover {
+    background-color: transparent;
+  }
+}
+
+/* misc */
+hr {
+  border: 0;
+  border-top: 1px solid var(--line-color);
+}
+.bcp14 {
+  font-variant: small-caps;
+}
+
+.role {
+  font-variant: all-small-caps;
+}
+
+/* info block */
+#identifiers {
+  margin: 0;
+  font-size: var(--small-font-size);
+  line-height: 18px;
+  --identifier-width: 8em;
+}
+#identifiers dt {
+  width: var(--identifier-width);
+  margin: 0;
+  clear: left;
+  float: left;
+  text-align: right;
+}
+#identifiers dd {
+  margin: 0 0 0 calc(1em + var(--identifier-width));
+  min-width: 5em;
+}
+#identifiers .authors .author {
+  display: inline-block;
+  margin-right: 1.5em;
+}
+#identifiers .authors .org {
+  font-style: italic;
+}
+
+/* The prepared/rendered info at the very bottom of the page */
+.docInfo {
+  color: #999;
+  font-size: 0.9em;
+  font-style: italic;
+  margin-top: 2em;
+}
+.docInfo .prepared {
+  float: left;
+}
+.docInfo .prepared {
+  float: right;
+}
+
+/* table of contents */
+#toc {
+  padding: 0.75em 0 2em 0;
+  margin-bottom: 1em;
+}
+#toc nav ul {
+  margin: 0 0.5em 0 0;
+  padding: 0;
+  list-style: none;
+}
+#toc nav li {
+  line-height: 1.3em;
+  margin: 0.75em 0;
+  padding-left: 1.2em;
+  text-indent: -1.2em;
+}
+/* references */
+.references dt {
+  text-align: right;
+  font-weight: bold;
+  min-width: 7em;
+}
+.references dd {
+  margin-left: 8em;
+  overflow: auto;
+}
+
+.refInstance {
+  margin-bottom: 1.25em;
+}
+
+.references .ascii {
+  margin-bottom: 0.25em;
+}
+
+/* index */
+.index ul {
+  margin: 0 0 0 1em;
+  padding: 0;
+  list-style: none;
+}
+.index ul ul {
+  margin: 0;
+}
+.index li {
+  margin: 0;
+  text-indent: -2em;
+  padding-left: 2em;
+  padding-bottom: 5px;
+}
+.indexIndex {
+  margin: 0.5em 0 1em;
+}
+.index a {
+  font-weight: 700;
+}
+/* make the index two-column on all but the smallest screens */
+@media (min-width: 600px) {
+  .index ul {
+    column-count: 2;
+    column-gap: 20px;
+  }
+  .index ul ul {
+    column-count: 1;
+    column-gap: 0;
+  }
+}
+
+/* authors */
+address.vcard {
+  font-style: normal;
+  margin: 1em 0;
+}
+address.vcard .nameRole {
+  font-weight: 700;
+  margin-left: 0;
+}
+address.vcard .label {
+  margin: 0.5em 0;
+}
+address.vcard .type {
+  display: none;
+}
+.alternative-contact {
+  margin: 1.5em 0 1em;
+}
+hr.addr {
+  border-top: 1px dashed;
+  margin: 0;
+  color: #ddd;
+  max-width: calc(100% - 16px);
+}
+@media (min-width: 600px) {
+  #authors-addresses {
+    display: relative;
+    padding: 32px 0 0;
+    column-count: 2;
+    column-gap: 20px;
+  }
+  #name-authors-addresses {
+    position: absolute;
+    top: 0px;
+    column-span: all;
+  }
+  /* hack for break-inside: avoid-column */
+  #authors-addresses address {
+    display: inline-block;
+  }
+}
+
+/* temporary notes */
+.rfcEditorRemove::before {
+  position: absolute;
+  top: 0.2em;
+  right: 0.2em;
+  padding: 0.2em;
+  content: "The RFC Editor will remove this note";
+  color: #b76427;
+  background-color: rgba(249, 232, 105, 0.3);
+}
+.rfcEditorRemove {
+  position: relative;
+  padding-top: 1.8em;
+  background-color: rgba(249, 232, 105, 0.3);
+  border-radius: 3px;
+}
+.cref {
+  background-color: rgba(249, 232, 105, 0.3);
+  padding: 2px 4px;
+}
+.crefSource {
+  font-style: italic;
+}
+/* alternative layout for smaller screens */
+@media screen and (max-width: 953px) {
+  #toc {
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    right: 0;
+    padding: 0;
+    margin: 0;
+    border-bottom: 1px solid #ccc;
+    opacity: 0.9; /* TODO fix when Henrik takes the patch. */
+  }
+  #toc.active {
+      opacity: 1;
+  }
+  #toc h2 {
+    margin: 0;
+    padding: 2px 0 2px 6px;
+    padding-right: 1em;
+    font-size: 18px;
+    line-height: 24px;
+    min-width: 190px;
+    text-align: right;
+    background-color: #444;
+    color: white;
+    cursor: pointer;
+  }
+  #toc h2::before { /* css hamburger */
+    float: right;
+    position: relative;
+    width: 1em;
+    height: 1px;
+    left: -164px;
+    margin: 8px 0 0 0;
+    background: white none repeat scroll 0 0;
+    box-shadow: 0 4px 0 0 white, 0 8px 0 0 white;
+    content: "";
+  }
+  #toc nav {
+    display: none;
+    background-color: var(--background-color);
+    padding: 0.5em 1em 1em;
+    overflow: auto;
+    overscroll-behavior: contain;
+    height: calc(100vh - 48px);
+    border-left: 1px solid #ddd;
+  }
+  #toc.active nav {
+    display: block;
+  }
+  /* Make the collapsed ToC header render white on gray also when it's a link */
+  #toc h2 a,
+  #toc h2 a:link,
+  #toc h2 a:focus,
+  #toc h2 a:hover,
+  #toc a.toplink,
+  #toc a.toplink:hover {
+    color: white;
+    background-color: #444;
+    text-decoration: none;
+  }
+  #toc a.toplink {
+    margin-top: 2px;
+  }
+}
+
+/* alternative layout for wide screens */
+@media screen and (min-width: 954px) {
+  body {
+    padding-right: 380px;
+  }
+  #toc {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    right: calc(50vw - 480px);
+    width: 312px;
+    margin: 0;
+    padding: 0;
+    z-index: 1;
+  }
+  #toc h2 {
+    margin: 0;
+    padding: 0.25em 1em 1em 0;
+  }
+  #toc nav {
+    display: block;
+    height: calc(90vh - 84px);
+    bottom: 0;
+    padding: 0.5em 0 2em;
+    overflow: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+  }
+  #toc nav > ul  {
+    margin-bottom: 2em;
+  }
+  #toc ul {
+    margin: 0 0 0 4px;
+    font-size: var(--small-font-size);
+  }
+  #toc ul p, #toc ul li {
+    margin: 2px 0;
+    line-height: 22px;
+  }
+  img { /* future proofing */
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* pagination */
+@media print {
+  body {
+    width: 100%;
+  }
+  p {
+    orphans: 3;
+    widows: 3;
+  }
+  #n-copyright-notice {
+    border-bottom: none;
+  }
+  #toc, #n-introduction {
+    page-break-before: always;
+  }
+  #toc {
+    border-top: none;
+    padding-top: 0;
+  }
+  figure, pre {
+    page-break-inside: avoid;
+  }
+  figure {
+    overflow: scroll;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+  }
+  h2+*, h3+*, h4+*, h5+*, h6+* {
+    page-break-before: avoid;
+  }
+  pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 10pt;
+  }
+  table {
+    border: 1px solid #ddd;
+  }
+  td {
+    border-top: 1px solid #ddd;
+  }
+}
+
+@page :first {
+  padding-top: 0;
+  @top-left {
+    content: normal;
+    border: none;
+  }
+  @top-center {
+    content: normal;
+    border: none;
+  }
+  @top-right {
+    content: normal;
+    border: none;
+  }
+}
+
+@page {
+  size: A4;
+  margin-bottom: 45mm;
+  padding-top: 20px;
+}
+
+/* Changes introduced to fix issues found during implementation */
+
+/* Separate body from document info even without intervening H1 */
+section {
+  clear: both;
+}
+
+/* Top align author divs, to avoid names without organization dropping level with org names */
+.author {
+  vertical-align: top;
+}
+
+/* Style section numbers with more space between number and title */
+.section-number {
+  padding-right: 0.5em;
+}
+
+/* Add styling for a link in the ToC that points to the top of the document */
+a.toplink {
+  float: right;
+  margin: 8px 0.5em 0;
+}
+
+/* Fix the dl styling to match the RFC 7992 attributes */
+dl > dt,
+dl.dlParallel > dt {
+  float: left;
+  margin-right: 1em;
+}
+dl.dlNewline > dt {
+  float: none;
+}
+
+/* Provide styling for table cell text alignment */
+table td.text-left,
+table th.text-left {
+  text-align: left;
+}
+table td.text-center,
+table th.text-center {
+  text-align: center;
+}
+table td.text-right,
+table th.text-right {
+  text-align: right;
+}
+
+/* Make the alternative author contact information look less like just another
+   author, and group it closer with the primary author contact information */
+.alternative-contact {
+  margin: 0.5em 0 0.25em 0;
+}
+address .non-ascii {
+  margin: 0 0 0 2em;
+}
+
+/* With it being possible to set tables with alignment
+  left, center, and right, { width: 100%; } does not make sense */
+table {
+  width: auto;
+}
+
+/* Avoid reference text that sits in a block with very wide left margin,
+   because of a long floating dt label.*/
+.references dd {
+  overflow: visible;
+}
+
+/* Control caption placement */
+caption {
+  caption-side: bottom;
+}
+
+/* Limit the width of the author address vcard, so names in right-to-left
+   script don't end up on the other side of the page. */
+
+address.vcard {
+  max-width: 20em;
+  margin-right: auto;
+}
+
+/* For address alignment dependent on LTR or RTL scripts */
+address div.left {
+  text-align: left;
+}
+address div.right {
+  text-align: right;
+}
+
+/* Provide table alignment support.  We can't use the alignX classes above
+   since they do unwanted things with caption and other styling. */
+table.right {
+ margin-left: auto;
+ margin-right: 0;
+}
+table.center {
+ margin-left: auto;
+ margin-right: auto;
+}
+table.left {
+ margin-left: 0;
+ margin-right: auto;
+}
+
+/* Give the table caption label the same styling as the figcaption */
+
+@media print {
+  .toplink {
+    display: none;
+  }
+
+  /* avoid overwriting the top border line with the ToC header */
+  #toc {
+    padding-top: 1px;
+  }
+
+  /* Avoid page breaks inside dl and author address entries */
+  dd {
+    page-break-before: avoid;
+  }
+  .vcard {
+    page-break-inside: avoid;
+  }
+
+}
+/* Tweak the bcp14 keyword presentation */
+.bcp14 {
+  font-variant: small-caps;
+  font-weight: bold;
+  font-size: 0.9em;
+}
+</script>
+</body>
+</html>
