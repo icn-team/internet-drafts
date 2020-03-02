@@ -28,3 +28,20 @@ jobs:
       with:
         github_token: ${{ secrets.GH_TOKEN }}
         publish_dir: ./public
+  verify:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 'checkout'
+      uses: actions/checkout@v2
+    - name: 'docker hub login'
+      uses: azure/docker-login@v1
+      with:
+          login-server: hub.docker.com
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+    - name: 'build internet drafts'
+      shell: bash
+      run: |
+        docker run -v $PWD:/workspace icnteam/internet-drafts:latest bash -c "cd /workspace; make; make pdf"
