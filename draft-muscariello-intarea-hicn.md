@@ -1,15 +1,17 @@
 ---
 title: Hybrid Information-Centric Networking
 abbrev: hICN
-docname: draft-muscariello-intarea-hicn-03
+docname: draft-muscariello-intarea-hicn-04
 date: 
-ategory: info
+
+category: info
 ipr: trust200902
 area: Internet Area
 workgroup: Internet Area WG
 keyword: Internet-Draft
 
-stand_alone: yes pi: [toc, sortrefs, symrefs]
+stand_alone: yes
+pi: [toc, sortrefs, symrefs]
 
 author:
 
@@ -35,14 +37,14 @@ author:
     email: mpapal@cisco.com
 
 informative:
-CCN: DOI.10.1145/1658939.1658941
-NDN: DOI.10.1145/2656877.2656887
-MAN: DOI.10.1109/INFCOMW.2012.6193505
-WLD: DOI.10.1145/2984356.2984361
-MIR: DOI.10.1109/TMC.2017.2734658
-RAQ: DOI.10.1109/ICNP.2013.6733576
-FRA: DOI.10.1109/MASS.2015.51
-TRA: DOI.10.1145/3267955.3267972
+      CCN: DOI.10.1145/1658939.1658941
+      NDN: DOI.10.1145/2656877.2656887
+      MAN: DOI.10.1109/INFCOMW.2012.6193505
+      WLD: DOI.10.1145/2984356.2984361
+      MIR: DOI.10.1109/TMC.2017.2734658
+      RAQ: DOI.10.1109/ICNP.2013.6733576
+      FRA: DOI.10.1109/MASS.2015.51
+      TRA: DOI.10.1145/3267955.3267972
 
 --- abstract
 
