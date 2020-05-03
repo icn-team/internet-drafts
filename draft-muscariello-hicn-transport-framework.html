@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<html lang="en" class="Internet-Draft">
+<head>
+<meta charset="utf-8">
+<meta content="Common,Latin" name="scripts">
+<meta content="initial-scale=1.0" name="viewport">
+<title>Transport Framework for Hybrid Information-Centric Networking Architecture</title>
+<meta content="Luca Muscariello" name="author">
+<meta content="Giovanna Carofiglio" name="author">
+<meta content="
+       Information-Centric Networking (ICN) architectures introduce a location-independent communication model based on request/reply exchanges between a client and one or more a-priori unknown sources (ref to RFCs). Request packets carry a data indentifier which is not bound to any specific host location, hence is not affected by network mobility. They are routed in a hop-by-hop fashion over one or multiple paths until they are matched by requested data packets. Data packets follow the reverse path of requests to be conveyed to one or more requesting clients. 
+       Mobility, Multi-path, Multi-source and Many-to-many communication (M4) characterize ICN transport making it a promising candidate for a various number of applications (e.g. live-streaming, IoT, mobile edge computing, realtime multimedia communications, etc.)
+The requirements of native M4 transport are not met by traditional host-to-host transport protocols which assume the knowledge of both client and server end-points before packet transmission and do not leverage dynamic forwarding/caching/control decisions taken by in-path nodes. 
+       There have been various attempts in the literature to either adapt existing transport protocols to ICN or to define novel approaches, in all cases targeting a specific application (refs to papers)
+A few attemtps have been made at addressing the novel challenges brought by ICN in terms of flow definition, path labelling, etc., but to the best of our knowledge no unified ICN transport framework has been proposed so far.
+Without the ambition to design a specific ICN transport protocol, this document discusses a general M4 transport framework for Hybrid ICN, an IP-integrated open-source ICN architecture (ref to FD.io hICN) and  illustrates its applicability to a few relevant use cases. 
+    " name="description">
+<meta content="xml2rfc 2.40.1" name="generator">
+<meta content="Internet-Draft" name="keyword">
+<meta content="draft-muscariello-hicn-transport-latest" name="ietf.draft">
+<link href="draft-muscariello-hicn-transport-framework.xml" rel="alternate" type="application/rfc+xml">
+<link href="#copyright" rel="license">
+<style type="text/css">@import url('https://martinthomson.github.io/i-d-template/fonts.css');
+
+html {
+  --background-color: #fff;
+  --text-color: #222;
+  --title-color: #191919;
+  --link-color: #2a6496;
+  --highlight-color: #f9f9f9;
+  --line-color: #eee;
+  --small-font-size: 14.5px;
+}
+body {
+  max-width: 600px;
+  margin: 75px auto;
+  padding: 0 5px;
+  color: var(--text-color);
+  background-color: var(--background-color);
+  font: 16px/22px "Lora", serif;
+  scroll-behavior: smooth;
+}
+
+.ears {
+  display: none;
+}
+
+/* headings */
+#title, h1, h2, h3, h4, h5, h6 {
+  font-family: "Cabin Condensed", sans-serif;
+  font-weight: 600;
+  margin: 0.8em 0 0.3em;
+  font-size-adjust: 0.5;
+  color: var(--title-color);
+}
+#title {
+  padding: 1em 0 0.2em;
+  font-size: 32px;
+  line-height: 40px;
+  clear: both;
+}
+h1, h2, h3 {
+  font-size: 22px;
+  line-height: 26px;
+}
+h4, h5, h6 {
+  font-size: 18px;
+  line-height: 22px;
+}
+
+/* general structure */
+.author {
+  padding-bottom: 0.3em;
+}
+#abstract+p, #abstract+p code, #abstract+p samp, #abstract+p tt {
+  font-size: 18px;
+  line-height: 24px;
+}
+p {
+  padding: 0;
+  margin: 0.5em 0;
+  text-align: left;
+}
+div, span {
+  position: relative;
+}
+div {
+  margin: 0;
+}
+.alignRight.art-text {
+  background-color: var(--highlight-color);
+  border: 1px solid var(--line-color);
+  border-radius: 3px;
+  padding: 0.5em 1em 0;
+  margin-bottom: 0.5em;
+}
+.alignRight.art-text pre {
+  padding: 0;
+  width: auto;
+}
+.alignRight {
+  margin: 1em 0;
+}
+.alignRight > *:first-child {
+  border: none;
+  margin: 0;
+  float: right;
+  clear: both;
+}
+.alignRight > *:nth-child(2) {
+  clear: both;
+  display: block;
+  border: none;
+}
+svg {
+  display: block;
+}
+.alignCenter.art-text {
+  background-color: var(--highlight-color);
+  border: 1px solid var(--line-color);
+  border-radius: 3px;
+  padding: 0.5em 1em 0;
+  margin-bottom: 0.5em;
+}
+.alignCenter.art-text pre {
+  padding: 0;
+  width: auto;
+}
+.alignCenter {
+  margin: 1em 0;
+}
+.alignCenter > *:first-child {
+  border: none;
+  /* this isn't optimal, but it's an existence proof.  PrinceXML doesn't
+     support flexbox yet.
+  */
+  display: table;
+  margin: 0 auto;
+}
+
+/* lists */
+ol, ul {
+  padding: 0;
+  margin: 0 0 1em 2em;
+}
+ol ol, ul ul, ol ul, ul ol {
+  margin-left: 1em;
+}
+li {
+  margin: 0 0 0.25em 0;
+}
+.ulCompact li {
+  margin: 0;
+}
+ul.empty, .ulEmpty {
+  list-style-type: none;
+}
+ul.empty li, .ulEmpty li {
+  margin-top: 0.5em;
+}
+ul.compact, .ulCompact,
+ol.compact, .olCompact {
+  line-height: 100%;
+  margin: 0 0 0 2em;
+}
+
+/* definition lists */
+dl {
+}
+dl > dt {
+  float: left;
+  margin-right: 1em;
+}
+dl > dd {
+  margin-bottom: .8em;
+  min-height: 1.3em;
+}
+dl.compact > dd, .dlCompact > dd {
+  margin-bottom: 0em;
+}
+dl > dd > dl {
+  margin-top: 0.5em;
+  margin-bottom: 0em;
+}
+
+/* links */
+a, a[href].selfRef:hover {
+  text-decoration: none;
+}
+a[href].selfRef {
+  color: var(--text-color);
+}
+a[href] {
+  color: var(--link-color);
+}
+a[href]:hover {
+  text-decoration: underline;
+}
+a[href].selfRef:hover {
+  background-color: var(--highlight-color);
+}
+a.xref {
+  white-space: nowrap;
+}
+
+/* Figures */
+tt, code, pre {
+  background-color: var(--highlight-color);
+  font: 14px/22px 'Oxygen Mono', monospace;
+}
+pre {
+  border: 1px solid var(--line-color);
+  font-size: 13.5px;
+  line-height: 16px;
+  letter-spacing: -0.2px;
+  margin: 5px;
+  padding: 5px;
+}
+img {
+  max-width: 100%;
+}
+figure {
+  margin: 0.5em 0;
+}
+figure blockquote {
+  margin: 0.8em 0.4em 0.4em;
+}
+figcaption, caption {
+  font-style: italic;
+  margin: 0.5em 1.5em;
+  text-align: left;
+}
+@media screen {
+  pre {
+    display: inline-block;
+    overflow-x: auto;
+    max-width: 100%;
+    width: calc(100% - 22px - 1em);
+  }
+  figure pre {
+    display: block;
+    width: calc(100% - 25px);
+  }
+  pre + .pilcrow {
+    display: inline-block;
+    vertical-align: text-bottom;
+    padding-bottom: 8px;
+  }
+  table {
+    display: inline-block;
+    overflow-x: auto;
+  }
+}
+
+/* aside, blockquote */
+aside, blockquote {
+  margin-left: 0;
+  padding: 0 2em;
+  font-style: italic;
+}
+blockquote {
+  background-color: var(--highlight-color);
+  border: 1px solid var(--line-color);
+  border-radius: 3px;
+  margin: 1em 0;
+}
+cite {
+  display: block;
+  text-align: right;
+  font-style: italic;
+}
+
+/* tables */
+table {
+  width: 100%;
+  margin: 0 0 1em;
+  border-collapse: collapse;
+  border: 1px solid var(--line-color);
+}
+th, td {
+  text-align: left;
+  vertical-align: top;
+  padding: 0.5em 0.75em;
+}
+th {
+  text-align: left;
+  background-color: #eee;
+}
+tr:nth-child(2n) > td {
+  background-color: var(--background-color);
+}
+tr:nth-child(2n+1) > td {
+  background-color: var(--highlight-color);
+}
+thead+tbody tr:nth-child(2n) > td {
+  background-color: var(--highlight-color);
+}
+thead+tbody tr:nth-child(2n+1) > td {
+  background-color: var(--background-color);
+}
+table caption {
+  margin: 0;
+  padding: 3px 1em;
+  border-top: 1px solid var(--line-color);
+}
+table p {
+  /* XXX to avoid bottom margin on table row signifiers. If paragraphs should
+     be allowed within tables more generally, it would be far better to select on a class. */
+  margin: 0;
+}
+
+/* pilcrow */
+a.pilcrow {
+  margin-left: 3px;
+  visibility: hidden;
+  user-select: none;
+}
+a.pilcrow[href] { color: #ddd; }
+a.pilcrow[href]:hover { text-decoration: none; }
+@media screen {
+  :hover > a.pilcrow {
+    visibility: visible;
+  }
+  a.pilcrow:hover {
+    background-color: transparent;
+  }
+}
+
+/* misc */
+hr {
+  border: 0;
+  border-top: 1px solid var(--line-color);
+}
+.bcp14 {
+  font-variant: small-caps;
+}
+
+.role {
+  font-variant: all-small-caps;
+}
+
+/* info block */
+#identifiers {
+  margin: 0;
+  font-size: var(--small-font-size);
+  line-height: 18px;
+  --identifier-width: 8em;
+}
+#identifiers dt {
+  width: var(--identifier-width);
+  margin: 0;
+  clear: left;
+  float: left;
+  text-align: right;
+}
+#identifiers dd {
+  margin: 0 0 0 calc(1em + var(--identifier-width));
+  min-width: 5em;
+}
+#identifiers .authors .author {
+  display: inline-block;
+  margin-right: 1.5em;
+}
+#identifiers .authors .org {
+  font-style: italic;
+}
+
+/* The prepared/rendered info at the very bottom of the page */
+.docInfo {
+  color: #999;
+  font-size: 0.9em;
+  font-style: italic;
+  margin-top: 2em;
+}
+.docInfo .prepared {
+  float: left;
+}
+.docInfo .prepared {
+  float: right;
+}
+
+/* table of contents */
+#toc {
+  padding: 0.75em 0 2em 0;
+  margin-bottom: 1em;
+}
+#toc nav ul {
+  margin: 0 0.5em 0 0;
+  padding: 0;
+  list-style: none;
+}
+#toc nav li {
+  line-height: 1.3em;
+  margin: 0.75em 0;
+  padding-left: 1.2em;
+  text-indent: -1.2em;
+}
+#toc a.xref {
+  white-space: normal;
+}
+/* references */
+.references dt {
+  text-align: right;
+  font-weight: bold;
+  min-width: 7em;
+}
+.references dd {
+  margin-left: 8em;
+  overflow: auto;
+}
+
+.refInstance {
+  margin-bottom: 1.25em;
+}
+
+.references .ascii {
+  margin-bottom: 0.25em;
+}
+
+/* index */
+.index ul {
+  margin: 0 0 0 1em;
+  padding: 0;
+  list-style: none;
+}
+.index ul ul {
+  margin: 0;
+}
+.index li {
+  margin: 0;
+  text-indent: -2em;
+  padding-left: 2em;
+  padding-bottom: 5px;
+}
+.indexIndex {
+  margin: 0.5em 0 1em;
+}
+.index a {
+  font-weight: 700;
+}
+/* make the index two-column on all but the smallest screens */
+@media (min-width: 500px) {
+  .index ul {
+    column-count: 2;
+    column-gap: 20px;
+  }
+  .index ul ul {
+    column-count: 1;
+    column-gap: 0;
+  }
+}
+
+/* authors */
+address.vcard {
+  font-style: normal;
+  margin: 1em 0;
+}
+address.vcard .nameRole {
+  font-weight: 700;
+  margin-left: 0;
+}
+address.vcard .label {
+  margin: 0.5em 0;
+}
+address.vcard .type {
+  display: none;
+}
+.alternative-contact {
+  margin: 1.5em 0 1em;
+}
+hr.addr {
+  border-top: 1px dashed;
+  margin: 0;
+  color: #ddd;
+  max-width: calc(100% - 16px);
+}
+@media (min-width: 500px) {
+  #authors-addresses > section {
+    display: relative;
+    padding: 32px 0 0;
+    column-count: 2;
+    column-gap: 20px;
+  }
+  #name-authors-addresses {
+    position: absolute;
+    top: 0px;
+    column-span: all;
+  }
+  /* hack for break-inside: avoid-column */
+  #authors-addresses address {
+    display: inline-block;
+    break-inside: avoid-column;
+  }
+}
+
+/* temporary notes */
+.rfcEditorRemove::before {
+  position: absolute;
+  top: 0.2em;
+  right: 0.2em;
+  padding: 0.2em;
+  content: "The RFC Editor will remove this note";
+  color: #b76427;
+  background-color: rgba(249, 232, 105, 0.3);
+}
+.rfcEditorRemove {
+  position: relative;
+  padding-top: 1.8em;
+  background-color: rgba(249, 232, 105, 0.3);
+  border-radius: 3px;
+}
+.cref {
+  background-color: rgba(249, 232, 105, 0.3);
+  padding: 2px 4px;
+}
+.crefSource {
+  font-style: italic;
+}
+/* alternative layout for smaller screens */
+@media screen and (max-width: 929px) {
+  #toc {
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    right: 0;
+    padding: 0;
+    margin: 0;
+    border-bottom: 1px solid #ccc;
+    opacity: 0.6;
+  }
+  #toc.active {
+      opacity: 1;
+  }
+  #toc h2 {
+    margin: 0;
+    padding: 2px 0 2px 6px;
+    padding-right: 1em;
+    font-size: 18px;
+    line-height: 24px;
+    min-width: 190px;
+    text-align: right;
+    background-color: #444;
+    color: white;
+    cursor: pointer;
+  }
+  #toc h2::before { /* css hamburger */
+    float: right;
+    position: relative;
+    width: 1em;
+    height: 1px;
+    left: -164px;
+    margin: 8px 0 0 0;
+    background: white none repeat scroll 0 0;
+    box-shadow: 0 4px 0 0 white, 0 8px 0 0 white;
+    content: "";
+  }
+  #toc nav {
+    display: none;
+    background-color: var(--background-color);
+    padding: 0.5em 1em 1em;
+    overflow: auto;
+    overscroll-behavior: contain;
+    height: calc(100vh - 48px);
+    border-left: 1px solid #ddd;
+  }
+  #toc.active nav {
+    display: block;
+  }
+  /* Make the collapsed ToC header render white on gray also when it's a link */
+  #toc h2 a,
+  #toc h2 a:link,
+  #toc h2 a:focus,
+  #toc h2 a:hover,
+  #toc a.toplink,
+  #toc a.toplink:hover {
+    color: white;
+    background-color: #444;
+    text-decoration: none;
+  }
+  #toc a.toplink {
+    margin-top: 2px;
+  }
+}
+
+/* alternative layout for wide screens */
+@media screen and (min-width: 930px) {
+  body {
+    padding-right: 360px;
+    padding-right: calc(min(180px + 20%, 500px));
+  }
+  #toc {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    right: calc(50vw - 480px);
+    width: 312px;
+    margin: 0;
+    padding: 0;
+    z-index: 1;
+  }
+  #toc h2 {
+    margin: 0;
+    padding: 0.25em 1em 1em 0;
+  }
+  #toc nav {
+    display: block;
+    height: calc(90vh - 84px);
+    bottom: 0;
+    padding: 0.5em 0 2em;
+    overflow: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+  }
+  #toc nav > ul  {
+    margin-bottom: 2em;
+  }
+  #toc ul {
+    margin: 0 0 0 4px;
+    font-size: var(--small-font-size);
+  }
+  #toc ul p, #toc ul li {
+    margin: 2px 0;
+    line-height: 22px;
+  }
+  img { /* future proofing */
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* pagination */
+@media print {
+  body {
+    width: 100%;
+  }
+  p {
+    orphans: 3;
+    widows: 3;
+  }
+  #n-copyright-notice {
+    border-bottom: none;
+  }
+  #toc, #n-introduction {
+    page-break-before: always;
+  }
+  #toc {
+    border-top: none;
+    padding-top: 0;
+  }
+  figure, pre {
+    page-break-inside: avoid;
+  }
+  figure {
+    overflow: scroll;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+  }
+  h2+*, h3+*, h4+*, h5+*, h6+* {
+    page-break-before: avoid;
+  }
+  pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 10pt;
+  }
+  table {
+    border: 1px solid #ddd;
+  }
+  td {
+    border-top: 1px solid #ddd;
+  }
+}
+
+@page :first {
+  padding-top: 0;
+  @top-left {
+    content: normal;
+    border: none;
+  }
+  @top-center {
+    content: normal;
+    border: none;
+  }
+  @top-right {
+    content: normal;
+    border: none;
+  }
+}
+
+@page {
+  size: A4;
+  margin-bottom: 45mm;
+  padding-top: 20px;
+}
+
+/* Changes introduced to fix issues found during implementation */
+
+/* Separate body from document info even without intervening H1 */
+section {
+  clear: both;
+}
+
+/* Top align author divs, to avoid names without organization dropping level with org names */
+.author {
+  vertical-align: top;
+}
+
+/* Style section numbers with more space between number and title */
+.section-number {
+  padding-right: 0.5em;
+}
+
+/* Add styling for a link in the ToC that points to the top of the document */
+a.toplink {
+  float: right;
+  margin: 8px 0.5em 0;
+}
+
+/* Fix the dl styling to match the RFC 7992 attributes */
+dl > dt,
+dl.dlParallel > dt {
+  float: left;
+  margin-right: 1em;
+}
+dl.dlNewline > dt {
+  float: none;
+}
+
+/* Provide styling for table cell text alignment */
+table .text-left, table .text-left {
+  text-align: left;
+}
+table .text-center, table .text-center {
+  text-align: center;
+}
+table .text-right, table .text-right {
+  text-align: right;
+}
+
+/* Make the alternative author contact information look less like just another
+   author, and group it closer with the primary author contact information */
+.alternative-contact {
+  margin: 0.5em 0 0.25em 0;
+}
+address .non-ascii {
+  margin: 0 0 0 2em;
+}
+
+/* With it being possible to set tables with alignment
+  left, center, and right, { width: 100%; } does not make sense */
+table {
+  width: auto;
+}
+
+/* Avoid reference text that sits in a block with very wide left margin,
+   because of a long floating dt label.*/
+.references dd {
+  overflow: visible;
+}
+
+/* Control caption placement */
+caption {
+  caption-side: bottom;
+}
+
+/* Limit the width of the author address vcard, so names in right-to-left
+   script don't end up on the other side of the page. */
+
+address.vcard {
+  max-width: 20em;
+  margin-right: auto;
+}
+
+/* For address alignment dependent on LTR or RTL scripts */
+address div.left {
+  text-align: left;
+}
+address div.right {
+  text-align: right;
+}
+
+/* Provide table alignment support.  We can't use the alignX classes above
+   since they do unwanted things with caption and other styling. */
+table.right {
+ margin-left: auto;
+ margin-right: 0;
+}
+table.center {
+ margin-left: auto;
+ margin-right: auto;
+}
+table.left {
+ margin-left: 0;
+ margin-right: auto;
+}
+
+/* Give the table caption label the same styling as the figcaption */
+
+@media print {
+  .toplink {
+    display: none;
+  }
+
+  /* avoid overwriting the top border line with the ToC header */
+  #toc {
+    padding-top: 1px;
+  }
+
+  /* Avoid page breaks inside dl and author address entries */
+  dd {
+    page-break-before: avoid;
+  }
+  .vcard {
+    page-break-inside: avoid;
+  }
+
+}
+/* Tweak the bcp14 keyword presentation */
+.bcp14 {
+  font-variant: small-caps;
+  font-weight: bold;
+  font-size: 0.9em;
+}
+</style>
+<link href="rfc-local.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<table class="ears">
+<thead><tr>
+<td class="left">Internet-Draft</td>
+<td class="center">hICN-transport</td>
+<td class="right">May 2020</td>
+</tr></thead>
+<tfoot><tr>
+<td class="left">Muscariello &amp; Carofiglio</td>
+<td class="center">Expires 4 November 2020</td>
+<td class="right">[Page]</td>
+</tr></tfoot>
+</table>
+<div id="external-metadata" class="document-information"></div>
+<div id="internal-metadata" class="document-information">
+<dl id="identifiers">
+<dt class="label-workgroup">Workgroup:</dt>
+<dd class="workgroup">Network Working Group</dd>
+<dt class="label-internet-draft">Internet-Draft:</dt>
+<dd class="internet-draft">draft-muscariello-hicn-transport-latest</dd>
+<dt class="label-published">Published:</dt>
+<dd class="published">
+<time datetime="2020-05-03" class="published">3 May 2020</time>
+    </dd>
+<dt class="label-intended-status">Intended Status:</dt>
+<dd class="intended-status">Informational</dd>
+<dt class="label-expires">Expires:</dt>
+<dd class="expires"><time datetime="2020-11-04">4 November 2020</time></dd>
+<dt class="label-authors">Authors:</dt>
+<dd class="authors">
+<div class="author">
+      <div class="author-name">L. Muscariello</div>
+<div class="org">Cisco Systems Inc.</div>
+</div>
+<div class="author">
+      <div class="author-name">G. Carofiglio</div>
+<div class="org">Cisco Systems Inc.</div>
+</div>
+</dd>
+</dl>
+</div>
+<h1 id="title">Transport Framework for Hybrid Information-Centric Networking Architecture</h1>
+<section id="section-abstract">
+      <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
+<p id="section-abstract-1">Information-Centric Networking (ICN) architectures introduce a location-independent communication model based on request/reply exchanges between a client and one or more a-priori unknown sources (ref to RFCs). Request packets carry a data indentifier which is not bound to any specific host location, hence is not affected by network mobility. They are routed in a hop-by-hop fashion over one or multiple paths until they are matched by requested data packets. Data packets follow the reverse path of requests to be conveyed to one or more requesting clients.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-2">Mobility, Multi-path, Multi-source and Many-to-many communication (M4) characterize ICN transport making it a promising candidate for a various number of applications (e.g. live-streaming, IoT, mobile edge computing, realtime multimedia communications, etc.)
+The requirements of native M4 transport are not met by traditional host-to-host transport protocols which assume the knowledge of both client and server end-points before packet transmission and do not leverage dynamic forwarding/caching/control decisions taken by in-path nodes.<a href="#section-abstract-2" class="pilcrow">¶</a></p>
+<p id="section-abstract-3">There have been various attempts in the literature to either adapt existing transport protocols to ICN or to define novel approaches, in all cases targeting a specific application (refs to papers)
+A few attemtps have been made at addressing the novel challenges brought by ICN in terms of flow definition, path labelling, etc., but to the best of our knowledge no unified ICN transport framework has been proposed so far.
+Without the ambition to design a specific ICN transport protocol, this document discusses a general M4 transport framework for Hybrid ICN, an IP-integrated open-source ICN architecture (ref to FD.io hICN) and  illustrates its applicability to a few relevant use cases.<a href="#section-abstract-3" class="pilcrow">¶</a></p>
+</section>
+<div id="status-of-memo">
+<section id="section-boilerplate.1">
+        <h2 id="name-status-of-this-memo">
+<a href="#name-status-of-this-memo" class="section-name selfRef">Status of This Memo</a>
+        </h2>
+<p id="section-boilerplate.1-1">
+        This Internet-Draft is submitted in full conformance with the
+        provisions of BCP 78 and BCP 79.<a href="#section-boilerplate.1-1" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-2">
+        Internet-Drafts are working documents of the Internet Engineering Task
+        Force (IETF). Note that other groups may also distribute working
+        documents as Internet-Drafts. The list of current Internet-Drafts is
+        at <span><a href="https://datatracker.ietf.org/drafts/current/">https://datatracker.ietf.org/drafts/current/</a></span>.<a href="#section-boilerplate.1-2" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-3">
+        Internet-Drafts are draft documents valid for a maximum of six months
+        and may be updated, replaced, or obsoleted by other documents at any
+        time. It is inappropriate to use Internet-Drafts as reference
+        material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-4">
+        This Internet-Draft will expire on 4 November 2020.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="copyright">
+<section id="section-boilerplate.2">
+        <h2 id="name-copyright-notice">
+<a href="#name-copyright-notice" class="section-name selfRef">Copyright Notice</a>
+        </h2>
+<p id="section-boilerplate.2-1">
+            Copyright (c) 2020 IETF Trust and the persons identified as the
+            document authors. All rights reserved.<a href="#section-boilerplate.2-1" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.2-2">
+            This document is subject to BCP 78 and the IETF Trust's Legal
+            Provisions Relating to IETF Documents
+            (<span><a href="https://trustee.ietf.org/license-info">https://trustee.ietf.org/license-info</a></span>) in effect on the date of
+            publication of this document. Please review these documents
+            carefully, as they describe your rights and restrictions with
+            respect to this document. Code Components extracted from this
+            document must include Simplified BSD License text as described in
+            Section 4.e of the Trust Legal Provisions and are provided without
+            warranty as described in the Simplified BSD License.<a href="#section-boilerplate.2-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="toc">
+<section id="section-toc.1">
+        <a href="#" onclick="scroll(0,0)" class="toplink">▲</a><h2 id="name-table-of-contents">
+<a href="#name-table-of-contents" class="section-name selfRef">Table of Contents</a>
+        </h2>
+<nav class="toc"><ul class="toc ulEmpty">
+<li class="toc ulEmpty" id="section-toc.1-1.1">
+            <p id="section-toc.1-1.1.1"><a href="#section-1" class="xref">1</a>.  <a href="#name-introduction" class="xref">Introduction</a><a href="#section-toc.1-1.1.1" class="pilcrow">¶</a></p>
+<ul class="toc ulEmpty">
+<li class="toc ulEmpty" id="section-toc.1-1.1.2.1">
+                <p id="section-toc.1-1.1.2.1.1"><a href="#section-1.1" class="xref">1.1</a>.  <a href="#name-problem-and-scope" class="xref">Problem and Scope</a><a href="#section-toc.1-1.1.2.1.1" class="pilcrow">¶</a></p>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.1.2.2">
+                <p id="section-toc.1-1.1.2.2.1"><a href="#section-1.2" class="xref">1.2</a>.  <a href="#name-related-work" class="xref">Related work</a><a href="#section-toc.1-1.1.2.2.1" class="pilcrow">¶</a></p>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.1.2.3">
+                <p id="section-toc.1-1.1.2.3.1"><a href="#section-1.3" class="xref">1.3</a>.  <a href="#name-reference-icn-architecture-" class="xref">Reference ICN architecture: hICN</a><a href="#section-toc.1-1.1.2.3.1" class="pilcrow">¶</a></p>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.1.2.4">
+                <p id="section-toc.1-1.1.2.4.1"><a href="#section-1.4" class="xref">1.4</a>.  <a href="#name-terminology" class="xref">Terminology</a><a href="#section-toc.1-1.1.2.4.1" class="pilcrow">¶</a></p>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.1.2.5">
+                <p id="section-toc.1-1.1.2.5.1"><a href="#section-1.5" class="xref">1.5</a>.  <a href="#name-notational-conventions" class="xref">Notational Conventions</a><a href="#section-toc.1-1.1.2.5.1" class="pilcrow">¶</a></p>
+</li>
+</ul>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.2">
+            <p id="section-toc.1-1.2.1"><a href="#section-2" class="xref">2</a>.  <a href="#name-transport-framework-archite" class="xref">Transport framework architecture</a><a href="#section-toc.1-1.2.1" class="pilcrow">¶</a></p>
+<ul class="toc ulEmpty">
+<li class="toc ulEmpty" id="section-toc.1-1.2.2.1">
+                <p id="section-toc.1-1.2.2.1.1"><a href="#section-2.1" class="xref">2.1</a>.  <a href="#name-application-apis" class="xref">Application APIs</a><a href="#section-toc.1-1.2.2.1.1" class="pilcrow">¶</a></p>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.2.2.2">
+                <p id="section-toc.1-1.2.2.2.1"><a href="#section-2.2" class="xref">2.2</a>.  <a href="#name-flow-identification" class="xref">Flow identification</a><a href="#section-toc.1-1.2.2.2.1" class="pilcrow">¶</a></p>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.2.2.3">
+                <p id="section-toc.1-1.2.2.3.1"><a href="#section-2.3" class="xref">2.3</a>.  <a href="#name-loss-detection-and-control" class="xref">Loss detection and control</a><a href="#section-toc.1-1.2.2.3.1" class="pilcrow">¶</a></p>
+</li>
+</ul>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.3">
+            <p id="section-toc.1-1.3.1"><a href="#section-3" class="xref">3</a>.  <a href="#name-coexistance-with-non-icn-tr" class="xref">Coexistance with non-ICN transport</a><a href="#section-toc.1-1.3.1" class="pilcrow">¶</a></p>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.4">
+            <p id="section-toc.1-1.4.1"><a href="#section-4" class="xref">4</a>.  <a href="#name-examples-of-application" class="xref">Examples of application</a><a href="#section-toc.1-1.4.1" class="pilcrow">¶</a></p>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.5">
+            <p id="section-toc.1-1.5.1"><a href="#section-5" class="xref">5</a>.  <a href="#name-security-considerations" class="xref">Security considerations</a><a href="#section-toc.1-1.5.1" class="pilcrow">¶</a></p>
+<ul class="toc ulEmpty">
+<li class="toc ulEmpty" id="section-toc.1-1.5.2.1">
+                <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="xref">5.1</a>.  <a href="#name-consumer" class="xref">Consumer</a><a href="#section-toc.1-1.5.2.1.1" class="pilcrow">¶</a></p>
+</li>
+</ul>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.6">
+            <p id="section-toc.1-1.6.1"><a href="#section-6" class="xref">6</a>.  <a href="#name-references" class="xref">References</a><a href="#section-toc.1-1.6.1" class="pilcrow">¶</a></p>
+<ul class="toc ulEmpty">
+<li class="toc ulEmpty" id="section-toc.1-1.6.2.1">
+                <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="xref">6.1</a>.  <a href="#name-normative-references" class="xref">Normative References</a><a href="#section-toc.1-1.6.2.1.1" class="pilcrow">¶</a></p>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.6.2.2">
+                <p id="section-toc.1-1.6.2.2.1"><a href="#section-6.2" class="xref">6.2</a>.  <a href="#name-informative-references" class="xref">Informative References</a><a href="#section-toc.1-1.6.2.2.1" class="pilcrow">¶</a></p>
+</li>
+</ul>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.7">
+            <p id="section-toc.1-1.7.1"><a href="#section-appendix.a" class="xref"></a><a href="#name-authors-addresses" class="xref">Authors' Addresses</a><a href="#section-toc.1-1.7.1" class="pilcrow">¶</a></p>
+</li>
+</ul>
+</nav>
+</section>
+</div>
+<div id="introduction">
+<section id="section-1">
+      <h2 id="name-introduction">
+<a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
+      </h2>
+<div id="problem-and-scope">
+<section id="section-1.1">
+        <h3 id="name-problem-and-scope">
+<a href="#section-1.1" class="section-number selfRef">1.1. </a><a href="#name-problem-and-scope" class="section-name selfRef">Problem and Scope</a>
+        </h3>
+<p id="section-1.1-1">Information-Centric Networking (ICN) identifies a networking paradigm  centering 
+communication around named data, in contrast to host location. ICN offers a simplified 
+and more efficient user-to-content communication that resolves the mismatch 
+between content-centric usage and underlying host-to-host foundations of the Internet.<a href="#section-1.1-1" class="pilcrow">¶</a></p>
+<p id="section-1.1-2">Despite important architectural differences in the proposed designs (REFS), a shared
+idea characterizes ICN, that of abstracting data delivery from underlying point
+to point connectivity by means of an information-aware network layer operating
+directly on secured named data regardless of their location. 
+It results a native support for mobility, storage and security as network features are integrated
+by design, rather than as an afterthought.<a href="#section-1.1-2" class="pilcrow">¶</a></p>
+<p id="section-1.1-3">Receiver-Driven Connectionless Transport - In contrast
+with the current sender-based TCP/IP model, ICN transport
+is receiver-controlled, does not require connection instantiation
+and accommodates retrieval from possibly multiple
+dynamically discovered sources. It builds upon the flow
+balance principle guaranteeing corresponding request-data
+flows on a hop-by-hop basis [9]. A large body of work has
+looked into ICN transport (surveyed in [78]), not only to
+propose rate and congestion control mechanisms [81, 100] -
+especially in the multipath case [30] - but also to highlight
+the interaction with in-network caching [29], the coupling
+with request routing [30, 50], and the new opportunities
+provided by in-network hop-by-hop rate/loss/congestion
+control [32, 93] for a more reactive low latency response of
+involved network nodes.<a href="#section-1.1-3" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-1.1-4.1">Rephrase around M4 transport capabilities<a href="#section-1.1-4.1" class="pilcrow">¶</a>
+</li>
+</ul>
+</section>
+</div>
+<div id="related-work">
+<section id="section-1.2">
+        <h3 id="name-related-work">
+<a href="#section-1.2" class="section-number selfRef">1.2. </a><a href="#name-related-work" class="section-name selfRef">Related work</a>
+        </h3>
+<p id="section-1.2-1">Rel work : a summary
+There have been various attempts in the literature to either adapt existing transport protocols to ICN or to define novel approaches, in all cases targeting a specific application (refs to papers)<a href="#section-1.2-1" class="pilcrow">¶</a></p>
+<p id="section-1.2-2">Rel work on ICN transport protocols<a href="#section-1.2-2" class="pilcrow">¶</a></p>
+<p id="section-1.2-3">There has been huge amount of work on transport protocolsin the Internet. Here we focus on transport schemes proposedfor CCN. We give a discussion of such work in three aspects.RTT-based congestion control:Some designs, for instanceICP [3] and ICTP [19], rely on a single round trip time (RTT)estimator at the receiver to predict network status which arenot suitable for CCN because CCN flows may have multiplesources and multiple paths. To adapt to CCN's multipathnature, authors in [5], [6] propose per-route transport control,in which a separate RTT estimation is maintained for eachroute at the receiver, similar to MPTCP [21]. Multiple RTTbased scheme works well for multipath transfer, however, itadds lots of complexity to the receiver and heavily relies onthe accuracy of timing. Our scheme, on the other hand, utilizesexplicit congestion signalling from network to effectivelynotify the receiver about network condition. Compared withmultiple RTT based scheme, our approach leads to a muchsimpler receiver design and is not restricted to limitations oftimers which have long been criticized [9], [11], [18], [24].hop-by-hop  Interest  shaping:Since in CCN one Interestpacket retrieves at most one Data chunk, a router can controlthe rate of future incoming data chunks by shaping the rate ofoutgoing Interests. In [4], [17], authors propose quota-basedInterest shaping scheme to actively control traffic volume.They assign a quota (in terms of the number of pendingInterests) to each flow, and if the number of pending Interestsfor a flow exceeds the quota, that flow's Interests will bedelayed or dropped. In [22], authors use per interface rate limitto avoid congestion at an interface and per prefix-interfaceratelimit to control Interest rate of each content prefix. The quota-based Interest shaping and the rate limiting Interest controlrequire to assign an appropriate quota value for each flowor rate limit value for each content, which is challenging in practice, if not impossible. And they can be rather inefficientunder dynamic traffic setting. Our fair share Interest shapingscheme also considers about fairness, however, resources areshared by all flows and Interest from a flow is delayedtemporarily only when shared resources become limited andthe corresponding flow unfairly consumes resources.flow-aware traffic control:Authors in [17] propose a flow-aware network paradigm for CCN. They define content flowas packets bearing the same content name identified on the flyby parsing the packet headers. Moreover, routers impose per-flow fair bandwidth sharing by having multiple data queues ateach interface for active flows and using deficit round robin(DRR) [20] for fair scheduling among these queues. Differentfrom such scheme, our FISP realizes per-flow fair sharing byhaving per-flow Interest queues at an interface and utilizingmodified DRR to approximate max-min fairness.<a href="#section-1.2-3" class="pilcrow">¶</a></p>
+<p id="section-1.2-4">The Information Centric Transport Protocol (ICTP) [REF]adapts the existing ideas of CCNx. ICTP implements thesame algorithm of TCP in its congestion control mechanism,adapting it to the receiver-driven context. In particular, itoperates using interest-data sequences. The loss detection relieson the expected set of data. An equivalent of duplicate ACKin ICTP is the out-of-order received segments, i.e. a gap inthe flow of data. In NetInf TP the order of reception is non-sequential and loss detection relies on the number of receivedsegments after a particular request has been issued.Carofiglioet al.propose the Interest Control Protocol (ICP)as a receiver-driven transport protocol for CCN [REF]. ICPimplements a window-based interest flow control mechanism.For reliability, ICP relies on delay measurements and timerexpirations only; this means, retransmissions are realized byre-issuing interest packets once the timers expire. This alsomeans that re-expression of an interest can happen even if apacket is only delayed. The authors used an analytic modelwith parameter setting to optimize the round-trip timers. Incontrast, NetInf TP uses an additional packet loss detectionmechanism that signals congestion more reliably.<a href="#section-1.2-4" class="pilcrow">¶</a></p>
+<p id="section-1.2-5">NetInf TP [REF] applies a cyclic retransmission strategy which savesresources in congested scenarios.<a href="#section-1.2-5" class="pilcrow">¶</a></p>
+<p id="section-1.2-6">A few attemtps have been made at addressing the novel challenges brought by ICN in terms of flow definition, path labelling, etc., but to the best of our knowledge no unified ICN transport framework has been proposed so far.<a href="#section-1.2-6" class="pilcrow">¶</a></p>
+<p id="section-1.2-7">Rel work on new challenges  brought by  ICN transport<a href="#section-1.2-7" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-1.2-8.1">Flow definition<a href="#section-1.2-8.1" class="pilcrow">¶</a>
+</li>
+<li id="section-1.2-8.2">Path identification<a href="#section-1.2-8.2" class="pilcrow">¶</a>
+</li>
+<li id="section-1.2-8.3">Out-of-order delivery or variations in inter-arrival inter-vals can no longer be used as an indication of networkcongestion. In fact, a packet might arrive out of ordersimply because it has been sent by a node located furtheraway than the source of the other packets.<a href="#section-1.2-8.3" class="pilcrow">¶</a>
+</li>
+<li id="section-1.2-8.4">RTO estimation, as defined by Jacobson's algorithm [6],does not span multiple data sources, and as such it cannotbe used reliably.<a href="#section-1.2-8.4" class="pilcrow">¶</a>
+</li>
+</ul>
+</section>
+</div>
+<div id="reference-icn-architecture-hicn">
+<section id="section-1.3">
+        <h3 id="name-reference-icn-architecture-">
+<a href="#section-1.3" class="section-number selfRef">1.3. </a><a href="#name-reference-icn-architecture-" class="section-name selfRef">Reference ICN architecture: hICN</a>
+        </h3>
+<p id="section-1.3-1">Focus here is on defining a transport frameworkf for Hybrid ICN (REF to FD.io hICN)<a href="#section-1.3-1" class="pilcrow">¶</a></p>
+<p id="section-1.3-2">We focus on hICN (refs) and on the open-sourced implementation in FD.io hICN project (ref)<a href="#section-1.3-2" class="pilcrow">¶</a></p>
+<p id="section-1.3-3">Hybrid ICN is an architecture that brings ICN into IPv6 as described in [1]. By doing that, hicn allows to generalize IPv6 networking by using location-independent name-based networking. This is made either at the network layer and at the transport layer by also providing name-based sockets to applications.<a href="#section-1.3-3" class="pilcrow">¶</a></p>
+<p id="section-1.3-4">hicn allows to reuse existing IPv6 protocol and architectures, to extend them and deploy hybrid solutions based on the use case and application needs. Moreover, hicn can exploit hardware and software implementations heavily based on IP, making much simpler insertion of the technology in current networks, current applications and design future applications reusing what the industry already provides in terms of on the shelf components.<a href="#section-1.3-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="terminology">
+<section id="section-1.4">
+        <h3 id="name-terminology">
+<a href="#section-1.4" class="section-number selfRef">1.4. </a><a href="#name-terminology" class="section-name selfRef">Terminology</a>
+      </h3>
+</section>
+</div>
+<div id="notational-conventions">
+<section id="section-1.5">
+        <h3 id="name-notational-conventions">
+<a href="#section-1.5" class="section-number selfRef">1.5. </a><a href="#name-notational-conventions" class="section-name selfRef">Notational Conventions</a>
+        </h3>
+<p id="section-1.5-1">The words "MUST", "MUST NOT", "SHOULD", and "MAY" are used in this document.
+It's not shouting; when these words are capitalized, they have a special
+meaning as defined in <span>[<a href="#RFC2119" class="xref">RFC2119</a>]</span>.<a href="#section-1.5-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="transport-framework-architecture">
+<section id="section-2">
+      <h2 id="name-transport-framework-archite">
+<a href="#section-2" class="section-number selfRef">2. </a><a href="#name-transport-framework-archite" class="section-name selfRef">Transport framework architecture</a>
+      </h2>
+<p id="section-2-1">M4 Transport framework provides segmentation and reassembly services to
+the applications, and sits on top of hICN network layer which provides a 
+request/reply service to the transport layer itself. End-points in TCP/IP can be 
+described as acting as transmitters or receivers, or both at the same time, 
+whereas hICN transport is oriented to the consumer/producer paradigm where a 
+transmission is always triggered by a matching request. Moreover, a TCP connection 
+is a bidirectional communication channel, while in hICN there are always two 
+unidirectional sockets: the consumer and the producer. Transport protocols in 
+hICN can be stream or datagram oriented, depending on the application (as TCP or UDP).
+Currently, hICN prototype implements (i) the stream oriented ICN multi-path 
+transport protocol with support for loss recovery, flow and congestion control 
+introduced  in \cite{carofiglio2016optimal} and (ii) the in-network loss control 
+mechanisms in \cite{Papalini-WLDR}. We plan to enrich in the future the set of 
+supported transport protocols. As previously mentioned, a transport manifest is used 
+by the producer to distribute meta-data useful for consumer to retrieve the actual 
+data. It includes low level segmentation information (name suffixes) as well as 
+integrity information, and it is signed with the producer's private key~\cite{Manifest}. 
+Such approach is adopted as the default \hicn{} approach instead of per packet 
+signature computation. The manifest also carries the expiration time of the associated data
+which is an absolute quantity and requires reasonable synchronization to UTC.
+In case the manifest is not used by the producer, the expiration time is carried
+by the TCP timestamp option.<a href="#section-2-1" class="pilcrow">¶</a></p>
+<p id="section-2-2">\subsection{Socket API}\label{subsec:socket-api}
+We use substantially unaltered the INET6 socket API for \hicn{} with the twofold 
+advantage to provide a known API for developers of new applications and simple 
+integration of existing ones.
+The system calls of \hicn{} socket API are based on the socket interface extensions 
+for IPv6 \cite{rfc3493}. Both consumer and producer sockets bind to a socket address 
+(\sa{}), which is initialized by specifying address family 
+\af  and name prefix. The range of addresses stated by the name prefix 
+tells the namespace in which a producer socket is allowed to publish data and a 
+consumer socket is allowed to request data.<a href="#section-2-2" class="pilcrow">¶</a></p>
+<p id="section-2-3">The \texttt{bind()} system call takes care of setting up a local face to the \hicn{} 
+forwarder, which in the case of the producer also sets a FIB entry 
+\texttt{(name_prefix, socket_id)}. The \texttt{recvmsg()} and the \texttt{recvfrom()} 
+system calls are used by a consumer for retrieving data, while \texttt{sendmsg()} and 
+\texttt{sendto()} are used by a producer for publishing a content and making it available 
+for the consumers. 
+After data is published under a given name,  subsequent requests for it can be 
+satisfied by the producer socket without passing them to the application.<a href="#section-2-3" class="pilcrow">¶</a></p>
+<p id="section-2-4">The consumer socket can use the \texttt{sendmsg()} for sending a single Interest 
+with payload eventually triggering a \texttt{recvmsg()} on the remote producer 
+to pass the payload to the application, e.g. to send and HTTP request in half RTT.
+In general, push semantics are realized using reverse pull techniques, which require all end-points
+to have a consumer and a producer socket open and bound to a valid name prefix.
+An end-point can push data to one or several remote end-points by (i) calling a 
+\texttt{sendto()} from the producer socket with actual data; (ii) passing the resulting 
+transport manifest to a valid open consumer socket; (iii) calling a \texttt{sendmsg()} 
+from the consumer to trigger an Interest packet carrying the data manifest as payload.
+The remote producer (one or many) after reception of Interest can pass the manifest to
+the local consumer socket to trigger the reverse pull procedure.
+This technique can be used to send large HTTP requests to one or multiple servers, 
+and has the advantage to enable multicast upload from one client to many servers.<a href="#section-2-4" class="pilcrow">¶</a></p>
+<div id="application-apis">
+<section id="section-2.1">
+        <h3 id="name-application-apis">
+<a href="#section-2.1" class="section-number selfRef">2.1. </a><a href="#name-application-apis" class="section-name selfRef">Application APIs</a>
+        </h3>
+<p id="section-2.1-1">Application requirements to tailor underlying transport
+## Consumer and Producer Sockets
+We use substantially unaltered the INET6 socket API for \hicn{} with the twofold 
+advantage to provide a known API for developers of new applications and simple 
+integration of existing ones.
+The system calls of \hicn{} socket API are based on the socket interface extensions 
+for IPv6 \cite{rfc3493}. Both consumer and producer sockets bind to a socket address 
+(\sa{}), which is initialized by specifying address family 
+\af  and name prefix. The range of addresses stated by the name prefix 
+tells the namespace in which a producer socket is allowed to publish data and a 
+consumer socket is allowed to request data.<a href="#section-2.1-1" class="pilcrow">¶</a></p>
+<p id="section-2.1-2">The \texttt{bind()} system call takes care of setting up a local face to the \hicn{} 
+forwarder, which in the case of the producer also sets a FIB entry 
+\texttt{(name_prefix, socket_id)}. The \texttt{recvmsg()} and the \texttt{recvfrom()} 
+system calls are used by a consumer for retrieving data, while \texttt{sendmsg()} and 
+\texttt{sendto()} are used by a producer for publishing a content and making it available 
+for the consumers. 
+After data is published under a given name,  subsequent requests for it can be 
+satisfied by the producer socket without passing them to the application.<a href="#section-2.1-2" class="pilcrow">¶</a></p>
+<p id="section-2.1-3">The consumer socket can use the \texttt{sendmsg()} for sending a single Interest 
+with payload eventually triggering a \texttt{recvmsg()} on the remote producer 
+to pass the payload to the application, e.g. to send and HTTP request in half RTT.
+In general, push semantics are realized using reverse pull techniques, which require all end-points
+to have a consumer and a producer socket open and bound to a valid name prefix.
+An end-point can push data to one or several remote end-points by (i) calling a 
+\texttt{sendto()} from the producer socket with actual data; (ii) passing the resulting 
+transport manifest to a valid open consumer socket; (iii) calling a \texttt{sendmsg()} 
+from the consumer to trigger an Interest packet carrying the data manifest as payload.
+The remote producer (one or many) after reception of Interest can pass the manifest to
+the local consumer socket to trigger the reverse pull procedure.
+This technique can be used to send large HTTP requests to one or multiple servers, 
+and has the advantage to enable multicast upload from one client to many servers.<a href="#section-2.1-3" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-2.1-4.1">Transport semantics in L4 packet header<a href="#section-2.1-4.1" class="pilcrow">¶</a>
+</li>
+</ul>
+</section>
+</div>
+<div id="flow-identification">
+<section id="section-2.2">
+        <h3 id="name-flow-identification">
+<a href="#section-2.2" class="section-number selfRef">2.2. </a><a href="#name-flow-identification" class="section-name selfRef">Flow identification</a>
+        </h3>
+<p id="section-2.2-1">...
+## Rate and congestion control at the receiver
+AIMD-based receiver Interest control(RIC). The receiveradjusts its Interest window based on the AIMD (AdditiveIncrease Multiplicative Decrease) mechanism. Here, re-ceiver detects congestion mostly by marked packets fromupstream routers.<a href="#section-2.2-1" class="pilcrow">¶</a></p>
+<p id="section-2.2-2">RAAQM paragraph<a href="#section-2.2-2" class="pilcrow">¶</a></p>
+<p id="section-2.2-3">Other proposals<a href="#section-2.2-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="loss-detection-and-control">
+<section id="section-2.3">
+        <h3 id="name-loss-detection-and-control">
+<a href="#section-2.3" class="section-number selfRef">2.3. </a><a href="#name-loss-detection-and-control" class="section-name selfRef">Loss detection and control</a>
+        </h3>
+<p id="section-2.3-1">at receiver and in the network<a href="#section-2.3-1" class="pilcrow">¶</a></p>
+<p id="section-2.3-2">WLDR, MLDR<a href="#section-2.3-2" class="pilcrow">¶</a></p>
+<p id="section-2.3-3">Interest shaping and control hop-by-hop<a href="#section-2.3-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="coexistance-with-non-icn-transport">
+<section id="section-3">
+      <h2 id="name-coexistance-with-non-icn-tr">
+<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-coexistance-with-non-icn-tr" class="section-name selfRef">Coexistance with non-ICN transport</a>
+    </h2>
+</section>
+</div>
+<div id="examples-of-application">
+<section id="section-4">
+      <h2 id="name-examples-of-application">
+<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-examples-of-application" class="section-name selfRef">Examples of application</a>
+      </h2>
+<p id="section-4-1">## Live-streaming video distribution
+## Realtime Communications<a href="#section-4-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="security-considerations">
+<section id="section-5">
+      <h2 id="name-security-considerations">
+<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-security-considerations" class="section-name selfRef">Security considerations</a>
+      </h2>
+<p id="section-5-1">We also envision for future work, the design of a secure transport layer that 
+provides confidentiality to the communication by extending the widely diffused 
+point-to-point approach (e.g., as in TLS and DTLS), by means of secure group 
+communications~\cite{baugher2005multicast,perrig1999efficient,rafaeli2003survey,sherman2003key} 
+to cope and exploit \hicn{} in-network caching and multicasting.<a href="#section-5-1" class="pilcrow">¶</a></p>
+<div id="consumer">
+<section id="section-5.1">
+        <h3 id="name-consumer">
+<a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-consumer" class="section-name selfRef">Consumer</a>
+        </h3>
+<p id="section-5.1-1">## Producer<a href="#section-5.1-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<section id="section-6">
+      <h2 id="name-references">
+<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-references" class="section-name selfRef">References</a>
+      </h2>
+<section id="section-6.1">
+        <h3 id="name-normative-references">
+<a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+        </h3>
+<dl class="references">
+<dt id="RFC0793">[RFC0793]</dt>
+<dd>
+<span class="refAuthor">Postel, J.</span>, <span class="refTitle">"Transmission Control Protocol"</span>, <span class="seriesInfo">STD 7</span>, <span class="seriesInfo">RFC 793</span>, <span class="seriesInfo">DOI 10.17487/RFC0793</span>, <time datetime="1981-09">September 1981</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc793">https://www.rfc-editor.org/info/rfc793</a>&gt;</span>. </dd>
+<dt id="RFC1081">[RFC1081]</dt>
+<dd>
+<span class="refAuthor">Rose, M.T.</span>, <span class="refTitle">"Post Office Protocol: Version 3"</span>, <span class="seriesInfo">RFC 1081</span>, <span class="seriesInfo">DOI 10.17487/RFC1081</span>, <time datetime="1988-11">November 1988</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc1081">https://www.rfc-editor.org/info/rfc1081</a>&gt;</span>. </dd>
+<dt id="RFC1624">[RFC1624]</dt>
+<dd>
+<span class="refAuthor">Rijsinghani, A., Ed.</span>, <span class="refTitle">"Computation of the Internet Checksum via Incremental Update"</span>, <span class="seriesInfo">RFC 1624</span>, <span class="seriesInfo">DOI 10.17487/RFC1624</span>, <time datetime="1994-05">May 1994</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc1624">https://www.rfc-editor.org/info/rfc1624</a>&gt;</span>. </dd>
+<dt id="RFC2119">[RFC2119]</dt>
+<dd>
+<span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc2119">https://www.rfc-editor.org/info/rfc2119</a>&gt;</span>. </dd>
+<dt id="RFC3031">[RFC3031]</dt>
+<dd>
+<span class="refAuthor">Rosen, E.</span><span class="refAuthor">, Viswanathan, A.</span><span class="refAuthor">, and R. Callon</span>, <span class="refTitle">"Multiprotocol Label Switching Architecture"</span>, <span class="seriesInfo">RFC 3031</span>, <span class="seriesInfo">DOI 10.17487/RFC3031</span>, <time datetime="2001-01">January 2001</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc3031">https://www.rfc-editor.org/info/rfc3031</a>&gt;</span>. </dd>
+<dt id="RFC3550">[RFC3550]</dt>
+<dd>
+<span class="refAuthor">Schulzrinne, H.</span><span class="refAuthor">, Casner, S.</span><span class="refAuthor">, Frederick, R.</span><span class="refAuthor">, and V. Jacobson</span>, <span class="refTitle">"RTP: A Transport Protocol for Real-Time Applications"</span>, <span class="seriesInfo">STD 64</span>, <span class="seriesInfo">RFC 3550</span>, <span class="seriesInfo">DOI 10.17487/RFC3550</span>, <time datetime="2003-07">July 2003</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc3550">https://www.rfc-editor.org/info/rfc3550</a>&gt;</span>. </dd>
+<dt id="RFC3587">[RFC3587]</dt>
+<dd>
+<span class="refAuthor">Hinden, R.</span><span class="refAuthor">, Deering, S.</span><span class="refAuthor">, and E. Nordmark</span>, <span class="refTitle">"IPv6 Global Unicast Address Format"</span>, <span class="seriesInfo">RFC 3587</span>, <span class="seriesInfo">DOI 10.17487/RFC3587</span>, <time datetime="2003-08">August 2003</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc3587">https://www.rfc-editor.org/info/rfc3587</a>&gt;</span>. </dd>
+<dt id="RFC4291">[RFC4291]</dt>
+<dd>
+<span class="refAuthor">Hinden, R.</span><span class="refAuthor"> and S. Deering</span>, <span class="refTitle">"IP Version 6 Addressing Architecture"</span>, <span class="seriesInfo">RFC 4291</span>, <span class="seriesInfo">DOI 10.17487/RFC4291</span>, <time datetime="2006-02">February 2006</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc4291">https://www.rfc-editor.org/info/rfc4291</a>&gt;</span>. </dd>
+<dt id="RFC4302">[RFC4302]</dt>
+<dd>
+<span class="refAuthor">Kent, S.</span>, <span class="refTitle">"IP Authentication Header"</span>, <span class="seriesInfo">RFC 4302</span>, <span class="seriesInfo">DOI 10.17487/RFC4302</span>, <time datetime="2005-12">December 2005</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc4302">https://www.rfc-editor.org/info/rfc4302</a>&gt;</span>. </dd>
+<dt id="RFC6830">[RFC6830]</dt>
+<dd>
+<span class="refAuthor">Farinacci, D.</span><span class="refAuthor">, Fuller, V.</span><span class="refAuthor">, Meyer, D.</span><span class="refAuthor">, and D. Lewis</span>, <span class="refTitle">"The Locator/ID Separation Protocol (LISP)"</span>, <span class="seriesInfo">RFC 6830</span>, <span class="seriesInfo">DOI 10.17487/RFC6830</span>, <time datetime="2013-01">January 2013</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc6830">https://www.rfc-editor.org/info/rfc6830</a>&gt;</span>. </dd>
+<dt id="RFC8200">[RFC8200]</dt>
+<dd>
+<span class="refAuthor">Deering, S.</span><span class="refAuthor"> and R. Hinden</span>, <span class="refTitle">"Internet Protocol, Version 6 (IPv6) Specification"</span>, <span class="seriesInfo">STD 86</span>, <span class="seriesInfo">RFC 8200</span>, <span class="seriesInfo">DOI 10.17487/RFC8200</span>, <time datetime="2017-07">July 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8200">https://www.rfc-editor.org/info/rfc8200</a>&gt;</span>. </dd>
+</dl>
+</section>
+<section id="section-6.2">
+        <h3 id="name-informative-references">
+<a href="#section-6.2" class="section-number selfRef">6.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
+        </h3>
+<dl class="references">
+<dt id="CCN">[CCN]</dt>
+<dd>
+<span class="refAuthor">Jacobson, V.</span><span class="refAuthor">, Smetters, D.</span><span class="refAuthor">, Thornton, J.</span><span class="refAuthor">, Plass, M.</span><span class="refAuthor">, Briggs, N.</span><span class="refAuthor">, and R. Braynard</span>, <span class="refTitle">"Networking named content"</span>, <span class="seriesInfo">DOI 10.1145/1658939.1658941</span>, <span class="seriesInfo">Proceedings of the 5th international conference on Emerging networking experiments and technologies - CoNEXT '09</span>, <time datetime="2009">2009</time>, <span>&lt;<a href="https://doi.org/10.1145/1658939.1658941">https://doi.org/10.1145/1658939.1658941</a>&gt;</span>. </dd>
+<dt id="I-D.irtf-icnrg-ccnxmessages">[I-D.irtf-icnrg-ccnxmessages]</dt>
+<dd>
+<span class="refAuthor">Mosko, M.</span><span class="refAuthor">, Solis, I.</span><span class="refAuthor">, and C. Wood</span>, <span class="refTitle">"CCNx Messages in TLV Format"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-irtf-icnrg-ccnxmessages-09</span>, <time datetime="2019-01-24">24 January 2019</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-irtf-icnrg-ccnxmessages-09.txt">http://www.ietf.org/internet-drafts/draft-irtf-icnrg-ccnxmessages-09.txt</a>&gt;</span>. </dd>
+<dt id="I-D.irtf-icnrg-ccnxsemantics">[I-D.irtf-icnrg-ccnxsemantics]</dt>
+<dd>
+<span class="refAuthor">Mosko, M.</span><span class="refAuthor">, Solis, I.</span><span class="refAuthor">, and C. Wood</span>, <span class="refTitle">"CCNx Semantics"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-irtf-icnrg-ccnxsemantics-10</span>, <time datetime="2019-01-24">24 January 2019</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-irtf-icnrg-ccnxsemantics-10.txt">http://www.ietf.org/internet-drafts/draft-irtf-icnrg-ccnxsemantics-10.txt</a>&gt;</span>. </dd>
+<dt id="I-D.irtf-icnrg-mapme">[I-D.irtf-icnrg-mapme]</dt>
+<dd>
+<span class="refAuthor">Auge, J.</span><span class="refAuthor">, Carofiglio, G.</span><span class="refAuthor">, Muscariello, L.</span><span class="refAuthor">, and M. Papalini</span>, <span class="refTitle">"MAP-Me : Managing Anchorless Mobility in Content Centric Networking"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-irtf-icnrg-mapme-04</span>, <time datetime="2019-11-03">3 November 2019</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-irtf-icnrg-mapme-04.txt">http://www.ietf.org/internet-drafts/draft-irtf-icnrg-mapme-04.txt</a>&gt;</span>. </dd>
+<dt id="I-D.irtf-icnrg-terminology">[I-D.irtf-icnrg-terminology]</dt>
+<dd>
+<span class="refAuthor">Wissingh, B.</span><span class="refAuthor">, Wood, C.</span><span class="refAuthor">, Afanasyev, A.</span><span class="refAuthor">, Zhang, L.</span><span class="refAuthor">, Oran, D.</span><span class="refAuthor">, and C. Tschudin</span>, <span class="refTitle">"Information-Centric Networking (ICN): CCNx and NDN Terminology"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-irtf-icnrg-terminology-08</span>, <time datetime="2020-01-17">17 January 2020</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-irtf-icnrg-terminology-08.txt">http://www.ietf.org/internet-drafts/draft-irtf-icnrg-terminology-08.txt</a>&gt;</span>. </dd>
+<dt id="I-D.muscariello-intarea-hicn">[I-D.muscariello-intarea-hicn]</dt>
+<dd>
+<span class="refAuthor">Muscariello, L.</span><span class="refAuthor">, Carofiglio, G.</span><span class="refAuthor">, Auge, J.</span><span class="refAuthor">, and M. Papalini</span>, <span class="refTitle">"Hybrid Information-Centric Networking"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-muscariello-intarea-hicn-03</span>, <time datetime="2019-10-30">30 October 2019</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-muscariello-intarea-hicn-03.txt">http://www.ietf.org/internet-drafts/draft-muscariello-intarea-hicn-03.txt</a>&gt;</span>. </dd>
+<dt id="MAN">[MAN]</dt>
+<dd>
+<span class="refAuthor">Baugher, M.</span><span class="refAuthor">, Davie, B.</span><span class="refAuthor">, Narayanan, A.</span><span class="refAuthor">, and D. Oran</span>, <span class="refTitle">"Self-verifying names for read-only named data"</span>, <span class="seriesInfo">DOI 10.1109/infcomw.2012.6193505</span>, <span class="seriesInfo">2012 Proceedings IEEE INFOCOM Workshops</span>, <time datetime="2012-03">March 2012</time>, <span>&lt;<a href="https://doi.org/10.1109/infcomw.2012.6193505">https://doi.org/10.1109/infcomw.2012.6193505</a>&gt;</span>. </dd>
+<dt id="MIR">[MIR]</dt>
+<dd>
+<span class="refAuthor">Garcia-Luna-Aceves, J.</span><span class="refAuthor">, Martinez-Castillo, J.</span><span class="refAuthor">, and R. Menchaca-Mendez</span>, <span class="refTitle">"Routing to Multi-Instantiated Destinations: Principles, Practice, and Applications"</span>, <span class="seriesInfo">DOI 10.1109/tmc.2017.2734658</span>, <span class="seriesInfo">IEEE Transactions on Mobile Computing Vol. 17, pp. 1696-1709</span>, <time datetime="2018-07">July 2018</time>, <span>&lt;<a href="https://doi.org/10.1109/tmc.2017.2734658">https://doi.org/10.1109/tmc.2017.2734658</a>&gt;</span>. </dd>
+<dt id="NDN">[NDN]</dt>
+<dd>
+<span class="refAuthor">Zhang, L.</span><span class="refAuthor">, Afanasyev, A.</span><span class="refAuthor">, Burke, J.</span><span class="refAuthor">, Jacobson, V.</span><span class="refAuthor">, claffy, k.</span><span class="refAuthor">, Crowley, P.</span><span class="refAuthor">, Papadopoulos, C.</span><span class="refAuthor">, Wang, L.</span><span class="refAuthor">, and B. Zhang</span>, <span class="refTitle">"Named data networking"</span>, <span class="seriesInfo">DOI 10.1145/2656877.2656887</span>, <span class="seriesInfo">ACM SIGCOMM Computer Communication Review Vol. 44, pp. 66-73</span>, <time datetime="2014-07">July 2014</time>, <span>&lt;<a href="https://doi.org/10.1145/2656877.2656887">https://doi.org/10.1145/2656877.2656887</a>&gt;</span>. </dd>
+<dt id="RAQ">[RAQ]</dt>
+<dd>
+<span class="refAuthor">Carofiglio, G.</span><span class="refAuthor">, Gallo, M.</span><span class="refAuthor">, Muscariello, L.</span><span class="refAuthor">, Papalini, M.</span><span class="refAuthor">, and S. Wang</span>, <span class="refTitle">"Optimal multipath congestion control and request forwarding in Information-Centric Networks"</span>, <span class="seriesInfo">DOI 10.1109/icnp.2013.6733576</span>, <span class="seriesInfo">2013 21st IEEE International Conference on Network Protocols (ICNP)</span>, <time datetime="2013-10">October 2013</time>, <span>&lt;<a href="https://doi.org/10.1109/icnp.2013.6733576">https://doi.org/10.1109/icnp.2013.6733576</a>&gt;</span>. </dd>
+<dt id="WLD">[WLD]</dt>
+<dd>
+<span class="refAuthor">Carofiglio, G.</span><span class="refAuthor">, Muscariello, L.</span><span class="refAuthor">, Papalini, M.</span><span class="refAuthor">, Rozhnova, N.</span><span class="refAuthor">, and X. Zeng</span>, <span class="refTitle">"Leveraging ICN In-network Control for Loss Detection and Recovery in Wireless Mobile networks"</span>, <span class="seriesInfo">DOI 10.1145/2984356.2984361</span>, <span class="seriesInfo">Proceedings of the 2016 conference on 3rd ACM Conference on Information-Centric Networking - ACM-ICN '16</span>, <time datetime="2016">2016</time>, <span>&lt;<a href="https://doi.org/10.1145/2984356.2984361">https://doi.org/10.1145/2984356.2984361</a>&gt;</span>. </dd>
+</dl>
+</section>
+</section>
+<div id="authors-addresses">
+<section id="section-appendix.a">
+      <h2 id="name-authors-addresses">
+<a href="#name-authors-addresses" class="section-name selfRef">Authors' Addresses</a>
+      </h2>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Luca Muscariello</span></div>
+<div dir="auto" class="left"><span class="org">Cisco Systems Inc.</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:lumuscar@cisco.com" class="email">lumuscar@cisco.com</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Giovanna Carofiglio</span></div>
+<div dir="auto" class="left"><span class="org">Cisco Systems Inc.</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:gcarofig@cisco.com" class="email">gcarofig@cisco.com</a>
+</div>
+</address>
+</section>
+</div>
+<script>const toc = document.getElementById("toc");
+toc.querySelector("h2").addEventListener("click", e => {
+  toc.classList.toggle("active");
+});
+toc.querySelector("nav").addEventListener("click", e => {
+  toc.classList.remove("active");
+});
+</script>
+</body>
+</html>

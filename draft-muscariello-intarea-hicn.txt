@@ -5,13 +5,13 @@
 Internet Area WG                                          L. Muscariello
 Internet-Draft                                             G. Carofiglio
 Intended status: Informational                                   J. Augé
-Expires: 3 September 2020                                    M. Papalini
+Expires: 4 November 2020                                     M. Papalini
                                                       Cisco Systems Inc.
-                                                            2 March 2020
+                                                              3 May 2020
 
 
                  Hybrid Information-Centric Networking
-                   draft-muscariello-intarea-hicn-03
+                   draft-muscariello-intarea-hicn-04
 
 Abstract
 
@@ -42,7 +42,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 3 September 2020.
+   This Internet-Draft will expire on 4 November 2020.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Muscariello, et al.     Expires 3 September 2020                [Page 1]
+Muscariello, et al.      Expires 4 November 2020                [Page 1]
 
-Internet-Draft                    hICN                        March 2020
+Internet-Draft                    hICN                          May 2020
 
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Muscariello, et al.     Expires 3 September 2020                [Page 2]
+Muscariello, et al.      Expires 4 November 2020                [Page 2]
 
-Internet-Draft                    hICN                        March 2020
+Internet-Draft                    hICN                          May 2020
 
 
    *  (i) the network can transport many different kinds of applications
@@ -165,9 +165,9 @@ Internet-Draft                    hICN                        March 2020
 
 
 
-Muscariello, et al.     Expires 3 September 2020                [Page 3]
+Muscariello, et al.      Expires 4 November 2020                [Page 3]
 
-Internet-Draft                    hICN                        March 2020
+Internet-Draft                    hICN                          May 2020
 
 
    +---------------------+
@@ -221,9 +221,9 @@ Internet-Draft                    hICN                        March 2020
 
 
 
-Muscariello, et al.     Expires 3 September 2020                [Page 4]
+Muscariello, et al.      Expires 4 November 2020                [Page 4]
 
-Internet-Draft                    hICN                        March 2020
+Internet-Draft                    hICN                          May 2020
 
 
    end, in packet header fields as described in the following sections.
@@ -277,9 +277,9 @@ Internet-Draft                    hICN                        March 2020
 
 
 
-Muscariello, et al.     Expires 3 September 2020                [Page 5]
+Muscariello, et al.      Expires 4 November 2020                [Page 5]
 
-Internet-Draft                    hICN                        March 2020
+Internet-Draft                    hICN                          May 2020
 
 
    cases all transport services are connection-less, meaning that a
@@ -333,9 +333,9 @@ Internet-Draft                    hICN                        March 2020
 
 
 
-Muscariello, et al.     Expires 3 September 2020                [Page 6]
+Muscariello, et al.      Expires 4 November 2020                [Page 6]
 
-Internet-Draft                    hICN                        March 2020
+Internet-Draft                    hICN                          May 2020
 
 
    is that the producer socket uses an authentic-able identity while
@@ -389,9 +389,9 @@ Internet-Draft                    hICN                        March 2020
 
 
 
-Muscariello, et al.     Expires 3 September 2020                [Page 7]
+Muscariello, et al.      Expires 4 November 2020                [Page 7]
 
-Internet-Draft                    hICN                        March 2020
+Internet-Draft                    hICN                          May 2020
 
 
    From the description given above, the name prefix is a location
@@ -445,9 +445,9 @@ Internet-Draft                    hICN                        March 2020
 
 
 
-Muscariello, et al.     Expires 3 September 2020                [Page 8]
+Muscariello, et al.      Expires 4 November 2020                [Page 8]
 
-Internet-Draft                    hICN                        March 2020
+Internet-Draft                    hICN                          May 2020
 
 
    0                   1                   2                   3
@@ -501,9 +501,9 @@ Internet-Draft                    hICN                        March 2020
 
 
 
-Muscariello, et al.     Expires 3 September 2020                [Page 9]
+Muscariello, et al.      Expires 4 November 2020                [Page 9]
 
-Internet-Draft                    hICN                        March 2020
+Internet-Draft                    hICN                          May 2020
 
 
    0                   1                   2                   3
@@ -557,9 +557,9 @@ Internet-Draft                    hICN                        March 2020
 
 
 
-Muscariello, et al.     Expires 3 September 2020               [Page 10]
+Muscariello, et al.      Expires 4 November 2020               [Page 10]
 
-Internet-Draft                    hICN                        March 2020
+Internet-Draft                    hICN                          May 2020
 
 
          Figure 6: Transport header for data and interest packets.
@@ -613,15 +613,14 @@ Internet-Draft                    hICN                        March 2020
 
 
 
-Muscariello, et al.     Expires 3 September 2020               [Page 11]
+Muscariello, et al.      Expires 4 November 2020               [Page 11]
 
-Internet-Draft                    hICN                        March 2020
+Internet-Draft                    hICN                          May 2020
 
 
-       Figure 7: Transport header for data and interest packets using
-                                UDP header.
-
-   Both transport headers can be used to carry name suffix information.
+   {: #fig-transport-udp title="Transport header for data and interest
+   packets using UDP header."} Both transport headers can be used to
+   carry name suffix information.
 
    The following sections describe the components of an hICN node and
    the packet processing operations.
@@ -669,9 +668,10 @@ Internet-Draft                    hICN                        March 2020
 
 
 
-Muscariello, et al.     Expires 3 September 2020               [Page 12]
+
+Muscariello, et al.      Expires 4 November 2020               [Page 12]
 
-Internet-Draft                    hICN                        March 2020
+Internet-Draft                    hICN                          May 2020
 
 
 2.5.1.  Interest Path
@@ -725,12 +725,12 @@ Internet-Draft                    hICN                        March 2020
 
 
 
-Muscariello, et al.     Expires 3 September 2020               [Page 13]
+Muscariello, et al.      Expires 4 November 2020               [Page 13]
 
-Internet-Draft                    hICN                        March 2020
+Internet-Draft                    hICN                          May 2020
 
 
-      Figure 8: The interest packet hits a matching data packet in the
+      Figure 7: The interest packet hits a matching data packet in the
                                packet cache.
 
              +----------------+    +--------+
@@ -741,7 +741,7 @@ Internet-Draft                    hICN                        March 2020
              |                |    |        |
              +----------------+    +--------+
 
-      Figure 9: The interest packet finds no match in the packet cache
+      Figure 8: The interest packet finds no match in the packet cache
                     and is processed to find a next-hop.
 
                                     Same src addr
@@ -757,7 +757,7 @@ Internet-Draft                    hICN                        March 2020
                                     +-----------+
                                     Different src addr
 
-       Figure 10: The interest packet hits an interest packet in the
+        Figure 9: The interest packet hits an interest packet in the
                                packet cache.
 
 2.5.2.  Data Path
@@ -781,9 +781,9 @@ Internet-Draft                    hICN                        March 2020
 
 
 
-Muscariello, et al.     Expires 3 September 2020               [Page 14]
+Muscariello, et al.      Expires 4 November 2020               [Page 14]
 
-Internet-Draft                    hICN                        March 2020
+Internet-Draft                    hICN                          May 2020
 
 
        RX
@@ -807,7 +807,7 @@ Internet-Draft                    hICN                        March 2020
                          |  TX Data[N]
                          +------>
 
-      Figure 11: The data packet hits an interest packet in the packet
+      Figure 10: The data packet hits an interest packet in the packet
                                    cache.
 
      RX             Packet Cache
@@ -816,7 +816,7 @@ Internet-Draft                    hICN                        March 2020
                |   OR Data hit    |
                +------------------+
 
-      Figure 12: The data packet is drop in case no interest match is
+      Figure 11: The data packet is drop in case no interest match is
                          found in the packet cache.
 
 3.  Security
@@ -837,9 +837,9 @@ Internet-Draft                    hICN                        March 2020
 
 
 
-Muscariello, et al.     Expires 3 September 2020               [Page 15]
+Muscariello, et al.      Expires 4 November 2020               [Page 15]
 
-Internet-Draft                    hICN                        March 2020
+Internet-Draft                    hICN                          May 2020
 
 
    *  (i)IP or extension header fields either immutable in transit or
@@ -869,7 +869,7 @@ Internet-Draft                    hICN                        March 2020
    /                                                               /
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
-         Figure 13: The IP authentication header appended after the
+         Figure 12: The IP authentication header appended after the
                 transport header to carry packet signatures.
 
    ValidAlg:          8-bit index to indicate which validation algorithm
@@ -893,9 +893,9 @@ Internet-Draft                    hICN                        March 2020
 
 
 
-Muscariello, et al.     Expires 3 September 2020               [Page 16]
+Muscariello, et al.      Expires 4 November 2020               [Page 16]
 
-Internet-Draft                    hICN                        March 2020
+Internet-Draft                    hICN                          May 2020
 
 
    manifest must be signed to guarantee a level of security equivalent
@@ -932,7 +932,7 @@ Internet-Draft                    hICN                        March 2020
    |                                                               |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
-     Figure 14: The transport manifest, generated by the producer end-
+     Figure 13: The transport manifest, generated by the producer end-
         point for the consumer end-point, contains names, integrity
         hashes and is signed with the producer end-point private key
 
@@ -949,9 +949,9 @@ Internet-Draft                    hICN                        March 2020
 
 
 
-Muscariello, et al.     Expires 3 September 2020               [Page 17]
+Muscariello, et al.      Expires 4 November 2020               [Page 17]
 
-Internet-Draft                    hICN                        March 2020
+Internet-Draft                    hICN                          May 2020
 
 
    Version:          8-bit index to indicate which validation algorithm
@@ -1005,9 +1005,9 @@ Internet-Draft                    hICN                        March 2020
 
 
 
-Muscariello, et al.     Expires 3 September 2020               [Page 18]
+Muscariello, et al.      Expires 4 November 2020               [Page 18]
 
-Internet-Draft                    hICN                        March 2020
+Internet-Draft                    hICN                          May 2020
 
 
    then run at different end-points to eventually reply to the same
@@ -1061,9 +1061,9 @@ Internet-Draft                    hICN                        March 2020
 
 
 
-Muscariello, et al.     Expires 3 September 2020               [Page 19]
+Muscariello, et al.      Expires 4 November 2020               [Page 19]
 
-Internet-Draft                    hICN                        March 2020
+Internet-Draft                    hICN                          May 2020
 
 
    [RFC6830]  Farinacci, D., Fuller, V., Meyer, D., and D. Lewis, "The
@@ -1117,9 +1117,9 @@ Internet-Draft                    hICN                        March 2020
 
 
 
-Muscariello, et al.     Expires 3 September 2020               [Page 20]
+Muscariello, et al.      Expires 4 November 2020               [Page 20]
 
-Internet-Draft                    hICN                        March 2020
+Internet-Draft                    hICN                          May 2020
 
 
    [NDN]      Zhang, L., Afanasyev, A., Burke, J., Jacobson, V., claffy,
@@ -1138,7 +1138,7 @@ Internet-Draft                    hICN                        March 2020
    [TRA]      Sardara, M., Muscariello, L., and A. Compagno, "A
               transport layer and socket API for (h)ICN",
               DOI 10.1145/3267955.3267972, Proceedings of the 5th ACM
-              Conference on Information-Centric Networking - ICN '18,
+              Conference on Information-Centric Networking, September
               2018, <https://doi.org/10.1145/3267955.3267972>.
 
    [WLD]      Carofiglio, G., Muscariello, L., Papalini, M., Rozhnova,
@@ -1173,9 +1173,9 @@ Authors' Addresses
 
 
 
-Muscariello, et al.     Expires 3 September 2020               [Page 21]
+Muscariello, et al.      Expires 4 November 2020               [Page 21]
 
-Internet-Draft                    hICN                        March 2020
+Internet-Draft                    hICN                          May 2020
 
 
    Michele Papalini
@@ -1229,4 +1229,4 @@ Internet-Draft                    hICN                        March 2020
 
 
 
-Muscariello, et al.     Expires 3 September 2020               [Page 22]
+Muscariello, et al.      Expires 4 November 2020               [Page 22]

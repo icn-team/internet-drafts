@@ -5,9 +5,9 @@
 DMM Working Group                                                J. Augé
 Internet-Draft                                             G. Carofiglio
 Intended status: Informational                            L. Muscariello
-Expires: 3 September 2020                                    M. Papalini
+Expires: 4 November 2020                                     M. Papalini
                                                                    Cisco
-                                                            2 March 2020
+                                                              3 May 2020
 
 
                     Anchorless mobility through hICN
@@ -40,7 +40,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 3 September 2020.
+   This Internet-Draft will expire on 4 November 2020.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Augé, et al.            Expires 3 September 2020                [Page 1]
+Augé, et al.             Expires 4 November 2020                [Page 1]
 
-Internet-Draft      Anchorless mobility through hICN          March 2020
+Internet-Draft      Anchorless mobility through hICN            May 2020
 
 
    Please review these documents carefully, as they describe your rights
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Augé, et al.            Expires 3 September 2020                [Page 2]
+Augé, et al.             Expires 4 November 2020                [Page 2]
 
-Internet-Draft      Anchorless mobility through hICN          March 2020
+Internet-Draft      Anchorless mobility through hICN            May 2020
 
 
 1.  Introduction
@@ -165,9 +165,9 @@ Internet-Draft      Anchorless mobility through hICN          March 2020
 
 
 
-Augé, et al.            Expires 3 September 2020                [Page 3]
+Augé, et al.             Expires 4 November 2020                [Page 3]
 
-Internet-Draft      Anchorless mobility through hICN          March 2020
+Internet-Draft      Anchorless mobility through hICN            May 2020
 
 
 2.1.  Terminology
@@ -221,9 +221,9 @@ Internet-Draft      Anchorless mobility through hICN          March 2020
 
 
 
-Augé, et al.            Expires 3 September 2020                [Page 4]
+Augé, et al.             Expires 4 November 2020                [Page 4]
 
-Internet-Draft      Anchorless mobility through hICN          March 2020
+Internet-Draft      Anchorless mobility through hICN            May 2020
 
 
    *Locator-based architectures*
@@ -277,9 +277,9 @@ Internet-Draft      Anchorless mobility through hICN          March 2020
 
 
 
-Augé, et al.            Expires 3 September 2020                [Page 5]
+Augé, et al.             Expires 4 November 2020                [Page 5]
 
-Internet-Draft      Anchorless mobility through hICN          March 2020
+Internet-Draft      Anchorless mobility through hICN            May 2020
 
 
    known as name-based [I-D.irtf-icnrg-terminology], although as we will
@@ -333,9 +333,9 @@ Internet-Draft      Anchorless mobility through hICN          March 2020
 
 
 
-Augé, et al.            Expires 3 September 2020                [Page 6]
+Augé, et al.             Expires 4 November 2020                [Page 6]
 
-Internet-Draft      Anchorless mobility through hICN          March 2020
+Internet-Draft      Anchorless mobility through hICN            May 2020
 
 
 3.1.  Consumer mobility in hICN
@@ -389,9 +389,9 @@ Internet-Draft      Anchorless mobility through hICN          March 2020
 
 
 
-Augé, et al.            Expires 3 September 2020                [Page 7]
+Augé, et al.             Expires 4 November 2020                [Page 7]
 
-Internet-Draft      Anchorless mobility through hICN          March 2020
+Internet-Draft      Anchorless mobility through hICN            May 2020
 
 
       routers.  Forwarding to the new location is enabled without
@@ -445,9 +445,9 @@ Internet-Draft      Anchorless mobility through hICN          March 2020
 
 
 
-Augé, et al.            Expires 3 September 2020                [Page 8]
+Augé, et al.             Expires 4 November 2020                [Page 8]
 
-Internet-Draft      Anchorless mobility through hICN          March 2020
+Internet-Draft      Anchorless mobility through hICN            May 2020
 
 
    Pending signalization interests that are not acknowledged are
@@ -501,9 +501,9 @@ Internet-Draft      Anchorless mobility through hICN          March 2020
 
 
 
-Augé, et al.            Expires 3 September 2020                [Page 9]
+Augé, et al.             Expires 4 November 2020                [Page 9]
 
-Internet-Draft      Anchorless mobility through hICN          March 2020
+Internet-Draft      Anchorless mobility through hICN            May 2020
 
 
 5.3.1.  Illustration
@@ -557,9 +557,9 @@ Internet-Draft      Anchorless mobility through hICN          March 2020
 
 
 
-Augé, et al.            Expires 3 September 2020               [Page 10]
+Augé, et al.             Expires 4 November 2020               [Page 10]
 
-Internet-Draft      Anchorless mobility through hICN          March 2020
+Internet-Draft      Anchorless mobility through hICN            May 2020
 
 
    [MAPME] that stretch is bounded and typically kept low in scenarios
@@ -613,9 +613,9 @@ Internet-Draft      Anchorless mobility through hICN          March 2020
 
 
 
-Augé, et al.            Expires 3 September 2020               [Page 11]
+Augé, et al.             Expires 4 November 2020               [Page 11]
 
-Internet-Draft      Anchorless mobility through hICN          March 2020
+Internet-Draft      Anchorless mobility through hICN            May 2020
 
 
       followed by the packet, this one is re-sent through the
@@ -669,9 +669,9 @@ Internet-Draft      Anchorless mobility through hICN          March 2020
 
 
 
-Augé, et al.            Expires 3 September 2020               [Page 12]
+Augé, et al.             Expires 4 November 2020               [Page 12]
 
-Internet-Draft      Anchorless mobility through hICN          March 2020
+Internet-Draft      Anchorless mobility through hICN            May 2020
 
 
        P (radio link) AR1             AR2             GW          Internet
@@ -725,9 +725,9 @@ Internet-Draft      Anchorless mobility through hICN          March 2020
 
 
 
-Augé, et al.            Expires 3 September 2020               [Page 13]
+Augé, et al.             Expires 4 November 2020               [Page 13]
 
-Internet-Draft      Anchorless mobility through hICN          March 2020
+Internet-Draft      Anchorless mobility through hICN            May 2020
 
 
 6.  Benefits
@@ -781,9 +781,9 @@ Internet-Draft      Anchorless mobility through hICN          March 2020
 
 
 
-Augé, et al.            Expires 3 September 2020               [Page 14]
+Augé, et al.             Expires 4 November 2020               [Page 14]
 
-Internet-Draft      Anchorless mobility through hICN          March 2020
+Internet-Draft      Anchorless mobility through hICN            May 2020
 
 
    video conferencing where we typically have few presenters and most
@@ -837,9 +837,9 @@ Internet-Draft      Anchorless mobility through hICN          March 2020
 
 
 
-Augé, et al.            Expires 3 September 2020               [Page 15]
+Augé, et al.             Expires 4 November 2020               [Page 15]
 
-Internet-Draft      Anchorless mobility through hICN          March 2020
+Internet-Draft      Anchorless mobility through hICN            May 2020
 
 
        C              AR1             AR2             GW          Internet
@@ -893,9 +893,9 @@ Internet-Draft      Anchorless mobility through hICN          March 2020
 
 
 
-Augé, et al.            Expires 3 September 2020               [Page 16]
+Augé, et al.             Expires 4 November 2020               [Page 16]
 
-Internet-Draft      Anchorless mobility through hICN          March 2020
+Internet-Draft      Anchorless mobility through hICN            May 2020
 
 
        C (radio link) AR1             AR2             GW          Internet
@@ -949,9 +949,9 @@ Internet-Draft      Anchorless mobility through hICN          March 2020
 
 
 
-Augé, et al.            Expires 3 September 2020               [Page 17]
+Augé, et al.             Expires 4 November 2020               [Page 17]
 
-Internet-Draft      Anchorless mobility through hICN          March 2020
+Internet-Draft      Anchorless mobility through hICN            May 2020
 
 
        C (radio link) AR1             AR2             GW          Internet
@@ -1005,9 +1005,9 @@ Internet-Draft      Anchorless mobility through hICN          March 2020
 
 
 
-Augé, et al.            Expires 3 September 2020               [Page 18]
+Augé, et al.             Expires 4 November 2020               [Page 18]
 
-Internet-Draft      Anchorless mobility through hICN          March 2020
+Internet-Draft      Anchorless mobility through hICN            May 2020
 
 
       C          WiFi          GW         LTE enB        PGW       Internet
@@ -1061,9 +1061,9 @@ Internet-Draft      Anchorless mobility through hICN          March 2020
 
 
 
-Augé, et al.            Expires 3 September 2020               [Page 19]
+Augé, et al.             Expires 4 November 2020               [Page 19]
 
-Internet-Draft      Anchorless mobility through hICN          March 2020
+Internet-Draft      Anchorless mobility through hICN            May 2020
 
 
    Mobility is handled transparently at the network layer with very fast
@@ -1117,9 +1117,9 @@ Internet-Draft      Anchorless mobility through hICN          March 2020
 
 
 
-Augé, et al.            Expires 3 September 2020               [Page 20]
+Augé, et al.             Expires 4 November 2020               [Page 20]
 
-Internet-Draft      Anchorless mobility through hICN          March 2020
+Internet-Draft      Anchorless mobility through hICN            May 2020
 
 
    the sum of access throughputs, which is hard to achieve with existing
@@ -1173,9 +1173,9 @@ Internet-Draft      Anchorless mobility through hICN          March 2020
 
 
 
-Augé, et al.            Expires 3 September 2020               [Page 21]
+Augé, et al.             Expires 4 November 2020               [Page 21]
 
-Internet-Draft      Anchorless mobility through hICN          March 2020
+Internet-Draft      Anchorless mobility through hICN            May 2020
 
 
    C         P         AR1        AR2        AR3         GW  X    Internet
@@ -1229,9 +1229,9 @@ Internet-Draft      Anchorless mobility through hICN          March 2020
 
 
 
-Augé, et al.            Expires 3 September 2020               [Page 22]
+Augé, et al.             Expires 4 November 2020               [Page 22]
 
-Internet-Draft      Anchorless mobility through hICN          March 2020
+Internet-Draft      Anchorless mobility through hICN            May 2020
 
 
 7.1.  Interaction with non-hICN enabled routers
@@ -1285,9 +1285,9 @@ Internet-Draft      Anchorless mobility through hICN          March 2020
 
 
 
-Augé, et al.            Expires 3 September 2020               [Page 23]
+Augé, et al.             Expires 4 November 2020               [Page 23]
 
-Internet-Draft      Anchorless mobility through hICN          March 2020
+Internet-Draft      Anchorless mobility through hICN            May 2020
 
 
    Similarly, the proposed producer mobility solution is appropriate for
@@ -1341,9 +1341,9 @@ Internet-Draft      Anchorless mobility through hICN          March 2020
 
 
 
-Augé, et al.            Expires 3 September 2020               [Page 24]
+Augé, et al.             Expires 4 November 2020               [Page 24]
 
-Internet-Draft      Anchorless mobility through hICN          March 2020
+Internet-Draft      Anchorless mobility through hICN            May 2020
 
 
               Support in the Internet", RFC 6301, DOI 10.17487/RFC6301,
@@ -1397,9 +1397,9 @@ Internet-Draft      Anchorless mobility through hICN          March 2020
 
 
 
-Augé, et al.            Expires 3 September 2020               [Page 25]
+Augé, et al.             Expires 4 November 2020               [Page 25]
 
-Internet-Draft      Anchorless mobility through hICN          March 2020
+Internet-Draft      Anchorless mobility through hICN            May 2020
 
 
               Papalini, "MAP-Me : Managing Anchorless Mobility in
@@ -1453,16 +1453,16 @@ Internet-Draft      Anchorless mobility through hICN          March 2020
 
 
 
-Augé, et al.            Expires 3 September 2020               [Page 26]
+Augé, et al.             Expires 4 November 2020               [Page 26]
 
-Internet-Draft      Anchorless mobility through hICN          March 2020
+Internet-Draft      Anchorless mobility through hICN            May 2020
 
 
    [SEC]      Compagno, A., Zeng, X., Muscariello, L., Carofiglio, G.,
               and J. Augé, "Secure producer mobility in information-
               centric network", DOI 10.1145/3125719.3125725, Proceedings
-              of the 4th ACM Conference on Information-Centric
-              Networking - ICN '17, 2017,
+              of the 4th ACM Conference on Information-
+              Centric Networking, September 2017,
               <https://doi.org/10.1145/3125719.3125725>.
 
    [SURVEY1]  Zhang, Y., Afanasyev, A., Burke, J., and L. Zhang, "A
@@ -1509,9 +1509,9 @@ Authors' Addresses
 
 
 
-Augé, et al.            Expires 3 September 2020               [Page 27]
+Augé, et al.             Expires 4 November 2020               [Page 27]
 
-Internet-Draft      Anchorless mobility through hICN          March 2020
+Internet-Draft      Anchorless mobility through hICN            May 2020
 
 
    France
@@ -1565,4 +1565,4 @@ Internet-Draft      Anchorless mobility through hICN          March 2020
 
 
 
-Augé, et al.            Expires 3 September 2020               [Page 28]
+Augé, et al.             Expires 4 November 2020               [Page 28]

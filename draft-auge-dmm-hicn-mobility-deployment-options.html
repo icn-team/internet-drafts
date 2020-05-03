@@ -1,0 +1,1987 @@
+<!DOCTYPE html>
+<html lang="en" class="Internet-Draft">
+<head>
+<meta charset="utf-8">
+<meta content="Common,Latin" name="scripts">
+<meta content="initial-scale=1.0" name="viewport">
+<title>Anchorless mobility management through hICN (hICN-AMM): Deployment options</title>
+<meta content="Jordan Augé" name="author">
+<meta content="Giovanna Carofiglio" name="author">
+<meta content="Luca Muscariello" name="author">
+<meta content="Michele Papalini" name="author">
+<meta content="
+       A novel mobility management approach is described in  ,
+that leverages routable location-independent identifiers (IDs) and an
+Information-Centric Networking (ICN) communication model integrated in IPv6,
+also referred to as Hybrid ICN (hICN)  . 
+       Such approach belongs to the category of pure ID-based mobility management
+schemes whose objective is (i) to overcome the limitations of traditional
+locator-based solutions like Mobile IP, (ii)
+to remove the need for a global mapping system as the one required by
+locator-identifier separation solutions like LISP
+  or ILA  . 
+       ID-based networking as proposed by ICN architectures allows to disentangle
+forwarding operations from changes of network location, hence removing tunnels
+and user plane or control plane anchors. In virtue of its anchorless property,
+we denote this approach as hICN-AMM (hICN Anchorless Mobility Management)
+hereinafter. 
+       This document discusses hICN-AMM deployment options and related tradeoffs in
+terms of cost/benefits. Particular attention is devoted to the insertion in the
+recently proposed 5G Service Based Architecture under study at 3GPP where
+an hICN-AMM solution might present a more efficient alternative to the traditional
+tunnel-based mobility architecture through GTP-U. 
+    " name="description">
+<meta content="xml2rfc 2.40.1" name="generator">
+<meta content="Anchorless mobility" name="keyword">
+<meta content="draft-auge-dmm-hicn-mobility-deployment-options-03" name="ietf.draft">
+<link href="draft-auge-dmm-hicn-mobility-deployment-options.xml" rel="alternate" type="application/rfc+xml">
+<link href="#copyright" rel="license">
+<style type="text/css">@import url('https://martinthomson.github.io/i-d-template/fonts.css');
+
+html {
+  --background-color: #fff;
+  --text-color: #222;
+  --title-color: #191919;
+  --link-color: #2a6496;
+  --highlight-color: #f9f9f9;
+  --line-color: #eee;
+  --small-font-size: 14.5px;
+}
+body {
+  max-width: 600px;
+  margin: 75px auto;
+  padding: 0 5px;
+  color: var(--text-color);
+  background-color: var(--background-color);
+  font: 16px/22px "Lora", serif;
+  scroll-behavior: smooth;
+}
+
+.ears {
+  display: none;
+}
+
+/* headings */
+#title, h1, h2, h3, h4, h5, h6 {
+  font-family: "Cabin Condensed", sans-serif;
+  font-weight: 600;
+  margin: 0.8em 0 0.3em;
+  font-size-adjust: 0.5;
+  color: var(--title-color);
+}
+#title {
+  padding: 1em 0 0.2em;
+  font-size: 32px;
+  line-height: 40px;
+  clear: both;
+}
+h1, h2, h3 {
+  font-size: 22px;
+  line-height: 26px;
+}
+h4, h5, h6 {
+  font-size: 18px;
+  line-height: 22px;
+}
+
+/* general structure */
+.author {
+  padding-bottom: 0.3em;
+}
+#abstract+p, #abstract+p code, #abstract+p samp, #abstract+p tt {
+  font-size: 18px;
+  line-height: 24px;
+}
+p {
+  padding: 0;
+  margin: 0.5em 0;
+  text-align: left;
+}
+div, span {
+  position: relative;
+}
+div {
+  margin: 0;
+}
+.alignRight.art-text {
+  background-color: var(--highlight-color);
+  border: 1px solid var(--line-color);
+  border-radius: 3px;
+  padding: 0.5em 1em 0;
+  margin-bottom: 0.5em;
+}
+.alignRight.art-text pre {
+  padding: 0;
+  width: auto;
+}
+.alignRight {
+  margin: 1em 0;
+}
+.alignRight > *:first-child {
+  border: none;
+  margin: 0;
+  float: right;
+  clear: both;
+}
+.alignRight > *:nth-child(2) {
+  clear: both;
+  display: block;
+  border: none;
+}
+svg {
+  display: block;
+}
+.alignCenter.art-text {
+  background-color: var(--highlight-color);
+  border: 1px solid var(--line-color);
+  border-radius: 3px;
+  padding: 0.5em 1em 0;
+  margin-bottom: 0.5em;
+}
+.alignCenter.art-text pre {
+  padding: 0;
+  width: auto;
+}
+.alignCenter {
+  margin: 1em 0;
+}
+.alignCenter > *:first-child {
+  border: none;
+  /* this isn't optimal, but it's an existence proof.  PrinceXML doesn't
+     support flexbox yet.
+  */
+  display: table;
+  margin: 0 auto;
+}
+
+/* lists */
+ol, ul {
+  padding: 0;
+  margin: 0 0 1em 2em;
+}
+ol ol, ul ul, ol ul, ul ol {
+  margin-left: 1em;
+}
+li {
+  margin: 0 0 0.25em 0;
+}
+.ulCompact li {
+  margin: 0;
+}
+ul.empty, .ulEmpty {
+  list-style-type: none;
+}
+ul.empty li, .ulEmpty li {
+  margin-top: 0.5em;
+}
+ul.compact, .ulCompact,
+ol.compact, .olCompact {
+  line-height: 100%;
+  margin: 0 0 0 2em;
+}
+
+/* definition lists */
+dl {
+}
+dl > dt {
+  float: left;
+  margin-right: 1em;
+}
+dl > dd {
+  margin-bottom: .8em;
+  min-height: 1.3em;
+}
+dl.compact > dd, .dlCompact > dd {
+  margin-bottom: 0em;
+}
+dl > dd > dl {
+  margin-top: 0.5em;
+  margin-bottom: 0em;
+}
+
+/* links */
+a, a[href].selfRef:hover {
+  text-decoration: none;
+}
+a[href].selfRef {
+  color: var(--text-color);
+}
+a[href] {
+  color: var(--link-color);
+}
+a[href]:hover {
+  text-decoration: underline;
+}
+a[href].selfRef:hover {
+  background-color: var(--highlight-color);
+}
+a.xref {
+  white-space: nowrap;
+}
+
+/* Figures */
+tt, code, pre {
+  background-color: var(--highlight-color);
+  font: 14px/22px 'Oxygen Mono', monospace;
+}
+pre {
+  border: 1px solid var(--line-color);
+  font-size: 13.5px;
+  line-height: 16px;
+  letter-spacing: -0.2px;
+  margin: 5px;
+  padding: 5px;
+}
+img {
+  max-width: 100%;
+}
+figure {
+  margin: 0.5em 0;
+}
+figure blockquote {
+  margin: 0.8em 0.4em 0.4em;
+}
+figcaption, caption {
+  font-style: italic;
+  margin: 0.5em 1.5em;
+  text-align: left;
+}
+@media screen {
+  pre {
+    display: inline-block;
+    overflow-x: auto;
+    max-width: 100%;
+    width: calc(100% - 22px - 1em);
+  }
+  figure pre {
+    display: block;
+    width: calc(100% - 25px);
+  }
+  pre + .pilcrow {
+    display: inline-block;
+    vertical-align: text-bottom;
+    padding-bottom: 8px;
+  }
+  table {
+    display: inline-block;
+    overflow-x: auto;
+  }
+}
+
+/* aside, blockquote */
+aside, blockquote {
+  margin-left: 0;
+  padding: 0 2em;
+  font-style: italic;
+}
+blockquote {
+  background-color: var(--highlight-color);
+  border: 1px solid var(--line-color);
+  border-radius: 3px;
+  margin: 1em 0;
+}
+cite {
+  display: block;
+  text-align: right;
+  font-style: italic;
+}
+
+/* tables */
+table {
+  width: 100%;
+  margin: 0 0 1em;
+  border-collapse: collapse;
+  border: 1px solid var(--line-color);
+}
+th, td {
+  text-align: left;
+  vertical-align: top;
+  padding: 0.5em 0.75em;
+}
+th {
+  text-align: left;
+  background-color: #eee;
+}
+tr:nth-child(2n) > td {
+  background-color: var(--background-color);
+}
+tr:nth-child(2n+1) > td {
+  background-color: var(--highlight-color);
+}
+thead+tbody tr:nth-child(2n) > td {
+  background-color: var(--highlight-color);
+}
+thead+tbody tr:nth-child(2n+1) > td {
+  background-color: var(--background-color);
+}
+table caption {
+  margin: 0;
+  padding: 3px 1em;
+  border-top: 1px solid var(--line-color);
+}
+table p {
+  /* XXX to avoid bottom margin on table row signifiers. If paragraphs should
+     be allowed within tables more generally, it would be far better to select on a class. */
+  margin: 0;
+}
+
+/* pilcrow */
+a.pilcrow {
+  margin-left: 3px;
+  visibility: hidden;
+  user-select: none;
+}
+a.pilcrow[href] { color: #ddd; }
+a.pilcrow[href]:hover { text-decoration: none; }
+@media screen {
+  :hover > a.pilcrow {
+    visibility: visible;
+  }
+  a.pilcrow:hover {
+    background-color: transparent;
+  }
+}
+
+/* misc */
+hr {
+  border: 0;
+  border-top: 1px solid var(--line-color);
+}
+.bcp14 {
+  font-variant: small-caps;
+}
+
+.role {
+  font-variant: all-small-caps;
+}
+
+/* info block */
+#identifiers {
+  margin: 0;
+  font-size: var(--small-font-size);
+  line-height: 18px;
+  --identifier-width: 8em;
+}
+#identifiers dt {
+  width: var(--identifier-width);
+  margin: 0;
+  clear: left;
+  float: left;
+  text-align: right;
+}
+#identifiers dd {
+  margin: 0 0 0 calc(1em + var(--identifier-width));
+  min-width: 5em;
+}
+#identifiers .authors .author {
+  display: inline-block;
+  margin-right: 1.5em;
+}
+#identifiers .authors .org {
+  font-style: italic;
+}
+
+/* The prepared/rendered info at the very bottom of the page */
+.docInfo {
+  color: #999;
+  font-size: 0.9em;
+  font-style: italic;
+  margin-top: 2em;
+}
+.docInfo .prepared {
+  float: left;
+}
+.docInfo .prepared {
+  float: right;
+}
+
+/* table of contents */
+#toc {
+  padding: 0.75em 0 2em 0;
+  margin-bottom: 1em;
+}
+#toc nav ul {
+  margin: 0 0.5em 0 0;
+  padding: 0;
+  list-style: none;
+}
+#toc nav li {
+  line-height: 1.3em;
+  margin: 0.75em 0;
+  padding-left: 1.2em;
+  text-indent: -1.2em;
+}
+#toc a.xref {
+  white-space: normal;
+}
+/* references */
+.references dt {
+  text-align: right;
+  font-weight: bold;
+  min-width: 7em;
+}
+.references dd {
+  margin-left: 8em;
+  overflow: auto;
+}
+
+.refInstance {
+  margin-bottom: 1.25em;
+}
+
+.references .ascii {
+  margin-bottom: 0.25em;
+}
+
+/* index */
+.index ul {
+  margin: 0 0 0 1em;
+  padding: 0;
+  list-style: none;
+}
+.index ul ul {
+  margin: 0;
+}
+.index li {
+  margin: 0;
+  text-indent: -2em;
+  padding-left: 2em;
+  padding-bottom: 5px;
+}
+.indexIndex {
+  margin: 0.5em 0 1em;
+}
+.index a {
+  font-weight: 700;
+}
+/* make the index two-column on all but the smallest screens */
+@media (min-width: 500px) {
+  .index ul {
+    column-count: 2;
+    column-gap: 20px;
+  }
+  .index ul ul {
+    column-count: 1;
+    column-gap: 0;
+  }
+}
+
+/* authors */
+address.vcard {
+  font-style: normal;
+  margin: 1em 0;
+}
+address.vcard .nameRole {
+  font-weight: 700;
+  margin-left: 0;
+}
+address.vcard .label {
+  margin: 0.5em 0;
+}
+address.vcard .type {
+  display: none;
+}
+.alternative-contact {
+  margin: 1.5em 0 1em;
+}
+hr.addr {
+  border-top: 1px dashed;
+  margin: 0;
+  color: #ddd;
+  max-width: calc(100% - 16px);
+}
+@media (min-width: 500px) {
+  #authors-addresses > section {
+    display: relative;
+    padding: 32px 0 0;
+    column-count: 2;
+    column-gap: 20px;
+  }
+  #name-authors-addresses {
+    position: absolute;
+    top: 0px;
+    column-span: all;
+  }
+  /* hack for break-inside: avoid-column */
+  #authors-addresses address {
+    display: inline-block;
+    break-inside: avoid-column;
+  }
+}
+
+/* temporary notes */
+.rfcEditorRemove::before {
+  position: absolute;
+  top: 0.2em;
+  right: 0.2em;
+  padding: 0.2em;
+  content: "The RFC Editor will remove this note";
+  color: #b76427;
+  background-color: rgba(249, 232, 105, 0.3);
+}
+.rfcEditorRemove {
+  position: relative;
+  padding-top: 1.8em;
+  background-color: rgba(249, 232, 105, 0.3);
+  border-radius: 3px;
+}
+.cref {
+  background-color: rgba(249, 232, 105, 0.3);
+  padding: 2px 4px;
+}
+.crefSource {
+  font-style: italic;
+}
+/* alternative layout for smaller screens */
+@media screen and (max-width: 929px) {
+  #toc {
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    right: 0;
+    padding: 0;
+    margin: 0;
+    border-bottom: 1px solid #ccc;
+    opacity: 0.6;
+  }
+  #toc.active {
+      opacity: 1;
+  }
+  #toc h2 {
+    margin: 0;
+    padding: 2px 0 2px 6px;
+    padding-right: 1em;
+    font-size: 18px;
+    line-height: 24px;
+    min-width: 190px;
+    text-align: right;
+    background-color: #444;
+    color: white;
+    cursor: pointer;
+  }
+  #toc h2::before { /* css hamburger */
+    float: right;
+    position: relative;
+    width: 1em;
+    height: 1px;
+    left: -164px;
+    margin: 8px 0 0 0;
+    background: white none repeat scroll 0 0;
+    box-shadow: 0 4px 0 0 white, 0 8px 0 0 white;
+    content: "";
+  }
+  #toc nav {
+    display: none;
+    background-color: var(--background-color);
+    padding: 0.5em 1em 1em;
+    overflow: auto;
+    overscroll-behavior: contain;
+    height: calc(100vh - 48px);
+    border-left: 1px solid #ddd;
+  }
+  #toc.active nav {
+    display: block;
+  }
+  /* Make the collapsed ToC header render white on gray also when it's a link */
+  #toc h2 a,
+  #toc h2 a:link,
+  #toc h2 a:focus,
+  #toc h2 a:hover,
+  #toc a.toplink,
+  #toc a.toplink:hover {
+    color: white;
+    background-color: #444;
+    text-decoration: none;
+  }
+  #toc a.toplink {
+    margin-top: 2px;
+  }
+}
+
+/* alternative layout for wide screens */
+@media screen and (min-width: 930px) {
+  body {
+    padding-right: 360px;
+    padding-right: calc(min(180px + 20%, 500px));
+  }
+  #toc {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    right: calc(50vw - 480px);
+    width: 312px;
+    margin: 0;
+    padding: 0;
+    z-index: 1;
+  }
+  #toc h2 {
+    margin: 0;
+    padding: 0.25em 1em 1em 0;
+  }
+  #toc nav {
+    display: block;
+    height: calc(90vh - 84px);
+    bottom: 0;
+    padding: 0.5em 0 2em;
+    overflow: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+  }
+  #toc nav > ul  {
+    margin-bottom: 2em;
+  }
+  #toc ul {
+    margin: 0 0 0 4px;
+    font-size: var(--small-font-size);
+  }
+  #toc ul p, #toc ul li {
+    margin: 2px 0;
+    line-height: 22px;
+  }
+  img { /* future proofing */
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* pagination */
+@media print {
+  body {
+    width: 100%;
+  }
+  p {
+    orphans: 3;
+    widows: 3;
+  }
+  #n-copyright-notice {
+    border-bottom: none;
+  }
+  #toc, #n-introduction {
+    page-break-before: always;
+  }
+  #toc {
+    border-top: none;
+    padding-top: 0;
+  }
+  figure, pre {
+    page-break-inside: avoid;
+  }
+  figure {
+    overflow: scroll;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+  }
+  h2+*, h3+*, h4+*, h5+*, h6+* {
+    page-break-before: avoid;
+  }
+  pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 10pt;
+  }
+  table {
+    border: 1px solid #ddd;
+  }
+  td {
+    border-top: 1px solid #ddd;
+  }
+}
+
+@page :first {
+  padding-top: 0;
+  @top-left {
+    content: normal;
+    border: none;
+  }
+  @top-center {
+    content: normal;
+    border: none;
+  }
+  @top-right {
+    content: normal;
+    border: none;
+  }
+}
+
+@page {
+  size: A4;
+  margin-bottom: 45mm;
+  padding-top: 20px;
+}
+
+/* Changes introduced to fix issues found during implementation */
+
+/* Separate body from document info even without intervening H1 */
+section {
+  clear: both;
+}
+
+/* Top align author divs, to avoid names without organization dropping level with org names */
+.author {
+  vertical-align: top;
+}
+
+/* Style section numbers with more space between number and title */
+.section-number {
+  padding-right: 0.5em;
+}
+
+/* Add styling for a link in the ToC that points to the top of the document */
+a.toplink {
+  float: right;
+  margin: 8px 0.5em 0;
+}
+
+/* Fix the dl styling to match the RFC 7992 attributes */
+dl > dt,
+dl.dlParallel > dt {
+  float: left;
+  margin-right: 1em;
+}
+dl.dlNewline > dt {
+  float: none;
+}
+
+/* Provide styling for table cell text alignment */
+table .text-left, table .text-left {
+  text-align: left;
+}
+table .text-center, table .text-center {
+  text-align: center;
+}
+table .text-right, table .text-right {
+  text-align: right;
+}
+
+/* Make the alternative author contact information look less like just another
+   author, and group it closer with the primary author contact information */
+.alternative-contact {
+  margin: 0.5em 0 0.25em 0;
+}
+address .non-ascii {
+  margin: 0 0 0 2em;
+}
+
+/* With it being possible to set tables with alignment
+  left, center, and right, { width: 100%; } does not make sense */
+table {
+  width: auto;
+}
+
+/* Avoid reference text that sits in a block with very wide left margin,
+   because of a long floating dt label.*/
+.references dd {
+  overflow: visible;
+}
+
+/* Control caption placement */
+caption {
+  caption-side: bottom;
+}
+
+/* Limit the width of the author address vcard, so names in right-to-left
+   script don't end up on the other side of the page. */
+
+address.vcard {
+  max-width: 20em;
+  margin-right: auto;
+}
+
+/* For address alignment dependent on LTR or RTL scripts */
+address div.left {
+  text-align: left;
+}
+address div.right {
+  text-align: right;
+}
+
+/* Provide table alignment support.  We can't use the alignX classes above
+   since they do unwanted things with caption and other styling. */
+table.right {
+ margin-left: auto;
+ margin-right: 0;
+}
+table.center {
+ margin-left: auto;
+ margin-right: auto;
+}
+table.left {
+ margin-left: 0;
+ margin-right: auto;
+}
+
+/* Give the table caption label the same styling as the figcaption */
+
+@media print {
+  .toplink {
+    display: none;
+  }
+
+  /* avoid overwriting the top border line with the ToC header */
+  #toc {
+    padding-top: 1px;
+  }
+
+  /* Avoid page breaks inside dl and author address entries */
+  dd {
+    page-break-before: avoid;
+  }
+  .vcard {
+    page-break-inside: avoid;
+  }
+
+}
+/* Tweak the bcp14 keyword presentation */
+.bcp14 {
+  font-variant: small-caps;
+  font-weight: bold;
+  font-size: 0.9em;
+}
+</style>
+<link href="rfc-local.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<table class="ears">
+<thead><tr>
+<td class="left">Internet-Draft</td>
+<td class="center">hICN mobility: deployment options</td>
+<td class="right">May 2020</td>
+</tr></thead>
+<tfoot><tr>
+<td class="left">Augé, et al.</td>
+<td class="center">Expires 4 November 2020</td>
+<td class="right">[Page]</td>
+</tr></tfoot>
+</table>
+<div id="external-metadata" class="document-information"></div>
+<div id="internal-metadata" class="document-information">
+<dl id="identifiers">
+<dt class="label-workgroup">Workgroup:</dt>
+<dd class="workgroup">DMM Working Group</dd>
+<dt class="label-internet-draft">Internet-Draft:</dt>
+<dd class="internet-draft">draft-auge-dmm-hicn-mobility-deployment-options-03</dd>
+<dt class="label-published">Published:</dt>
+<dd class="published">
+<time datetime="2020-05-03" class="published">3 May 2020</time>
+    </dd>
+<dt class="label-intended-status">Intended Status:</dt>
+<dd class="intended-status">Informational</dd>
+<dt class="label-expires">Expires:</dt>
+<dd class="expires"><time datetime="2020-11-04">4 November 2020</time></dd>
+<dt class="label-authors">Authors:</dt>
+<dd class="authors">
+<div class="author">
+      <div class="author-name">J. Augé</div>
+<div class="org">Cisco</div>
+</div>
+<div class="author">
+      <div class="author-name">G. Carofiglio</div>
+<div class="org">Cisco</div>
+</div>
+<div class="author">
+      <div class="author-name">L. Muscariello</div>
+<div class="org">Cisco</div>
+</div>
+<div class="author">
+      <div class="author-name">M. Papalini</div>
+<div class="org">Cisco</div>
+</div>
+</dd>
+</dl>
+</div>
+<h1 id="title">Anchorless mobility management through hICN (hICN-AMM): Deployment options</h1>
+<section id="section-abstract">
+      <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
+<p id="section-abstract-1">A novel mobility management approach is described in <span>[<a href="#I-D.auge-dmm-hicn-mobility" class="xref">I-D.auge-dmm-hicn-mobility</a>]</span>,
+that leverages routable location-independent identifiers (IDs) and an
+Information-Centric Networking (ICN) communication model integrated in IPv6,
+also referred to as Hybrid ICN (hICN) <span>[<a href="#I-D.muscariello-intarea-hicn" class="xref">I-D.muscariello-intarea-hicn</a>]</span>.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-2">Such approach belongs to the category of pure ID-based mobility management
+schemes whose objective is (i) to overcome the limitations of traditional
+locator-based solutions like Mobile IP, (ii)
+to remove the need for a global mapping system as the one required by
+locator-identifier separation solutions like LISP
+<span>[<a href="#I-D.ietf-lisp-introduction" class="xref">I-D.ietf-lisp-introduction</a>]</span> or ILA <span>[<a href="#I-D.herbert-intarea-ila" class="xref">I-D.herbert-intarea-ila</a>]</span>.<a href="#section-abstract-2" class="pilcrow">¶</a></p>
+<p id="section-abstract-3">ID-based networking as proposed by ICN architectures allows to disentangle
+forwarding operations from changes of network location, hence removing tunnels
+and user plane or control plane anchors. In virtue of its anchorless property,
+we denote this approach as hICN-AMM (hICN Anchorless Mobility Management)
+hereinafter.<a href="#section-abstract-3" class="pilcrow">¶</a></p>
+<p id="section-abstract-4">This document discusses hICN-AMM deployment options and related tradeoffs in
+terms of cost/benefits. Particular attention is devoted to the insertion in the
+recently proposed 5G Service Based Architecture under study at 3GPP where
+an hICN-AMM solution might present a more efficient alternative to the traditional
+tunnel-based mobility architecture through GTP-U.<a href="#section-abstract-4" class="pilcrow">¶</a></p>
+</section>
+<div id="status-of-memo">
+<section id="section-boilerplate.1">
+        <h2 id="name-status-of-this-memo">
+<a href="#name-status-of-this-memo" class="section-name selfRef">Status of This Memo</a>
+        </h2>
+<p id="section-boilerplate.1-1">
+        This Internet-Draft is submitted in full conformance with the
+        provisions of BCP 78 and BCP 79.<a href="#section-boilerplate.1-1" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-2">
+        Internet-Drafts are working documents of the Internet Engineering Task
+        Force (IETF). Note that other groups may also distribute working
+        documents as Internet-Drafts. The list of current Internet-Drafts is
+        at <span><a href="https://datatracker.ietf.org/drafts/current/">https://datatracker.ietf.org/drafts/current/</a></span>.<a href="#section-boilerplate.1-2" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-3">
+        Internet-Drafts are draft documents valid for a maximum of six months
+        and may be updated, replaced, or obsoleted by other documents at any
+        time. It is inappropriate to use Internet-Drafts as reference
+        material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-4">
+        This Internet-Draft will expire on 4 November 2020.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="copyright">
+<section id="section-boilerplate.2">
+        <h2 id="name-copyright-notice">
+<a href="#name-copyright-notice" class="section-name selfRef">Copyright Notice</a>
+        </h2>
+<p id="section-boilerplate.2-1">
+            Copyright (c) 2020 IETF Trust and the persons identified as the
+            document authors. All rights reserved.<a href="#section-boilerplate.2-1" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.2-2">
+            This document is subject to BCP 78 and the IETF Trust's Legal
+            Provisions Relating to IETF Documents
+            (<span><a href="https://trustee.ietf.org/license-info">https://trustee.ietf.org/license-info</a></span>) in effect on the date of
+            publication of this document. Please review these documents
+            carefully, as they describe your rights and restrictions with
+            respect to this document. Code Components extracted from this
+            document must include Simplified BSD License text as described in
+            Section 4.e of the Trust Legal Provisions and are provided without
+            warranty as described in the Simplified BSD License.<a href="#section-boilerplate.2-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="toc">
+<section id="section-toc.1">
+        <a href="#" onclick="scroll(0,0)" class="toplink">▲</a><h2 id="name-table-of-contents">
+<a href="#name-table-of-contents" class="section-name selfRef">Table of Contents</a>
+        </h2>
+<nav class="toc"><ul class="toc ulEmpty">
+<li class="toc ulEmpty" id="section-toc.1-1.1">
+            <p id="section-toc.1-1.1.1"><a href="#section-1" class="xref">1</a>.  <a href="#name-introduction" class="xref">Introduction</a><a href="#section-toc.1-1.1.1" class="pilcrow">¶</a></p>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.2">
+            <p id="section-toc.1-1.2.1"><a href="#section-2" class="xref">2</a>.  <a href="#name-overview-of-a-mobile-access" class="xref">Overview of a mobile access network and the 5G architecture</a><a href="#section-toc.1-1.2.1" class="pilcrow">¶</a></p>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.3">
+            <p id="section-toc.1-1.3.1"><a href="#section-3" class="xref">3</a>.  <a href="#name-transparent-integration-opt" class="xref">Transparent integration (option #1)</a><a href="#section-toc.1-1.3.1" class="pilcrow">¶</a></p>
+<ul class="toc ulEmpty">
+<li class="toc ulEmpty" id="section-toc.1-1.3.2.1">
+                <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="xref">3.1</a>.  <a href="#name-mec-deployment-option-1a" class="xref">MEC deployment (option #1a)</a><a href="#section-toc.1-1.3.2.1.1" class="pilcrow">¶</a></p>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.3.2.2">
+                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="xref">3.2</a>.  <a href="#name-hicn-deployment-as-a-upf-op" class="xref">hICN deployment as a UPF (option #1b)</a><a href="#section-toc.1-1.3.2.2.1" class="pilcrow">¶</a></p>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.3.2.3">
+                <p id="section-toc.1-1.3.2.3.1"><a href="#section-3.3" class="xref">3.3</a>.  <a href="#name-summary" class="xref">Summary</a><a href="#section-toc.1-1.3.2.3.1" class="pilcrow">¶</a></p>
+</li>
+</ul>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.4">
+            <p id="section-toc.1-1.4.1"><a href="#section-4" class="xref">4</a>.  <a href="#name-integrated-approaches-data-" class="xref">"Integrated" approaches: data-plane alternatives to GTP-U (option #2)</a><a href="#section-toc.1-1.4.1" class="pilcrow">¶</a></p>
+<ul class="toc ulEmpty">
+<li class="toc ulEmpty" id="section-toc.1-1.4.2.1">
+                <p id="section-toc.1-1.4.2.1.1"><a href="#section-4.1" class="xref">4.1</a>.  <a href="#name-hicn-insertion-at-n9-interf" class="xref">hICN insertion at N9 interface only (option #2a)</a><a href="#section-toc.1-1.4.2.1.1" class="pilcrow">¶</a></p>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.4.2.2">
+                <p id="section-toc.1-1.4.2.2.1"><a href="#section-4.2" class="xref">4.2</a>.  <a href="#name-hicn-deployment-at-both-n9-" class="xref">hICN deployment at both N9 and N3 interfaces (option #2b)</a><a href="#section-toc.1-1.4.2.2.1" class="pilcrow">¶</a></p>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.4.2.3">
+                <p id="section-toc.1-1.4.2.3.1"><a href="#section-4.3" class="xref">4.3</a>.  <a href="#name-control-plane-consideration" class="xref">Control plane considerations</a><a href="#section-toc.1-1.4.2.3.1" class="pilcrow">¶</a></p>
+</li>
+</ul>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.5">
+            <p id="section-toc.1-1.5.1"><a href="#section-5" class="xref">5</a>.  <a href="#name-deployment-considerations" class="xref">Deployment considerations</a><a href="#section-toc.1-1.5.1" class="pilcrow">¶</a></p>
+<ul class="toc ulEmpty">
+<li class="toc ulEmpty" id="section-toc.1-1.5.2.1">
+                <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="xref">5.1</a>.  <a href="#name-hicn-in-a-slice" class="xref">hICN in a slice</a><a href="#section-toc.1-1.5.2.1.1" class="pilcrow">¶</a></p>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.5.2.2">
+                <p id="section-toc.1-1.5.2.2.1"><a href="#section-5.2" class="xref">5.2</a>.  <a href="#name-end-to-end-deployment" class="xref">End-to-end deployment</a><a href="#section-toc.1-1.5.2.2.1" class="pilcrow">¶</a></p>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.5.2.3">
+                <p id="section-toc.1-1.5.2.3.1"><a href="#section-5.3" class="xref">5.3</a>.  <a href="#name-network-contained-deploymen" class="xref">Network-contained deployment</a><a href="#section-toc.1-1.5.2.3.1" class="pilcrow">¶</a></p>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.5.2.4">
+                <p id="section-toc.1-1.5.2.4.1"><a href="#section-5.4" class="xref">5.4</a>.  <a href="#name-alternative-data-planes-joi" class="xref">Alternative data planes: joint hICN/SRv6 deployment</a><a href="#section-toc.1-1.5.2.4.1" class="pilcrow">¶</a></p>
+</li>
+</ul>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.6">
+            <p id="section-toc.1-1.6.1"><a href="#section-6" class="xref">6</a>.  <a href="#name-summary-2" class="xref">Summary</a><a href="#section-toc.1-1.6.1" class="pilcrow">¶</a></p>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.7">
+            <p id="section-toc.1-1.7.1"><a href="#section-7" class="xref">7</a>.  <a href="#name-references" class="xref">References</a><a href="#section-toc.1-1.7.1" class="pilcrow">¶</a></p>
+<ul class="toc ulEmpty">
+<li class="toc ulEmpty" id="section-toc.1-1.7.2.1">
+                <p id="section-toc.1-1.7.2.1.1"><a href="#section-7.1" class="xref">7.1</a>.  <a href="#name-normative-references" class="xref">Normative References</a><a href="#section-toc.1-1.7.2.1.1" class="pilcrow">¶</a></p>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.7.2.2">
+                <p id="section-toc.1-1.7.2.2.1"><a href="#section-7.2" class="xref">7.2</a>.  <a href="#name-informative-references" class="xref">Informative References</a><a href="#section-toc.1-1.7.2.2.1" class="pilcrow">¶</a></p>
+</li>
+</ul>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.8">
+            <p id="section-toc.1-1.8.1"><a href="#section-appendix.a" class="xref"></a><a href="#name-authors-addresses" class="xref">Authors' Addresses</a><a href="#section-toc.1-1.8.1" class="pilcrow">¶</a></p>
+</li>
+</ul>
+</nav>
+</section>
+</div>
+<div id="introduction">
+<section id="section-1">
+      <h2 id="name-introduction">
+<a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
+      </h2>
+<p id="section-1-1">The steady increase in mobile traffic observed in the recent years has come with
+a growing expectation from next generation 5G networks of a seamless
+latency-minimal service experience over multiple heterogeneous access networks.
+Motivated by stringent next-generation applications requirements and by the
+convergence of diverse wireless radio accesses, 5G standardization bodies have
+encouraged re-consideration of the existing Mobile IP and GTP-based architecture
+aiming at a simplified and sustainable mobility solution.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-2">Specifically, enhanced user plane solutions are currently investigated where
+GTP-U tunnels would be replaced by more flexible and dynamic forwarding schemes
+tailored to application needs and enabling novel use cases such as
+caching/computing at the edge (MEC/FOG), coordinated use of multiple network
+accesses in parallel, etc.<a href="#section-1-2" class="pilcrow">¶</a></p>
+<p id="section-1-3">It is commonly accepted that the inefficiencies of tunnels in terms of state and
+network overhead, as well as the presence of anchors in the data plane are a
+direct consequence of using locators as identifiers of mobile
+nodes/services. This has motivated the introduction of a class of approaches
+distinguishing locators and identifiers, known as Loc/ID split, and more
+recently of pure ID-based approaches inspired from name-based
+Information-Centric Networking (ICN) architectures.<a href="#section-1-3" class="pilcrow">¶</a></p>
+<p id="section-1-4">The focus of this document is on the latter category of solutions and more
+precisely on the hICN-AMM proposal in <span>[<a href="#I-D.auge-dmm-hicn-mobility" class="xref">I-D.auge-dmm-hicn-mobility</a>]</span>, that aims at a
+simplified anchorless mobility management through Hybrid ICN (hICN), a
+fully-fledged ICN architecture in IPv6 <span>[<a href="#I-D.muscariello-intarea-hicn" class="xref">I-D.muscariello-intarea-hicn</a>]</span>.<a href="#section-1-4" class="pilcrow">¶</a></p>
+<p id="section-1-5">hICN-AMM benefits result both from the flexibility of pure ID-based mobility
+solutions, that completely decouple data delivery from underlying network
+connectivity, and from the native mobility support of ICN architectures.<a href="#section-1-5" class="pilcrow">¶</a></p>
+<p id="section-1-6">Forwarding operations are performed directly based on location-independent IDs
+stored in routers' FIBs and no mapping of ID into locators is required. In this
+way, purely ID-based architectures remove the need to maintain a global mapping
+system at scale, and its intrinsic management complexity.<a href="#section-1-6" class="pilcrow">¶</a></p>
+<p id="section-1-7">Additional benefits brought by ICN communication model include:<a href="#section-1-7" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-1-8.1">the flexibility of multi-source/multi-path connectionless pull-based
+transport. An example is the native support for consumer mobility, i.e. the
+transparent emission of data requests over multiple and varying available
+network interfaces during node mobility;<a href="#section-1-8.1" class="pilcrow">¶</a>
+</li>
+<li id="section-1-8.2">the opportunity to define fine-grained per-application forwarding and
+security policies.<a href="#section-1-8.2" class="pilcrow">¶</a>
+</li>
+</ul>
+<p id="section-1-9">An overview of ICN principles and advantages for a simplified mobility
+management resulting from name-based forwarding can be found in <span>[<a href="#RFC7476" class="xref">RFC7476</a>]</span>,
+while a detailed description of the proposal is presented in
+<span>[<a href="#I-D.auge-dmm-hicn-mobility" class="xref">I-D.auge-dmm-hicn-mobility</a>]</span>.<a href="#section-1-9" class="pilcrow">¶</a></p>
+<p id="section-1-10">In this document, we discuss the integration of hICN-AMM proposal within an
+existing mobile network architecture and analyze the resulting tradeoffs in
+terms of cost/benefits. The 3GPP 5G architecture is used here as a reference as
+the envisaged target for hICN-AMM insertion.<a href="#section-1-10" class="pilcrow">¶</a></p>
+<p id="section-1-11">After a short overview of 5G architecture, we first discuss hICN-AMM insertion
+with no modification to the existing 3GPP architecture. We then consider the
+additional benefits emerging from a tighter integration involving optimization
+of data plane interfaces. Finally, we consider the impact of different degrees
+of hICN penetration, ranging from end-to-end to fully network-contained
+deployments.<a href="#section-1-11" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="overview-of-a-mobile-access-network-and-the-5g-architecture">
+<section id="section-2">
+      <h2 id="name-overview-of-a-mobile-access">
+<a href="#section-2" class="section-number selfRef">2. </a><a href="#name-overview-of-a-mobile-access" class="section-name selfRef">Overview of a mobile access network and the 5G architecture</a>
+      </h2>
+<p id="section-2-1"><a href="#fig-mobile-network" class="xref">Figure 1</a> schematizes a typical mobile network composed of  edge,
+backhaul and core network segments. In the rest of this document, we assume an
+IPv6-based network.<a href="#section-2-1" class="pilcrow">¶</a></p>
+<span id="name-overview-of-a-typical-mobil"></span><div id="fig-mobile-network">
+<figure id="figure-1">
+        <div class="artwork art-text alignLeft" id="section-2-2.1">
+<pre>
+                 , - ,              , - ,              , - ,
+Cell site    , '       ' ,      , '       ' ,      , '       ' ,
+    __     ,               ,__,                ,__,               ,
+ __/ A\   ,                /X/|                /X/|                ,
+/ A\__/  __     IP edge    |_|/  IP backhaul   |_|/    IP core     __
+\__/ A\ /X/|               , ,                 , ,                /X/|
+/ A\__/ |_|/    network    ,__     network     ,__     network    |_|/
+\__/ A\  |,                /X/|                /X/|                |
+   \__/  | ,               |_|/,               |_|/,              ,|
+         |   ,          , ' |   ,          , '' |   ,          , ' |
+         |     ' - ,  '     |     ' - ,  '      |     ' - ,  '     |
+       +-+-+              +-+-+               +-+-+              +-+-+
+       |   |              |   |               |   |              |   |
+       |DDC|              |DDC|               |DDC|              |DDC|
+       |   |              |   |               |   |              |   |
+       +---+              +---+               +---+              +---+
+</pre>
+</div>
+<figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
+<a href="#name-overview-of-a-typical-mobil" class="selfRef">Overview of a typical mobile network architecture</a>
+        </figcaption></figure>
+</div>
+<p id="section-2-3">With the adoption of virtualization and softwarization technologies, services
+are increasingly hosted in Distributed Data Centers (DDC) deployed at the
+network edge (Mobile Edge Computing, MEC).<a href="#section-2-3" class="pilcrow">¶</a></p>
+<p id="section-2-4">5G network has been designed around such evolved Service Based Architecture
+(SBA) <span>[<a href="#TS.23.501-3GPP" class="xref">TS.23.501-3GPP</a>]</span>, exploiting SDN and NFV capabilities. It consists in a
+set of modular functions with  separation of user and control
+planes. <a href="#fig-5g-sba" class="xref">Figure 2</a> gives the traditional representation of this architecture
+(as of Release 15) in its service-based representation.<a href="#section-2-4" class="pilcrow">¶</a></p>
+<span id="name-5g-reference-architecture"></span><div id="fig-5g-sba">
+<figure id="figure-2">
+        <div class="artwork art-text alignLeft" id="section-2-5.1">
+<pre>
+                    Service Based Interfaces
++-------+ +-------+ +-------+ +-------+ +-------+ +-------+ +-------+
+| NSSF  | |  NRF  | |  DSF  | |  UDM  | |  NEF  | |  PCF  | |  AUSF |
++---+---+ +---+---+ +---+---+ +---+---+ +---+---+ +---+---+ +---+---+
+    |         |         |         |         |         |         |
+----+------+--+---------+---------+-------+-+---------+---------+-----
+           |                              |
+  +--------+---------+          +---------+--------+      MOBILITY
+  |        AMF       |          |        SMF       |     MANAGEMENT
+  +-+--------------+-+          +++--------------+-+
+    |              |              |              |        control
+    | N1           | N2           | N4           | N4      plane
+ ...|..............|..............|..............|....................
+    |              |              |              |       user plane
+    |              |              |              |
++---+---+      +---+---+  N3  +---+---+  N9  +---+---+  N6  +-------+
+|  UE   +------+  gNB  +------+  UPF  +------+  UPF  +------+  DN   |
++-------+      +-------+      +---+---+      +-------+      +-------+
+
+</pre>
+</div>
+<figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
+<a href="#name-5g-reference-architecture" class="selfRef">5G reference architecture</a>
+        </figcaption></figure>
+</div>
+<p id="section-2-6">The mobility management subsystem corresponds to the bottom part of the picture
+and distinguishes user and control planes.<a href="#section-2-6" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-2-7.1">the <strong>user plane</strong> (UP) represents the path followed by user traffic, between
+the mobile node or User Equipment (UE), and the Data Network (DN) corresponding
+to the egress point interfacing the ISP network and the Internet. The UP
+consists of the Radio Access Network (RAN), terminated by the gNB function, and
+of a series of User Plane Functions (UPFs) which are generic functions to
+transport/ process the traffic up to the egress point. In particular, UPFs serve
+as Layer 2 and Layer 3 anchors respectively in the RAN, and at the interface
+with the DN (to advertise IP prefixes). The interfaces between gNB and UPF (N3),
+and in-between UPFs (N9) are those where GTP tunnels are currently established,
+and where there are opportunities for optimization.<a href="#section-2-7.1" class="pilcrow">¶</a>
+</li>
+<li id="section-2-7.2">the principal <strong>control plane</strong> functions are the Access Management Function
+(AMF) which is responsible for the radio access, and the Session Management
+Function (SMF) which is taking care of the sessions established between a UE and
+a DN.<a href="#section-2-7.2" class="pilcrow">¶</a>
+</li>
+</ul>
+<p id="section-2-8">The resulting protocol stack between user plane components is represented in
+<a href="#fig-protocol-stack" class="xref">Figure 3</a>. It illustrates the encapsulation overhead of this
+solution at the various UPFs, and well as tunnel inefficiencies due to the
+transport of all mobile traffic up to the anchor in the core (N6), the latter
+preventing convergence with non-3GPP network accesses.<a href="#section-2-8" class="pilcrow">¶</a></p>
+<span id="name-5g-protocol-stack"></span><div id="fig-protocol-stack">
+<figure id="figure-3">
+        <div class="artwork art-text alignLeft" id="section-2-9.1">
+<pre>
+    UE            5G-AN        N3         UPF        N9   UPF    N6
+                               |                     |            |
++--------+                     |                     |            |
+|  App.  |--------------------------------------------------------|
++--------+                     |                     | +--------+ |
+| IP PDU |---------------------------------------------| IP PDU | |
++--------+ +-----------------+ | +-----------------+ | +--------+ |
+|        | |\     relay     /| | |\     relay     /| | |        | |
+|        | | \_____________/ |-|-| \_____________/ |-|-|        | |
+|        | |        | GTP-U  | | | GTP-U  |  GTP-U | | |  GTP-U | |
+|        | |        +--------+ | +--------+--------+ | +--------+ |
+|   5G   | |   5G   |  UDP   |-|-|  UDP   |   UDP  |-|-|   UDP  | |
+|   AN   |-|   AN   +--------+ | +--------+--------+ | +--------+ |
+|protocol| |protocol|   IP   |-|-|   IP   |   IP   |-|-|   IP   | |
+| layers | | layers +--------+ | +--------+--------+ | +--------+ |
+|        | |        |   L2   |-|-|   L2   |   L2   |-|-|   L2   | |
+|        | |        +--------+ | +--------+--------+ | +--------+ |
+|        | |        |   L1   |-|-|   L1   |   L1   |-|-|   L1   | |
++--------+ +-----------------+ | +-----------------+ | +--------+ |
+                               |                     |            |
+</pre>
+</div>
+<figcaption><a href="#figure-3" class="selfRef">Figure 3</a>:
+<a href="#name-5g-protocol-stack" class="selfRef">5G protocol stack</a>
+        </figcaption></figure>
+</div>
+</section>
+</div>
+<div id="transparent-integration-option-1">
+<section id="section-3">
+      <h2 id="name-transparent-integration-opt">
+<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-transparent-integration-opt" class="section-name selfRef">Transparent integration (option #1)</a>
+      </h2>
+<p id="section-3-1">This section discusses the insertion of hICN-AMM in an unmodified 3GPP 5G
+reference architecture, where GTP tunnels are preserved. As previously stated,
+maintaining GTP tunnels does not allow to overcome limitations of anchor-based
+approaches. However, a transparent integration of hICN-AMM limits to the minimum
+deployment costs and already brings advantages over the baseline architecture.
+We consider two cases: a) hICN-AMM deployment within Mobile Edge Computing (MEC)
+platforms, exploiting the local breakout capabilities of 5G networks, b)
+hICN-AMM deployment as User Plane Function (UPF) inside mobile user plane.<a href="#section-3-1" class="pilcrow">¶</a></p>
+<div id="mec-deployment-option-1a">
+<section id="section-3.1">
+        <h3 id="name-mec-deployment-option-1a">
+<a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-mec-deployment-option-1a" class="section-name selfRef">MEC deployment (option #1a)</a>
+        </h3>
+<p id="section-3.1-1">Option #1a refers to the deployment of an hICN forwarder within Mobile Edge
+Computing platforms. It relies on the local breakout capability introduced in
+5G, i.e. a specific UPF denoted UL/CL (uplink classifier) that locally diverts
+specific flows to an alternative DN, filtering packets based for instance on
+information carried in packet headers.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.1-2">In the hICN-AMM case, this function is used to realize the hICN punting function
+described in <span>[<a href="#I-D.muscariello-intarea-hicn" class="xref">I-D.muscariello-intarea-hicn</a>]</span>, i.e. to identify hICN traffic
+(Interest and Data packets) and forward it to the local MEC hICN instance.<a href="#section-3.1-2" class="pilcrow">¶</a></p>
+<p id="section-3.1-3">The MEC deployment is illustrated in <a href="#fig-hicn-sba-mec" class="xref">Figure 4</a>. It is worth noticing
+that option #1a shares similarities with the deployment approach for ID/Loc
+solutions proposed in <span>[<a href="#I-D.homma-dmm-5gs-id-loc-coexistence" class="xref">I-D.homma-dmm-5gs-id-loc-coexistence</a>]</span>.<a href="#section-3.1-3" class="pilcrow">¶</a></p>
+<span id="name-hicn-insertion-in-mec"></span><div id="fig-hicn-sba-mec">
+<figure id="figure-4">
+          <div class="artwork art-text alignLeft" id="section-3.1-4.1">
+<pre>
+  +------------------+          +------------------+
+  |        AMF       |          |        SMF       |
+  +-+--------------+-+          +++--------------+-+
+    |              |             .|              |
+    | N1           | N2       N4 .| N4           | N4
+    |              |             .|              |
++---+---+      +---+---+  N3  +---+---+  N9  +---+---+  N6  +-------+
+|  UE   +------+  gNB  +------+ UL/CL +------+  UPF  +------+  DN   |
++-------+      +-------+      +---+---+      +-------+      +-------+
+                                 .|
+                                 .| N9
+                                 .|                            _
+                              +--++---+  N9  +-------+  MEC  _( )___
+                              |  UPF  +------+   DN  +------(  hICN )_
+                              +-------+      +-------+      (_________)
+                                 ^               ^              ^
+                                 |_______________|              |
+                                   local breakout        hICN insertion
+</pre>
+</div>
+<figcaption><a href="#figure-4" class="selfRef">Figure 4</a>:
+<a href="#name-hicn-insertion-in-mec" class="selfRef">hICN insertion in MEC</a>
+          </figcaption></figure>
+</div>
+<p id="section-3.1-5">Although it preserves tunnels and anchor points, option #1a permits an early
+termination of tunnels and the distribution of hICN capabilities close to the
+edge like in path caching and rate/loss/congestion control which may be
+leveraged for efficient low-latency content distribution, especially in presence
+of consumer mobility. Let us analyze more in details such advantages.<a href="#section-3.1-5" class="pilcrow">¶</a></p>
+<p id="section-3.1-6"><strong>Pro: Benefits of edge caching</strong><a href="#section-3.1-6" class="pilcrow">¶</a></p>
+<p id="section-3.1-7">The ability for the UE to communicate with an endpoint close to the access is a
+pre-requisite of latency-sensitive and interactive applications such as AR/VR.
+Option #1a avoids forwarding of high-throughput traffic into the core, when it
+can be terminated locally at MEC.<a href="#section-3.1-7" class="pilcrow">¶</a></p>
+<p id="section-3.1-8">hICN ability to take dynamic hop-by-hop forwarding decisions facilitates
+edge/core traffic load-balancing. In addition, the pull-based transport model
+enables request aggregation removing traffic redundancy and facilitates the use
+of dynamically discovered sources. This is the case of requests directly
+satisfied from locally buffered temporary copies. In this way, hICN implicitly
+realizes opportunistic multicast distribution of popular content with benefits
+for improved users' QoE for services such as VoD or live streaming as well as
+reduced traffic cost by offloading the mobile core.<a href="#section-3.1-8" class="pilcrow">¶</a></p>
+<p id="section-3.1-9">We remark that for caching of data or of requests to be effective, a sufficient
+level of aggregation is required: one can thus expect hICN instances to be
+useful in the backhaul and core locations (with an eventual hierarchy of
+caches), while low-latency applications will benefit from deployments
+close to the cell site.<a href="#section-3.1-9" class="pilcrow">¶</a></p>
+<p id="section-3.1-10"><strong>Pro: Consumer mobility improvements</strong><a href="#section-3.1-10" class="pilcrow">¶</a></p>
+<p id="section-3.1-11">Consumer mobility is natively supported in ICN. It is sufficient for a mobile UE
+to keep sending interests as soon as it connects to a new network interface. The
+combined use of identifiers and of a pull-model in hICN-AMM allows for seamless
+mobility across heterogeneous wired and wireless networks, as well as their
+simultaneous use for multi-homing and bandwidth aggregation.<a href="#section-3.1-11" class="pilcrow">¶</a></p>
+<p id="section-3.1-12"><a href="#fig-hicn-wifi" class="xref">Figure 5</a> illustrates a mobility scenario considering a 3GPP access and
+a non-3GPP WiFi access tunneled to a N3 Inter-networking Function (N3IWF)
+offering a N3 interface for connection to the first UPF. In this setting, both
+wireless accesses are assumed to be connected through the same backhaul link,
+and thus to converge into the same first UPF.<a href="#section-3.1-12" class="pilcrow">¶</a></p>
+<p id="section-3.1-13">Placing an hICN instance at the aggregation of the two accesses would be
+beneficial both in terms of mobility and of local loss recovery, as a lost
+packet would be fast retransmitted directly from local hICN instance.<a href="#section-3.1-13" class="pilcrow">¶</a></p>
+<span id="name-example-of-a-ue-connection-"></span><div id="fig-hicn-wifi">
+<figure id="figure-5">
+          <div class="artwork art-text alignLeft" id="section-3.1-14.1">
+<pre>
+tunnelled non-3GPP radio
+(e.g. WiFi)   +------+  N3
+       +------+ N3IWF+-------+                         hICN
+      /       +------+        \                          +
+     /                         \                         |
++---+---+     +-------+ N3 +---+---+ N9 +---+---+ N6 +---+---+
+|  UE   +-----+  gNB  +----+ UL/CL +----+  UPF  +----+  DN   +---+ hICN
++-------+     +-------+    +---+---+    +-------+    +-------+
+</pre>
+</div>
+<figcaption><a href="#figure-5" class="selfRef">Figure 5</a>:
+<a href="#name-example-of-a-ue-connection-" class="selfRef">Example of a UE connection to two local radio accesses</a>
+          </figcaption></figure>
+</div>
+<p id="section-3.1-15"><strong>Pro: Multihoming and multi-source communications</strong><a href="#section-3.1-15" class="pilcrow">¶</a></p>
+<p id="section-3.1-16">A specific feature of hICN transport is to control the use of multiple
+path/sources of content at the same time, for instance caches located at the
+edge of different fixed/mobile network accesses. The consumer is able to use
+both network accesses in parallel adapting load-balancing on a per-packet
+granularity, based on network conditions in order to exploit the full aggregated
+bandwidth and/or to compensate variations induced by UE mobility or by random
+fluctuations of individual radio channel conditions.<a href="#section-3.1-16" class="pilcrow">¶</a></p>
+<p id="section-3.1-17"><a href="#fig-hicn-multisource" class="xref">Figure 6</a> presents the case of a mobile consumer fetching data
+simultaneously from two distinct sources, for instance local caches behind each
+radio access.<a href="#section-3.1-17" class="pilcrow">¶</a></p>
+<span id="name-multi-source-communication-"></span><div id="fig-hicn-multisource">
+<figure id="figure-6">
+          <div class="artwork art-text alignLeft" id="section-3.1-18.1">
+<pre>
+tunnelled non-3GPP radio
+(e.g. WiFi)  +-------+ N3 +-------+ N9 +-------+ N6 +-------+
+       +-----+ N3IWF +----| UL/CL +----+  UPF  +----+  DN   +----+ hICN
+      /      +-------+    +-------+    +-------+    +-------+
+     /
++---+---+    +-------+ N3 +-------+ N9 +---+---+ N6 +---+---+
+|  UE   +----+  gNB  +----+ UL/CL +----+  UPF  +----+  DN   +----+ hICN
++-------+    +-------+    +---+---+    +-------+    +-------+
+</pre>
+</div>
+<figcaption><a href="#figure-6" class="selfRef">Figure 6</a>:
+<a href="#name-multi-source-communication-" class="selfRef">Multi-source communication with hICN</a>
+          </figcaption></figure>
+</div>
+<p id="section-3.1-19"><strong>Con: Remaining IP anchors hinder producer mobility</strong><a href="#section-3.1-19" class="pilcrow">¶</a></p>
+<p id="section-3.1-20">hICN-AMM MEC deployments are not suitable for handling producer mobility
+effectively due to the presence of an anchor node in the core at the N6
+interface which traffic has to pass through. An alternative would be to put in
+place dedicated control mechanisms to update routers FIB following mobility
+events, but such coordination between hICN forwarders would involve interaction
+with SMF.<a href="#section-3.1-20" class="pilcrow">¶</a></p>
+<p id="section-3.1-21"><strong>Con: Loss of 3GPP control plane</strong><a href="#section-3.1-21" class="pilcrow">¶</a></p>
+<p id="section-3.1-22">More generally, traffic in between forwarders in the MEC will be out of reach
+for the mobile core. At the time of this writing, MEC interfaces are not well
+standardized; slicing and QoS functions will only be available up to the
+breakout point.<a href="#section-3.1-22" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="hicn-deployment-as-a-upf-option-1b">
+<section id="section-3.2">
+        <h3 id="name-hicn-deployment-as-a-upf-op">
+<a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-hicn-deployment-as-a-upf-op" class="section-name selfRef">hICN deployment as a UPF (option #1b)</a>
+        </h3>
+<p id="section-3.2-1">The design of hICN makes it a good candidate for being deployed as a UPF in
+NFV environments, for instance within a container (see <a href="#fig-hicn-sba-upf" class="xref">Figure 7</a>.
+This solution has the advantage of preserving the interface with the 3GPP
+control plane, including support for slicing or QoS.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
+<div id="fig-hicn-sba-upf">
+<figure id="figure-7">
+          <div class="artwork art-text alignLeft" id="section-3.2-2.1">
+<pre>
+  +------------------+          +------------------+
+  |        AMF       |          |        SMF       |
+  +-+--------------+-+          +-+--------------+-+
+    |              |              |              |
+    | N1           | N2           | N4           | N4
+    |              |              |              |
++---+---+      +---+---+  N3  +---+---+  N9  +---+---+  N6  +-------+
+|  UE   +------+  gNB  +------+  UPF  +------+  UPF  +------+  DN   |
++-------+      +-------+      +-------+      +-------+      +-------+
+                                 ^                ^
+                                 |________________|
+                                   hICN insertion
+</pre>
+</div>
+<figcaption><a href="#figure-7" class="selfRef">Figure 7</a></figcaption></figure>
+</div>
+<p id="section-3.2-3"><strong>Improved traffic engineering</strong><a href="#section-3.2-3" class="pilcrow">¶</a></p>
+<p id="section-3.2-4">On-path deployments of hICN-AMM, as early as at the first UPF, bring additional
+advantages in terms of opportunities to optimize traffic engineering, including
+multipath and load balancing support.<a href="#section-3.2-4" class="pilcrow">¶</a></p>
+<p id="section-3.2-5">As an example, one may consider hICN deployment at the PDU Session Anchor, with
+dynamic congestion-aware and per-application control of multiple downstream
+paths to the edge.<a href="#section-3.2-5" class="pilcrow">¶</a></p>
+<p id="section-3.2-6"><strong>Network-assisted transport</strong><a href="#section-3.2-6" class="pilcrow">¶</a></p>
+<p id="section-3.2-7">hICN ability to provide in-network assistance for rate/loss/congestion control
+is an additional advantage, e.g. to support rate adaptation in the case of
+dynamic adaptive streaming, or to improve reliability of WiFi communications via
+local wireless detection and recovery <span>[<a href="#WLDR" class="xref">WLDR</a>]</span>.<a href="#section-3.2-7" class="pilcrow">¶</a></p>
+<p id="section-3.2-8">We illustrate the latter case in <a href="#fig-hicn-wldr" class="xref">Figure 8</a>, where an hICN UPF is
+deployed as the first UPF following the WiFi access. hICN UPF can exploit
+network buffers to realize loss detection and recovery of the packet transiting
+on the unreliable radio access, thus offering superior performance for WiFi
+traffic with respect to a traditional end-to-end recovery approach. Such feature
+could be fundamental for low-latency reliable services.<a href="#section-3.2-8" class="pilcrow">¶</a></p>
+<span id="name-in-network-loss-detection-a"></span><div id="fig-hicn-wldr">
+<figure id="figure-8">
+          <div class="artwork art-text alignLeft" id="section-3.2-9.1">
+<pre>
+                             +-- Loss Detection and Recovey
+                             V
+             +-------+ N3 +-------+
+       +-----+ N3IWF +----| hICN  |
+      /      +-------+    +---+---+
+     /                     N9 |
++---+---+    +-------+ N3 +---+---+ N9 +---+---+ N6 +---+---+
+|  UE   +----+  gNB  +----+  UPF  +----+  UPF  +----+  DN   +----+ hICN
++-------+    +-------+    +---+---+    +-------+    +-------+
+</pre>
+</div>
+<figcaption><a href="#figure-8" class="selfRef">Figure 8</a>:
+<a href="#name-in-network-loss-detection-a" class="selfRef">In-network loss detection and recovery with hICN</a>
+          </figcaption></figure>
+</div>
+<p id="section-3.2-10"><strong>Producer mobility</strong><a href="#section-3.2-10" class="pilcrow">¶</a></p>
+<p id="section-3.2-11">Option #1b is appropriate for handling producer mobility; however, it would be
+supported through traditional DMM approaches for identifier-based mobility.<a href="#section-3.2-11" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="summary">
+<section id="section-3.3">
+        <h3 id="name-summary">
+<a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-summary" class="section-name selfRef">Summary</a>
+        </h3>
+<p id="section-3.3-1">This section has reviewed various insertion strategies for hICN, including
+overlay deployments using local breakout to hICN instances situated in MEC, or
+hICN forwarders deployed within an UPF. While those approaches have the merit of
+allowing an easy or early integration of hICN and exploiting some of its
+benefits, they do not fully exploit purely ID-based capabilities nor the dynamic
+hICN forwarding.<a href="#section-3.3-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="integrated-approaches-data-plane-alternatives-to-gtp-u-option-2">
+<section id="section-4">
+      <h2 id="name-integrated-approaches-data-">
+<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-integrated-approaches-data-" class="section-name selfRef">"Integrated" approaches: data-plane alternatives to GTP-U (option #2)</a>
+      </h2>
+<p id="section-4-1">The section describes more integrated hICN-AMM/3GPP 5G approaches leveraging
+hICN capabilities in the mobile backhaul network in alternative to GTP-U tunnels
+over N9 (and possibly N3) interface(s), as shown in <a href="#fig-5g-sba" class="xref">Figure 2</a> and
+<a href="#fig-protocol-stack" class="xref">Figure 3</a>.<a href="#section-4-1" class="pilcrow">¶</a></p>
+<p id="section-4-2">It is proposed to replace GTP tunnels at N9 and optionally at N3 interfaces by
+an hICN-enabled data plane operating on location-independent identifiers
+advertised by the routing protocol and whose forwarding information is
+stored/updated in routers' FIBs according to the hICN-AMM approach.<a href="#section-4-2" class="pilcrow">¶</a></p>
+<p id="section-4-3">We remind that an hICN data plane does not require the presence of a mapping
+system nor the enablement of all routers, since hICN traffic is transparently
+forwarded by regular hICN-unaware IP routers.<a href="#section-4-3" class="pilcrow">¶</a></p>
+<div id="hicn-insertion-at-n9-interface-only-option-2a">
+<section id="section-4.1">
+        <h3 id="name-hicn-insertion-at-n9-interf">
+<a href="#section-4.1" class="section-number selfRef">4.1. </a><a href="#name-hicn-insertion-at-n9-interf" class="section-name selfRef">hICN insertion at N9 interface only (option #2a)</a>
+        </h3>
+<p id="section-4.1-1">Option #2a answers the question of the ongoing 3GPP study of alternative
+technologies for the N9 interface <span>[<a href="#TR.29.892-3GPP" class="xref">TR.29.892-3GPP</a>]</span>. with no impact on gNB
+as illustrated in <a href="#fig-hicn-sba-n9" class="xref">Figure 9</a>. The corresponding protocol layering is
+shown in <a href="#fig-hicn-prot-n9" class="xref">Figure 10</a> where we assume hICN-enablement of the end-points
+(an alternative in-network hICN enablement via proxies is possible but not
+ considered by this document). In the protocol layer, hICN is associated to IPv6
+PDU layer, transported over N9 directly over L2.<a href="#section-4.1-1" class="pilcrow">¶</a></p>
+<span id="name-replacement-of-n9-interface"></span><div id="fig-hicn-sba-n9">
+<figure id="figure-9">
+          <div class="artwork art-text alignLeft" id="section-4.1-2.1">
+<pre>
+  +------------------+          +------------------+
+  |        AMF       |          |        SMF       |
+  +-+--------------+-+          +-+--------------+-+
+    |              |              |              |
+    | N1           | N2           | N4           | N4
+    |              |              |              |
++---+---+      +---+---+  N3  +---+---+  N9  +---+---+  N6  +-------+
+|  UE   +------+  gNB  +------+  UPF  +------+  UPF  +------+  DN   |
++-------+      +-------+      +-------+      +-------+      +-------+
+                                         ^
+                                         |
+                                   hICN insertion
+</pre>
+</div>
+<figcaption><a href="#figure-9" class="selfRef">Figure 9</a>:
+<a href="#name-replacement-of-n9-interface" class="selfRef">Replacement of N9 interface</a>
+          </figcaption></figure>
+</div>
+<span id="name-replacement-of-n9-interface-"></span><div id="fig-hicn-prot-n9">
+<figure id="figure-10">
+          <div class="artwork art-text alignLeft" id="section-4.1-3.1">
+<pre>
+    UE            5G-AN        N3         UPF        N9   UPF    N6
+                               |                     |            |
++--------+                     |                     |            |
+|  App.  |--------------------------------------------------------|
++--------+                     |                     | +--------+ |
+| IP PDU |                     |                     | | IP PDU | |
+| (hICN) |---------------------------------------------| (hICN) | |
++--------+ +-----------------+ | +-----------------+ | |        | |
+|        | |\     relay     /| | |\     decap     /  | |        | |
+|        | | \_____________/ |-|-| \_____________/   | |        | |
+|        | |        | GTP-U  | | | GTP-U  |          | |        | |
+|        | |        +--------+ | +--------+          | |        | |
+|   5G   | |   5G   |  UDP   |-|-|  UDP   |          | |        | |
+|   AN   |-|   AN   +--------+ | +--------+          | |        | |
+|protocol| |protocol|   IP   |-|-|   IP   |          | |        | |
+| layers | | layers +--------+ | +--------+--------+ | +--------+ |
+|        | |        |   L2   |-|-|   L2   |   L2   |-|-|   L2   | |
+|        | |        +--------+ | +--------+--------+ | +--------+ |
+|        | |        |   L1   |-|-|   L1   |   L1   |-|-|   L1   | |
++--------+ +-----------------+ | +-----------------+ | +--------+ |
+                               |                     |            |
+</pre>
+</div>
+<figcaption><a href="#figure-10" class="selfRef">Figure 10</a>:
+<a href="#name-replacement-of-n9-interface-" class="selfRef">Replacement of N9 interface - Protocol layers</a>
+          </figcaption></figure>
+</div>
+<p id="section-4.1-4"><strong>Anchorless consumer and producer mobility</strong><a href="#section-4.1-4" class="pilcrow">¶</a></p>
+<p id="section-4.1-5">Option #2a realizes a fully anchorless solution as the traffic does not need to
+go up to the anchor point in the core, nor to depend on the resolution performed
+by a mapping node. As illustrated in <a href="#fig-hicn-producer" class="xref">Figure 11</a>, communication
+between two UEs can take place by forwarding traffic between their first UPFs,
+and thus avoids unnecessarily overload of links up to the core. In this way
+option #2a provides an effective traffic offloading and increased resiliency of
+network operations in the event of a failure that would disconnect the edge from
+the mobile core (e.g. disaster recovery scenario).<a href="#section-4.1-5" class="pilcrow">¶</a></p>
+<span id="name-offloading-of-inter-ue-comm"></span><div id="fig-hicn-producer">
+<figure id="figure-11">
+          <div class="artwork art-text alignLeft" id="section-4.1-6.1">
+<pre>
+    +---+---+      +---+---+  N3  +-------+
+    |  UE   +------+  gNB  +------+  UPF  +------ ...
+    +-------+      +-------+      +---+---+
+                                      | N9    hICN domain
+    +---+---+      +---+---+  N3  +-------+
+    |  UE   +------+  gNB  +------+  UPF  +------ ...
+    +-------+      +-------+      +---+---+
+</pre>
+</div>
+<figcaption><a href="#figure-11" class="selfRef">Figure 11</a>:
+<a href="#name-offloading-of-inter-ue-comm" class="selfRef">Offloading of inter-UE communications</a>
+          </figcaption></figure>
+</div>
+<p id="section-4.1-7"><strong>Low state and signaling overhead</strong><a href="#section-4.1-7" class="pilcrow">¶</a></p>
+<p id="section-4.1-8">Unlike traditional 3GPP GTP-based mobility management, hICN-AMM does not involve
+signaling/ additional state to be maintained to handle static
+consumers/producers or mobile consumers. Forwarding updates are required only in
+the event of producer mobility to guarantee real-time re-direction of consumer
+requests without triggering routing updates.<a href="#section-4.1-8" class="pilcrow">¶</a></p>
+<p id="section-4.1-9"><strong>Dynamic forwarding strategies / UPF selection</strong><a href="#section-4.1-9" class="pilcrow">¶</a></p>
+<p id="section-4.1-10">Dynamic selection of next hop or exit point is simplified by hICN-AMM as it can
+be performed locally based on names and/or name-based locally available
+information (e.g. measurements of congestion status or residual latency up to
+the first data source).<a href="#section-4.1-10" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="hicn-deployment-at-both-n9-and-n3-interfaces-option-2b">
+<section id="section-4.2">
+        <h3 id="name-hicn-deployment-at-both-n9-">
+<a href="#section-4.2" class="section-number selfRef">4.2. </a><a href="#name-hicn-deployment-at-both-n9-" class="section-name selfRef">hICN deployment at both N9 and N3 interfaces (option #2b)</a>
+        </h3>
+<p id="section-4.2-1">Option #2b proposes to additionally remove GTP tunnels between the RAN and the
+first UPF (N3 interface). It is illustrated in <a href="#fig-hicn-sba-n9n3" class="xref">Figure 12</a> and
+<a href="#fig-hicn-prot-n9n3" class="xref">Figure 13</a>.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
+<span id="name-replacement-of-n3-and-n9-in"></span><div id="fig-hicn-sba-n9n3">
+<figure id="figure-12">
+          <div class="artwork art-text alignLeft" id="section-4.2-2.1">
+<pre>
+  +------------------+          +------------------+
+  |        AMF       |          |        SMF       |
+  +-+--------------+-+          +-+--------------+-+
+    |              |              |              |
+    | N1           | N2           | N4           | N4
+    |              |              |              |
++---+---+      +---+---+  N3  +---+---+  N9  +---+---+  N6  +-------+
+|  UE   +------+  gNB  +------+  UPF  +------+  UPF  +------+  DN   |
++-------+      +-------+  ^   +-------+  ^   +-------+      +-------+
+                          |              |
+                          |              |
+                           hICN insertion
+</pre>
+</div>
+<figcaption><a href="#figure-12" class="selfRef">Figure 12</a>:
+<a href="#name-replacement-of-n3-and-n9-in" class="selfRef">Replacement of N3 and N9 interfaces</a>
+          </figcaption></figure>
+</div>
+<span id="name-replacement-of-n3-and-n9-int"></span><div id="fig-hicn-prot-n9n3">
+<figure id="figure-13">
+          <div class="artwork art-text alignLeft" id="section-4.2-3.1">
+<pre>
+    UE            5G-AN        N3         UPF        N9   UPF    N6
+                               |                     |            |
++--------+                     |                     |            |
+|  App.  |--------------------------------------------------------|
++--------+                     | +--------+--------+ | +--------+ |
+| IP PDU |                     | | IP PDU | IP PDU | | | IP PDU | |
+| (hICN) |-----------------------| (hICN) | (hICN) |-|-| (hICN) | |
++--------+ +-----------------+ | |        |        | | |        | |
+|        | |\     decap     /  | |        |        | | |        | |
+|        | | \_____________/   | |        |        | | |        | |
+|        | |        |          | |        |        | | |        | |
+|        | |        |          | |        |        | | |        | |
+|   5G   | |   5G   |          | |        |        | | |        | |
+|   AN   |-|   AN   |          | |        |        | | |        | |
+|protocol| |protocol|          | |        |        | | |        | |
+| layers | | layers +--------+ | +--------+--------+ | +--------+ |
+|        | |        |   L2   |-|-|   L2   |   L2   |-|-|   L2   | |
+|        | |        +--------+ | +--------+--------+ | +--------+ |
+|        | |        |   L1   |-|-|   L1   |   L1   |-|-|   L1   | |
++--------+ +-----------------+ | +-----------------+ | +--------+ |
+                               |                     |            |
+</pre>
+</div>
+<figcaption><a href="#figure-13" class="selfRef">Figure 13</a>:
+<a href="#name-replacement-of-n3-and-n9-int" class="selfRef">Replacement of N3 and N9 interfaces : Protocol     layers</a>
+          </figcaption></figure>
+</div>
+<p id="section-4.2-4"><strong>Full tunnel removal; No internetworking between N3 and N9</strong><a href="#section-4.2-4" class="pilcrow">¶</a></p>
+<p id="section-4.2-5">A clear advantage is the elimination of all GTP tunnels and a similar
+specification of both N3 and N9 interfaces as recommended by 3GPP, so removing
+challenges of inter-networking between N3 and N9. Also, it leads to a flat and
+simpler architecture, allowing convergence with other non-3GPP accesses (and
+related management and monitoring tools).<a href="#section-4.2-5" class="pilcrow">¶</a></p>
+<p id="section-4.2-6"><strong>State and signaling reduction</strong><a href="#section-4.2-6" class="pilcrow">¶</a></p>
+<p id="section-4.2-7">A direct consequence is the extension to N3 of the property of hICN-AMM above
+described, namely the absence of signaling and additional state to be maintained to
+handle static consumers/producers or mobile consumers.<a href="#section-4.2-7" class="pilcrow">¶</a></p>
+<p id="section-4.2-8"><strong>Dynamic first UPF selection</strong><a href="#section-4.2-8" class="pilcrow">¶</a></p>
+<p id="section-4.2-9">Dynamic forwarding capabilities are extended to the selection of the first UPF,
+hence closer to the edge w.r.t. option #2a.<a href="#section-4.2-9" class="pilcrow">¶</a></p>
+<p id="section-4.2-10">The advantage can be significant in the case of dense deployments scenarios:
+here hICN-AMM makes possible to isolate the core network from local edge
+mobility (a design objective of 5G mobile architecture), while still permitting
+distributed  selection of ingress UPFs, and load-balancing of traffic across
+them.<a href="#section-4.2-10" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="control-plane-considerations">
+<section id="section-4.3">
+        <h3 id="name-control-plane-consideration">
+<a href="#section-4.3" class="section-number selfRef">4.3. </a><a href="#name-control-plane-consideration" class="section-name selfRef">Control plane considerations</a>
+        </h3>
+<p id="section-4.3-1">By operating directly on router FIBs for mobility updates and for dynamic
+policy-based forwarding strategies etc., hICN inherits the simplicity of IP
+forwarding and can reuse legacy IP routing protocols to advertise/route ID
+prefixes.  In this way it remains compatible with the exiting control plane
+architecture as proposed in the 3GPP standard, with no change required to N1, N2
+or N4.<a href="#section-4.3-1" class="pilcrow">¶</a></p>
+<p id="section-4.3-2">hICN-AMM producer mobility management does not require SMF interaction, but
+could be implemented by means of SMF signaling, at the condition to follow the
+same procedure described for MAP-Me protocol in hICN-AMM. In the analysis of
+pros and cons of SMF interaction, it is worth noticing that the absence of SMF
+interaction might be beneficial in case of dense deployments or of failure of
+the central control entities (infrastructure-less communication scenarios) to
+empower distributed control of local mobility within an area.<a href="#section-4.3-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="deployment-considerations">
+<section id="section-5">
+      <h2 id="name-deployment-considerations">
+<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-deployment-considerations" class="section-name selfRef">Deployment considerations</a>
+      </h2>
+<p id="section-5-1">The benefits previously described can be obtained by an upgrade of only a few
+selected routers at the network edge. The design of hICN allows the rest of the
+infrastructure to remain unmodified, and to leverage existing management and
+monitoring tools.<a href="#section-5-1" class="pilcrow">¶</a></p>
+<div id="hicn-in-a-slice">
+<section id="section-5.1">
+        <h3 id="name-hicn-in-a-slice">
+<a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-hicn-in-a-slice" class="section-name selfRef">hICN in a slice</a>
+        </h3>
+<p id="section-5.1-1">The use of hICN does not impose any specific slicing of the network as the
+architecture uses regular IPv6 packets, and is designed to coexist with regular
+traffic. In that, hICN contrasts with previous approaches integrating ICN in IP
+networks by using separate slices and/or different PDU formats as reviewed in
+<span>[<a href="#I-D.irtf-icnrg-deployment-guidelines" class="xref">I-D.irtf-icnrg-deployment-guidelines</a>]</span>.<a href="#section-5.1-1" class="pilcrow">¶</a></p>
+<p id="section-5.1-2">Although not required, slicing can ease a transition of services towards hICN,
+and/or the coexistence of different mobility management solutions with hICN-AMM
+or of different hICN deployment options.<a href="#section-5.1-2" class="pilcrow">¶</a></p>
+<p id="section-5.1-3">An example use of slicing would be to create multiple slices for optimizing the
+delivery of services having different requirements such as a low-latency
+communication slice with hICN instances deployed very close to the edge, and a
+video delivery service with caches deployed in locations aggregating a
+sufficient number of users to be effective.<a href="#section-5.1-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="end-to-end-deployment">
+<section id="section-5.2">
+        <h3 id="name-end-to-end-deployment">
+<a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-end-to-end-deployment" class="section-name selfRef">End-to-end deployment</a>
+        </h3>
+<p id="section-5.2-1">Deployment of the hICN stack in the endpoints is the preferred insertion option
+and offers the full range of benefits. hICN client and network stacks are
+available through two reference implementations based on the CICN project
+<span>[<a href="#CICN" class="xref">CICN</a>]</span>. They share the objective of smooth deployment in existing devices, and
+are fully user-space based.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
+<p id="section-5.2-2">The first one is built on top of existing IP primitives and proposed as an
+application/library for all major OS vendors including iOS, Android, Linux, macOS
+and Windows. The second one targets high-performance routers and servers, and
+leverages the VPP technology <span>[<a href="#VPP" class="xref">VPP</a>]</span>.<a href="#section-5.2-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="network-contained-deployment">
+<section id="section-5.3">
+        <h3 id="name-network-contained-deploymen">
+<a href="#section-5.3" class="section-number selfRef">5.3. </a><a href="#name-network-contained-deploymen" class="section-name selfRef">Network-contained deployment</a>
+        </h3>
+<p id="section-5.3-1">In case it is not possible to insert hICN stack at endpoints, an hICN deployment
+fully contained in the network can be envisaged through the deployment of
+proxies. An overview of different options implemented at the network, transport
+or application level is provided in <span>[<a href="#I-D.irtf-icnrg-deployment-guidelines" class="xref">I-D.irtf-icnrg-deployment-guidelines</a>]</span>.
+An example would be the deployment of HTTP (or RTP) proxies (as made available through
+the CICN project)  at the ingress and egress (resp. first and last UPFs), in
+order to benefit from content awareness in the network. Such configuration
+however reduces the flexibility and dynamic forwarding capabilities in
+endpoints. In particular, existing transport protocols have limited support for
+dynamically changing paths/discovered sources or network conditions.<a href="#section-5.3-1" class="pilcrow">¶</a></p>
+<p id="section-5.3-2">In such configuration, traffic that is not handled through hICN-AMM mechanisms
+can still benefit from the lower overhead and anchorless mobility capabilities
+coming from the removal of GTP tunnels, as well as dynamic forwarding
+capabilities that are inherent to the forwarding pipeline. This results from the
+ability to assign location-independent identifiers to endpoints even without the
+deployment of a full hICN stack. The advantages of removed identifier/location
+mapping and of a lightweight FIB update process are maintained. No encapsulation
+is required and packet headers are not modified, which may allow the network to
+have visibility of the source and/or destination identifiers.<a href="#section-5.3-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="alternative-data-planes-joint-hicnsrv6-deployment">
+<section id="section-5.4">
+        <h3 id="name-alternative-data-planes-joi">
+<a href="#section-5.4" class="section-number selfRef">5.4. </a><a href="#name-alternative-data-planes-joi" class="section-name selfRef">Alternative data planes: joint hICN/SRv6 deployment</a>
+        </h3>
+<p id="section-5.4-1">hICN is designed to operate inside an IPv6 network by means of an enriched
+communication layer supporting ICN primitives. The targeted deployment of a few
+hICN-empowered nodes leads to the tradeoff between incremental deployment and
+benefits which are proportionally related to the degree of hICN penetration. The
+association of hICN with other data planes technologies is investigated as a
+possibility to overcome the above-mentioned tradeoff yielding to a selective,
+yet fully beneficial insertion of hICN in IP networks.<a href="#section-5.4-1" class="pilcrow">¶</a></p>
+<p id="section-5.4-2">To this aim, we focus on hICN insertion in a Segment Routing (SR) enhanced data
+plane, specifically considering SRv6 instantiation of SR
+<span>[<a href="#I-D.ietf-spring-segment-routing" class="xref">I-D.ietf-spring-segment-routing</a>]</span>.<a href="#section-5.4-2" class="pilcrow">¶</a></p>
+<p id="section-5.4-3">hICN/SRv6 combination inherits all SRv6 advantages presented in SR-dedicated
+section of this document, namely "underlay" management (fast reroute, etc.),
+service chaining or fine-grained TE, for instance.<a href="#section-5.4-3" class="pilcrow">¶</a></p>
+<p id="section-5.4-4">In addition, it allows extending the reach of hICN on regular IP routers with
+SRv6 functionality. One realization being to create SRv6 domains in between hICN
+nodes. The hICN router (through forwarding strategies) would then act as a
+control plane for SRv6 by specifying the list of SIDs to insert in the packet.<a href="#section-5.4-4" class="pilcrow">¶</a></p>
+<p id="section-5.4-5">SRv6 forwarding of packets between hICN hops would permit to enforce dynamic
+per-application hICN forwarding strategies and their objectives (path steering,
+QoS, etc.), which would be otherwise not possible over not hICN-enabled IP
+network segments. It would also allow dynamic multi-path and load balancing in
+hICN-unaware IP network segments and enforcing the symmetry of the request/reply
+path for more accurate round trip delay measurements and rate/congestion
+control).<a href="#section-5.4-5" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="summary-1">
+<section id="section-6">
+      <h2 id="name-summary-2">
+<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-summary-2" class="section-name selfRef">Summary</a>
+      </h2>
+<p id="section-6-1">hICN proposes a general purpose architecture that combines the benefits of a
+pure-ID (name-based) architecture with those of ICN.<a href="#section-6-1" class="pilcrow">¶</a></p>
+<p id="section-6-2">An hICN enabled network offers native offloading capabilities in virtue of the
+anchorless properties resulting from the pure-ID communication scheme. It does
+so without the need for a mapping system, and further requires no change in the
+5G architecture nor in its control plane. The architecture will further leverage
+the incremental insertion of Information-Centric functionalities through proxies
+or direct insertion in user devices as the technology gets adopted and deployed.<a href="#section-6-2" class="pilcrow">¶</a></p>
+<p id="section-6-3">While a full deployment is recommended to make efficient use of available
+network resources, it is still possible to opt for a partial or phased
+deployment, with the associated tradeoffs that we summarize in <a href="#tab-summary" class="xref">Figure 14</a>.<a href="#section-6-3" class="pilcrow">¶</a></p>
+<p id="section-6-4">This table reviews the various insertion options in the 3GPP architecture
+earlier introduced - namely options #1a (MEC), #1b (UPF), #2a (N9) and #2b
+(N9/N3) -, assuming endpoints are hICN-enabled. Various levels of hICN
+penetration are then considered : (UE) the UE is hICN-enabled, (proxy) hICN
+processing is available through proxies, (None) no hICN function, the traffic is
+purely forwarded using endpoint identifiers rather than content identifiers.<a href="#section-6-4" class="pilcrow">¶</a></p>
+<div id="tab-summary">
+<figure id="figure-14">
+        <div class="artwork art-text alignLeft" id="section-6-5.1">
+<pre>
+                                       +-----------------------+------+
+                     hICN penetration: |       UE      | Proxy | None |
+  Benefit:          Deployment option: | 1a 1b | 2a 2b |   2b  |  2b  |
++--------------------------------------+-------+-------+-------+------+
+| Additional state for static consumer | Y  Y  | Y  N  |   N   |  N   |
+| Additional state for static producer | Y  Y  | Y  N  |   N   |  N   |
+| Additional state for mobile consumer | Y  Y  | Y  N  |   N   |  N   |
+| Additional state for mobile producer | Y  Y  | Y  N  |   N   |  N   |
++--------------------------------------+-------+-------+-------+------+
+| Signalization for static consumer    | Y  Y  | N  N  |   N   |  N   |
+| Signalization for static producer    | Y  Y  | N  N  |   N   |  N   |
+| Signalization for mobile consumer    | Y  Y  | N  N  |   N   |  N   |
+| Signalization for mobile producer    | Y  Y  | Y  Y  |   Y   |  Y   |
++--------------------------------------+-------+-------+-------+------+
+| Removed tunnel/encap overhead        | N  N  | P  Y  |   Y   |  Y   |
+| Preserve perf. of flows in progress  | N  N  | Y  Y  |   Y   |  Y   |
++--------------------------------------+-------+-------+-------+------+
+| Local offload                        | P  N  | Y  Y  |   Y   |  Y   |
+| Anchorless for UP                    | N  N  | Y  Y  |   Y   |  Y   |
+| Anchorless for CP                    | N  N  | Y  Y  |   Y   |  Y   |
+| Dynamic egress UPF selection         | N  N  | Y  Y  |   Y   |  Y   |
+| Dynamic ingress UPF selection        | N  N  | N  Y  |   Y   |  Y   |
++--------------------------------------+-------+-------+-------+------+
+| Edge caching : low-latency           | Y  Y  | Y  Y  |   P   |  N   |
+| Edge caching : multicast             | Y  Y  | Y  Y  |   P   |  N   |
+| Seamless mobility across het. RAT    | Y  Y  | Y  Y  |   Y   |  P   |
+| Multi-homing ; Bandwidth aggregation | Y  Y  | Y  Y  |   Y   |  P   |
+| Multi-source                         | Y  Y  | Y  Y  |   Y   |  N   |
+| In-network assistance                | N  Y  | Y  Y  |   P   |  N   |
++--------------------------------------+-------+-------+-------+------+
+| Integration with 3GPP CP             | N  Y  | Y  Y  |   Y   |  Y   |
++--------------------------------------+-------+-------+-------+------+
+
+LEGEND: (Y) Yes - (N) No - (P) Partial
+</pre>
+</div>
+<figcaption><a href="#figure-14" class="selfRef">Figure 14</a></figcaption></figure>
+</div>
+</section>
+</div>
+<section id="section-7">
+      <h2 id="name-references">
+<a href="#section-7" class="section-number selfRef">7. </a><a href="#name-references" class="section-name selfRef">References</a>
+      </h2>
+<section id="section-7.1">
+        <h3 id="name-normative-references">
+<a href="#section-7.1" class="section-number selfRef">7.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+        </h3>
+<dl class="references">
+<dt id="RFC7476">[RFC7476]</dt>
+<dd>
+<span class="refAuthor">Pentikousis, K., Ed.</span><span class="refAuthor">, Ohlman, B.</span><span class="refAuthor">, Corujo, D.</span><span class="refAuthor">, Boggia, G.</span><span class="refAuthor">, Tyson, G.</span><span class="refAuthor">, Davies, E.</span><span class="refAuthor">, Molinaro, A.</span><span class="refAuthor">, and S. Eum</span>, <span class="refTitle">"Information-Centric Networking: Baseline Scenarios"</span>, <span class="seriesInfo">RFC 7476</span>, <span class="seriesInfo">DOI 10.17487/RFC7476</span>, <time datetime="2015-03">March 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc7476">https://www.rfc-editor.org/info/rfc7476</a>&gt;</span>. </dd>
+</dl>
+</section>
+<section id="section-7.2">
+        <h3 id="name-informative-references">
+<a href="#section-7.2" class="section-number selfRef">7.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
+        </h3>
+<dl class="references">
+<dt id="CICN">[CICN]</dt>
+<dd>
+<span class="refAuthor">io, Linux Foundation fd.</span>, <span class="refTitle">"CICN project"</span>, <time datetime="2018">2018</time>. </dd>
+<dt id="I-D.auge-dmm-hicn-mobility">[I-D.auge-dmm-hicn-mobility]</dt>
+<dd>
+<span class="refAuthor">Auge, J.</span><span class="refAuthor">, Carofiglio, G.</span><span class="refAuthor">, Muscariello, L.</span><span class="refAuthor">, and M. Papalini</span>, <span class="refTitle">"Anchorless mobility through hICN"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-auge-dmm-hicn-mobility-03</span>, <time datetime="2020-01-06">6 January 2020</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-auge-dmm-hicn-mobility-03.txt">http://www.ietf.org/internet-drafts/draft-auge-dmm-hicn-mobility-03.txt</a>&gt;</span>. </dd>
+<dt id="I-D.herbert-intarea-ila">[I-D.herbert-intarea-ila]</dt>
+<dd>
+<span class="refAuthor">Herbert, T.</span><span class="refAuthor"> and P. Lapukhov</span>, <span class="refTitle">"Identifier-locator addressing for IPv6"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-herbert-intarea-ila-01</span>, <time datetime="2018-03-05">5 March 2018</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-herbert-intarea-ila-01.txt">http://www.ietf.org/internet-drafts/draft-herbert-intarea-ila-01.txt</a>&gt;</span>. </dd>
+<dt id="I-D.homma-dmm-5gs-id-loc-coexistence">[I-D.homma-dmm-5gs-id-loc-coexistence]</dt>
+<dd>
+<span class="refAuthor">Homma, S.</span><span class="refAuthor">, Kawakami, K.</span><span class="refAuthor">, Akhavain, A.</span><span class="refAuthor">, Rodriguez-Natal, A.</span><span class="refAuthor">, and R. Shekhar</span>, <span class="refTitle">"Co-existence of 3GPP 5GS and Identifier-Locator Separation Architecture"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-homma-dmm-5gs-id-loc-coexistence-03</span>, <time datetime="2019-04-23">23 April 2019</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-homma-dmm-5gs-id-loc-coexistence-03.txt">http://www.ietf.org/internet-drafts/draft-homma-dmm-5gs-id-loc-coexistence-03.txt</a>&gt;</span>. </dd>
+<dt id="I-D.ietf-lisp-introduction">[I-D.ietf-lisp-introduction]</dt>
+<dd>
+<span class="refAuthor">Cabellos-Aparicio, A.</span><span class="refAuthor"> and D. Saucez</span>, <span class="refTitle">"An Architectural Introduction to the Locator/ID Separation Protocol (LISP)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-lisp-introduction-13</span>, <time datetime="2015-04-02">2 April 2015</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-ietf-lisp-introduction-13.txt">http://www.ietf.org/internet-drafts/draft-ietf-lisp-introduction-13.txt</a>&gt;</span>. </dd>
+<dt id="I-D.ietf-spring-segment-routing">[I-D.ietf-spring-segment-routing]</dt>
+<dd>
+<span class="refAuthor">Filsfils, C.</span><span class="refAuthor">, Previdi, S.</span><span class="refAuthor">, Ginsberg, L.</span><span class="refAuthor">, Decraene, B.</span><span class="refAuthor">, Litkowski, S.</span><span class="refAuthor">, and R. Shakir</span>, <span class="refTitle">"Segment Routing Architecture"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-spring-segment-routing-15</span>, <time datetime="2018-01-25">25 January 2018</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-ietf-spring-segment-routing-15.txt">http://www.ietf.org/internet-drafts/draft-ietf-spring-segment-routing-15.txt</a>&gt;</span>. </dd>
+<dt id="I-D.irtf-icnrg-deployment-guidelines">[I-D.irtf-icnrg-deployment-guidelines]</dt>
+<dd>
+<span class="refAuthor">Rahman, A.</span><span class="refAuthor">, Trossen, D.</span><span class="refAuthor">, Kutscher, D.</span><span class="refAuthor">, and R. Ravindran</span>, <span class="refTitle">"Deployment Considerations for Information-Centric Networking (ICN)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-irtf-icnrg-deployment-guidelines-07</span>, <time datetime="2019-09-03">3 September 2019</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-irtf-icnrg-deployment-guidelines-07.txt">http://www.ietf.org/internet-drafts/draft-irtf-icnrg-deployment-guidelines-07.txt</a>&gt;</span>. </dd>
+<dt id="I-D.muscariello-intarea-hicn">[I-D.muscariello-intarea-hicn]</dt>
+<dd>
+<span class="refAuthor">Muscariello, L.</span><span class="refAuthor">, Carofiglio, G.</span><span class="refAuthor">, Auge, J.</span><span class="refAuthor">, and M. Papalini</span>, <span class="refTitle">"Hybrid Information-Centric Networking"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-muscariello-intarea-hicn-03</span>, <time datetime="2019-10-30">30 October 2019</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-muscariello-intarea-hicn-03.txt">http://www.ietf.org/internet-drafts/draft-muscariello-intarea-hicn-03.txt</a>&gt;</span>. </dd>
+<dt id="TR.29.892-3GPP">[TR.29.892-3GPP]</dt>
+<dd>
+<span class="refAuthor">3rd Generation Partnership Project (3GPP)</span>, <span class="refTitle">"Study on User Plane Protocol in 5GC, 3GPP TR 29.892 (study item)"</span>, <time datetime="2017">2017</time>. </dd>
+<dt id="TS.23.501-3GPP">[TS.23.501-3GPP]</dt>
+<dd>
+<span class="refAuthor">3rd Generation Partnership Project (3GPP)</span>, <span class="refTitle">"System Architecture for 5G System; Stage 2, 3GPP TS 23.501 v2.0.1"</span>, <time datetime="2017-12">December 2017</time>. </dd>
+<dt id="VPP">[VPP]</dt>
+<dd>
+<span class="refAuthor">io (Linux Foundation), FD.</span>, <span class="refTitle">"Vector Packet Processing (VPP)"</span>, <span class="seriesInfo">url https://wiki.fd.io/view/VPP</span>, <time datetime="n.d.">n.d.</time>. </dd>
+<dt id="WLDR">[WLDR]</dt>
+<dd>
+<span class="refAuthor">Carofiglio, G.</span><span class="refAuthor">, Muscariello, L.</span><span class="refAuthor">, Papalini, M.</span><span class="refAuthor">, Rozhnova, N.</span><span class="refAuthor">, and X. Zeng</span>, <span class="refTitle">"Leveraging ICN In-network Control for Loss Detection and Recovery in Wireless Mobile networks"</span>, <span class="seriesInfo">DOI 10.1145/2984356.2984361</span>, <span class="seriesInfo">Proceedings of the 2016 conference on 3rd ACM Conference on Information-Centric Networking - ACM-ICN '16</span>, <time datetime="2016">2016</time>, <span>&lt;<a href="https://doi.org/10.1145/2984356.2984361">https://doi.org/10.1145/2984356.2984361</a>&gt;</span>. </dd>
+</dl>
+</section>
+</section>
+<div id="authors-addresses">
+<section id="section-appendix.a">
+      <h2 id="name-authors-addresses">
+<a href="#name-authors-addresses" class="section-name selfRef">Authors' Addresses</a>
+      </h2>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Jordan Augé</span></div>
+<div dir="auto" class="left"><span class="org">Cisco Systems</span></div>
+<div dir="auto" class="left"><span class="street-address">11, rue Camille Desmoulins</span></div>
+<div dir="auto" class="left">
+<span class="postal-code">92130</span> <span class="locality">Issy-les-Moulineaux</span>
+</div>
+<div dir="auto" class="left"><span class="country-name">France</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:augjorda@cisco.com" class="email">augjorda@cisco.com</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Giovanna Carofiglio</span></div>
+<div dir="auto" class="left"><span class="org">Cisco Systems</span></div>
+<div dir="auto" class="left"><span class="street-address">11, rue Camille Desmoulins</span></div>
+<div dir="auto" class="left">
+<span class="postal-code">92130</span> <span class="locality">Issy-les-Moulineaux</span>
+</div>
+<div dir="auto" class="left"><span class="country-name">France</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:gcarofig@cisco.com" class="email">gcarofig@cisco.com</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Luca Muscariello</span></div>
+<div dir="auto" class="left"><span class="org">Cisco Systems</span></div>
+<div dir="auto" class="left"><span class="street-address">11, rue Camille Desmoulins</span></div>
+<div dir="auto" class="left">
+<span class="postal-code">92130</span> <span class="locality">Issy-les-Moulineaux</span>
+</div>
+<div dir="auto" class="left"><span class="country-name">France</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:lumuscar@cisco.com" class="email">lumuscar@cisco.com</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Michele Papalini</span></div>
+<div dir="auto" class="left"><span class="org">Cisco Systems</span></div>
+<div dir="auto" class="left"><span class="street-address">11, rue Camille Desmoulins</span></div>
+<div dir="auto" class="left">
+<span class="postal-code">92130</span> <span class="locality">Issy-les-Moulineaux</span>
+</div>
+<div dir="auto" class="left"><span class="country-name">France</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:micpapal@cisco.com" class="email">micpapal@cisco.com</a>
+</div>
+</address>
+</section>
+</div>
+<script>const toc = document.getElementById("toc");
+toc.querySelector("h2").addEventListener("click", e => {
+  toc.classList.toggle("active");
+});
+toc.querySelector("nav").addEventListener("click", e => {
+  toc.classList.remove("active");
+});
+</script>
+</body>
+</html>

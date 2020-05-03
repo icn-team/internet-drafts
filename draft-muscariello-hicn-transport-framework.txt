@@ -5,7 +5,7 @@
 Network Working Group                                     L. Muscariello
 Internet-Draft                                             G. Carofiglio
 Intended status: Informational                        Cisco Systems Inc.
-Expires: 3 September 2020                                   2 March 2020
+Expires: 4 November 2020                                      3 May 2020
 
 
      Transport Framework for Hybrid Information-Centric Networking
@@ -53,9 +53,9 @@ Status of This Memo
 
 
 
-Muscariello & CarofiglioExpires 3 September 2020                [Page 1]
+Muscariello & Carofiglio Expires 4 November 2020                [Page 1]
 
-Internet-Draft               hICN-transport                   March 2020
+Internet-Draft               hICN-transport                     May 2020
 
 
    Internet-Drafts are working documents of the Internet Engineering
@@ -68,7 +68,7 @@ Internet-Draft               hICN-transport                   March 2020
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 3 September 2020.
+   This Internet-Draft will expire on 4 November 2020.
 
 Copyright Notice
 
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Muscariello & CarofiglioExpires 3 September 2020                [Page 2]
+Muscariello & Carofiglio Expires 4 November 2020                [Page 2]
 
-Internet-Draft               hICN-transport                   March 2020
+Internet-Draft               hICN-transport                     May 2020
 
 
 1.  Introduction
@@ -165,9 +165,9 @@ Internet-Draft               hICN-transport                   March 2020
 
 
 
-Muscariello & CarofiglioExpires 3 September 2020                [Page 3]
+Muscariello & Carofiglio Expires 4 November 2020                [Page 3]
 
-Internet-Draft               hICN-transport                   March 2020
+Internet-Draft               hICN-transport                     May 2020
 
 
    network status which arenot suitable for CCN because CCN flows may
@@ -221,9 +221,9 @@ Internet-Draft               hICN-transport                   March 2020
 
 
 
-Muscariello & CarofiglioExpires 3 September 2020                [Page 4]
+Muscariello & Carofiglio Expires 4 November 2020                [Page 4]
 
-Internet-Draft               hICN-transport                   March 2020
+Internet-Draft               hICN-transport                     May 2020
 
 
    sequential and loss detection relies on the number of
@@ -277,9 +277,9 @@ Internet-Draft               hICN-transport                   March 2020
 
 
 
-Muscariello & CarofiglioExpires 3 September 2020                [Page 5]
+Muscariello & Carofiglio Expires 4 November 2020                [Page 5]
 
-Internet-Draft               hICN-transport                   March 2020
+Internet-Draft               hICN-transport                     May 2020
 
 
    either at the network layer and at the transport layer by also
@@ -333,9 +333,9 @@ Internet-Draft               hICN-transport                   March 2020
 
 
 
-Muscariello & CarofiglioExpires 3 September 2020                [Page 6]
+Muscariello & Carofiglio Expires 4 November 2020                [Page 6]
 
-Internet-Draft               hICN-transport                   March 2020
+Internet-Draft               hICN-transport                     May 2020
 
 
    \subsection{Socket API}\label{subsec:socket-api} We use substantially
@@ -389,9 +389,9 @@ Internet-Draft               hICN-transport                   March 2020
 
 
 
-Muscariello & CarofiglioExpires 3 September 2020                [Page 7]
+Muscariello & Carofiglio Expires 4 November 2020                [Page 7]
 
-Internet-Draft               hICN-transport                   March 2020
+Internet-Draft               hICN-transport                     May 2020
 
 
    initialized by specifying address family \af and name prefix.  The
@@ -445,9 +445,9 @@ Internet-Draft               hICN-transport                   March 2020
 
 
 
-Muscariello & CarofiglioExpires 3 September 2020                [Page 8]
+Muscariello & Carofiglio Expires 4 November 2020                [Page 8]
 
-Internet-Draft               hICN-transport                   March 2020
+Internet-Draft               hICN-transport                     May 2020
 
 
 2.3.  Loss detection and control
@@ -501,9 +501,9 @@ Internet-Draft               hICN-transport                   March 2020
 
 
 
-Muscariello & CarofiglioExpires 3 September 2020                [Page 9]
+Muscariello & Carofiglio Expires 4 November 2020                [Page 9]
 
-Internet-Draft               hICN-transport                   March 2020
+Internet-Draft               hICN-transport                     May 2020
 
 
    [RFC3031]  Rosen, E., Viswanathan, A., and R. Callon, "Multiprotocol
@@ -557,9 +557,9 @@ Internet-Draft               hICN-transport                   March 2020
 
 
 
-Muscariello & CarofiglioExpires 3 September 2020               [Page 10]
+Muscariello & Carofiglio Expires 4 November 2020               [Page 10]
 
-Internet-Draft               hICN-transport                   March 2020
+Internet-Draft               hICN-transport                     May 2020
 
 
    [I-D.irtf-icnrg-ccnxsemantics]
@@ -613,9 +613,9 @@ Internet-Draft               hICN-transport                   March 2020
 
 
 
-Muscariello & CarofiglioExpires 3 September 2020               [Page 11]
+Muscariello & Carofiglio Expires 4 November 2020               [Page 11]
 
-Internet-Draft               hICN-transport                   March 2020
+Internet-Draft               hICN-transport                     May 2020
 
 
    [RAQ]      Carofiglio, G., Gallo, M., Muscariello, L., Papalini, M.,
@@ -669,4 +669,4 @@ Authors' Addresses
 
 
 
-Muscariello & CarofiglioExpires 3 September 2020               [Page 12]
+Muscariello & Carofiglio Expires 4 November 2020               [Page 12]
