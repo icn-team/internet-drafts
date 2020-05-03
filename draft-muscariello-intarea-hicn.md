@@ -1,9 +1,13 @@
 ---
-title: Hybrid Information-Centric Networking abbrev: hICN docname:
-draft-muscariello-intarea-hicn-03 date: category: info
-
-ipr: trust200902 area: Internet Area workgroup: Internet Area WG keyword:
-Internet-Draft
+title: Hybrid Information-Centric Networking
+abbrev: hICN
+docname: draft-muscariello-intarea-hicn-03
+date: 
+ategory: info
+ipr: trust200902
+area: Internet Area
+workgroup: Internet Area WG
+keyword: Internet-Draft
 
 stand_alone: yes pi: [toc, sortrefs, symrefs]
 
@@ -30,10 +34,15 @@ author:
     org: Cisco Systems Inc.
     email: mpapal@cisco.com
 
-informative: CCN: DOI.10.1145/1658939.1658941 NDN: DOI.10.1145/2656877.2656887
-    MAN: DOI.10.1109/INFCOMW.2012.6193505 WLD: DOI.10.1145/2984356.2984361 MIR:
-    DOI.10.1109/TMC.2017.2734658 RAQ: DOI.10.1109/ICNP.2013.6733576 FRA:
-    DOI.10.1109/MASS.2015.51 TRA: DOI.10.1145/3267955.3267972
+informative:
+CCN: DOI.10.1145/1658939.1658941
+NDN: DOI.10.1145/2656877.2656887
+MAN: DOI.10.1109/INFCOMW.2012.6193505
+WLD: DOI.10.1145/2984356.2984361
+MIR: DOI.10.1109/TMC.2017.2734658
+RAQ: DOI.10.1109/ICNP.2013.6733576
+FRA: DOI.10.1109/MASS.2015.51
+TRA: DOI.10.1145/3267955.3267972
 
 --- abstract
 
@@ -685,7 +694,7 @@ equivalent to packet-wise signatures. When the producer uses the manifest data
 packets do not carry the AH which is carried by the transport manifest only.
 
 hICN is oblivious of the trust model adopted by consumers and works with any of
-the existing proposals. 
+the existing proposals.
     
 
 ~~~~
@@ -707,7 +716,7 @@ the existing proposals.
 |                           Hash Value[1]                       |
 |                                                               |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-                               . . . 
+                               . . .
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 |                           Name-suffix[NumberOfEntries]        |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -777,7 +786,7 @@ end-host for the consumer end-point.
 # IANA Considerations
 There are no IANA considerations in this specification.
 
-# Acknowledgements 
+# Acknowledgements
 The authors would like to thank David Ward, David Oran, Paul Polakos, Mark
 Townsley, Mauro Sardara and Alberto Compagno for suggestions on how to improve
 the architecture and the current document.
