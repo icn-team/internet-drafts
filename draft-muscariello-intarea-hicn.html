@@ -9,6 +9,7 @@
 <meta content="Giovanna Carofiglio" name="author">
 <meta content="Jordan Augé" name="author">
 <meta content="Michele Papalini" name="author">
+<meta content="Mauro Sardara" name="author">
 <meta content="
        This document describes the hybrid information-centric networking (hICN)
 architecture for IPv6. The specifications describe a way to implement
@@ -840,7 +841,7 @@ table.left {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Muscariello, et al.</td>
-<td class="center">Expires 4 November 2020</td>
+<td class="center">Expires 5 November 2020</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -853,12 +854,12 @@ table.left {
 <dd class="internet-draft">draft-muscariello-intarea-hicn-04</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2020-05-03" class="published">3 May 2020</time>
+<time datetime="2020-05-04" class="published">4 May 2020</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2020-11-04">4 November 2020</time></dd>
+<dd class="expires"><time datetime="2020-11-05">5 November 2020</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -875,6 +876,10 @@ table.left {
 </div>
 <div class="author">
       <div class="author-name">M. Papalini</div>
+<div class="org">Cisco Systems Inc.</div>
+</div>
+<div class="author">
+      <div class="author-name">M. Sardara</div>
 <div class="org">Cisco Systems Inc.</div>
 </div>
 </dd>
@@ -913,7 +918,7 @@ them where needed.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 4 November 2020.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 5 November 2020.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1289,7 +1294,6 @@ new ones.<a href="#section-2.2.2-1" class="pilcrow">¶</a></p>
             +-----------------------------
             |           name suffix      |
             +-----------------------------
-
 </pre>
 </div>
 <figcaption><a href="#figure-3" class="selfRef">Figure 3</a>:
@@ -1419,9 +1423,9 @@ Source Address:       128-bit address of the destination of the packet
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 |                           Path Label                          |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|  Data |   Time    |M|A|S|R|S|F|        Loss Detection         |
-| Offset|   Scale   |A|C|I|S|Y|I|         and Recovery          |
-|       |           |N|K|G|T|N|N|                               |
+|  Data |   Time    |M|A|S|x|x|x|        Loss Detection         |
+| Offset|   Scale   |A|C|I|x|x|x|         and Recovery          |
+|       |           |N|K|G|x|x|x|                               |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 |           Checksum            |             Lifetime          |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -1462,7 +1466,9 @@ Lifetime:          16-bit unsigned integer to carry the packet lifetime in
 Checksum:          Updated using RFC 1624.
 </pre><a href="#section-2.3.2-4" class="pilcrow">¶</a>
 </div>
-<div class="artwork art-text alignLeft" id="section-2.3.2-5">
+<span id="name-transport-header-for-data-an"></span><div id="fig-transport-udp">
+<figure id="figure-7">
+            <div class="artwork art-text alignLeft" id="section-2.3.2-5.1">
 <pre>
 0                   1                   2                   3
  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -1475,17 +1481,19 @@ Checksum:          Updated using RFC 1624.
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 |                           Path Label                          |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|  Data |   Time    |M|A|S|R|S|F|        Loss Detection         |
-| Offset|   Scale   |A|C|I|S|Y|I|         and Recovery          |
-|       |           |N|K|G|T|N|N|                               |
+|  Data |   Time    |M|A|S|x|x|x|        Loss Detection         |
+| Offset|   Scale   |A|C|I|x|x|x|         and Recovery          |
+|       |           |N|K|G|x|x|x|                               |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 |           Checksum            |             Lifetime          |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-</pre><a href="#section-2.3.2-5" class="pilcrow">¶</a>
+</pre>
 </div>
-<p id="section-2.3.2-6">{: #fig-transport-udp title="Transport header for data and interest packets
-using UDP header."} Both transport headers can be used to carry name suffix
-information.<a href="#section-2.3.2-6" class="pilcrow">¶</a></p>
+<figcaption><a href="#figure-7" class="selfRef">Figure 7</a>:
+<a href="#name-transport-header-for-data-an" class="selfRef">Transport header for data and interest packets using UDP header.</a>
+            </figcaption></figure>
+</div>
+<p id="section-2.3.2-6">Both transport headers can be used to carry name suffix information.<a href="#section-2.3.2-6" class="pilcrow">¶</a></p>
 <p id="section-2.3.2-7">The following sections describe the components of an hICN node and the packet
 processing operations.<a href="#section-2.3.2-7" class="pilcrow">¶</a></p>
 </section>
@@ -1573,7 +1581,7 @@ determine the next-hop by using the router IP FIB.<a href="#section-2.5.1-2.2" c
  next-hop in the IPv6 FIB. Polymorphism is transparent for the forwarding plane
  while it has several implications in the control plane.<a href="#section-2.5.1-3" class="pilcrow">¶</a></p>
 <span id="name-the-interest-packet-hits-a-"></span><div id="fig-interest-data-hit">
-<figure id="figure-7">
+<figure id="figure-8">
             <div class="artwork art-text alignLeft" id="section-2.5.1-4.1">
 <pre>
            Packet Cache
@@ -1586,12 +1594,12 @@ determine the next-hop by using the router IP FIB.<a href="#section-2.5.1-2.2" c
           +------------+
 </pre>
 </div>
-<figcaption><a href="#figure-7" class="selfRef">Figure 7</a>:
+<figcaption><a href="#figure-8" class="selfRef">Figure 8</a>:
 <a href="#name-the-interest-packet-hits-a-" class="selfRef">The interest packet hits a matching data packet in the packet cache.</a>
             </figcaption></figure>
 </div>
 <span id="name-the-interest-packet-finds-n"></span><div id="fig-interest-data-interest-miss">
-<figure id="figure-8">
+<figure id="figure-9">
             <div class="artwork art-text alignLeft" id="section-2.5.1-5.1">
 <pre>
           +----------------+    +--------+
@@ -1604,12 +1612,12 @@ determine the next-hop by using the router IP FIB.<a href="#section-2.5.1-2.2" c
 
 </pre>
 </div>
-<figcaption><a href="#figure-8" class="selfRef">Figure 8</a>:
+<figcaption><a href="#figure-9" class="selfRef">Figure 9</a>:
 <a href="#name-the-interest-packet-finds-n" class="selfRef">The interest packet finds no match in the packet cache and is processed to find a next-hop.</a>
             </figcaption></figure>
 </div>
 <span id="name-the-interest-packet-hits-an"></span><div id="fig-interest-hit">
-<figure id="figure-9">
+<figure id="figure-10">
             <div class="artwork art-text alignLeft" id="section-2.5.1-6.1">
 <pre>
                                  Same src addr
@@ -1627,7 +1635,7 @@ Interest |              |        +-----^-----+
 
 </pre>
 </div>
-<figcaption><a href="#figure-9" class="selfRef">Figure 9</a>:
+<figcaption><a href="#figure-10" class="selfRef">Figure 10</a>:
 <a href="#name-the-interest-packet-hits-an" class="selfRef">The interest packet hits an interest packet in the packet cache.</a>
             </figcaption></figure>
 </div>
@@ -1654,7 +1662,7 @@ following options are possible:<a href="#section-2.5.2-1" class="pilcrow">¶</a>
 </li>
 </ol>
 <span id="name-the-data-packet-hits-an-int"></span><div id="fig-data-hit">
-<figure id="figure-10">
+<figure id="figure-11">
             <div class="artwork art-text alignLeft" id="section-2.5.2-3.1">
 <pre>
     RX
@@ -1678,16 +1686,14 @@ following options are possible:<a href="#section-2.5.2-1" class="pilcrow">¶</a>
                       |  TX Data[N]
                       +------&gt;
 
-
-
 </pre>
 </div>
-<figcaption><a href="#figure-10" class="selfRef">Figure 10</a>:
+<figcaption><a href="#figure-11" class="selfRef">Figure 11</a>:
 <a href="#name-the-data-packet-hits-an-int" class="selfRef">The data packet hits an interest packet in the packet cache.</a>
             </figcaption></figure>
 </div>
 <span id="name-the-data-packet-is-drop-in-"></span><div id="fig-data-no-hit">
-<figure id="figure-11">
+<figure id="figure-12">
             <div class="artwork art-text alignLeft" id="section-2.5.2-4.1">
 <pre>
   RX             Packet Cache
@@ -1697,7 +1703,7 @@ following options are possible:<a href="#section-2.5.2-1" class="pilcrow">¶</a>
             +------------------+
 </pre>
 </div>
-<figcaption><a href="#figure-11" class="selfRef">Figure 11</a>:
+<figcaption><a href="#figure-12" class="selfRef">Figure 12</a>:
 <a href="#name-the-data-packet-is-drop-in-" class="selfRef">The data packet is drop in case no interest match is found in the packet cache.</a>
             </figcaption></figure>
 </div>
@@ -1736,7 +1742,7 @@ devices such as middleboxes.<a href="#section-3-3.2" class="pilcrow">¶</a>
 </li>
 </ul>
 <span id="name-the-ip-authentication-heade"></span><div id="fig-ah">
-<figure id="figure-12">
+<figure id="figure-13">
         <div class="artwork art-text alignLeft" id="section-3-4.1">
 <pre>
 0                   1                   2                   3
@@ -1758,7 +1764,7 @@ devices such as middleboxes.<a href="#section-3-3.2" class="pilcrow">¶</a>
 
 </pre>
 </div>
-<figcaption><a href="#figure-12" class="selfRef">Figure 12</a>:
+<figcaption><a href="#figure-13" class="selfRef">Figure 13</a>:
 <a href="#name-the-ip-authentication-heade" class="selfRef">The IP authentication header appended after the transport header to carry packet signatures.</a>
         </figcaption></figure>
 </div>
@@ -1787,9 +1793,7 @@ equivalent to packet-wise signatures. When the producer uses the manifest data
 packets do not carry the AH which is carried by the transport manifest only.<a href="#section-3-6" class="pilcrow">¶</a></p>
 <p id="section-3-7">hICN is oblivious of the trust model adopted by consumers and works with any of
 the existing proposals.<a href="#section-3-7" class="pilcrow">¶</a></p>
-<span id="name-the-transport-manifest-gene"></span><div id="fig-man">
-<figure id="figure-13">
-        <div class="artwork art-text alignLeft" id="section-3-8.1">
+<div class="artwork art-text alignLeft" id="section-3-8">
 <pre>
 0                   1                   2                   3
  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -1817,13 +1821,11 @@ the existing proposals.<a href="#section-3-7" class="pilcrow">¶</a></p>
 |                                                               |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
-</pre>
+</pre><a href="#section-3-8" class="pilcrow">¶</a>
 </div>
-<figcaption><a href="#figure-13" class="selfRef">Figure 13</a>:
-<a href="#name-the-transport-manifest-gene" class="selfRef">The transport manifest, generated by the producer end-point for the consumer end-point, contains names, integrity hashes and is signed with the producer end-point private key</a>
-        </figcaption></figure>
-</div>
-<div class="artwork art-text alignLeft" id="section-3-9">
+<span id="name-the-transport-manifest-gene"></span><div id="fig-man">
+<figure id="figure-14">
+        <div class="artwork art-text alignLeft" id="section-3-9.1">
 <pre>
 Version:          8-bit index to indicate which validation algorithm
                   must be used to verify the signature.
@@ -1848,7 +1850,11 @@ Name-suffix:      32-bit field carrying the name-suffix.
 
 Hash-value:       256-bit field carrying the SHA-256 hash of the packet
                   security envelop.
-</pre><a href="#section-3-9" class="pilcrow">¶</a>
+</pre>
+</div>
+<figcaption><a href="#figure-14" class="selfRef">Figure 14</a>:
+<a href="#name-the-transport-manifest-gene" class="selfRef">The transport manifest, generated by the producer end-point for the consumer end-point, contains names, integrity hashes and is signed with the producer end-point private key</a>
+        </figcaption></figure>
 </div>
 </section>
 </div>
@@ -2005,6 +2011,14 @@ the architecture and the current document.<a href="#section-6-1" class="pilcrow"
 <div class="email">
 <span>Email:</span>
 <a href="mailto:mpapal@cisco.com" class="email">mpapal@cisco.com</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Mauro Sardara</span></div>
+<div dir="auto" class="left"><span class="org">Cisco Systems Inc.</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:msardara@cisco.com" class="email">msardara@cisco.com</a>
 </div>
 </address>
 </section>

@@ -5,9 +5,10 @@
 Internet Area WG                                          L. Muscariello
 Internet-Draft                                             G. Carofiglio
 Intended status: Informational                                   J. Augé
-Expires: 4 November 2020                                     M. Papalini
+Expires: 5 November 2020                                     M. Papalini
+                                                              M. Sardara
                                                       Cisco Systems Inc.
-                                                              3 May 2020
+                                                              4 May 2020
 
 
                  Hybrid Information-Centric Networking
@@ -42,7 +43,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 4 November 2020.
+   This Internet-Draft will expire on 5 November 2020.
 
 Copyright Notice
 
@@ -52,8 +53,7 @@ Copyright Notice
 
 
 
-
-Muscariello, et al.      Expires 4 November 2020                [Page 1]
+Muscariello, et al.      Expires 5 November 2020                [Page 1]
 
 Internet-Draft                    hICN                          May 2020
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Muscariello, et al.      Expires 4 November 2020                [Page 2]
+Muscariello, et al.      Expires 5 November 2020                [Page 2]
 
 Internet-Draft                    hICN                          May 2020
 
@@ -165,7 +165,7 @@ Internet-Draft                    hICN                          May 2020
 
 
 
-Muscariello, et al.      Expires 4 November 2020                [Page 3]
+Muscariello, et al.      Expires 5 November 2020                [Page 3]
 
 Internet-Draft                    hICN                          May 2020
 
@@ -221,7 +221,7 @@ Internet-Draft                    hICN                          May 2020
 
 
 
-Muscariello, et al.      Expires 4 November 2020                [Page 4]
+Muscariello, et al.      Expires 5 November 2020                [Page 4]
 
 Internet-Draft                    hICN                          May 2020
 
@@ -277,7 +277,7 @@ Internet-Draft                    hICN                          May 2020
 
 
 
-Muscariello, et al.      Expires 4 November 2020                [Page 5]
+Muscariello, et al.      Expires 5 November 2020                [Page 5]
 
 Internet-Draft                    hICN                          May 2020
 
@@ -333,7 +333,7 @@ Internet-Draft                    hICN                          May 2020
 
 
 
-Muscariello, et al.      Expires 4 November 2020                [Page 6]
+Muscariello, et al.      Expires 5 November 2020                [Page 6]
 
 Internet-Draft                    hICN                          May 2020
 
@@ -389,7 +389,7 @@ Internet-Draft                    hICN                          May 2020
 
 
 
-Muscariello, et al.      Expires 4 November 2020                [Page 7]
+Muscariello, et al.      Expires 5 November 2020                [Page 7]
 
 Internet-Draft                    hICN                          May 2020
 
@@ -445,7 +445,7 @@ Internet-Draft                    hICN                          May 2020
 
 
 
-Muscariello, et al.      Expires 4 November 2020                [Page 8]
+Muscariello, et al.      Expires 5 November 2020                [Page 8]
 
 Internet-Draft                    hICN                          May 2020
 
@@ -501,7 +501,7 @@ Internet-Draft                    hICN                          May 2020
 
 
 
-Muscariello, et al.      Expires 4 November 2020                [Page 9]
+Muscariello, et al.      Expires 5 November 2020                [Page 9]
 
 Internet-Draft                    hICN                          May 2020
 
@@ -547,9 +547,9 @@ Internet-Draft                    hICN                          May 2020
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
    |                           Path Label                          |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |  Data |   Time    |M|A|S|R|S|F|        Loss Detection         |
-   | Offset|   Scale   |A|C|I|S|Y|I|         and Recovery          |
-   |       |           |N|K|G|T|N|N|                               |
+   |  Data |   Time    |M|A|S|x|x|x|        Loss Detection         |
+   | Offset|   Scale   |A|C|I|x|x|x|         and Recovery          |
+   |       |           |N|K|G|x|x|x|                               |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
    |           Checksum            |             Lifetime          |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -557,7 +557,7 @@ Internet-Draft                    hICN                          May 2020
 
 
 
-Muscariello, et al.      Expires 4 November 2020               [Page 10]
+Muscariello, et al.      Expires 5 November 2020               [Page 10]
 
 Internet-Draft                    hICN                          May 2020
 
@@ -603,9 +603,9 @@ Internet-Draft                    hICN                          May 2020
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
    |                           Path Label                          |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |  Data |   Time    |M|A|S|R|S|F|        Loss Detection         |
-   | Offset|   Scale   |A|C|I|S|Y|I|         and Recovery          |
-   |       |           |N|K|G|T|N|N|                               |
+   |  Data |   Time    |M|A|S|x|x|x|        Loss Detection         |
+   | Offset|   Scale   |A|C|I|x|x|x|         and Recovery          |
+   |       |           |N|K|G|x|x|x|                               |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
    |           Checksum            |             Lifetime          |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -613,14 +613,15 @@ Internet-Draft                    hICN                          May 2020
 
 
 
-Muscariello, et al.      Expires 4 November 2020               [Page 11]
+Muscariello, et al.      Expires 5 November 2020               [Page 11]
 
 Internet-Draft                    hICN                          May 2020
 
 
-   {: #fig-transport-udp title="Transport header for data and interest
-   packets using UDP header."} Both transport headers can be used to
-   carry name suffix information.
+       Figure 7: Transport header for data and interest packets using
+                                UDP header.
+
+   Both transport headers can be used to carry name suffix information.
 
    The following sections describe the components of an hICN node and
    the packet processing operations.
@@ -668,8 +669,7 @@ Internet-Draft                    hICN                          May 2020
 
 
 
-
-Muscariello, et al.      Expires 4 November 2020               [Page 12]
+Muscariello, et al.      Expires 5 November 2020               [Page 12]
 
 Internet-Draft                    hICN                          May 2020
 
@@ -725,12 +725,12 @@ Internet-Draft                    hICN                          May 2020
 
 
 
-Muscariello, et al.      Expires 4 November 2020               [Page 13]
+Muscariello, et al.      Expires 5 November 2020               [Page 13]
 
 Internet-Draft                    hICN                          May 2020
 
 
-      Figure 7: The interest packet hits a matching data packet in the
+      Figure 8: The interest packet hits a matching data packet in the
                                packet cache.
 
              +----------------+    +--------+
@@ -741,7 +741,7 @@ Internet-Draft                    hICN                          May 2020
              |                |    |        |
              +----------------+    +--------+
 
-      Figure 8: The interest packet finds no match in the packet cache
+      Figure 9: The interest packet finds no match in the packet cache
                     and is processed to find a next-hop.
 
                                     Same src addr
@@ -757,7 +757,7 @@ Internet-Draft                    hICN                          May 2020
                                     +-----------+
                                     Different src addr
 
-        Figure 9: The interest packet hits an interest packet in the
+       Figure 10: The interest packet hits an interest packet in the
                                packet cache.
 
 2.5.2.  Data Path
@@ -781,7 +781,7 @@ Internet-Draft                    hICN                          May 2020
 
 
 
-Muscariello, et al.      Expires 4 November 2020               [Page 14]
+Muscariello, et al.      Expires 5 November 2020               [Page 14]
 
 Internet-Draft                    hICN                          May 2020
 
@@ -807,7 +807,7 @@ Internet-Draft                    hICN                          May 2020
                          |  TX Data[N]
                          +------>
 
-      Figure 10: The data packet hits an interest packet in the packet
+      Figure 11: The data packet hits an interest packet in the packet
                                    cache.
 
      RX             Packet Cache
@@ -816,7 +816,7 @@ Internet-Draft                    hICN                          May 2020
                |   OR Data hit    |
                +------------------+
 
-      Figure 11: The data packet is drop in case no interest match is
+      Figure 12: The data packet is drop in case no interest match is
                          found in the packet cache.
 
 3.  Security
@@ -837,7 +837,7 @@ Internet-Draft                    hICN                          May 2020
 
 
 
-Muscariello, et al.      Expires 4 November 2020               [Page 15]
+Muscariello, et al.      Expires 5 November 2020               [Page 15]
 
 Internet-Draft                    hICN                          May 2020
 
@@ -869,7 +869,7 @@ Internet-Draft                    hICN                          May 2020
    /                                                               /
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
-         Figure 12: The IP authentication header appended after the
+         Figure 13: The IP authentication header appended after the
                 transport header to carry packet signatures.
 
    ValidAlg:          8-bit index to indicate which validation algorithm
@@ -893,7 +893,7 @@ Internet-Draft                    hICN                          May 2020
 
 
 
-Muscariello, et al.      Expires 4 November 2020               [Page 16]
+Muscariello, et al.      Expires 5 November 2020               [Page 16]
 
 Internet-Draft                    hICN                          May 2020
 
@@ -932,9 +932,6 @@ Internet-Draft                    hICN                          May 2020
    |                                                               |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
-     Figure 13: The transport manifest, generated by the producer end-
-        point for the consumer end-point, contains names, integrity
-        hashes and is signed with the producer end-point private key
 
 
 
@@ -949,7 +946,10 @@ Internet-Draft                    hICN                          May 2020
 
 
 
-Muscariello, et al.      Expires 4 November 2020               [Page 17]
+
+
+
+Muscariello, et al.      Expires 5 November 2020               [Page 17]
 
 Internet-Draft                    hICN                          May 2020
 
@@ -978,6 +978,10 @@ Internet-Draft                    hICN                          May 2020
    Hash-value:       256-bit field carrying the SHA-256 hash of the packet
                      security envelop.
 
+     Figure 14: The transport manifest, generated by the producer end-
+        point for the consumer end-point, contains names, integrity
+        hashes and is signed with the producer end-point private key
+
 4.  The End-host model and End-to-End considerations
 
    In hICN the end-host model is very similar to a regular IPv6 end-host
@@ -998,18 +1002,17 @@ Internet-Draft                    hICN                          May 2020
    the identifiers in the source address field while in IPv6 multicast
    it is stored in the destination address field.
 
-   Theres is also an analogy between IPv6 anycast and the hICN interest
-   forwarding path, where multiple interfaces make use of the same IPv6
-   (anycast) address.  Multiple instances of the same applications can
 
 
 
-
-Muscariello, et al.      Expires 4 November 2020               [Page 18]
+Muscariello, et al.      Expires 5 November 2020               [Page 18]
 
 Internet-Draft                    hICN                          May 2020
 
 
+   Theres is also an analogy between IPv6 anycast and the hICN interest
+   forwarding path, where multiple interfaces make use of the same IPv6
+   (anycast) address.  Multiple instances of the same applications can
    then run at different end-points to eventually reply to the same
    request.
 
@@ -1054,17 +1057,17 @@ Internet-Draft                    hICN                          May 2020
               August 2003, <https://www.rfc-editor.org/info/rfc3587>.
 
    [RFC4302]  Kent, S., "IP Authentication Header", RFC 4302,
-              DOI 10.17487/RFC4302, December 2005,
-              <https://www.rfc-editor.org/info/rfc4302>.
 
 
 
 
-
-Muscariello, et al.      Expires 4 November 2020               [Page 19]
+Muscariello, et al.      Expires 5 November 2020               [Page 19]
 
 Internet-Draft                    hICN                          May 2020
 
+
+              DOI 10.17487/RFC4302, December 2005,
+              <https://www.rfc-editor.org/info/rfc4302>.
 
    [RFC6830]  Farinacci, D., Fuller, V., Meyer, D., and D. Lewis, "The
               Locator/ID Separation Protocol (LISP)", RFC 6830,
@@ -1111,16 +1114,16 @@ Internet-Draft                    hICN                          May 2020
               Menchaca-Mendez, "Routing to Multi-Instantiated
               Destinations: Principles, Practice, and Applications",
               DOI 10.1109/tmc.2017.2734658, IEEE Transactions on Mobile
-              Computing Vol. 17, pp. 1696-1709, July 2018,
-              <https://doi.org/10.1109/tmc.2017.2734658>.
 
 
 
-
-Muscariello, et al.      Expires 4 November 2020               [Page 20]
+Muscariello, et al.      Expires 5 November 2020               [Page 20]
 
 Internet-Draft                    hICN                          May 2020
 
+
+              Computing Vol. 17, pp. 1696-1709, July 2018,
+              <https://doi.org/10.1109/tmc.2017.2734658>.
 
    [NDN]      Zhang, L., Afanasyev, A., Burke, J., Jacobson, V., claffy,
               k., Crowley, P., Papadopoulos, C., Wang, L., and B. Zhang,
@@ -1170,10 +1173,7 @@ Authors' Addresses
 
 
 
-
-
-
-Muscariello, et al.      Expires 4 November 2020               [Page 21]
+Muscariello, et al.      Expires 5 November 2020               [Page 21]
 
 Internet-Draft                    hICN                          May 2020
 
@@ -1184,6 +1184,10 @@ Internet-Draft                    hICN                          May 2020
    Email: mpapal@cisco.com
 
 
+   Mauro Sardara
+   Cisco Systems Inc.
+
+   Email: msardara@cisco.com
 
 
 
@@ -1225,8 +1229,4 @@ Internet-Draft                    hICN                          May 2020
 
 
 
-
-
-
-
-Muscariello, et al.      Expires 4 November 2020               [Page 22]
+Muscariello, et al.      Expires 5 November 2020               [Page 22]
