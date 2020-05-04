@@ -35,6 +35,11 @@ author:
     name: Michele Papalini
     org: Cisco Systems Inc.
     email: mpapal@cisco.com
+-
+    ins: M. Sardara
+    name: Mauro Sardara
+    org: Cisco Systems Inc.
+    email: msardara@cisco.com
 
 informative:
       CCN: DOI.10.1145/1658939.1658941
@@ -263,7 +268,7 @@ application data unit according to an MTU. Name suffixes are used to index each
 segment in the socket stream.
 
 More details about how to use hICN to transport HTTP or RTP will be given in a
-different document. 
+different document.
 
 ### Name prefix
 The format of an hICN name prefix is the following:
@@ -282,7 +287,7 @@ globally routable. The data identifier is encoded in 64 bits. An application can
 use several identifiers if needed.
 
 From the description given above, the name prefix is a location independent name
-encoded in an IPv6 address. 
+encoded in an IPv6 address.
 
 ### Name Suffix
 The name suffix is used by the transport layer protocol to index segments. The
@@ -296,11 +301,10 @@ document and additional work is required to extend existing protocols or design
 new ones.
 
 ~~~
-            |            32 bits         | 
+            |            32 bits         |
             +-----------------------------
-            |           name suffix      |      
+            |           name suffix      |
             +-----------------------------
-      
 ~~~
 {: #fig-name-suffix title="hICN name suffix."}
 
@@ -312,7 +316,7 @@ They are composed of a network and transport header. The transport header is the
 same for both packet types while the network header is slightly different.
 
 
-### Interest Packet 
+### Interest Packet
 
 ~~~~
 
@@ -397,9 +401,9 @@ same for both packet types while the network header is slightly different.
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 |                           Path Label                          |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|  Data |   Time    |M|A|S|R|S|F|        Loss Detection         |
-| Offset|   Scale   |A|C|I|S|Y|I|         and Recovery          |
-|       |           |N|K|G|T|N|N|                               |
+|  Data |   Time    |M|A|S|x|x|x|        Loss Detection         |
+| Offset|   Scale   |A|C|I|x|x|x|         and Recovery          |
+|       |           |N|K|G|x|x|x|                               |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 |           Checksum            |             Lifetime          |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -447,16 +451,17 @@ same for both packet types while the network header is slightly different.
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 |                           Path Label                          |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|  Data |   Time    |M|A|S|R|S|F|        Loss Detection         |
-| Offset|   Scale   |A|C|I|S|Y|I|         and Recovery          |
-|       |           |N|K|G|T|N|N|                               |
+|  Data |   Time    |M|A|S|x|x|x|        Loss Detection         |
+| Offset|   Scale   |A|C|I|x|x|x|         and Recovery          |
+|       |           |N|K|G|x|x|x|                               |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 |           Checksum            |             Lifetime          |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ~~~
 {: #fig-transport-udp title="Transport header for data and interest packets
-using UDP header."} Both transport headers can be used to carry name suffix
-information.
+using UDP header."} 
+
+Both transport headers can be used to carry name suffix information.
 
 
 The following sections describe the components of an hICN node and the packet
@@ -551,7 +556,7 @@ in the packet cache."}
           | Interest Miss  |    |        | IPv6Hdr(Interest).SrcAddr:= NIC.Addr
           |                |    |        |
           +----------------+    +--------+
-          
+
 ~~~~
 {: #fig-interest-data-interest-miss title="The interest packet finds no match in
 the packet cache and is processed to find a next-hop."}
@@ -569,7 +574,7 @@ Interest |              |        +-----^-----+
                                  |Filtered   |
                                  +-----------+
                                  Different src addr
-          
+
 ~~~~
 {: #fig-interest-hit title="The interest packet hits an interest packet in the
 packet cache."}
@@ -610,8 +615,6 @@ following options are possible:
                       |  TX Data[N]
                       +------>
 
-
-
 ~~~
 {: #fig-data-hit title="The data packet hits an interest packet in the packet
 cache."}
@@ -640,10 +643,10 @@ header as it is appended after the transport header. However the choice of the
 IP AH has been made in order to exploit existing protocol implementations in the
 end-points.
 
-When using IP AH, the signature is computed over 
+When using IP AH, the signature is computed over
 
 - (i)IP or extension header fields either immutable in transit or that are
-  predictable in value upon arrival at the consumer, 
+  predictable in value upon arrival at the consumer,
 
 - (ii) the AH header with the signature field set to zero. We recall that in
   hICN the destination header field is not immutable nor predictable and must be
@@ -661,7 +664,7 @@ When using IP AH, the signature is computed over
 |                                                               |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 /                                                               /
-/                            KeyID                              / 
+/                            KeyID                              /
 /                                                               /
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 /                                                               /
@@ -697,7 +700,6 @@ packets do not carry the AH which is carried by the transport manifest only.
 
 hICN is oblivious of the trust model adopted by consumers and works with any of
 the existing proposals.
-    
 
 ~~~~
 0                   1                   2                   3
@@ -727,6 +729,7 @@ the existing proposals.
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 ~~~~
+
 {: #fig-man title="The transport manifest, generated by the producer end-point
 for the consumer end-point, contains names, integrity hashes and is signed with
 the producer end-point private key"}
@@ -755,7 +758,6 @@ the producer end-point private key"}
 
     Hash-value:       256-bit field carrying the SHA-256 hash of the packet
                       security envelop.  
-     
 
 # The End-host model and End-to-End considerations
 In hICN the end-host model is very similar to a regular IPv6 end-host with some
