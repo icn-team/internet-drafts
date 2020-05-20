@@ -50,6 +50,7 @@ informative:
       RAQ: DOI.10.1109/ICNP.2013.6733576
       FRA: DOI.10.1109/MASS.2015.51
       TRA: DOI.10.1145/3267955.3267972
+      HCN: DOI.10.1145/3357150.3357394
 
 --- abstract
 
@@ -66,12 +67,12 @@ them where needed.
 
 --- middle
 
-
 # Introduction
 The  objective of this document is to describe hybrid ICN, a network protocol
 that integrates ICN in IPv6, at a minimum cost in terms of required
 modifications in end-points and routers and in a way to guarantee transparent
-interconnection with IP without using overlays.
+interconnection with IP without using overlays. Extensions for IPv4 exist
+but are out of scope for this document.
     
 The ICN reference design used in this document is CCNx as  described in
 {{!RFC8569}} and {{!RFC8609}}. IPv6 is used as described in {{!RFC8200}}.
@@ -146,7 +147,7 @@ as defined in {{!RFC2119}}.
 communication."}
 
 The communication model described in this document covers the transport and the
-network layer.
+network layer. Additional details can be found in {{HCN}} with additional analysis
 
 The network layer includes the forwarding plane only and does not consider the
 routing plane. hICN network layer is about using the IPv6 FIB to determine a
@@ -792,5 +793,5 @@ There are no IANA considerations in this specification.
 
 # Acknowledgements
 The authors would like to thank David Ward, David Oran, Paul Polakos, Mark
-Townsley, Mauro Sardara and Alberto Compagno for suggestions on how to improve
+Townsley and Alberto Compagno for suggestions on how to improve
 the architecture and the current document.
