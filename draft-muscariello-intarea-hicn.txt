@@ -5,10 +5,10 @@
 Internet Area WG                                          L. Muscariello
 Internet-Draft                                             G. Carofiglio
 Intended status: Informational                                   J. Augé
-Expires: 5 November 2020                                     M. Papalini
+Expires: 21 November 2020                                    M. Papalini
                                                               M. Sardara
                                                       Cisco Systems Inc.
-                                                              4 May 2020
+                                                             20 May 2020
 
 
                  Hybrid Information-Centric Networking
@@ -43,7 +43,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 5 November 2020.
+   This Internet-Draft will expire on 21 November 2020.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Muscariello, et al.      Expires 5 November 2020                [Page 1]
+Muscariello, et al.     Expires 21 November 2020                [Page 1]
 
 Internet-Draft                    hICN                          May 2020
 
@@ -98,6 +98,7 @@ Table of Contents
    protocol that integrates ICN in IPv6, at a minimum cost in terms of
    required modifications in end-points and routers and in a way to
    guarantee transparent interconnection with IP without using overlays.
+   Extensions for IPv4 exist but are out of scope for this document.
 
    The ICN reference design used in this document is CCNx as described
    in [RFC8569] and [RFC8609].  IPv6 is used as described in [RFC8200].
@@ -108,8 +109,7 @@ Table of Contents
 
 
 
-
-Muscariello, et al.      Expires 5 November 2020                [Page 2]
+Muscariello, et al.     Expires 21 November 2020                [Page 2]
 
 Internet-Draft                    hICN                          May 2020
 
@@ -165,7 +165,7 @@ Internet-Draft                    hICN                          May 2020
 
 
 
-Muscariello, et al.      Expires 5 November 2020                [Page 3]
+Muscariello, et al.     Expires 21 November 2020                [Page 3]
 
 Internet-Draft                    hICN                          May 2020
 
@@ -206,7 +206,8 @@ Internet-Draft                    hICN                          May 2020
       Figure 1: General overview of an hICN end-to-end communication.
 
    The communication model described in this document covers the
-   transport and the network layer.
+   transport and the network layer.  Additional details can be found in
+   [HCN] with additional analysis
 
    The network layer includes the forwarding plane only and does not
    consider the routing plane. hICN network layer is about using the
@@ -217,15 +218,15 @@ Internet-Draft                    hICN                          May 2020
    The packet pipeline of an hICN node always includes a lookup in a
    packet cache for both requests and replies.  The packet cache is a
    mandatory component that is added to the usual IPv6 packet processing
-   pipeline.  Requests and replies carry an immutable data name end-to-
 
 
 
-Muscariello, et al.      Expires 5 November 2020                [Page 4]
+Muscariello, et al.     Expires 21 November 2020                [Page 4]
 
 Internet-Draft                    hICN                          May 2020
 
 
+   pipeline.  Requests and replies carry an immutable data name end-to-
    end, in packet header fields as described in the following sections.
    Moreover, requests and replies carry locators as mutable packet
    header fields.  A locator, i.e. an interface identifier, is changed
@@ -272,16 +273,17 @@ Internet-Draft                    hICN                          May 2020
    perform basic transport service operations: allocation,
    initialization, configuration, data transmission and reception.
 
-   The producer and consumer sockets can implement different types of
-   services such as stream or datagram, reliable or unreliable.  In all
 
 
 
-Muscariello, et al.      Expires 5 November 2020                [Page 5]
+
+Muscariello, et al.     Expires 21 November 2020                [Page 5]
 
 Internet-Draft                    hICN                          May 2020
 
 
+   The producer and consumer sockets can implement different types of
+   services such as stream or datagram, reliable or unreliable.  In all
    cases all transport services are connection-less, meaning that a
    producer transport service produces named data in a socket memory
    that is accessible by any valid request coming from one or multiple
@@ -327,17 +329,18 @@ Internet-Draft                    hICN                          May 2020
    into the transport manifest, and eventually signing only such
    manifest.
 
-   The consumer socket, on the other end, always performs reassembly of
-   Data Packets, hash integrity verification and signature verification.
-   This is common to all architectures in (h)ICN.  The usual assumption
 
 
 
-Muscariello, et al.      Expires 5 November 2020                [Page 6]
+
+Muscariello, et al.     Expires 21 November 2020                [Page 6]
 
 Internet-Draft                    hICN                          May 2020
 
 
+   The consumer socket, on the other end, always performs reassembly of
+   Data Packets, hash integrity verification and signature verification.
+   This is common to all architectures in (h)ICN.  The usual assumption
    is that the producer socket uses an authentic-able identity while
    using namespaces that it has been assigned.  The end-point must be
    able to manage the mapping of her identity and the allocated
@@ -382,17 +385,18 @@ Internet-Draft                    hICN                          May 2020
 
                       Figure 2: hICN IPv6 name prefix.
 
-   It is composed of a routable IPv6 /64 prefix as per [RFC3587] which
-   SHOULD be globally routable.  The data identifier is encoded in 64
-   bits.  An application can use several identifiers if needed.
 
 
 
 
-Muscariello, et al.      Expires 5 November 2020                [Page 7]
+Muscariello, et al.     Expires 21 November 2020                [Page 7]
 
 Internet-Draft                    hICN                          May 2020
 
+
+   It is composed of a routable IPv6 /64 prefix as per [RFC3587] which
+   SHOULD be globally routable.  The data identifier is encoded in 64
+   bits.  An application can use several identifiers if needed.
 
    From the description given above, the name prefix is a location
    independent name encoded in an IPv6 address.
@@ -441,11 +445,7 @@ Internet-Draft                    hICN                          May 2020
 
 
 
-
-
-
-
-Muscariello, et al.      Expires 5 November 2020                [Page 8]
+Muscariello, et al.     Expires 21 November 2020                [Page 8]
 
 Internet-Draft                    hICN                          May 2020
 
@@ -501,7 +501,7 @@ Internet-Draft                    hICN                          May 2020
 
 
 
-Muscariello, et al.      Expires 5 November 2020                [Page 9]
+Muscariello, et al.     Expires 21 November 2020                [Page 9]
 
 Internet-Draft                    hICN                          May 2020
 
@@ -557,7 +557,7 @@ Internet-Draft                    hICN                          May 2020
 
 
 
-Muscariello, et al.      Expires 5 November 2020               [Page 10]
+Muscariello, et al.     Expires 21 November 2020               [Page 10]
 
 Internet-Draft                    hICN                          May 2020
 
@@ -613,7 +613,7 @@ Internet-Draft                    hICN                          May 2020
 
 
 
-Muscariello, et al.      Expires 5 November 2020               [Page 11]
+Muscariello, et al.     Expires 21 November 2020               [Page 11]
 
 Internet-Draft                    hICN                          May 2020
 
@@ -669,7 +669,7 @@ Internet-Draft                    hICN                          May 2020
 
 
 
-Muscariello, et al.      Expires 5 November 2020               [Page 12]
+Muscariello, et al.     Expires 21 November 2020               [Page 12]
 
 Internet-Draft                    hICN                          May 2020
 
@@ -725,7 +725,7 @@ Internet-Draft                    hICN                          May 2020
 
 
 
-Muscariello, et al.      Expires 5 November 2020               [Page 13]
+Muscariello, et al.     Expires 21 November 2020               [Page 13]
 
 Internet-Draft                    hICN                          May 2020
 
@@ -781,7 +781,7 @@ Internet-Draft                    hICN                          May 2020
 
 
 
-Muscariello, et al.      Expires 5 November 2020               [Page 14]
+Muscariello, et al.     Expires 21 November 2020               [Page 14]
 
 Internet-Draft                    hICN                          May 2020
 
@@ -837,7 +837,7 @@ Internet-Draft                    hICN                          May 2020
 
 
 
-Muscariello, et al.      Expires 5 November 2020               [Page 15]
+Muscariello, et al.     Expires 21 November 2020               [Page 15]
 
 Internet-Draft                    hICN                          May 2020
 
@@ -893,7 +893,7 @@ Internet-Draft                    hICN                          May 2020
 
 
 
-Muscariello, et al.      Expires 5 November 2020               [Page 16]
+Muscariello, et al.     Expires 21 November 2020               [Page 16]
 
 Internet-Draft                    hICN                          May 2020
 
@@ -949,7 +949,7 @@ Internet-Draft                    hICN                          May 2020
 
 
 
-Muscariello, et al.      Expires 5 November 2020               [Page 17]
+Muscariello, et al.     Expires 21 November 2020               [Page 17]
 
 Internet-Draft                    hICN                          May 2020
 
@@ -1005,7 +1005,7 @@ Internet-Draft                    hICN                          May 2020
 
 
 
-Muscariello, et al.      Expires 5 November 2020               [Page 18]
+Muscariello, et al.     Expires 21 November 2020               [Page 18]
 
 Internet-Draft                    hICN                          May 2020
 
@@ -1030,8 +1030,8 @@ Internet-Draft                    hICN                          May 2020
 6.  Acknowledgements
 
    The authors would like to thank David Ward, David Oran, Paul Polakos,
-   Mark Townsley, Mauro Sardara and Alberto Compagno for suggestions on
-   how to improve the architecture and the current document.
+   Mark Townsley and Alberto Compagno for suggestions on how to improve
+   the architecture and the current document.
 
 7.  References
 
@@ -1061,7 +1061,7 @@ Internet-Draft                    hICN                          May 2020
 
 
 
-Muscariello, et al.      Expires 5 November 2020               [Page 19]
+Muscariello, et al.     Expires 21 November 2020               [Page 19]
 
 Internet-Draft                    hICN                          May 2020
 
@@ -1104,9 +1104,24 @@ Internet-Draft                    hICN                          May 2020
               Sensor Systems, October 2015,
               <https://doi.org/10.1109/mass.2015.51>.
 
+   [HCN]      Carofiglio, G., Muscariello, L., Augé, J., Papalini, M.,
+              Sardara, M., and A. Compagno, "Enabling ICN in the
+              Internet Protocol", DOI 10.1145/3357150.3357394,
+              Proceedings of the 6th ACM Conference on Information-
+              Centric Networking, September 2019,
+              <https://doi.org/10.1145/3357150.3357394>.
+
    [MAN]      Baugher, M., Davie, B., Narayanan, A., and D. Oran, "Self-
               verifying names for read-only named data",
               DOI 10.1109/infcomw.2012.6193505, 2012 Proceedings IEEE
+
+
+
+Muscariello, et al.     Expires 21 November 2020               [Page 20]
+
+Internet-Draft                    hICN                          May 2020
+
+
               INFOCOM Workshops, March 2012,
               <https://doi.org/10.1109/infcomw.2012.6193505>.
 
@@ -1114,14 +1129,6 @@ Internet-Draft                    hICN                          May 2020
               Menchaca-Mendez, "Routing to Multi-Instantiated
               Destinations: Principles, Practice, and Applications",
               DOI 10.1109/tmc.2017.2734658, IEEE Transactions on Mobile
-
-
-
-Muscariello, et al.      Expires 5 November 2020               [Page 20]
-
-Internet-Draft                    hICN                          May 2020
-
-
               Computing Vol. 17, pp. 1696-1709, July 2018,
               <https://doi.org/10.1109/tmc.2017.2734658>.
 
@@ -1163,6 +1170,14 @@ Authors' Addresses
    Giovanna Carofiglio
    Cisco Systems Inc.
 
+
+
+
+Muscariello, et al.     Expires 21 November 2020               [Page 21]
+
+Internet-Draft                    hICN                          May 2020
+
+
    Email: gcarofig@cisco.com
 
 
@@ -1170,12 +1185,6 @@ Authors' Addresses
    Cisco Systems Inc.
 
    Email: augjorda@cisco.com
-
-
-
-Muscariello, et al.      Expires 5 November 2020               [Page 21]
-
-Internet-Draft                    hICN                          May 2020
 
 
    Michele Papalini
@@ -1220,13 +1229,4 @@ Internet-Draft                    hICN                          May 2020
 
 
 
-
-
-
-
-
-
-
-
-
-Muscariello, et al.      Expires 5 November 2020               [Page 22]
+Muscariello, et al.     Expires 21 November 2020               [Page 22]
