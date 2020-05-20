@@ -34,7 +34,7 @@ author:
     ins: M. Papalini
     name: Michele Papalini
     org: Cisco Systems Inc.
-    email: mpapal@cisco.com
+    email: micpapal@cisco.com
 -
     ins: M. Sardara
     name: Mauro Sardara
@@ -147,7 +147,8 @@ as defined in {{!RFC2119}}.
 communication."}
 
 The communication model described in this document covers the transport and the
-network layer. Additional details can be found in {{HCN}} with additional analysis
+network layer. Additional details can be found in {{HCN}} with additional
+analysis
 
 The network layer includes the forwarding plane only and does not consider the
 routing plane. hICN network layer is about using the IPv6 FIB to determine a
