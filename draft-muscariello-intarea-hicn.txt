@@ -1190,7 +1190,7 @@ Internet-Draft                    hICN                          May 2020
    Michele Papalini
    Cisco Systems Inc.
 
-   Email: mpapal@cisco.com
+   Email: micpapal@cisco.com
 
 
    Mauro Sardara
