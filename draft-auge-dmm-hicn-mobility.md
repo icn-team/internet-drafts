@@ -1,7 +1,7 @@
 ---
 title: "Anchorless mobility through hICN"
-docname: draft-auge-dmm-hicn-mobility-03
-date: 
+docname: draft-auge-dmm-hicn-mobility-04
+date: 2020-07-08
 category: info
 
 ipr: trust200902
@@ -17,8 +17,8 @@ pi: [toc, sortrefs, symrefs]
 author:
 
 -
-    ins: J. Augé
-    name: Jordan Augé
+    ins: J. Auge
+    name: Jordan Auge
     org: Cisco Systems
     abbrev: Cisco
     street:
@@ -66,8 +66,6 @@ informative:
   SURVEY1: DOI.10.1109/INFCOMW.2016.7562050
   SURVEY2: DOI.10.1186/s13638-016-0715-0
   SURVEYICN: DOI.10.1145/2248361.2248363
-  SURVEYCC: DOI.10.1016/j.comcom.2016.04.017
-  KITE: DOI.10.1145/2660129.2660159
   DATAPLANE:
     title: "Ensuring connectivity via data plane mechanisms."
     author:
@@ -97,14 +95,6 @@ informative:
         ins: "S."
     date: 2013
   SEC: DOI.10.1145/3125719.3125725
-  ravindran20175g: DOI.10.1109/MCOM.2017.1600938
-  TS23.501:
-    title: Technical Specification Group Services and System Aspects; System Architecture for the 5G System (Rel.15)
-    author:
-      - surname: 3gpp-23.501
-    series:
-      name: 3GPP
-      value: ""
   TS29.274:
     title: 3GPP Evolved Packet System (EPS); Evolved General Packet Radio Service (GPRS) Tunnelling Protocol for Control plane (GTPv2-C); Stage 3
     author:
@@ -118,11 +108,10 @@ informative:
 This document first discusses the use of locators and identifiers in mobility
 management architectures, and their implication on various anchorless
 properties. A new architecture is then proposed that is purely based on
-identifiers, and more specifically names as defined in Hybrid-ICN (hICN)
-{{?I-D.muscariello-intarea-hicn}}. The document then focuses on two main cases:
-the end-point sends data (data producer) or the end-point receives data (data
-consumer). These two cases are taken into account entirely to provide anchorless
-mobility management in hICN.
+identifiers, and more specifically names as defined in Hybrid-ICN (hICN). The
+document then focuses on two main cases: the end-point sends data (data
+producer) or the end-point receives data (data consumer). These two cases are
+taken into account entirely to provide anchorless mobility management in hICN.
 
 --- middle
 
@@ -131,7 +120,7 @@ mobility management in hICN.
 New usages of the network and the rapid growth of the Mobile Internet calls to
 reconsider the way we deploy and operate IP networks, where mobility is not
 built into the design, but rather added as an afterthought. Notable examples are
-IETF Mobile IP and its variants {{!RFC3344}} and {{!RFC3775}} 3GPP GTP-based
+IETF Mobile IP and its variants {{!RFC5944}} and {{!RFC2275}} 3GPP GTP-based
 architecture {{TS29.274}}, both based on tunnelling and encapsulation.
 
 One identified difficulty in proposing mobility models for IP lies in the
@@ -432,7 +421,7 @@ routers AR1 and AR2 while serving user requests:
    reach the producer's new location in AR2.
 
 ~~~~
-    P (radio link) AR1             AR2             GW          Internet
+    P (radio link) AR1             AR2             GW        Internet
     |               |               |               |              |
 1   |               |               |               |<~~~~~~~~~~~~~|
     |               |<~~~~~~~~~~~~~~|~~~~~~~~~~~~~~~|  Interest    |
@@ -528,7 +517,7 @@ producer within a few hops.
 to the producer before it had the time to complete the update.
 
 ~~~~
-    P (radio link) AR1             AR2             GW          Internet
+    P (radio link) AR1             AR2             GW        Internet
     |               |               |               |              |
 1   |               |               |               |<~~~~~~~~~~~~~|
     |               |<~~~~~~~~~~~~~~|~~~~~~~~~~~~~~~|   Interest   |
@@ -683,12 +672,12 @@ illustrate the flow of packets during mobility events, eventually specializing A
 into AP or eNB when it makes more sense.
 
 ~~~~
-             +-----+                        .-~-.
-         _,--+ AR1 +--,             .- ~ ~-(     )_ _
-+-----+ /    +-----+   \ +----+    |                  ~-.        +-----+
-|  C  +=                =+ GW +----+       Internet       \--//--+  P  |
-+-----+ \_   +-----+   / +----+     \                    .'      +-----+
-          '--+ AR2 +--'              ~- . ___________.-~
+             +-----+                      .--.
+         _,--+ AR1 +--,            .-~ ~-(    )_ _
++-----+ /    +-----+   \ +----+   |                ~-.        +-----+
+|  C  +=                =+ GW +---+     Internet       \--//--+  P  |
++-----+ \_   +-----+   / +----+    \                  .'      +-----+
+          '--+ AR2 +--'              ~-.__________.-~
              +-----+
 ~~~~
 {: #fig-twoaccess title="Simple topology with a multi-homed consumer"}
@@ -699,12 +688,12 @@ the Internet.
 
 
 ~~~~
-    C              AR1             AR2             GW          Internet
+    C              AR1             AR2             GW        Internet
     |               |               |               |              |
 1   |~~~~~~~~~~~~~~>|               |               |              |
     |  Interest X   |~~~~~~~~~~~~~~~|~~~~~~~~~~~~~~>|              |
     |               |               |               |~~~~~~~~~~~~~>|
-    |               |               |               |              |...
+    |               |               |               |             ...
     |               |               |               |<-------------|
     |     Data X    |<--------------|---------------|              |
     |<--------------|               |               |              |
@@ -743,13 +732,13 @@ responsible for packet losses. {{fig-loss-cache}} considers a similar scenario
 with a lossy channel (eg. WiFi) between the mobile and the first access router.
 
 ~~~~
-    C (radio link) AR1             AR2             GW          Internet
+    C (radio link) AR1             AR2             GW        Internet
     |               |               |               |              |
 1   |~~~~~~~X       |               |               |              |
 2   |~~~~~~~~~~~~~~>|               |               |              |
     |  Interest     |~~~~~~~~~~~~~~~|~~~~~~~~~~~~~~>|              |
     |               |               |               |~~~~~~~~~~~~~>|
-    |               |               |               |              | ...
+    |               |               |               |             ...
     |               |               |               |<-------------|
     |     Data      |<--------------|---------------|              |
 3   |       X-------|               |               |              |
@@ -785,7 +774,7 @@ protocol, so that only losses due to congestion are exposed to it, and don't
 perturb the feedback loop by unnecessarily reducing the transfer rate.
 
 ~~~~
-    C (radio link) AR1             AR2             GW          Internet
+    C (radio link) AR1             AR2             GW        Internet
     |               |               |               |              |
 1   |~~~~~~~~~~~~~~>|               |               |              |
     |  Interest     |~~~~~~~~~~~~~~~|~~~~~~~~~~~~~~>|              |
@@ -825,25 +814,25 @@ access.
 transparently for the application.
 
 ~~~~
-   C          WiFi          GW         LTE enB        PGW       Internet
-   |            |            |            |            |            |
-1  |~~~~~~~~~~~>|            |            |            |            |
-   |            |~~~~~~~~~~~>|            |            |            |
-   |            |            |~~~~~~~~~~~~|~~~~~~~~~~~~|~~~~~~~~~~~>|
-   |            |            |            |            |            |
-   |            |            |<-----------|------------|------------|
-   |            |<-----------|            |            |            |
-   |<-----------|            |            |            |            |
-2  |            X            |            |            |            |
-3  |~~~~~~~~~~~~X~~~~~~~~~~~~|~~~~~~~~~~~>|            |            |
-   |            X            |            |~~~~~~~~~~~>|            |
-   |            X            |            |            |~~~~~~~~~~~>|
-   |            |            |            |            |            |
-   |            |            |            |            |<-----------|
-   |            |            |            |<-----------|            |
-   |<-----------|------------|------------|            |            |
-4  |~~~~~~~~~~~>|...         |            |            |            |
-   |            |            |            |            |            |
+  C          WiFi          GW         LTE enB        PGW     Internet
+  |            |            |            |            |            |
+1 |~~~~~~~~~~~>|            |            |            |            |
+  |            |~~~~~~~~~~~>|            |            |            |
+  |            |            |~~~~~~~~~~~~|~~~~~~~~~~~~|~~~~~~~~~~~>|
+  |            |            |            |            |            |
+  |            |            |<-----------|------------|------------|
+  |            |<-----------|            |            |            |
+  |<-----------|            |            |            |            |
+2 |            X            |            |            |            |
+3 |~~~~~~~~~~~~X~~~~~~~~~~~~|~~~~~~~~~~~>|            |            |
+  |            X            |            |~~~~~~~~~~~>|            |
+  |            X            |            |            |~~~~~~~~~~~>|
+  |            |            |            |            |            |
+  |            |            |            |            |<-----------|
+  |            |            |            |<-----------|            |
+  |<-----------|------------|------------|            |            |
+4 |~~~~~~~~~~~>|...         |            |            |            |
+  |            |            |            |            |            |
 ~~~~~
 {: #fig-mobility-seamless title="Seamless mobility between a WiFi and a LTE access point}
 
@@ -897,21 +886,21 @@ optimal split. Note that in that case the relative distances on the vertical
 axis have not been respected here for readability.
 
 ~~~~
-   C          WiFi          GW         LTE enB        PGW       Internet
-   |            |            |            |            |            |
-   |~~~~~~~~~~~~|~~~~~~~~~~~~|~~~~~~~~~~~>|            |            |
-   |~~~~~~~~~~~>|            |            |~~~~~~~~~~~>|~~~~~~~~~~~>|
-   |            |~~~~~~~~~~~>|            |            |            |
-   |            |            |~~~~~~~~~~~~|~~~~~~~~~~~~|~~~~~~~~~~~>|
-   |            |            |            |            |            |
-   |            |            |            |            |<-----------|
-   |            |            |            |<-----------|            |
-   |<-----------|------------|------------|            |            |
-   |            |            |<-----------|------------|------------|
-   |            |<-----------|            |            |            |
-   |<-----------|            |            |            |            |
-   |            |            |            |            |            |
-   |            |            |            |            |            |
+  C          WiFi          GW         LTE enB        PGW     Internet
+  |            |            |            |            |            |
+  |~~~~~~~~~~~~|~~~~~~~~~~~~|~~~~~~~~~~~>|            |            |
+  |~~~~~~~~~~~>|            |            |~~~~~~~~~~~>|~~~~~~~~~~~>|
+  |            |~~~~~~~~~~~>|            |            |            |
+  |            |            |~~~~~~~~~~~~|~~~~~~~~~~~~|~~~~~~~~~~~>|
+  |            |            |            |            |            |
+  |            |            |            |            |<-----------|
+  |            |            |            |<-----------|            |
+  |<-----------|------------|------------|            |            |
+  |            |            |<-----------|------------|------------|
+  |            |<-----------|            |            |            |
+  |<-----------|            |            |            |            |
+  |            |            |            |            |            |
+  |            |            |            |            |            |
 ~~~~
 
 Fine grained control from the application allows fully exploiting available
@@ -950,32 +939,32 @@ between a consumer connected to AR3, and a mobile producer moving from AR1 to
 AR2.
 
 ~~~~
-C         P         AR1        AR2        AR3         GW  X    Internet
-|         |          |          |          |          |   X         |
-|~~~~~~~~~|~~~~~~~~~~|~~~~~~~~~~|~~~~~~~~~>|          |   X         |
-|         |          |          |          |~~~~~~~~~>|   X         |
-|         |          |<~~~~~~~~~|~~~~~~~~~~|~~~~~~~~~~|   X         |
-|         |<~~~~~~~~~|          |          |          |   X         |
-|         |--------->|          |          |          |   X         |
-|         |          |----------|----------|--------->|   X         |
-|         |          |          |          |<---------|   X         |
-|<--------|----------|----------|----------|          |   X         |
-|         |          |          |          |          |   X         |
-|         |..........-          |          |          |   X         |
-|         |..........|..........+          |          |   X         |
-|         |==========|=========>o          |          |   X   NO    |
-|         | Update   |          |==========|=========>o   X TRAFFIC |
-|         |          o<=========|==========|==========|   X         |
-|         |          |          |          |          |   X         |
-|~~~~~~~~~|~~~~~~~~~~|~~~~~~~~~~|~~~~~~~~~>|          |   X         |
-|         |          |          |          |~~~~~~~~~>|   X         |
-|         |          |          |<~~~~~~~~~|~~~~~~~~~~|   X         |
-|         |<~~~~~~~~~|~~~~~~~~~~|          |          |   X         |
-|         |----------|--------->|          |          |   X         |
-|         |          |          |----------|--------->|   X         |
-|         |          |          |          |<---------|   X         |
-|<--------|----------|----------|----------|          |   X         |
-|         |          |          |          |          |   X         |
+C         P         AR1        AR2        AR3        GW  X   Internet
+|         |          |          |          |          |  X         |
+|~~~~~~~~~|~~~~~~~~~~|~~~~~~~~~~|~~~~~~~~~>|          |  X         |
+|         |          |          |          |~~~~~~~~~>|  X         |
+|         |          |<~~~~~~~~~|~~~~~~~~~~|~~~~~~~~~~|  X         |
+|         |<~~~~~~~~~|          |          |          |  X         |
+|         |--------->|          |          |          |  X         |
+|         |          |----------|----------|--------->|  X         |
+|         |          |          |          |<---------|  X         |
+|<--------|----------|----------|----------|          |  X         |
+|         |          |          |          |          |  X         |
+|         |..........-          |          |          |  X         |
+|         |..........|..........+          |          |  X         |
+|         |==========|=========>o          |          |  X   NO    |
+|         | Update   |          |==========|=========>o  X TRAFFIC |
+|         |          o<=========|==========|==========|  X         |
+|         |          |          |          |          |  X         |
+|~~~~~~~~~|~~~~~~~~~~|~~~~~~~~~~|~~~~~~~~~>|          |  X         |
+|         |          |          |          |~~~~~~~~~>|  X         |
+|         |          |          |<~~~~~~~~~|~~~~~~~~~~|  X         |
+|         |<~~~~~~~~~|~~~~~~~~~~|          |          |  X         |
+|         |----------|--------->|          |          |  X         |
+|         |          |          |----------|--------->|  X         |
+|         |          |          |          |<---------|  X         |
+|<--------|----------|----------|----------|          |  X         |
+|         |          |          |          |          |  X         |
 ~~~~
 {: #fig-disconnected title="Anchorless mobility in network disconnected from core"}
 

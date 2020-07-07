@@ -1,9 +1,9 @@
 ---
 title: "Anchorless mobility management through hICN (hICN-AMM): Deployment options"
 abbrev: "hICN mobility: deployment options"
-docname: draft-auge-dmm-hicn-mobility-deployment-options-03
+docname: draft-auge-dmm-hicn-mobility-deployment-options-04
 
-date:
+date: 2020-07-08
 category: info
 
 ipr: trust200902
@@ -20,8 +20,8 @@ pi: [toc, sortrefs, symrefs]
 author:
 
 -
-    ins: J. Augé
-    name: Jordan Augé
+    ins: J. Auge
+    name: Jordan Auge
     org: Cisco Systems
     abbrev: Cisco
     street:
@@ -91,23 +91,21 @@ informative:
 
 --- abstract
 
-A novel mobility management approach is described in {{?I-D.auge-dmm-hicn-mobility}},
-that leverages routable location-independent identifiers (IDs) and an
-Information-Centric Networking (ICN) communication model integrated in IPv6,
-also referred to as Hybrid ICN (hICN) {{?I-D.muscariello-intarea-hicn}}.
+A novel mobility management approach has been proposed, that leverages routable
+location-independent identifiers (IDs) and an Information-Centric Networking
+(ICN) communication model integrated in IPv6, also referred to as Hybrid ICN
+(hICN). In virtue of its anchorless property, we denote this approach as
+hICN-AMM (hICN Anchorless Mobility Management) hereinafter.
 
 Such approach belongs to the category of pure ID-based mobility management
 schemes whose objective is (i) to overcome the limitations of traditional
 locator-based solutions like Mobile IP, (ii)
 to remove the need for a global mapping system as the one required by
-locator-identifier separation solutions like LISP
-{{?I-D.ietf-lisp-introduction}} or ILA {{?I-D.herbert-intarea-ila}}.
+locator-identifier separation solutions like LISP or ILA.
 
 ID-based networking as proposed by ICN architectures allows to disentangle
 forwarding operations from changes of network location, hence removing tunnels
-and user plane or control plane anchors. In virtue of its anchorless property,
-we denote this approach as hICN-AMM (hICN Anchorless Mobility Management)
-hereinafter.
+and user plane or control plane anchors. 
 
 This document discusses hICN-AMM deployment options and related tradeoffs in
 terms of cost/benefits. Particular attention is devoted to the insertion in the
@@ -192,20 +190,20 @@ IPv6-based network.
 ~~~~
                  , - ,              , - ,              , - ,
 Cell site    , '       ' ,      , '       ' ,      , '       ' ,
-    __     ,               ,__,                ,__,               ,
- __/ A\   ,                /X/|                /X/|                ,
-/ A\__/  __     IP edge    |_|/  IP backhaul   |_|/    IP core     __
-\__/ A\ /X/|               , ,                 , ,                /X/|
-/ A\__/ |_|/    network    ,__     network     ,__     network    |_|/
-\__/ A\  |,                /X/|                /X/|                |
-   \__/  | ,               |_|/,               |_|/,              ,|
-         |   ,          , ' |   ,          , '' |   ,          , ' |
-         |     ' - ,  '     |     ' - ,  '      |     ' - ,  '     |
-       +-+-+              +-+-+               +-+-+              +-+-+
-       |   |              |   |               |   |              |   |
-       |DDC|              |DDC|               |DDC|              |DDC|
-       |   |              |   |               |   |              |   |
-       +---+              +---+               +---+              +---+
+    __     ,               ,__,               ,__,              ,
+ __/ A\   ,                /X/|                /X/|               ,
+/ A\__/  __     IP edge    |_|/  IP backhaul   |_|/    IP core    __
+\__/ A\ /X/|               , ,                 , ,               /X/|
+/ A\__/ |_|/    network    ,__     network     ,__     network   |_|/
+\__/ A\  |,                /X/|                /X/|               |
+   \__/  | ,               |_|/,               |_|/,              |
+         |   ,          , ' |   ,          , '' |   ,          , '|
+         |     ' - ,  '     |     ' - ,  '      |     ' -  , '    |
+       +-+-+              +-+-+               +-+-+             +-+-+
+       |   |              |   |               |   |             |   |
+       |DDC|              |DDC|               |DDC|             |DDC|
+       |   |              |   |               |   |             |   |
+       +---+              +---+               +---+             +---+
 ~~~~
 {: #fig-mobile-network title="Overview of a typical mobile network architecture" }
 
@@ -225,14 +223,14 @@ planes. {{fig-5g-sba}} gives the traditional representation of this architecture
 | NSSF  | |  NRF  | |  DSF  | |  UDM  | |  NEF  | |  PCF  | |  AUSF |
 +---+---+ +---+---+ +---+---+ +---+---+ +---+---+ +---+---+ +---+---+
     |         |         |         |         |         |         |
-----+------+--+---------+---------+-------+-+---------+---------+-----
+----+------+--+---------+---------+-------+-+---------+---------+----
            |                              |
   +--------+---------+          +---------+--------+      MOBILITY
   |        AMF       |          |        SMF       |     MANAGEMENT
   +-+--------------+-+          +++--------------+-+
     |              |              |              |        control
     | N1           | N2           | N4           | N4      plane
- ...|..............|..............|..............|....................
+ ...|..............|..............|..............|...................
     |              |              |              |       user plane
     |              |              |              |
 +---+---+      +---+---+  N3  +---+---+  N9  +---+---+  N6  +-------+
@@ -320,24 +318,24 @@ that option #1a shares similarities with the deployment approach for ID/Loc
 solutions proposed in {{?I-D.homma-dmm-5gs-id-loc-coexistence}}.
 
 ~~~~
-  +------------------+          +------------------+
-  |        AMF       |          |        SMF       |
-  +-+--------------+-+          +++--------------+-+
-    |              |             .|              |
-    | N1           | N2       N4 .| N4           | N4
-    |              |             .|              |
-+---+---+      +---+---+  N3  +---+---+  N9  +---+---+  N6  +-------+
-|  UE   +------+  gNB  +------+ UL/CL +------+  UPF  +------+  DN   |
-+-------+      +-------+      +---+---+      +-------+      +-------+
-                                 .|
-                                 .| N9
-                                 .|                            _
-                              +--++---+  N9  +-------+  MEC  _( )___
-                              |  UPF  +------+   DN  +------(  hICN )_
-                              +-------+      +-------+      (_________)
-                                 ^               ^              ^
-                                 |_______________|              |
-                                   local breakout        hICN insertion
+  +-----------------+          +------------------+
+  |        AMF      |          |        SMF       |
+  +-+-------------+-+          +++--------------+-+
+    |             |             .|              |
+    | N1          | N2       N4 .| N4           | N4
+    |             |             .|              |
++---+--+     +---+---+  N3  +---+---+  N9  +---+---+  N6  +-------+
+|  UE  +-----+  gNB  +------+ UL/CL +------+  UPF  +------+  DN   |
++------+     +-------+      +---+---+      +-------+      +-------+
+                               .|
+                               .| N9
+                               .|                            _
+                            +--++---+  N9  +-------+  MEC  _( )___
+                            |  UPF  +------+   DN  +------(  hICN )_
+                            +-------+      +-------+      (_________)
+                               ^               ^              ^
+                               |_______________|              |
+                                 local breakout        hICN insertion
 ~~~~
 {: #fig-hicn-sba-mec title="hICN insertion in MEC" }
 
@@ -389,13 +387,13 @@ packet would be fast retransmitted directly from local hICN instance.
 
 ~~~~
 tunnelled non-3GPP radio
-(e.g. WiFi)   +------+  N3
-       +------+ N3IWF+-------+                         hICN
-      /       +------+        \                          +
-     /                         \                         |
-+---+---+     +-------+ N3 +---+---+ N9 +---+---+ N6 +---+---+
-|  UE   +-----+  gNB  +----+ UL/CL +----+  UPF  +----+  DN   +---+ hICN
-+-------+     +-------+    +---+---+    +-------+    +-------+
+(eg. WiFi)  +------+  N3
+       +----+ N3IWF+-------+                         hICN
+      /     +------+        \                          +
+     /                       \                         |
++---+---+   +-------+ N3 +---+---+ N9 +---+---+ N6 +---+---+
+|  UE   +---+  gNB  +----+ UL/CL +----+  UPF  +----+  DN   +---+ hICN
++-------+   +-------+    +---+---+    +-------+    +-------+
 ~~~~
 {: #fig-hicn-wifi title="Example of a UE connection to two local radio accesses"}
 
@@ -415,13 +413,13 @@ radio access.
 
 ~~~~
 tunnelled non-3GPP radio
-(e.g. WiFi)  +-------+ N3 +-------+ N9 +-------+ N6 +-------+
-       +-----+ N3IWF +----| UL/CL +----+  UPF  +----+  DN   +----+ hICN
-      /      +-------+    +-------+    +-------+    +-------+
+(eg. WiFi) +-------+ N3 +-------+ N9 +-------+ N6 +-------+
+       +---+ N3IWF +----| UL/CL +----+  UPF  +----+  DN   +----+ hICN
+      /    +-------+    +-------+    +-------+    +-------+
      /
-+---+---+    +-------+ N3 +-------+ N9 +---+---+ N6 +---+---+
-|  UE   +----+  gNB  +----+ UL/CL +----+  UPF  +----+  DN   +----+ hICN
-+-------+    +-------+    +---+---+    +-------+    +-------+
++---+---+  +-------+ N3 +-------+ N9 +---+---+ N6 +---+---+
+|  UE   +--+  gNB  +----+ UL/CL +----+  UPF  +----+  DN   +----+ hICN
++-------+  +-------+    +---+---+    +-------+    +-------+
 ~~~~
 {: #fig-hicn-multisource title="Multi-source communication with hICN"}
 
@@ -505,15 +503,15 @@ traffic with respect to a traditional end-to-end recovery approach. Such feature
 could be fundamental for low-latency reliable services.
 
 ~~~~
-                             +-- Loss Detection and Recovey
-                             V
-             +-------+ N3 +-------+
-       +-----+ N3IWF +----| hICN  |
-      /      +-------+    +---+---+
-     /                     N9 |
-+---+---+    +-------+ N3 +---+---+ N9 +---+---+ N6 +---+---+
-|  UE   +----+  gNB  +----+  UPF  +----+  UPF  +----+  DN   +----+ hICN
-+-------+    +-------+    +---+---+    +-------+    +-------+
+                            +-- Loss Detection and Recovey
+                            V
+            +-------+ N3 +-------+
+       +----+ N3IWF +----| hICN  |
+      /     +-------+    +---+---+
+     /                    N9 |
++---+---+   +-------+ N3 +---+---+ N9 +---+---+ N6 +---+---+
+|  UE   +---+  gNB  +----+  UPF  +----+  UPF  +----+  DN   +---+ hICN
++-------+   +-------+    +---+---+    +-------+    +-------+
 ~~~~
 {: #fig-hicn-wldr title="In-network loss detection and recovery with hICN"}
 
@@ -879,38 +877,38 @@ processing is available through proxies, (None) no hICN function, the traffic is
 purely forwarded using endpoint identifiers rather than content identifiers.
 
 ~~~~
-                                       +-----------------------+------+
-                     hICN penetration: |       UE      | Proxy | None |
-  Benefit:          Deployment option: | 1a 1b | 2a 2b |   2b  |  2b  |
-+--------------------------------------+-------+-------+-------+------+
-| Additional state for static consumer | Y  Y  | Y  N  |   N   |  N   |
-| Additional state for static producer | Y  Y  | Y  N  |   N   |  N   |
-| Additional state for mobile consumer | Y  Y  | Y  N  |   N   |  N   |
-| Additional state for mobile producer | Y  Y  | Y  N  |   N   |  N   |
-+--------------------------------------+-------+-------+-------+------+
-| Signalization for static consumer    | Y  Y  | N  N  |   N   |  N   |
-| Signalization for static producer    | Y  Y  | N  N  |   N   |  N   |
-| Signalization for mobile consumer    | Y  Y  | N  N  |   N   |  N   |
-| Signalization for mobile producer    | Y  Y  | Y  Y  |   Y   |  Y   |
-+--------------------------------------+-------+-------+-------+------+
-| Removed tunnel/encap overhead        | N  N  | P  Y  |   Y   |  Y   |
-| Preserve perf. of flows in progress  | N  N  | Y  Y  |   Y   |  Y   |
-+--------------------------------------+-------+-------+-------+------+
-| Local offload                        | P  N  | Y  Y  |   Y   |  Y   |
-| Anchorless for UP                    | N  N  | Y  Y  |   Y   |  Y   |
-| Anchorless for CP                    | N  N  | Y  Y  |   Y   |  Y   |
-| Dynamic egress UPF selection         | N  N  | Y  Y  |   Y   |  Y   |
-| Dynamic ingress UPF selection        | N  N  | N  Y  |   Y   |  Y   |
-+--------------------------------------+-------+-------+-------+------+
-| Edge caching : low-latency           | Y  Y  | Y  Y  |   P   |  N   |
-| Edge caching : multicast             | Y  Y  | Y  Y  |   P   |  N   |
-| Seamless mobility across het. RAT    | Y  Y  | Y  Y  |   Y   |  P   |
-| Multi-homing ; Bandwidth aggregation | Y  Y  | Y  Y  |   Y   |  P   |
-| Multi-source                         | Y  Y  | Y  Y  |   Y   |  N   |
-| In-network assistance                | N  Y  | Y  Y  |   P   |  N   |
-+--------------------------------------+-------+-------+-------+------+
-| Integration with 3GPP CP             | N  Y  | Y  Y  |   Y   |  Y   |
-+--------------------------------------+-------+-------+-------+------+
+                                     +-----------------------+------+
+                   hICN penetration: |       UE      | Proxy | None |
+  Benefit:        Deployment option: | 1a 1b | 2a 2b |   2b  |  2b  |
++------------------------------------+-------+-------+-------+------+
+| Additional state for static cons.  | Y  Y  | Y  N  |   N   |  N   |
+| Additional state for static prod.  | Y  Y  | Y  N  |   N   |  N   |
+| Additional state for mobile cons.  | Y  Y  | Y  N  |   N   |  N   |
+| Additional state for mobile prod.  | Y  Y  | Y  N  |   N   |  N   |
++------------------------------------+-------+-------+-------+------+
+| Signalization for static consumer  | Y  Y  | N  N  |   N   |  N   |
+| Signalization for static producer  | Y  Y  | N  N  |   N   |  N   |
+| Signalization for mobile consumer  | Y  Y  | N  N  |   N   |  N   |
+| Signalization for mobile producer  | Y  Y  | Y  Y  |   Y   |  Y   |
++------------------------------------+-------+-------+-------+------+
+| Removed tunnel/encap overhead      | N  N  | P  Y  |   Y   |  Y   |
+| Preserve perf. of ongoing flows    | N  N  | Y  Y  |   Y   |  Y   |
++------------------------------------+-------+-------+-------+------+
+| Local offload                      | P  N  | Y  Y  |   Y   |  Y   |
+| Anchorless for UP                  | N  N  | Y  Y  |   Y   |  Y   |
+| Anchorless for CP                  | N  N  | Y  Y  |   Y   |  Y   |
+| Dynamic egress UPF selection       | N  N  | Y  Y  |   Y   |  Y   |
+| Dynamic ingress UPF selection      | N  N  | N  Y  |   Y   |  Y   |
++------------------------------------+-------+-------+-------+------+
+| Edge caching : low-latency         | Y  Y  | Y  Y  |   P   |  N   |
+| Edge caching : multicast           | Y  Y  | Y  Y  |   P   |  N   |
+| Seamless mobility across het. RAT  | Y  Y  | Y  Y  |   Y   |  P   |
+| Multi-homing : bw aggregation      | Y  Y  | Y  Y  |   Y   |  P   |
+| Multi-source                       | Y  Y  | Y  Y  |   Y   |  N   |
+| In-network assistance              | N  Y  | Y  Y  |   P   |  N   |
++------------------------------------+-------+-------+-------+------+
+| Integration with 3GPP CP           | N  Y  | Y  Y  |   Y   |  Y   |
++------------------------------------+-------+-------+-------+------+
 
 LEGEND: (Y) Yes - (N) No - (P) Partial
 ~~~~
