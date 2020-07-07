@@ -1,8 +1,8 @@
 ---
 title: "MAP-Me : Managing Anchorless Mobility in Content Centric Networking"
 abbrev: Managing Anchorless Mobility in CCN
-docname: draft-irtf-icnrg-mapme-04
-date: 2019-10
+docname: draft-irtf-icnrg-mapme-05
+date: 2020-06
 category: info
 
 ipr: trust200902
@@ -18,8 +18,8 @@ pi: [toc, sortrefs, symrefs]
 
 author:
 -
-    ins: J. Augé
-    name: Jordan Augé
+    ins: J. Auge
+    name: Jordan Auge
     role: editor
     org: Cisco Systems Inc.
     street: 11, rue Camille Desmoulins
@@ -71,7 +71,6 @@ informative:
   NLSR: DOI.10.1145/2491224.2491231
   SURVEY13: DOI.10.1145/2248361.2248363
   SURVEY14: DOI.10.1109/SURV.2013.070813.00063
-  KITE: DOI.10.1145/2660129.2660159
   DATAPLANE:
     title: "Ensuring connectivity via data plane mechanisms."
     author:
@@ -661,7 +660,7 @@ latest sequence number stored in the FIB entry, and schedule the entry to be
 checked for retransmissions.
 
 ~~~~~~~~~~
-  | Algorithm 1:ForwardSpecialInterest(SpecialInterest SI,IngressFace F)
+  | Alg. 1:ForwardSpecialInterest(SpecialInterest SI,IngressFace F)
   |
   |  CheckValidity()
   |  // Acknowledge reception
@@ -711,7 +710,7 @@ The function SendToNeighbors(I) is responsible for broadcasting the Interest I
 to all neighboring PoAs.
 
 ~~~~~~~~~~
-  | Algorithm 2:  InterestForward(Interest I, Origin face F)
+  | Alg. 2:  InterestForward(Interest I, Origin face F)
   |
   |  // Regular PIT and CS lookup
   |  e <- FIB.LongestPrefixMatch(I.name)
@@ -730,7 +729,8 @@ to all neighboring PoAs.
   |  .   if hasProducerFace(e.NextHops) then
   |  .   .   ForwardingStrategy.process(I, e)
   |  .   // Otherwise iterate iif higher seq and breadcrumb
-  |  .   else if e.seq >= I.seq and EXISTS f |(f -> NULL) in e.TFIB then
+  |  .   else if e.seq >= I.seq and \
+  |             EXISTS f | (f -> NULL) in e.TFIB then
   |  .   .   I.seq <- e.seq
   |  .   .   SendToNeighbors(I)
 ~~~~~~~~~~
