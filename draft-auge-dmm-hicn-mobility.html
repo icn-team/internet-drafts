@@ -282,12 +282,14 @@ table {
   width: 100%;
   margin: 0 0 1em;
   border-collapse: collapse;
+}
+thead, tbody {
   border: 1px solid var(--line-color);
 }
 th, td {
   text-align: left;
   vertical-align: top;
-  padding: 0.5em 0.75em;
+  padding: 5px 10px;
 }
 th {
   text-align: left;
@@ -299,16 +301,15 @@ tr:nth-child(2n) > td {
 tr:nth-child(2n+1) > td {
   background-color: var(--highlight-color);
 }
-thead+tbody tr:nth-child(2n) > td {
+thead+tbody > tr:nth-child(2n) > td {
   background-color: var(--highlight-color);
 }
-thead+tbody tr:nth-child(2n+1) > td {
+thead+tbody > tr:nth-child(2n+1) > td {
   background-color: var(--background-color);
 }
 table caption {
   margin: 0;
   padding: 3px 1em;
-  border-top: 1px solid var(--line-color);
 }
 table p {
   /* XXX to avoid bottom margin on table row signifiers. If paragraphs should
@@ -483,14 +484,10 @@ hr.addr {
 }
 @media (min-width: 500px) {
   #authors-addresses > section {
-    display: relative;
-    padding: 32px 0 0;
     column-count: 2;
     column-gap: 20px;
   }
-  #name-authors-addresses {
-    position: absolute;
-    top: 0px;
+  #authors-addresses > section > h2 {
     column-span: all;
   }
   /* hack for break-inside: avoid-column */
@@ -500,21 +497,8 @@ hr.addr {
   }
 }
 
-/* temporary notes */
-.rfcEditorRemove::before {
-  position: absolute;
-  top: 0.2em;
-  right: 0.2em;
-  padding: 0.2em;
-  content: "The RFC Editor will remove this note";
-  color: #b76427;
-  background-color: rgba(249, 232, 105, 0.3);
-}
-.rfcEditorRemove {
-  position: relative;
-  padding-top: 1.8em;
-  background-color: rgba(249, 232, 105, 0.3);
-  border-radius: 3px;
+.rfcEditorRemove p:first-of-type {
+  font-style: italic;
 }
 .cref {
   background-color: rgba(249, 232, 105, 0.3);
@@ -837,11 +821,11 @@ table.left {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">Anchorless mobility through hICN</td>
-<td class="right">May 2020</td>
+<td class="right">July 2020</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Augé, et al.</td>
-<td class="center">Expires 21 November 2020</td>
+<td class="center">Expires 8 January 2021</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -854,12 +838,12 @@ table.left {
 <dd class="internet-draft">draft-auge-dmm-hicn-mobility-03</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2020-05-20" class="published">20 May 2020</time>
+<time datetime="2020-07-07" class="published">7 July 2020</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2020-11-21">21 November 2020</time></dd>
+<dd class="expires"><time datetime="2021-01-08">8 January 2021</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -912,7 +896,7 @@ mobility management in hICN.<a href="#section-abstract-1" class="pilcrow">¶</a>
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 21 November 2020.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 8 January 2021.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -2213,13 +2197,13 @@ management of micro-mobility; its extension to multiple domains is out of scope.
 <span class="refAuthor">Herbert, T.</span><span class="refAuthor"> and P. Lapukhov</span>, <span class="refTitle">"Identifier-locator addressing for IPv6"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-herbert-intarea-ila-01</span>, <time datetime="2018-03-05">5 March 2018</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-herbert-intarea-ila-01.txt">http://www.ietf.org/internet-drafts/draft-herbert-intarea-ila-01.txt</a>&gt;</span>. </dd>
 <dt id="I-D.irtf-icnrg-mapme">[I-D.irtf-icnrg-mapme]</dt>
 <dd>
-<span class="refAuthor">Auge, J.</span><span class="refAuthor">, Carofiglio, G.</span><span class="refAuthor">, Muscariello, L.</span><span class="refAuthor">, and M. Papalini</span>, <span class="refTitle">"MAP-Me : Managing Anchorless Mobility in Content Centric Networking"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-irtf-icnrg-mapme-04</span>, <time datetime="2019-11-03">3 November 2019</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-irtf-icnrg-mapme-04.txt">http://www.ietf.org/internet-drafts/draft-irtf-icnrg-mapme-04.txt</a>&gt;</span>. </dd>
+<span class="refAuthor">Auge, J.</span><span class="refAuthor">, Carofiglio, G.</span><span class="refAuthor">, Muscariello, L.</span><span class="refAuthor">, and M. Papalini</span>, <span class="refTitle">"MAP-Me : Managing Anchorless Mobility in Content Centric Networking"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-irtf-icnrg-mapme-05</span>, <time datetime="2020-06-09">9 June 2020</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-irtf-icnrg-mapme-05.txt">http://www.ietf.org/internet-drafts/draft-irtf-icnrg-mapme-05.txt</a>&gt;</span>. </dd>
 <dt id="I-D.irtf-icnrg-terminology">[I-D.irtf-icnrg-terminology]</dt>
 <dd>
 <span class="refAuthor">Wissingh, B.</span><span class="refAuthor">, Wood, C.</span><span class="refAuthor">, Afanasyev, A.</span><span class="refAuthor">, Zhang, L.</span><span class="refAuthor">, Oran, D.</span><span class="refAuthor">, and C. Tschudin</span>, <span class="refTitle">"Information-Centric Networking (ICN): CCNx and NDN Terminology"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-irtf-icnrg-terminology-08</span>, <time datetime="2020-01-17">17 January 2020</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-irtf-icnrg-terminology-08.txt">http://www.ietf.org/internet-drafts/draft-irtf-icnrg-terminology-08.txt</a>&gt;</span>. </dd>
 <dt id="I-D.muscariello-intarea-hicn">[I-D.muscariello-intarea-hicn]</dt>
 <dd>
-<span class="refAuthor">Muscariello, L.</span><span class="refAuthor">, Carofiglio, G.</span><span class="refAuthor">, Auge, J.</span><span class="refAuthor">, and M. Papalini</span>, <span class="refTitle">"Hybrid Information-Centric Networking"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-muscariello-intarea-hicn-03</span>, <time datetime="2019-10-30">30 October 2019</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-muscariello-intarea-hicn-03.txt">http://www.ietf.org/internet-drafts/draft-muscariello-intarea-hicn-03.txt</a>&gt;</span>. </dd>
+<span class="refAuthor">Muscariello, L.</span><span class="refAuthor">, Carofiglio, G.</span><span class="refAuthor">, Auge, J.</span><span class="refAuthor">, Papalini, M.</span><span class="refAuthor">, and M. Sardara</span>, <span class="refTitle">"Hybrid Information-Centric Networking"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-muscariello-intarea-hicn-04</span>, <time datetime="2020-05-20">20 May 2020</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-muscariello-intarea-hicn-04.txt">http://www.ietf.org/internet-drafts/draft-muscariello-intarea-hicn-04.txt</a>&gt;</span>. </dd>
 <dt id="I-D.vonhugo-5gangip-ip-issues">[I-D.vonhugo-5gangip-ip-issues]</dt>
 <dd>
 <span class="refAuthor">Hugo, D.</span><span class="refAuthor"> and B. Sarikaya</span>, <span class="refTitle">"Review on issues in discussion of next generation converged networks (5G) from an IP point of view"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-vonhugo-5gangip-ip-issues-03</span>, <time datetime="2017-03-13">13 March 2017</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-vonhugo-5gangip-ip-issues-03.txt">http://www.ietf.org/internet-drafts/draft-vonhugo-5gangip-ip-issues-03.txt</a>&gt;</span>. </dd>

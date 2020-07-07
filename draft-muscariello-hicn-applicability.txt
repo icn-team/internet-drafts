@@ -5,7 +5,7 @@
 Network Working Group                                     L. Muscariello
 Internet-Draft                                             G. Carofiglio
 Intended status: Informational                        Cisco Systems Inc.
-Expires: 21 November 2020                                    20 May 2020
+Expires: 8 January 2021                                      7 July 2020
 
 
 Applicability of the Hybrid Information-Centric Networking Architecture
@@ -33,7 +33,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 21 November 2020.
+   This Internet-Draft will expire on 8 January 2021.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Muscariello & CarofiglioExpires 21 November 2020                [Page 1]
+Muscariello & Carofiglio Expires 8 January 2021                 [Page 1]
 
-Internet-Draft             hICN Applicability                   May 2020
+Internet-Draft             hICN Applicability                  July 2020
 
 
 Table of Contents
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Muscariello & CarofiglioExpires 21 November 2020                [Page 2]
+Muscariello & Carofiglio Expires 8 January 2021                 [Page 2]
 
-Internet-Draft             hICN Applicability                   May 2020
+Internet-Draft             hICN Applicability                  July 2020
 
 
    [RFC3587]  Hinden, R., Deering, S., and E. Nordmark, "IPv6 Global
@@ -165,14 +165,14 @@ Internet-Draft             hICN Applicability                   May 2020
 
 
 
-Muscariello & CarofiglioExpires 21 November 2020                [Page 3]
+Muscariello & Carofiglio Expires 8 January 2021                 [Page 3]
 
-Internet-Draft             hICN Applicability                   May 2020
+Internet-Draft             hICN Applicability                  July 2020
 
 
-              Draft, draft-irtf-icnrg-mapme-04, 3 November 2019,
+              Draft, draft-irtf-icnrg-mapme-05, 9 June 2020,
               <http://www.ietf.org/internet-drafts/draft-irtf-icnrg-
-              mapme-04.txt>.
+              mapme-05.txt>.
 
    [I-D.irtf-icnrg-terminology]
               Wissingh, B., Wood, C., Afanasyev, A., Zhang, L., Oran,
@@ -183,11 +183,11 @@ Internet-Draft             hICN Applicability                   May 2020
               irtf-icnrg-terminology-08.txt>.
 
    [I-D.muscariello-intarea-hicn]
-              Muscariello, L., Carofiglio, G., Auge, J., and M.
-              Papalini, "Hybrid Information-Centric Networking", Work in
-              Progress, Internet-Draft, draft-muscariello-intarea-hicn-
-              03, 30 October 2019, <http://www.ietf.org/internet-drafts/
-              draft-muscariello-intarea-hicn-03.txt>.
+              Muscariello, L., Carofiglio, G., Auge, J., Papalini, M.,
+              and M. Sardara, "Hybrid Information-Centric Networking",
+              Work in Progress, Internet-Draft, draft-muscariello-
+              intarea-hicn-04, 20 May 2020, <http://www.ietf.org/
+              internet-drafts/draft-muscariello-intarea-hicn-04.txt>.
 
    [MAN]      Baugher, M., Davie, B., Narayanan, A., and D. Oran, "Self-
               verifying names for read-only named data",
@@ -221,9 +221,9 @@ Internet-Draft             hICN Applicability                   May 2020
 
 
 
-Muscariello & CarofiglioExpires 21 November 2020                [Page 4]
+Muscariello & Carofiglio Expires 8 January 2021                 [Page 4]
 
-Internet-Draft             hICN Applicability                   May 2020
+Internet-Draft             hICN Applicability                  July 2020
 
 
               DOI 10.1145/2984356.2984361, Proceedings of the 2016
@@ -277,4 +277,4 @@ Authors' Addresses
 
 
 
-Muscariello & CarofiglioExpires 21 November 2020                [Page 5]
+Muscariello & Carofiglio Expires 8 January 2021                 [Page 5]

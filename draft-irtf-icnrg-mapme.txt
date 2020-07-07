@@ -2,16 +2,16 @@
 
 
 
-icnrg                                                       J. Augé, Ed.
+icnrg                                                       J. Auge, Ed.
 Internet-Draft                                             G. Carofiglio
 Intended status: Informational                            L. Muscariello
-Expires: 22 April 2020                                       M. Papalini
+Expires: 9 December 2020                                     M. Papalini
                                                       Cisco Systems Inc.
-                                                            October 2019
+                                                               June 2020
 
 
   MAP-Me : Managing Anchorless Mobility in Content Centric Networking
-                       draft-irtf-icnrg-mapme-04
+                       draft-irtf-icnrg-mapme-05
 
 Abstract
 
@@ -42,20 +42,20 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 3 April 2020.
+   This Internet-Draft will expire on 3 December 2020.
 
 Copyright Notice
 
-   Copyright (c) 2019 IETF Trust and the persons identified as the
+   Copyright (c) 2020 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
 
 
 
 
-Augé, et al.              Expires 22 April 2020                 [Page 1]
+Auge, et al.             Expires 9 December 2020                [Page 1]
 
-Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
+Internet-Draft     Managing Anchorless Mobility in CCN         June 2020
 
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Augé, et al.              Expires 22 April 2020                 [Page 2]
+Auge, et al.             Expires 9 December 2020                [Page 2]
 
-Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
+Internet-Draft     Managing Anchorless Mobility in CCN         June 2020
 
 
 1.  Introduction
@@ -165,9 +165,9 @@ Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
 
 
 
-Augé, et al.              Expires 22 April 2020                 [Page 3]
+Auge, et al.             Expires 9 December 2020                [Page 3]
 
-Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
+Internet-Draft     Managing Anchorless Mobility in CCN         June 2020
 
 
    reverse-forwarding path (see [SURVEY16b] for a survey).  They still
@@ -221,9 +221,9 @@ Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
 
 
 
-Augé, et al.              Expires 22 April 2020                 [Page 4]
+Auge, et al.             Expires 9 December 2020                [Page 4]
 
-Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
+Internet-Draft     Managing Anchorless Mobility in CCN         June 2020
 
 
          would be too slow and too costly, but rather works at a faster
@@ -277,9 +277,9 @@ Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
 
 
 
-Augé, et al.              Expires 22 April 2020                 [Page 5]
+Auge, et al.             Expires 9 December 2020                [Page 5]
 
-Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
+Internet-Draft     Managing Anchorless Mobility in CCN         June 2020
 
 
    *  an Update protocol, detailed in Section 3, which is the central
@@ -333,9 +333,9 @@ Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
 
 
 
-Augé, et al.              Expires 22 April 2020                 [Page 6]
+Auge, et al.             Expires 9 December 2020                [Page 6]
 
-Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
+Internet-Draft     Managing Anchorless Mobility in CCN         June 2020
 
 
                             +---+                        +---+
@@ -389,9 +389,9 @@ Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
 
 
 
-Augé, et al.              Expires 22 April 2020                 [Page 7]
+Auge, et al.             Expires 9 December 2020                [Page 7]
 
-Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
+Internet-Draft     Managing Anchorless Mobility in CCN         June 2020
 
 
                                                    .................
@@ -445,9 +445,9 @@ Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
 
 
 
-Augé, et al.              Expires 22 April 2020                 [Page 8]
+Auge, et al.             Expires 9 December 2020                [Page 8]
 
-Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
+Internet-Draft     Managing Anchorless Mobility in CCN         June 2020
 
 
                             +---+
@@ -501,9 +501,9 @@ Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
 
 
 
-Augé, et al.              Expires 22 April 2020                 [Page 9]
+Auge, et al.             Expires 9 December 2020                [Page 9]
 
-Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
+Internet-Draft     Managing Anchorless Mobility in CCN         June 2020
 
 
 3.3.  Concurrent updates
@@ -557,9 +557,9 @@ Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
 
 
 
-Augé, et al.              Expires 22 April 2020                [Page 10]
+Auge, et al.             Expires 9 December 2020               [Page 10]
 
-Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
+Internet-Draft     Managing Anchorless Mobility in CCN         June 2020
 
 
                             +---+                      +---+
@@ -613,9 +613,9 @@ Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
 
 
 
-Augé, et al.              Expires 22 April 2020                [Page 11]
+Auge, et al.             Expires 9 December 2020               [Page 11]
 
-Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
+Internet-Draft     Managing Anchorless Mobility in CCN         June 2020
 
 
 4.  Notification protocol and scoped discovery
@@ -669,9 +669,9 @@ Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
 
 
 
-Augé, et al.              Expires 22 April 2020                [Page 12]
+Auge, et al.             Expires 9 December 2020               [Page 12]
 
-Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
+Internet-Draft     Managing Anchorless Mobility in CCN         June 2020
 
 
 4.2.  Scoped discovery
@@ -725,9 +725,9 @@ Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
 
 
 
-Augé, et al.              Expires 22 April 2020                [Page 13]
+Auge, et al.             Expires 9 December 2020               [Page 13]
 
-Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
+Internet-Draft     Managing Anchorless Mobility in CCN         June 2020
 
 
    *  an "Interest Type" (T) used to specify one of the four types of
@@ -781,9 +781,9 @@ Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
 
 
 
-Augé, et al.              Expires 22 April 2020                [Page 14]
+Auge, et al.             Expires 9 December 2020               [Page 14]
 
-Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
+Internet-Draft     Managing Anchorless Mobility in CCN         June 2020
 
 
 5.3.1.  Producer attachment and face creation
@@ -837,9 +837,9 @@ Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
 
 
 
-Augé, et al.              Expires 22 April 2020                [Page 15]
+Auge, et al.             Expires 9 December 2020               [Page 15]
 
-Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
+Internet-Draft     Managing Anchorless Mobility in CCN         June 2020
 
 
    - Send(Interest, Face) is used to send the specified Interest on the
@@ -847,7 +847,7 @@ Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
    in the TFIB, using the latest sequence number stored in the FIB
    entry, and schedule the entry to be checked for retransmissions.
 
-     | Algorithm 1:ForwardSpecialInterest(SpecialInterest SI,IngressFace F)
+     | Alg. 1:ForwardSpecialInterest(SpecialInterest SI,IngressFace F)
      |
      |  CheckValidity()
      |  // Acknowledge reception
@@ -893,9 +893,9 @@ Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
 
 
 
-Augé, et al.              Expires 22 April 2020                [Page 16]
+Auge, et al.             Expires 9 December 2020               [Page 16]
 
-Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
+Internet-Draft     Managing Anchorless Mobility in CCN         June 2020
 
 
 5.3.5.  Consumer request forwarding in case of producer discovery
@@ -905,7 +905,7 @@ Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
    The function SendToNeighbors(I) is responsible for broadcasting the
    Interest I to all neighboring PoAs.
 
-     | Algorithm 2:  InterestForward(Interest I, Origin face F)
+     | Alg. 2:  InterestForward(Interest I, Origin face F)
      |
      |  // Regular PIT and CS lookup
      |  e <- FIB.LongestPrefixMatch(I.name)
@@ -924,7 +924,8 @@ Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
      |  .   if hasProducerFace(e.NextHops) then
      |  .   .   ForwardingStrategy.process(I, e)
      |  .   // Otherwise iterate iif higher seq and breadcrumb
-     |  .   else if e.seq >= I.seq and EXISTS f |(f -> NULL) in e.TFIB then
+     |  .   else if e.seq >= I.seq and \
+     |             EXISTS f | (f -> NULL) in e.TFIB then
      |  .   .   I.seq <- e.seq
      |  .   .   SendToNeighbors(I)
 
@@ -945,15 +946,15 @@ Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
 
    It is worth observing that the discovery process is initiated only in
    the case of no valid next hop, and not every time a notification is
-   found in a router.  This is important to guarantee that the
 
 
 
-Augé, et al.              Expires 22 April 2020                [Page 17]
+Auge, et al.             Expires 9 December 2020               [Page 17]
 
-Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
+Internet-Draft     Managing Anchorless Mobility in CCN         June 2020
 
 
+   found in a router.  This is important to guarantee that the
    notification/discovery process does not affect IU propagation and
    completion.
 
@@ -998,24 +999,17 @@ Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
               J, ., A, ., A, ., B, ., M, ., and . S, "Ensuring
               connectivity via data plane mechanisms.", 2013.
 
-   [KITE]     Zhang, Y., Zhang, H., and L. Zhang, "Kite",
-              DOI 10.1145/2660129.2660159, Proceedings of the 1st
-              international conference on Information-centric networking
-
-
-
-
-Augé, et al.              Expires 22 April 2020                [Page 18]
-
-Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
-
-
-              - INC '14, 2014,
-              <https://doi.org/10.1145/2660129.2660159>.
-
    [MAPME]    Auge, J., Carofiglio, G., Grassi, G., Muscariello, L.,
               Pau, G., and X. Zeng, "MAP-Me: Managing Anchor-Less
               Producer Mobility in Content-Centric Networks",
+
+
+
+Auge, et al.             Expires 9 December 2020               [Page 18]
+
+Internet-Draft     Managing Anchorless Mobility in CCN         June 2020
+
+
               DOI 10.1109/tnsm.2018.2796720, IEEE Transactions on
               Network and Service Management Vol. 15, pp. 596-610, June
               2018, <https://doi.org/10.1109/tnsm.2018.2796720>.
@@ -1058,20 +1052,20 @@ Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
               Feng, B., Zhou, H., and Q. Xu, "Mobility support in Named
               Data Networking: a survey", DOI 10.1186/s13638-016-0715-0,
               EURASIP Journal on Wireless Communications and
-
-
-
-Augé, et al.              Expires 22 April 2020                [Page 19]
-
-Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
-
-
               Networking Vol. 2016, September 2016,
               <https://doi.org/10.1186/s13638-016-0715-0>.
 
    [SURVEY16b]
               Zhang, Y., Afanasyev, A., Burke, J., and L. Zhang, "A
               survey of mobility support in Named Data Networking",
+
+
+
+Auge, et al.             Expires 9 December 2020               [Page 19]
+
+Internet-Draft     Managing Anchorless Mobility in CCN         June 2020
+
+
               DOI 10.1109/infcomw.2016.7562050, 2016 IEEE Conference on
               Computer Communications Workshops (INFOCOM WKSHPS), April
               2016, <https://doi.org/10.1109/infcomw.2016.7562050>.
@@ -1086,7 +1080,7 @@ Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
 
 Authors' Addresses
 
-   Jordan Augé (editor)
+   Jordan Auge (editor)
    Cisco Systems Inc.
    11, rue Camille Desmoulins
    92130 Issy-les-Moulineaux
@@ -1113,15 +1107,6 @@ Authors' Addresses
    Email: lumuscar@cisco.com
 
 
-
-
-
-
-Augé, et al.              Expires 22 April 2020                [Page 20]
-
-Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
-
-
    Michele Papalini
    Cisco Systems Inc.
    11, rue Camille Desmoulins
@@ -1132,45 +1117,4 @@ Internet-Draft     Managing Anchorless Mobility in CCN      October 2019
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Augé, et al.              Expires 22 April 2020                [Page 21]
+Auge, et al.             Expires 9 December 2020               [Page 20]

@@ -5,10 +5,10 @@
 Internet Area WG                                          L. Muscariello
 Internet-Draft                                             G. Carofiglio
 Intended status: Informational                                   J. Augé
-Expires: 21 November 2020                                    M. Papalini
+Expires: 8 January 2021                                      M. Papalini
                                                               M. Sardara
                                                       Cisco Systems Inc.
-                                                             20 May 2020
+                                                             7 July 2020
 
 
                  Hybrid Information-Centric Networking
@@ -43,7 +43,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 21 November 2020.
+   This Internet-Draft will expire on 8 January 2021.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Muscariello, et al.     Expires 21 November 2020                [Page 1]
+Muscariello, et al.      Expires 8 January 2021                 [Page 1]
 
-Internet-Draft                    hICN                          May 2020
+Internet-Draft                    hICN                         July 2020
 
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Muscariello, et al.     Expires 21 November 2020                [Page 2]
+Muscariello, et al.      Expires 8 January 2021                 [Page 2]
 
-Internet-Draft                    hICN                          May 2020
+Internet-Draft                    hICN                         July 2020
 
 
    *  (i) the network can transport many different kinds of applications
@@ -165,9 +165,9 @@ Internet-Draft                    hICN                          May 2020
 
 
 
-Muscariello, et al.     Expires 21 November 2020                [Page 3]
+Muscariello, et al.      Expires 8 January 2021                 [Page 3]
 
-Internet-Draft                    hICN                          May 2020
+Internet-Draft                    hICN                         July 2020
 
 
    +---------------------+
@@ -221,9 +221,9 @@ Internet-Draft                    hICN                          May 2020
 
 
 
-Muscariello, et al.     Expires 21 November 2020                [Page 4]
+Muscariello, et al.      Expires 8 January 2021                 [Page 4]
 
-Internet-Draft                    hICN                          May 2020
+Internet-Draft                    hICN                         July 2020
 
 
    pipeline.  Requests and replies carry an immutable data name end-to-
@@ -277,9 +277,9 @@ Internet-Draft                    hICN                          May 2020
 
 
 
-Muscariello, et al.     Expires 21 November 2020                [Page 5]
+Muscariello, et al.      Expires 8 January 2021                 [Page 5]
 
-Internet-Draft                    hICN                          May 2020
+Internet-Draft                    hICN                         July 2020
 
 
    The producer and consumer sockets can implement different types of
@@ -333,9 +333,9 @@ Internet-Draft                    hICN                          May 2020
 
 
 
-Muscariello, et al.     Expires 21 November 2020                [Page 6]
+Muscariello, et al.      Expires 8 January 2021                 [Page 6]
 
-Internet-Draft                    hICN                          May 2020
+Internet-Draft                    hICN                         July 2020
 
 
    The consumer socket, on the other end, always performs reassembly of
@@ -389,9 +389,9 @@ Internet-Draft                    hICN                          May 2020
 
 
 
-Muscariello, et al.     Expires 21 November 2020                [Page 7]
+Muscariello, et al.      Expires 8 January 2021                 [Page 7]
 
-Internet-Draft                    hICN                          May 2020
+Internet-Draft                    hICN                         July 2020
 
 
    It is composed of a routable IPv6 /64 prefix as per [RFC3587] which
@@ -445,9 +445,9 @@ Internet-Draft                    hICN                          May 2020
 
 
 
-Muscariello, et al.     Expires 21 November 2020                [Page 8]
+Muscariello, et al.      Expires 8 January 2021                 [Page 8]
 
-Internet-Draft                    hICN                          May 2020
+Internet-Draft                    hICN                         July 2020
 
 
    0                   1                   2                   3
@@ -501,9 +501,9 @@ Internet-Draft                    hICN                          May 2020
 
 
 
-Muscariello, et al.     Expires 21 November 2020                [Page 9]
+Muscariello, et al.      Expires 8 January 2021                 [Page 9]
 
-Internet-Draft                    hICN                          May 2020
+Internet-Draft                    hICN                         July 2020
 
 
    0                   1                   2                   3
@@ -557,9 +557,9 @@ Internet-Draft                    hICN                          May 2020
 
 
 
-Muscariello, et al.     Expires 21 November 2020               [Page 10]
+Muscariello, et al.      Expires 8 January 2021                [Page 10]
 
-Internet-Draft                    hICN                          May 2020
+Internet-Draft                    hICN                         July 2020
 
 
          Figure 6: Transport header for data and interest packets.
@@ -613,9 +613,9 @@ Internet-Draft                    hICN                          May 2020
 
 
 
-Muscariello, et al.     Expires 21 November 2020               [Page 11]
+Muscariello, et al.      Expires 8 January 2021                [Page 11]
 
-Internet-Draft                    hICN                          May 2020
+Internet-Draft                    hICN                         July 2020
 
 
        Figure 7: Transport header for data and interest packets using
@@ -669,9 +669,9 @@ Internet-Draft                    hICN                          May 2020
 
 
 
-Muscariello, et al.     Expires 21 November 2020               [Page 12]
+Muscariello, et al.      Expires 8 January 2021                [Page 12]
 
-Internet-Draft                    hICN                          May 2020
+Internet-Draft                    hICN                         July 2020
 
 
 2.5.1.  Interest Path
@@ -725,9 +725,9 @@ Internet-Draft                    hICN                          May 2020
 
 
 
-Muscariello, et al.     Expires 21 November 2020               [Page 13]
+Muscariello, et al.      Expires 8 January 2021                [Page 13]
 
-Internet-Draft                    hICN                          May 2020
+Internet-Draft                    hICN                         July 2020
 
 
       Figure 8: The interest packet hits a matching data packet in the
@@ -781,9 +781,9 @@ Internet-Draft                    hICN                          May 2020
 
 
 
-Muscariello, et al.     Expires 21 November 2020               [Page 14]
+Muscariello, et al.      Expires 8 January 2021                [Page 14]
 
-Internet-Draft                    hICN                          May 2020
+Internet-Draft                    hICN                         July 2020
 
 
        RX
@@ -837,9 +837,9 @@ Internet-Draft                    hICN                          May 2020
 
 
 
-Muscariello, et al.     Expires 21 November 2020               [Page 15]
+Muscariello, et al.      Expires 8 January 2021                [Page 15]
 
-Internet-Draft                    hICN                          May 2020
+Internet-Draft                    hICN                         July 2020
 
 
    *  (i)IP or extension header fields either immutable in transit or
@@ -893,9 +893,9 @@ Internet-Draft                    hICN                          May 2020
 
 
 
-Muscariello, et al.     Expires 21 November 2020               [Page 16]
+Muscariello, et al.      Expires 8 January 2021                [Page 16]
 
-Internet-Draft                    hICN                          May 2020
+Internet-Draft                    hICN                         July 2020
 
 
    manifest must be signed to guarantee a level of security equivalent
@@ -949,9 +949,9 @@ Internet-Draft                    hICN                          May 2020
 
 
 
-Muscariello, et al.     Expires 21 November 2020               [Page 17]
+Muscariello, et al.      Expires 8 January 2021                [Page 17]
 
-Internet-Draft                    hICN                          May 2020
+Internet-Draft                    hICN                         July 2020
 
 
    Version:          8-bit index to indicate which validation algorithm
@@ -1005,9 +1005,9 @@ Internet-Draft                    hICN                          May 2020
 
 
 
-Muscariello, et al.     Expires 21 November 2020               [Page 18]
+Muscariello, et al.      Expires 8 January 2021                [Page 18]
 
-Internet-Draft                    hICN                          May 2020
+Internet-Draft                    hICN                         July 2020
 
 
    Theres is also an analogy between IPv6 anycast and the hICN interest
@@ -1061,9 +1061,9 @@ Internet-Draft                    hICN                          May 2020
 
 
 
-Muscariello, et al.     Expires 21 November 2020               [Page 19]
+Muscariello, et al.      Expires 8 January 2021                [Page 19]
 
-Internet-Draft                    hICN                          May 2020
+Internet-Draft                    hICN                         July 2020
 
 
               DOI 10.17487/RFC4302, December 2005,
@@ -1117,9 +1117,9 @@ Internet-Draft                    hICN                          May 2020
 
 
 
-Muscariello, et al.     Expires 21 November 2020               [Page 20]
+Muscariello, et al.      Expires 8 January 2021                [Page 20]
 
-Internet-Draft                    hICN                          May 2020
+Internet-Draft                    hICN                         July 2020
 
 
               INFOCOM Workshops, March 2012,
@@ -1173,9 +1173,9 @@ Authors' Addresses
 
 
 
-Muscariello, et al.     Expires 21 November 2020               [Page 21]
+Muscariello, et al.      Expires 8 January 2021                [Page 21]
 
-Internet-Draft                    hICN                          May 2020
+Internet-Draft                    hICN                         July 2020
 
 
    Email: gcarofig@cisco.com
@@ -1229,4 +1229,4 @@ Internet-Draft                    hICN                          May 2020
 
 
 
-Muscariello, et al.     Expires 21 November 2020               [Page 22]
+Muscariello, et al.      Expires 8 January 2021                [Page 22]

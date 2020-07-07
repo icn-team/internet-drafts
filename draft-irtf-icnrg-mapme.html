@@ -5,7 +5,7 @@
 <meta content="Common,Latin" name="scripts">
 <meta content="initial-scale=1.0" name="viewport">
 <title>MAP-Me : Managing Anchorless Mobility in Content Centric Networking</title>
-<meta content="Jordan Augé" name="author">
+<meta content="Jordan Auge" name="author">
 <meta content="Giovanna Carofiglio" name="author">
 <meta content="Luca Muscariello" name="author">
 <meta content="Michele Papalini" name="author">
@@ -23,7 +23,7 @@ and fast mobility.
     " name="description">
 <meta content="xml2rfc 2.40.1" name="generator">
 <meta content="Named-Data Networking" name="keyword">
-<meta content="draft-irtf-icnrg-mapme-04" name="ietf.draft">
+<meta content="draft-irtf-icnrg-mapme-05" name="ietf.draft">
 <link href="draft-irtf-icnrg-mapme.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
 <style type="text/css">@import url('https://martinthomson.github.io/i-d-template/fonts.css');
@@ -284,12 +284,14 @@ table {
   width: 100%;
   margin: 0 0 1em;
   border-collapse: collapse;
+}
+thead, tbody {
   border: 1px solid var(--line-color);
 }
 th, td {
   text-align: left;
   vertical-align: top;
-  padding: 0.5em 0.75em;
+  padding: 5px 10px;
 }
 th {
   text-align: left;
@@ -301,16 +303,15 @@ tr:nth-child(2n) > td {
 tr:nth-child(2n+1) > td {
   background-color: var(--highlight-color);
 }
-thead+tbody tr:nth-child(2n) > td {
+thead+tbody > tr:nth-child(2n) > td {
   background-color: var(--highlight-color);
 }
-thead+tbody tr:nth-child(2n+1) > td {
+thead+tbody > tr:nth-child(2n+1) > td {
   background-color: var(--background-color);
 }
 table caption {
   margin: 0;
   padding: 3px 1em;
-  border-top: 1px solid var(--line-color);
 }
 table p {
   /* XXX to avoid bottom margin on table row signifiers. If paragraphs should
@@ -485,14 +486,10 @@ hr.addr {
 }
 @media (min-width: 500px) {
   #authors-addresses > section {
-    display: relative;
-    padding: 32px 0 0;
     column-count: 2;
     column-gap: 20px;
   }
-  #name-authors-addresses {
-    position: absolute;
-    top: 0px;
+  #authors-addresses > section > h2 {
     column-span: all;
   }
   /* hack for break-inside: avoid-column */
@@ -502,21 +499,8 @@ hr.addr {
   }
 }
 
-/* temporary notes */
-.rfcEditorRemove::before {
-  position: absolute;
-  top: 0.2em;
-  right: 0.2em;
-  padding: 0.2em;
-  content: "The RFC Editor will remove this note";
-  color: #b76427;
-  background-color: rgba(249, 232, 105, 0.3);
-}
-.rfcEditorRemove {
-  position: relative;
-  padding-top: 1.8em;
-  background-color: rgba(249, 232, 105, 0.3);
-  border-radius: 3px;
+.rfcEditorRemove p:first-of-type {
+  font-style: italic;
 }
 .cref {
   background-color: rgba(249, 232, 105, 0.3);
@@ -839,11 +823,11 @@ table.left {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">Managing Anchorless Mobility in CCN</td>
-<td class="right">October 2019</td>
+<td class="right">June 2020</td>
 </tr></thead>
 <tfoot><tr>
-<td class="left">Augé, et al.</td>
-<td class="center">Expires 22 April 2020</td>
+<td class="left">Auge, et al.</td>
+<td class="center">Expires 9 December 2020</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -853,19 +837,19 @@ table.left {
 <dt class="label-workgroup">Workgroup:</dt>
 <dd class="workgroup">icnrg</dd>
 <dt class="label-internet-draft">Internet-Draft:</dt>
-<dd class="internet-draft">draft-irtf-icnrg-mapme-04</dd>
+<dd class="internet-draft">draft-irtf-icnrg-mapme-05</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2019-10" class="published">October 2019</time>
+<time datetime="2020-06" class="published">June 2020</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2020-04-22">22 April 2020</time></dd>
+<dd class="expires"><time datetime="2020-12-09">9 December 2020</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
-      <div class="author-name">J. Augé, <span class="editor">Ed.</span>
+      <div class="author-name">J. Auge, <span class="editor">Ed.</span>
 </div>
 <div class="org">Cisco Systems Inc.</div>
 </div>
@@ -917,7 +901,7 @@ and fast mobility.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 3 April 2020.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 3 December 2020.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -926,7 +910,7 @@ and fast mobility.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 <a href="#name-copyright-notice" class="section-name selfRef">Copyright Notice</a>
         </h2>
 <p id="section-boilerplate.2-1">
-            Copyright (c) 2019 IETF Trust and the persons identified as the
+            Copyright (c) 2020 IETF Trust and the persons identified as the
             document authors. All rights reserved.<a href="#section-boilerplate.2-1" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.2-2">
             This document is subject to BCP 78 and the IETF Trust's Legal
@@ -1706,7 +1690,7 @@ checked for retransmissions.<a href="#section-5.3.3-3" class="pilcrow">¶</a></p
 <figure id="figure-7">
             <div class="artwork art-text alignLeft" id="section-5.3.3-4.1">
 <pre>
-  | Algorithm 1:ForwardSpecialInterest(SpecialInterest SI,IngressFace F)
+  | Alg. 1:ForwardSpecialInterest(SpecialInterest SI,IngressFace F)
   |
   |  CheckValidity()
   |  // Acknowledge reception
@@ -1767,7 +1751,7 @@ to all neighboring PoAs.<a href="#section-5.3.5-1" class="pilcrow">¶</a></p>
 <figure id="figure-8">
             <div class="artwork art-text alignLeft" id="section-5.3.5-2.1">
 <pre>
-  | Algorithm 2:  InterestForward(Interest I, Origin face F)
+  | Alg. 2:  InterestForward(Interest I, Origin face F)
   |
   |  // Regular PIT and CS lookup
   |  e &lt;- FIB.LongestPrefixMatch(I.name)
@@ -1786,7 +1770,8 @@ to all neighboring PoAs.<a href="#section-5.3.5-1" class="pilcrow">¶</a></p>
   |  .   if hasProducerFace(e.NextHops) then
   |  .   .   ForwardingStrategy.process(I, e)
   |  .   // Otherwise iterate iif higher seq and breadcrumb
-  |  .   else if e.seq &gt;= I.seq and EXISTS f |(f -&gt; NULL) in e.TFIB then
+  |  .   else if e.seq &gt;= I.seq and \
+  |             EXISTS f | (f -&gt; NULL) in e.TFIB then
   |  .   .   I.seq &lt;- e.seq
   |  .   .   SendToNeighbors(I)
 </pre>
@@ -1875,9 +1860,6 @@ has led to this document.<a href="#section-7-1" class="pilcrow">¶</a></p>
 <dt id="DATAPLANE">[DATAPLANE]</dt>
 <dd>
 <span class="refAuthor">J, .</span><span class="refAuthor">, A, .</span><span class="refAuthor">, A, .</span><span class="refAuthor">, B, .</span><span class="refAuthor">, M, .</span><span class="refAuthor">, and . S</span>, <span class="refTitle">"Ensuring connectivity via data plane mechanisms."</span>, <time datetime="2013">2013</time>. </dd>
-<dt id="KITE">[KITE]</dt>
-<dd>
-<span class="refAuthor">Zhang, Y.</span><span class="refAuthor">, Zhang, H.</span><span class="refAuthor">, and L. Zhang</span>, <span class="refTitle">"Kite"</span>, <span class="seriesInfo">DOI 10.1145/2660129.2660159</span>, <span class="seriesInfo">Proceedings of the 1st international conference on Information-centric networking - INC '14</span>, <time datetime="2014">2014</time>, <span>&lt;<a href="https://doi.org/10.1145/2660129.2660159">https://doi.org/10.1145/2660129.2660159</a>&gt;</span>. </dd>
 <dt id="MAPME">[MAPME]</dt>
 <dd>
 <span class="refAuthor">Auge, J.</span><span class="refAuthor">, Carofiglio, G.</span><span class="refAuthor">, Grassi, G.</span><span class="refAuthor">, Muscariello, L.</span><span class="refAuthor">, Pau, G.</span><span class="refAuthor">, and X. Zeng</span>, <span class="refTitle">"MAP-Me: Managing Anchor-Less Producer Mobility in Content-Centric Networks"</span>, <span class="seriesInfo">DOI 10.1109/tnsm.2018.2796720</span>, <span class="seriesInfo">IEEE Transactions on Network and Service Management Vol. 15, pp. 596-610</span>, <time datetime="2018-06">June 2018</time>, <span>&lt;<a href="https://doi.org/10.1109/tnsm.2018.2796720">https://doi.org/10.1109/tnsm.2018.2796720</a>&gt;</span>. </dd>
@@ -1914,7 +1896,7 @@ has led to this document.<a href="#section-7-1" class="pilcrow">¶</a></p>
 <a href="#name-authors-addresses" class="section-name selfRef">Authors' Addresses</a>
       </h2>
 <address class="vcard">
-        <div dir="auto" class="left"><span class="fn nameRole">Jordan Augé (<span class="role">editor</span>)</span></div>
+        <div dir="auto" class="left"><span class="fn nameRole">Jordan Auge (<span class="role">editor</span>)</span></div>
 <div dir="auto" class="left"><span class="org">Cisco Systems Inc.</span></div>
 <div dir="auto" class="left"><span class="street-address">11, rue Camille Desmoulins</span></div>
 <div dir="auto" class="left">

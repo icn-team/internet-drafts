@@ -5,9 +5,9 @@
 DMM Working Group                                                J. Augé
 Internet-Draft                                             G. Carofiglio
 Intended status: Informational                            L. Muscariello
-Expires: 21 November 2020                                    M. Papalini
+Expires: 8 January 2021                                      M. Papalini
                                                                    Cisco
-                                                             20 May 2020
+                                                             7 July 2020
 
 
    Anchorless mobility management through hICN (hICN-AMM): Deployment
@@ -53,9 +53,9 @@ Status of This Memo
 
 
 
-Augé, et al.            Expires 21 November 2020                [Page 1]
+Augé, et al.             Expires 8 January 2021                 [Page 1]
 
-Internet-Draft      hICN mobility: deployment options           May 2020
+Internet-Draft      hICN mobility: deployment options          July 2020
 
 
    working documents as Internet-Drafts.  The list of current Internet-
@@ -66,7 +66,7 @@ Internet-Draft      hICN mobility: deployment options           May 2020
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 21 November 2020.
+   This Internet-Draft will expire on 8 January 2021.
 
 Copyright Notice
 
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Augé, et al.            Expires 21 November 2020                [Page 2]
+Augé, et al.             Expires 8 January 2021                 [Page 2]
 
-Internet-Draft      hICN mobility: deployment options           May 2020
+Internet-Draft      hICN mobility: deployment options          July 2020
 
 
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  22
@@ -165,9 +165,9 @@ Internet-Draft      hICN mobility: deployment options           May 2020
 
 
 
-Augé, et al.            Expires 21 November 2020                [Page 3]
+Augé, et al.             Expires 8 January 2021                 [Page 3]
 
-Internet-Draft      hICN mobility: deployment options           May 2020
+Internet-Draft      hICN mobility: deployment options          July 2020
 
 
    *  the flexibility of multi-source/multi-path connectionless pull-
@@ -221,9 +221,9 @@ Internet-Draft      hICN mobility: deployment options           May 2020
 
 
 
-Augé, et al.            Expires 21 November 2020                [Page 4]
+Augé, et al.             Expires 8 January 2021                 [Page 4]
 
-Internet-Draft      hICN mobility: deployment options           May 2020
+Internet-Draft      hICN mobility: deployment options          July 2020
 
 
                     , - ,              , - ,              , - ,
@@ -277,9 +277,9 @@ Internet-Draft      hICN mobility: deployment options           May 2020
 
 
 
-Augé, et al.            Expires 21 November 2020                [Page 5]
+Augé, et al.             Expires 8 January 2021                 [Page 5]
 
-Internet-Draft      hICN mobility: deployment options           May 2020
+Internet-Draft      hICN mobility: deployment options          July 2020
 
 
                     Figure 2: 5G reference architecture
@@ -333,9 +333,9 @@ Internet-Draft      hICN mobility: deployment options           May 2020
 
 
 
-Augé, et al.            Expires 21 November 2020                [Page 6]
+Augé, et al.             Expires 8 January 2021                 [Page 6]
 
-Internet-Draft      hICN mobility: deployment options           May 2020
+Internet-Draft      hICN mobility: deployment options          July 2020
 
 
        UE            5G-AN        N3         UPF        N9   UPF    N6
@@ -389,9 +389,9 @@ Internet-Draft      hICN mobility: deployment options           May 2020
 
 
 
-Augé, et al.            Expires 21 November 2020                [Page 7]
+Augé, et al.             Expires 8 January 2021                 [Page 7]
 
-Internet-Draft      hICN mobility: deployment options           May 2020
+Internet-Draft      hICN mobility: deployment options          July 2020
 
 
    identify hICN traffic (Interest and Data packets) and forward it to
@@ -445,9 +445,9 @@ Internet-Draft      hICN mobility: deployment options           May 2020
 
 
 
-Augé, et al.            Expires 21 November 2020                [Page 8]
+Augé, et al.             Expires 8 January 2021                 [Page 8]
 
-Internet-Draft      hICN mobility: deployment options           May 2020
+Internet-Draft      hICN mobility: deployment options          July 2020
 
 
    temporary copies.  In this way, hICN implicitly realizes
@@ -501,9 +501,9 @@ Internet-Draft      hICN mobility: deployment options           May 2020
 
 
 
-Augé, et al.            Expires 21 November 2020                [Page 9]
+Augé, et al.             Expires 8 January 2021                 [Page 9]
 
-Internet-Draft      hICN mobility: deployment options           May 2020
+Internet-Draft      hICN mobility: deployment options          July 2020
 
 
    accesses.  The consumer is able to use both network accesses in
@@ -557,9 +557,9 @@ Internet-Draft      hICN mobility: deployment options           May 2020
 
 
 
-Augé, et al.            Expires 21 November 2020               [Page 10]
+Augé, et al.             Expires 8 January 2021                [Page 10]
 
-Internet-Draft      hICN mobility: deployment options           May 2020
+Internet-Draft      hICN mobility: deployment options          July 2020
 
 
      +------------------+          +------------------+
@@ -613,9 +613,9 @@ Internet-Draft      hICN mobility: deployment options           May 2020
 
 
 
-Augé, et al.            Expires 21 November 2020               [Page 11]
+Augé, et al.             Expires 8 January 2021                [Page 11]
 
-Internet-Draft      hICN mobility: deployment options           May 2020
+Internet-Draft      hICN mobility: deployment options          July 2020
 
 
                                 +-- Loss Detection and Recovey
@@ -669,9 +669,9 @@ Internet-Draft      hICN mobility: deployment options           May 2020
 
 
 
-Augé, et al.            Expires 21 November 2020               [Page 12]
+Augé, et al.             Expires 8 January 2021                [Page 12]
 
-Internet-Draft      hICN mobility: deployment options           May 2020
+Internet-Draft      hICN mobility: deployment options          July 2020
 
 
 4.1.  hICN insertion at N9 interface only (option #2a)
@@ -725,9 +725,9 @@ Internet-Draft      hICN mobility: deployment options           May 2020
 
 
 
-Augé, et al.            Expires 21 November 2020               [Page 13]
+Augé, et al.             Expires 8 January 2021                [Page 13]
 
-Internet-Draft      hICN mobility: deployment options           May 2020
+Internet-Draft      hICN mobility: deployment options          July 2020
 
 
           Figure 10: Replacement of N9 interface - Protocol layers
@@ -781,9 +781,9 @@ Internet-Draft      hICN mobility: deployment options           May 2020
 
 
 
-Augé, et al.            Expires 21 November 2020               [Page 14]
+Augé, et al.             Expires 8 January 2021                [Page 14]
 
-Internet-Draft      hICN mobility: deployment options           May 2020
+Internet-Draft      hICN mobility: deployment options          July 2020
 
 
      +------------------+          +------------------+
@@ -837,9 +837,9 @@ Internet-Draft      hICN mobility: deployment options           May 2020
 
 
 
-Augé, et al.            Expires 21 November 2020               [Page 15]
+Augé, et al.             Expires 8 January 2021                [Page 15]
 
-Internet-Draft      hICN mobility: deployment options           May 2020
+Internet-Draft      hICN mobility: deployment options          July 2020
 
 
    *State and signaling reduction*
@@ -893,9 +893,9 @@ Internet-Draft      hICN mobility: deployment options           May 2020
 
 
 
-Augé, et al.            Expires 21 November 2020               [Page 16]
+Augé, et al.             Expires 8 January 2021                [Page 16]
 
-Internet-Draft      hICN mobility: deployment options           May 2020
+Internet-Draft      hICN mobility: deployment options          July 2020
 
 
 5.1.  hICN in a slice
@@ -949,9 +949,9 @@ Internet-Draft      hICN mobility: deployment options           May 2020
 
 
 
-Augé, et al.            Expires 21 November 2020               [Page 17]
+Augé, et al.             Expires 8 January 2021                [Page 17]
 
-Internet-Draft      hICN mobility: deployment options           May 2020
+Internet-Draft      hICN mobility: deployment options          July 2020
 
 
 5.3.  Network-contained deployment
@@ -1005,9 +1005,9 @@ Internet-Draft      hICN mobility: deployment options           May 2020
 
 
 
-Augé, et al.            Expires 21 November 2020               [Page 18]
+Augé, et al.             Expires 8 January 2021                [Page 18]
 
-Internet-Draft      hICN mobility: deployment options           May 2020
+Internet-Draft      hICN mobility: deployment options          July 2020
 
 
    In addition, it allows extending the reach of hICN on regular IP
@@ -1061,9 +1061,9 @@ Internet-Draft      hICN mobility: deployment options           May 2020
 
 
 
-Augé, et al.            Expires 21 November 2020               [Page 19]
+Augé, et al.             Expires 8 January 2021                [Page 19]
 
-Internet-Draft      hICN mobility: deployment options           May 2020
+Internet-Draft      hICN mobility: deployment options          July 2020
 
 
                                           +-----------------------+------+
@@ -1117,9 +1117,9 @@ Internet-Draft      hICN mobility: deployment options           May 2020
 
 
 
-Augé, et al.            Expires 21 November 2020               [Page 20]
+Augé, et al.             Expires 8 January 2021                [Page 20]
 
-Internet-Draft      hICN mobility: deployment options           May 2020
+Internet-Draft      hICN mobility: deployment options          July 2020
 
 
    [CICN]     io, Linux Foundation fd., "CICN project", 2018.
@@ -1173,17 +1173,17 @@ Internet-Draft      hICN mobility: deployment options           May 2020
 
 
 
-Augé, et al.            Expires 21 November 2020               [Page 21]
+Augé, et al.             Expires 8 January 2021                [Page 21]
 
-Internet-Draft      hICN mobility: deployment options           May 2020
+Internet-Draft      hICN mobility: deployment options          July 2020
 
 
    [I-D.muscariello-intarea-hicn]
-              Muscariello, L., Carofiglio, G., Auge, J., and M.
-              Papalini, "Hybrid Information-Centric Networking", Work in
-              Progress, Internet-Draft, draft-muscariello-intarea-hicn-
-              03, 30 October 2019, <http://www.ietf.org/internet-drafts/
-              draft-muscariello-intarea-hicn-03.txt>.
+              Muscariello, L., Carofiglio, G., Auge, J., Papalini, M.,
+              and M. Sardara, "Hybrid Information-Centric Networking",
+              Work in Progress, Internet-Draft, draft-muscariello-
+              intarea-hicn-04, 20 May 2020, <http://www.ietf.org/
+              internet-drafts/draft-muscariello-intarea-hicn-04.txt>.
 
    [TR.29.892-3GPP]
               3rd Generation Partnership Project (3GPP), "Study on User
@@ -1229,9 +1229,9 @@ Authors' Addresses
 
 
 
-Augé, et al.            Expires 21 November 2020               [Page 22]
+Augé, et al.             Expires 8 January 2021                [Page 22]
 
-Internet-Draft      hICN mobility: deployment options           May 2020
+Internet-Draft      hICN mobility: deployment options          July 2020
 
 
    Luca Muscariello
@@ -1285,4 +1285,4 @@ Internet-Draft      hICN mobility: deployment options           May 2020
 
 
 
-Augé, et al.            Expires 21 November 2020               [Page 23]
+Augé, et al.             Expires 8 January 2021                [Page 23]
