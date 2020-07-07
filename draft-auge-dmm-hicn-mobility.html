@@ -5,7 +5,7 @@
 <meta content="Common,Latin" name="scripts">
 <meta content="initial-scale=1.0" name="viewport">
 <title>Anchorless mobility through hICN</title>
-<meta content="Jordan Augé" name="author">
+<meta content="Jordan Auge" name="author">
 <meta content="Giovanna Carofiglio" name="author">
 <meta content="Luca Muscariello" name="author">
 <meta content="Michele Papalini" name="author">
@@ -13,15 +13,14 @@
        This document first discusses the use of locators and identifiers in mobility
 management architectures, and their implication on various anchorless
 properties. A new architecture is then proposed that is purely based on
-identifiers, and more specifically names as defined in Hybrid-ICN (hICN)
- . The document then focuses on two main cases:
-the end-point sends data (data producer) or the end-point receives data (data
-consumer). These two cases are taken into account entirely to provide anchorless
-mobility management in hICN. 
+identifiers, and more specifically names as defined in Hybrid-ICN (hICN). The
+document then focuses on two main cases: the end-point sends data (data
+producer) or the end-point receives data (data consumer). These two cases are
+taken into account entirely to provide anchorless mobility management in hICN. 
     " name="description">
 <meta content="xml2rfc 2.40.1" name="generator">
 <meta content="Hybrid ICN" name="keyword">
-<meta content="draft-auge-dmm-hicn-mobility-03" name="ietf.draft">
+<meta content="draft-auge-dmm-hicn-mobility-04" name="ietf.draft">
 <link href="draft-auge-dmm-hicn-mobility.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
 <style type="text/css">@import url('https://martinthomson.github.io/i-d-template/fonts.css');
@@ -824,8 +823,8 @@ table.left {
 <td class="right">July 2020</td>
 </tr></thead>
 <tfoot><tr>
-<td class="left">Augé, et al.</td>
-<td class="center">Expires 8 January 2021</td>
+<td class="left">Auge, et al.</td>
+<td class="center">Expires 9 January 2021</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -835,19 +834,19 @@ table.left {
 <dt class="label-workgroup">Workgroup:</dt>
 <dd class="workgroup">DMM Working Group</dd>
 <dt class="label-internet-draft">Internet-Draft:</dt>
-<dd class="internet-draft">draft-auge-dmm-hicn-mobility-03</dd>
+<dd class="internet-draft">draft-auge-dmm-hicn-mobility-04</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2020-07-07" class="published">7 July 2020</time>
+<time datetime="2020-07-08" class="published">8 July 2020</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2021-01-08">8 January 2021</time></dd>
+<dd class="expires"><time datetime="2021-01-09">9 January 2021</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
-      <div class="author-name">J. Augé</div>
+      <div class="author-name">J. Auge</div>
 <div class="org">Cisco</div>
 </div>
 <div class="author">
@@ -871,11 +870,10 @@ table.left {
 <p id="section-abstract-1">This document first discusses the use of locators and identifiers in mobility
 management architectures, and their implication on various anchorless
 properties. A new architecture is then proposed that is purely based on
-identifiers, and more specifically names as defined in Hybrid-ICN (hICN)
-<span>[<a href="#I-D.muscariello-intarea-hicn" class="xref">I-D.muscariello-intarea-hicn</a>]</span>. The document then focuses on two main cases:
-the end-point sends data (data producer) or the end-point receives data (data
-consumer). These two cases are taken into account entirely to provide anchorless
-mobility management in hICN.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+identifiers, and more specifically names as defined in Hybrid-ICN (hICN). The
+document then focuses on two main cases: the end-point sends data (data
+producer) or the end-point receives data (data consumer). These two cases are
+taken into account entirely to provide anchorless mobility management in hICN.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 </section>
 <div id="status-of-memo">
 <section id="section-boilerplate.1">
@@ -896,7 +894,7 @@ mobility management in hICN.<a href="#section-abstract-1" class="pilcrow">¶</a>
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 8 January 2021.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 9 January 2021.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1069,7 +1067,7 @@ mobility management in hICN.<a href="#section-abstract-1" class="pilcrow">¶</a>
 <p id="section-1-1">New usages of the network and the rapid growth of the Mobile Internet calls to
 reconsider the way we deploy and operate IP networks, where mobility is not
 built into the design, but rather added as an afterthought. Notable examples are
-IETF Mobile IP and its variants <span>[<a href="#RFC3344" class="xref">RFC3344</a>]</span> and <span>[<a href="#RFC3775" class="xref">RFC3775</a>]</span> 3GPP GTP-based
+IETF Mobile IP and its variants <span>[<a href="#RFC5944" class="xref">RFC5944</a>]</span> and <span>[<a href="#RFC2275" class="xref">RFC2275</a>]</span> 3GPP GTP-based
 architecture <span>[<a href="#TS29.274" class="xref">TS29.274</a>]</span>, both based on tunnelling and encapsulation.<a href="#section-1-1" class="pilcrow">¶</a></p>
 <p id="section-1-2">One identified difficulty in proposing mobility models for IP lies in the
 semantic overloading of IP addresses which are both host identifiers, and
@@ -1433,7 +1431,7 @@ reach the producer's new location in AR2.<a href="#section-5.3.1-2.5" class="pil
 <figure id="figure-1">
             <div class="artwork art-text alignLeft" id="section-5.3.1-3.1">
 <pre>
-    P (radio link) AR1             AR2             GW          Internet
+    P (radio link) AR1             AR2             GW        Internet
     |               |               |               |              |
 1   |               |               |               |&lt;~~~~~~~~~~~~~|
     |               |&lt;~~~~~~~~~~~~~~|~~~~~~~~~~~~~~~|  Interest    |
@@ -1559,7 +1557,7 @@ to the producer before it had the time to complete the update.<a href="#section-
 <figure id="figure-2">
             <div class="artwork art-text alignLeft" id="section-5.4.2-2.1">
 <pre>
-    P (radio link) AR1             AR2             GW          Internet
+    P (radio link) AR1             AR2             GW        Internet
     |               |               |               |              |
 1   |               |               |               |&lt;~~~~~~~~~~~~~|
     |               |&lt;~~~~~~~~~~~~~~|~~~~~~~~~~~~~~~|   Interest   |
@@ -1692,12 +1690,12 @@ into AP or eNB when it makes more sense.<a href="#section-6.3-2" class="pilcrow"
 <figure id="figure-3">
           <div class="artwork art-text alignLeft" id="section-6.3-3.1">
 <pre>
-             +-----+                        .-~-.
-         _,--+ AR1 +--,             .- ~ ~-(     )_ _
-+-----+ /    +-----+   \ +----+    |                  ~-.        +-----+
-|  C  +=                =+ GW +----+       Internet       \--//--+  P  |
-+-----+ \_   +-----+   / +----+     \                    .'      +-----+
-          '--+ AR2 +--'              ~- . ___________.-~
+             +-----+                      .--.
+         _,--+ AR1 +--,            .-~ ~-(    )_ _
++-----+ /    +-----+   \ +----+   |                ~-.        +-----+
+|  C  +=                =+ GW +---+     Internet       \--//--+  P  |
++-----+ \_   +-----+   / +----+    \                  .'      +-----+
+          '--+ AR2 +--'              ~-.__________.-~
              +-----+
 </pre>
 </div>
@@ -1712,12 +1710,12 @@ the Internet.<a href="#section-6.3-4" class="pilcrow">¶</a></p>
 <figure id="figure-4">
           <div class="artwork art-text alignLeft" id="section-6.3-5.1">
 <pre>
-    C              AR1             AR2             GW          Internet
+    C              AR1             AR2             GW        Internet
     |               |               |               |              |
 1   |~~~~~~~~~~~~~~&gt;|               |               |              |
     |  Interest X   |~~~~~~~~~~~~~~~|~~~~~~~~~~~~~~&gt;|              |
     |               |               |               |~~~~~~~~~~~~~&gt;|
-    |               |               |               |              |...
+    |               |               |               |             ...
     |               |               |               |&lt;-------------|
     |     Data X    |&lt;--------------|---------------|              |
     |&lt;--------------|               |               |              |
@@ -1766,13 +1764,13 @@ with a lossy channel (eg. WiFi) between the mobile and the first access router.<
 <figure id="figure-5">
           <div class="artwork art-text alignLeft" id="section-6.4-2.1">
 <pre>
-    C (radio link) AR1             AR2             GW          Internet
+    C (radio link) AR1             AR2             GW        Internet
     |               |               |               |              |
 1   |~~~~~~~X       |               |               |              |
 2   |~~~~~~~~~~~~~~&gt;|               |               |              |
     |  Interest     |~~~~~~~~~~~~~~~|~~~~~~~~~~~~~~&gt;|              |
     |               |               |               |~~~~~~~~~~~~~&gt;|
-    |               |               |               |              | ...
+    |               |               |               |             ...
     |               |               |               |&lt;-------------|
     |     Data      |&lt;--------------|---------------|              |
 3   |       X-------|               |               |              |
@@ -1819,7 +1817,7 @@ perturb the feedback loop by unnecessarily reducing the transfer rate.<a href="#
 <figure id="figure-6">
           <div class="artwork art-text alignLeft" id="section-6.5-3.1">
 <pre>
-    C (radio link) AR1             AR2             GW          Internet
+    C (radio link) AR1             AR2             GW        Internet
     |               |               |               |              |
 1   |~~~~~~~~~~~~~~&gt;|               |               |              |
     |  Interest     |~~~~~~~~~~~~~~~|~~~~~~~~~~~~~~&gt;|              |
@@ -1875,25 +1873,25 @@ transparently for the application.<a href="#section-6.6-2" class="pilcrow">¶</a
 <figure id="figure-7">
           <div class="artwork art-text alignLeft" id="section-6.6-3.1">
 <pre>
-   C          WiFi          GW         LTE enB        PGW       Internet
-   |            |            |            |            |            |
-1  |~~~~~~~~~~~&gt;|            |            |            |            |
-   |            |~~~~~~~~~~~&gt;|            |            |            |
-   |            |            |~~~~~~~~~~~~|~~~~~~~~~~~~|~~~~~~~~~~~&gt;|
-   |            |            |            |            |            |
-   |            |            |&lt;-----------|------------|------------|
-   |            |&lt;-----------|            |            |            |
-   |&lt;-----------|            |            |            |            |
-2  |            X            |            |            |            |
-3  |~~~~~~~~~~~~X~~~~~~~~~~~~|~~~~~~~~~~~&gt;|            |            |
-   |            X            |            |~~~~~~~~~~~&gt;|            |
-   |            X            |            |            |~~~~~~~~~~~&gt;|
-   |            |            |            |            |            |
-   |            |            |            |            |&lt;-----------|
-   |            |            |            |&lt;-----------|            |
-   |&lt;-----------|------------|------------|            |            |
-4  |~~~~~~~~~~~&gt;|...         |            |            |            |
-   |            |            |            |            |            |
+  C          WiFi          GW         LTE enB        PGW     Internet
+  |            |            |            |            |            |
+1 |~~~~~~~~~~~&gt;|            |            |            |            |
+  |            |~~~~~~~~~~~&gt;|            |            |            |
+  |            |            |~~~~~~~~~~~~|~~~~~~~~~~~~|~~~~~~~~~~~&gt;|
+  |            |            |            |            |            |
+  |            |            |&lt;-----------|------------|------------|
+  |            |&lt;-----------|            |            |            |
+  |&lt;-----------|            |            |            |            |
+2 |            X            |            |            |            |
+3 |~~~~~~~~~~~~X~~~~~~~~~~~~|~~~~~~~~~~~&gt;|            |            |
+  |            X            |            |~~~~~~~~~~~&gt;|            |
+  |            X            |            |            |~~~~~~~~~~~&gt;|
+  |            |            |            |            |            |
+  |            |            |            |            |&lt;-----------|
+  |            |            |            |&lt;-----------|            |
+  |&lt;-----------|------------|------------|            |            |
+4 |~~~~~~~~~~~&gt;|...         |            |            |            |
+  |            |            |            |            |            |
 </pre>
 </div>
 <figcaption><a href="#figure-7" class="selfRef">Figure 7</a></figcaption></figure>
@@ -1951,21 +1949,21 @@ optimal split. Note that in that case the relative distances on the vertical
 axis have not been respected here for readability.<a href="#section-6.7-3" class="pilcrow">¶</a></p>
 <div class="artwork art-text alignLeft" id="section-6.7-4">
 <pre>
-   C          WiFi          GW         LTE enB        PGW       Internet
-   |            |            |            |            |            |
-   |~~~~~~~~~~~~|~~~~~~~~~~~~|~~~~~~~~~~~&gt;|            |            |
-   |~~~~~~~~~~~&gt;|            |            |~~~~~~~~~~~&gt;|~~~~~~~~~~~&gt;|
-   |            |~~~~~~~~~~~&gt;|            |            |            |
-   |            |            |~~~~~~~~~~~~|~~~~~~~~~~~~|~~~~~~~~~~~&gt;|
-   |            |            |            |            |            |
-   |            |            |            |            |&lt;-----------|
-   |            |            |            |&lt;-----------|            |
-   |&lt;-----------|------------|------------|            |            |
-   |            |            |&lt;-----------|------------|------------|
-   |            |&lt;-----------|            |            |            |
-   |&lt;-----------|            |            |            |            |
-   |            |            |            |            |            |
-   |            |            |            |            |            |
+  C          WiFi          GW         LTE enB        PGW     Internet
+  |            |            |            |            |            |
+  |~~~~~~~~~~~~|~~~~~~~~~~~~|~~~~~~~~~~~&gt;|            |            |
+  |~~~~~~~~~~~&gt;|            |            |~~~~~~~~~~~&gt;|~~~~~~~~~~~&gt;|
+  |            |~~~~~~~~~~~&gt;|            |            |            |
+  |            |            |~~~~~~~~~~~~|~~~~~~~~~~~~|~~~~~~~~~~~&gt;|
+  |            |            |            |            |            |
+  |            |            |            |            |&lt;-----------|
+  |            |            |            |&lt;-----------|            |
+  |&lt;-----------|------------|------------|            |            |
+  |            |            |&lt;-----------|------------|------------|
+  |            |&lt;-----------|            |            |            |
+  |&lt;-----------|            |            |            |            |
+  |            |            |            |            |            |
+  |            |            |            |            |            |
 </pre><a href="#section-6.7-4" class="pilcrow">¶</a>
 </div>
 <p id="section-6.7-5">Fine grained control from the application allows fully exploiting available
@@ -2013,32 +2011,32 @@ AR2.<a href="#section-6.8-4" class="pilcrow">¶</a></p>
 <figure id="figure-9">
           <div class="artwork art-text alignLeft" id="section-6.8-5.1">
 <pre>
-C         P         AR1        AR2        AR3         GW  X    Internet
-|         |          |          |          |          |   X         |
-|~~~~~~~~~|~~~~~~~~~~|~~~~~~~~~~|~~~~~~~~~&gt;|          |   X         |
-|         |          |          |          |~~~~~~~~~&gt;|   X         |
-|         |          |&lt;~~~~~~~~~|~~~~~~~~~~|~~~~~~~~~~|   X         |
-|         |&lt;~~~~~~~~~|          |          |          |   X         |
-|         |---------&gt;|          |          |          |   X         |
-|         |          |----------|----------|---------&gt;|   X         |
-|         |          |          |          |&lt;---------|   X         |
-|&lt;--------|----------|----------|----------|          |   X         |
-|         |          |          |          |          |   X         |
-|         |..........-          |          |          |   X         |
-|         |..........|..........+          |          |   X         |
-|         |==========|=========&gt;o          |          |   X   NO    |
-|         | Update   |          |==========|=========&gt;o   X TRAFFIC |
-|         |          o&lt;=========|==========|==========|   X         |
-|         |          |          |          |          |   X         |
-|~~~~~~~~~|~~~~~~~~~~|~~~~~~~~~~|~~~~~~~~~&gt;|          |   X         |
-|         |          |          |          |~~~~~~~~~&gt;|   X         |
-|         |          |          |&lt;~~~~~~~~~|~~~~~~~~~~|   X         |
-|         |&lt;~~~~~~~~~|~~~~~~~~~~|          |          |   X         |
-|         |----------|---------&gt;|          |          |   X         |
-|         |          |          |----------|---------&gt;|   X         |
-|         |          |          |          |&lt;---------|   X         |
-|&lt;--------|----------|----------|----------|          |   X         |
-|         |          |          |          |          |   X         |
+C         P         AR1        AR2        AR3        GW  X   Internet
+|         |          |          |          |          |  X         |
+|~~~~~~~~~|~~~~~~~~~~|~~~~~~~~~~|~~~~~~~~~&gt;|          |  X         |
+|         |          |          |          |~~~~~~~~~&gt;|  X         |
+|         |          |&lt;~~~~~~~~~|~~~~~~~~~~|~~~~~~~~~~|  X         |
+|         |&lt;~~~~~~~~~|          |          |          |  X         |
+|         |---------&gt;|          |          |          |  X         |
+|         |          |----------|----------|---------&gt;|  X         |
+|         |          |          |          |&lt;---------|  X         |
+|&lt;--------|----------|----------|----------|          |  X         |
+|         |          |          |          |          |  X         |
+|         |..........-          |          |          |  X         |
+|         |..........|..........+          |          |  X         |
+|         |==========|=========&gt;o          |          |  X   NO    |
+|         | Update   |          |==========|=========&gt;o  X TRAFFIC |
+|         |          o&lt;=========|==========|==========|  X         |
+|         |          |          |          |          |  X         |
+|~~~~~~~~~|~~~~~~~~~~|~~~~~~~~~~|~~~~~~~~~&gt;|          |  X         |
+|         |          |          |          |~~~~~~~~~&gt;|  X         |
+|         |          |          |&lt;~~~~~~~~~|~~~~~~~~~~|  X         |
+|         |&lt;~~~~~~~~~|~~~~~~~~~~|          |          |  X         |
+|         |----------|---------&gt;|          |          |  X         |
+|         |          |          |----------|---------&gt;|  X         |
+|         |          |          |          |&lt;---------|  X         |
+|&lt;--------|----------|----------|----------|          |  X         |
+|         |          |          |          |          |  X         |
 </pre>
 </div>
 <figcaption><a href="#figure-9" class="selfRef">Figure 9</a>:
@@ -2140,12 +2138,9 @@ management of micro-mobility; its extension to multiple domains is out of scope.
 <a href="#section-9.1" class="section-number selfRef">9.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
         </h3>
 <dl class="references">
-<dt id="RFC3344">[RFC3344]</dt>
+<dt id="RFC2275">[RFC2275]</dt>
 <dd>
-<span class="refAuthor">Perkins, C., Ed.</span>, <span class="refTitle">"IP Mobility Support for IPv4"</span>, <span class="seriesInfo">RFC 3344</span>, <span class="seriesInfo">DOI 10.17487/RFC3344</span>, <time datetime="2002-08">August 2002</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc3344">https://www.rfc-editor.org/info/rfc3344</a>&gt;</span>. </dd>
-<dt id="RFC3775">[RFC3775]</dt>
-<dd>
-<span class="refAuthor">Johnson, D.</span><span class="refAuthor">, Perkins, C.</span><span class="refAuthor">, and J. Arkko</span>, <span class="refTitle">"Mobility Support in IPv6"</span>, <span class="seriesInfo">RFC 3775</span>, <span class="seriesInfo">DOI 10.17487/RFC3775</span>, <time datetime="2004-06">June 2004</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc3775">https://www.rfc-editor.org/info/rfc3775</a>&gt;</span>. </dd>
+<span class="refAuthor">Wijnen, B.</span><span class="refAuthor">, Presuhn, R.</span><span class="refAuthor">, and K. McCloghrie</span>, <span class="refTitle">"View-based Access Control Model (VACM) for the Simple Network Management Protocol (SNMP)"</span>, <span class="seriesInfo">RFC 2275</span>, <span class="seriesInfo">DOI 10.17487/RFC2275</span>, <time datetime="1998-01">January 1998</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc2275">https://www.rfc-editor.org/info/rfc2275</a>&gt;</span>. </dd>
 <dt id="RFC3971">[RFC3971]</dt>
 <dd>
 <span class="refAuthor">Arkko, J., Ed.</span><span class="refAuthor">, Kempf, J.</span><span class="refAuthor">, Zill, B.</span><span class="refAuthor">, and P. Nikander</span>, <span class="refTitle">"SEcure Neighbor Discovery (SEND)"</span>, <span class="seriesInfo">RFC 3971</span>, <span class="seriesInfo">DOI 10.17487/RFC3971</span>, <time datetime="2005-03">March 2005</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc3971">https://www.rfc-editor.org/info/rfc3971</a>&gt;</span>. </dd>
@@ -2161,6 +2156,9 @@ management of micro-mobility; its extension to multiple domains is out of scope.
 <dt id="RFC5909">[RFC5909]</dt>
 <dd>
 <span class="refAuthor">Combes, J-M.</span><span class="refAuthor">, Krishnan, S.</span><span class="refAuthor">, and G. Daley</span>, <span class="refTitle">"Securing Neighbor Discovery Proxy: Problem Statement"</span>, <span class="seriesInfo">RFC 5909</span>, <span class="seriesInfo">DOI 10.17487/RFC5909</span>, <time datetime="2010-07">July 2010</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc5909">https://www.rfc-editor.org/info/rfc5909</a>&gt;</span>. </dd>
+<dt id="RFC5944">[RFC5944]</dt>
+<dd>
+<span class="refAuthor">Perkins, C., Ed.</span>, <span class="refTitle">"IP Mobility Support for IPv4, Revised"</span>, <span class="seriesInfo">RFC 5944</span>, <span class="seriesInfo">DOI 10.17487/RFC5944</span>, <time datetime="2010-11">November 2010</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc5944">https://www.rfc-editor.org/info/rfc5944</a>&gt;</span>. </dd>
 <dt id="RFC6115">[RFC6115]</dt>
 <dd>
 <span class="refAuthor">Li, T., Ed.</span>, <span class="refTitle">"Recommendation for a Routing Architecture"</span>, <span class="seriesInfo">RFC 6115</span>, <span class="seriesInfo">DOI 10.17487/RFC6115</span>, <time datetime="2011-02">February 2011</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc6115">https://www.rfc-editor.org/info/rfc6115</a>&gt;</span>. </dd>
@@ -2207,15 +2205,9 @@ management of micro-mobility; its extension to multiple domains is out of scope.
 <dt id="I-D.vonhugo-5gangip-ip-issues">[I-D.vonhugo-5gangip-ip-issues]</dt>
 <dd>
 <span class="refAuthor">Hugo, D.</span><span class="refAuthor"> and B. Sarikaya</span>, <span class="refTitle">"Review on issues in discussion of next generation converged networks (5G) from an IP point of view"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-vonhugo-5gangip-ip-issues-03</span>, <time datetime="2017-03-13">13 March 2017</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-vonhugo-5gangip-ip-issues-03.txt">http://www.ietf.org/internet-drafts/draft-vonhugo-5gangip-ip-issues-03.txt</a>&gt;</span>. </dd>
-<dt id="KITE">[KITE]</dt>
-<dd>
-<span class="refAuthor">Zhang, Y.</span><span class="refAuthor">, Zhang, H.</span><span class="refAuthor">, and L. Zhang</span>, <span class="refTitle">"Kite"</span>, <span class="seriesInfo">DOI 10.1145/2660129.2660159</span>, <span class="seriesInfo">Proceedings of the 1st international conference on Information-centric networking - INC '14</span>, <time datetime="2014">2014</time>, <span>&lt;<a href="https://doi.org/10.1145/2660129.2660159">https://doi.org/10.1145/2660129.2660159</a>&gt;</span>. </dd>
 <dt id="MAPME">[MAPME]</dt>
 <dd>
 <span class="refAuthor">Auge, J.</span><span class="refAuthor">, Carofiglio, G.</span><span class="refAuthor">, Grassi, G.</span><span class="refAuthor">, Muscariello, L.</span><span class="refAuthor">, Pau, G.</span><span class="refAuthor">, and X. Zeng</span>, <span class="refTitle">"MAP-Me: Managing Anchor-Less Producer Mobility in Content-Centric Networks"</span>, <span class="seriesInfo">DOI 10.1109/tnsm.2018.2796720</span>, <span class="seriesInfo">IEEE Transactions on Network and Service Management Vol. 15, pp. 596-610</span>, <time datetime="2018-06">June 2018</time>, <span>&lt;<a href="https://doi.org/10.1109/tnsm.2018.2796720">https://doi.org/10.1109/tnsm.2018.2796720</a>&gt;</span>. </dd>
-<dt id="ravindran20175g">[ravindran20175g]</dt>
-<dd>
-<span class="refAuthor">Ravindran, R.</span><span class="refAuthor">, Chakraborti, A.</span><span class="refAuthor">, Amin, S.</span><span class="refAuthor">, Azgin, A.</span><span class="refAuthor">, and G. Wang</span>, <span class="refTitle">"5G-ICN: Delivering ICN Services over 5G Using Network Slicing"</span>, <span class="seriesInfo">DOI 10.1109/mcom.2017.1600938</span>, <span class="seriesInfo">IEEE Communications Magazine Vol. 55, pp. 101-107</span>, <time datetime="2017-05">May 2017</time>, <span>&lt;<a href="https://doi.org/10.1109/mcom.2017.1600938">https://doi.org/10.1109/mcom.2017.1600938</a>&gt;</span>. </dd>
 <dt id="SEC">[SEC]</dt>
 <dd>
 <span class="refAuthor">Compagno, A.</span><span class="refAuthor">, Zeng, X.</span><span class="refAuthor">, Muscariello, L.</span><span class="refAuthor">, Carofiglio, G.</span><span class="refAuthor">, and J. Augé</span>, <span class="refTitle">"Secure producer mobility in information-centric network"</span>, <span class="seriesInfo">DOI 10.1145/3125719.3125725</span>, <span class="seriesInfo">Proceedings of the 4th ACM Conference on Information-Centric Networking</span>, <time datetime="2017-09">September 2017</time>, <span>&lt;<a href="https://doi.org/10.1145/3125719.3125725">https://doi.org/10.1145/3125719.3125725</a>&gt;</span>. </dd>
@@ -2225,15 +2217,9 @@ management of micro-mobility; its extension to multiple domains is out of scope.
 <dt id="SURVEY2">[SURVEY2]</dt>
 <dd>
 <span class="refAuthor">Feng, B.</span><span class="refAuthor">, Zhou, H.</span><span class="refAuthor">, and Q. Xu</span>, <span class="refTitle">"Mobility support in Named Data Networking: a survey"</span>, <span class="seriesInfo">DOI 10.1186/s13638-016-0715-0</span>, <span class="seriesInfo">EURASIP Journal on Wireless Communications and Networking Vol. 2016</span>, <time datetime="2016-09">September 2016</time>, <span>&lt;<a href="https://doi.org/10.1186/s13638-016-0715-0">https://doi.org/10.1186/s13638-016-0715-0</a>&gt;</span>. </dd>
-<dt id="SURVEYCC">[SURVEYCC]</dt>
-<dd>
-<span class="refAuthor">Ren, Y.</span><span class="refAuthor">, Li, J.</span><span class="refAuthor">, Shi, S.</span><span class="refAuthor">, Li, L.</span><span class="refAuthor">, Wang, G.</span><span class="refAuthor">, and B. Zhang</span>, <span class="refTitle">"Congestion control in named data networking - A survey"</span>, <span class="seriesInfo">DOI 10.1016/j.comcom.2016.04.017</span>, <span class="seriesInfo">Computer Communications Vol. 86, pp. 1-11</span>, <time datetime="2016-07">July 2016</time>, <span>&lt;<a href="https://doi.org/10.1016/j.comcom.2016.04.017">https://doi.org/10.1016/j.comcom.2016.04.017</a>&gt;</span>. </dd>
 <dt id="SURVEYICN">[SURVEYICN]</dt>
 <dd>
 <span class="refAuthor">Tyson, G.</span><span class="refAuthor">, Sastry, N.</span><span class="refAuthor">, Rimac, I.</span><span class="refAuthor">, Cuevas, R.</span><span class="refAuthor">, and A. Mauthe</span>, <span class="refTitle">"A survey of mobility in information-centric networks"</span>, <span class="seriesInfo">DOI 10.1145/2248361.2248363</span>, <span class="seriesInfo">Proceedings of the 1st ACM workshop on Emerging Name-Oriented Mobile Networking Design - Architecture, Algorithms, and Applications - NoM '12</span>, <time datetime="2012">2012</time>, <span>&lt;<a href="https://doi.org/10.1145/2248361.2248363">https://doi.org/10.1145/2248361.2248363</a>&gt;</span>. </dd>
-<dt id="TS23.501">[TS23.501]</dt>
-<dd>
-<span class="refTitle">"Technical Specification Group Services and System Aspects; System Architecture for the 5G System (Rel.15)"</span>, <time datetime="n.d.">n.d.</time>. </dd>
 <dt id="TS29.274">[TS29.274]</dt>
 <dd>
 <span class="refTitle">"3GPP Evolved Packet System (EPS); Evolved General Packet Radio Service (GPRS) Tunnelling Protocol for Control plane (GTPv2-C); Stage 3"</span>, <time datetime="n.d.">n.d.</time>. </dd>
@@ -2246,7 +2232,7 @@ management of micro-mobility; its extension to multiple domains is out of scope.
 <a href="#name-authors-addresses" class="section-name selfRef">Authors' Addresses</a>
       </h2>
 <address class="vcard">
-        <div dir="auto" class="left"><span class="fn nameRole">Jordan Augé</span></div>
+        <div dir="auto" class="left"><span class="fn nameRole">Jordan Auge</span></div>
 <div dir="auto" class="left"><span class="org">Cisco Systems</span></div>
 <div dir="auto" class="left"><span class="street-address">11, rue Camille Desmoulins</span></div>
 <div dir="auto" class="left">

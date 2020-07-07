@@ -2,16 +2,16 @@
 
 
 
-DMM Working Group                                                J. Augé
+DMM Working Group                                                J. Auge
 Internet-Draft                                             G. Carofiglio
 Intended status: Informational                            L. Muscariello
-Expires: 8 January 2021                                      M. Papalini
+Expires: 9 January 2021                                      M. Papalini
                                                                    Cisco
-                                                             7 July 2020
+                                                             8 July 2020
 
 
                     Anchorless mobility through hICN
-                    draft-auge-dmm-hicn-mobility-03
+                    draft-auge-dmm-hicn-mobility-04
 
 Abstract
 
@@ -19,11 +19,10 @@ Abstract
    mobility management architectures, and their implication on various
    anchorless properties.  A new architecture is then proposed that is
    purely based on identifiers, and more specifically names as defined
-   in Hybrid-ICN (hICN) [I-D.muscariello-intarea-hicn].  The document
-   then focuses on two main cases: the end-point sends data (data
-   producer) or the end-point receives data (data consumer).  These two
-   cases are taken into account entirely to provide anchorless mobility
-   management in hICN.
+   in Hybrid-ICN (hICN).  The document then focuses on two main cases:
+   the end-point sends data (data producer) or the end-point receives
+   data (data consumer).  These two cases are taken into account
+   entirely to provide anchorless mobility management in hICN.
 
 Status of This Memo
 
@@ -40,7 +39,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 8 January 2021.
+   This Internet-Draft will expire on 9 January 2021.
 
 Copyright Notice
 
@@ -50,15 +49,15 @@ Copyright Notice
    This document is subject to BCP 78 and the IETF Trust's Legal
    Provisions Relating to IETF Documents (https://trustee.ietf.org/
    license-info) in effect on the date of publication of this document.
+   Please review these documents carefully, as they describe your rights
 
 
 
-Augé, et al.             Expires 8 January 2021                 [Page 1]
+Auge, et al.             Expires 9 January 2021                 [Page 1]
 
 Internet-Draft      Anchorless mobility through hICN           July 2020
 
 
-   Please review these documents carefully, as they describe your rights
    and restrictions with respect to this document.  Code Components
    extracted from this document must include Simplified BSD License text
    as described in Section 4.e of the Trust Legal Provisions and are
@@ -109,7 +108,8 @@ Table of Contents
 
 
 
-Augé, et al.             Expires 8 January 2021                 [Page 2]
+
+Auge, et al.             Expires 9 January 2021                 [Page 2]
 
 Internet-Draft      Anchorless mobility through hICN           July 2020
 
@@ -120,7 +120,7 @@ Internet-Draft      Anchorless mobility through hICN           July 2020
    calls to reconsider the way we deploy and operate IP networks, where
    mobility is not built into the design, but rather added as an
    afterthought.  Notable examples are IETF Mobile IP and its variants
-   [RFC3344] and [RFC3775] 3GPP GTP-based architecture [TS29.274], both
+   [RFC5944] and [RFC2275] 3GPP GTP-based architecture [TS29.274], both
    based on tunnelling and encapsulation.
 
    One identified difficulty in proposing mobility models for IP lies in
@@ -165,7 +165,7 @@ Internet-Draft      Anchorless mobility through hICN           July 2020
 
 
 
-Augé, et al.             Expires 8 January 2021                 [Page 3]
+Auge, et al.             Expires 9 January 2021                 [Page 3]
 
 Internet-Draft      Anchorless mobility through hICN           July 2020
 
@@ -221,7 +221,7 @@ Internet-Draft      Anchorless mobility through hICN           July 2020
 
 
 
-Augé, et al.             Expires 8 January 2021                 [Page 4]
+Auge, et al.             Expires 9 January 2021                 [Page 4]
 
 Internet-Draft      Anchorless mobility through hICN           July 2020
 
@@ -277,7 +277,7 @@ Internet-Draft      Anchorless mobility through hICN           July 2020
 
 
 
-Augé, et al.             Expires 8 January 2021                 [Page 5]
+Auge, et al.             Expires 9 January 2021                 [Page 5]
 
 Internet-Draft      Anchorless mobility through hICN           July 2020
 
@@ -333,7 +333,7 @@ Internet-Draft      Anchorless mobility through hICN           July 2020
 
 
 
-Augé, et al.             Expires 8 January 2021                 [Page 6]
+Auge, et al.             Expires 9 January 2021                 [Page 6]
 
 Internet-Draft      Anchorless mobility through hICN           July 2020
 
@@ -389,7 +389,7 @@ Internet-Draft      Anchorless mobility through hICN           July 2020
 
 
 
-Augé, et al.             Expires 8 January 2021                 [Page 7]
+Auge, et al.             Expires 9 January 2021                 [Page 7]
 
 Internet-Draft      Anchorless mobility through hICN           July 2020
 
@@ -445,7 +445,7 @@ Internet-Draft      Anchorless mobility through hICN           July 2020
 
 
 
-Augé, et al.             Expires 8 January 2021                 [Page 8]
+Auge, et al.             Expires 9 January 2021                 [Page 8]
 
 Internet-Draft      Anchorless mobility through hICN           July 2020
 
@@ -501,7 +501,7 @@ Internet-Draft      Anchorless mobility through hICN           July 2020
 
 
 
-Augé, et al.             Expires 8 January 2021                 [Page 9]
+Auge, et al.             Expires 9 January 2021                 [Page 9]
 
 Internet-Draft      Anchorless mobility through hICN           July 2020
 
@@ -528,7 +528,7 @@ Internet-Draft      Anchorless mobility through hICN           July 2020
    5.  A subsequent message from remote will follow the updated FIB and
        correctly reach the producer's new location in AR2.
 
-       P (radio link) AR1             AR2             GW          Internet
+       P (radio link) AR1             AR2             GW        Internet
        |               |               |               |              |
    1   |               |               |               |<~~~~~~~~~~~~~|
        |               |<~~~~~~~~~~~~~~|~~~~~~~~~~~~~~~|  Interest    |
@@ -557,7 +557,7 @@ Internet-Draft      Anchorless mobility through hICN           July 2020
 
 
 
-Augé, et al.             Expires 8 January 2021                [Page 10]
+Auge, et al.             Expires 9 January 2021                [Page 10]
 
 Internet-Draft      Anchorless mobility through hICN           July 2020
 
@@ -613,7 +613,7 @@ Internet-Draft      Anchorless mobility through hICN           July 2020
 
 
 
-Augé, et al.             Expires 8 January 2021                [Page 11]
+Auge, et al.             Expires 9 January 2021                [Page 11]
 
 Internet-Draft      Anchorless mobility through hICN           July 2020
 
@@ -669,12 +669,12 @@ Internet-Draft      Anchorless mobility through hICN           July 2020
 
 
 
-Augé, et al.             Expires 8 January 2021                [Page 12]
+Auge, et al.             Expires 9 January 2021                [Page 12]
 
 Internet-Draft      Anchorless mobility through hICN           July 2020
 
 
-       P (radio link) AR1             AR2             GW          Internet
+       P (radio link) AR1             AR2             GW        Internet
        |               |               |               |              |
    1   |               |               |               |<~~~~~~~~~~~~~|
        |               |<~~~~~~~~~~~~~~|~~~~~~~~~~~~~~~|   Interest   |
@@ -725,7 +725,7 @@ Internet-Draft      Anchorless mobility through hICN           July 2020
 
 
 
-Augé, et al.             Expires 8 January 2021                [Page 13]
+Auge, et al.             Expires 9 January 2021                [Page 13]
 
 Internet-Draft      Anchorless mobility through hICN           July 2020
 
@@ -781,7 +781,7 @@ Internet-Draft      Anchorless mobility through hICN           July 2020
 
 
 
-Augé, et al.             Expires 8 January 2021                [Page 14]
+Auge, et al.             Expires 9 January 2021                [Page 14]
 
 Internet-Draft      Anchorless mobility through hICN           July 2020
 
@@ -811,12 +811,12 @@ Internet-Draft      Anchorless mobility through hICN           July 2020
    mobility events, eventually specializing AR into AP or eNB when it
    makes more sense.
 
-                +-----+                        .-~-.
-            _,--+ AR1 +--,             .- ~ ~-(     )_ _
-   +-----+ /    +-----+   \ +----+    |                  ~-.        +-----+
-   |  C  +=                =+ GW +----+       Internet       \--//--+  P  |
-   +-----+ \_   +-----+   / +----+     \                    .'      +-----+
-             '--+ AR2 +--'              ~- . ___________.-~
+                +-----+                      .--.
+            _,--+ AR1 +--,            .-~ ~-(    )_ _
+   +-----+ /    +-----+   \ +----+   |                ~-.        +-----+
+   |  C  +=                =+ GW +---+     Internet       \--//--+  P  |
+   +-----+ \_   +-----+   / +----+    \                  .'      +-----+
+             '--+ AR2 +--'              ~-.__________.-~
                 +-----+
 
            Figure 3: Simple topology with a multi-homed consumer
@@ -837,17 +837,17 @@ Internet-Draft      Anchorless mobility through hICN           July 2020
 
 
 
-Augé, et al.             Expires 8 January 2021                [Page 15]
+Auge, et al.             Expires 9 January 2021                [Page 15]
 
 Internet-Draft      Anchorless mobility through hICN           July 2020
 
 
-       C              AR1             AR2             GW          Internet
+       C              AR1             AR2             GW        Internet
        |               |               |               |              |
    1   |~~~~~~~~~~~~~~>|               |               |              |
        |  Interest X   |~~~~~~~~~~~~~~~|~~~~~~~~~~~~~~>|              |
        |               |               |               |~~~~~~~~~~~~~>|
-       |               |               |               |              |...
+       |               |               |               |             ...
        |               |               |               |<-------------|
        |     Data X    |<--------------|---------------|              |
        |<--------------|               |               |              |
@@ -893,18 +893,18 @@ Internet-Draft      Anchorless mobility through hICN           July 2020
 
 
 
-Augé, et al.             Expires 8 January 2021                [Page 16]
+Auge, et al.             Expires 9 January 2021                [Page 16]
 
 Internet-Draft      Anchorless mobility through hICN           July 2020
 
 
-       C (radio link) AR1             AR2             GW          Internet
+       C (radio link) AR1             AR2             GW        Internet
        |               |               |               |              |
    1   |~~~~~~~X       |               |               |              |
    2   |~~~~~~~~~~~~~~>|               |               |              |
        |  Interest     |~~~~~~~~~~~~~~~|~~~~~~~~~~~~~~>|              |
        |               |               |               |~~~~~~~~~~~~~>|
-       |               |               |               |              | ...
+       |               |               |               |             ...
        |               |               |               |<-------------|
        |     Data      |<--------------|---------------|              |
    3   |       X-------|               |               |              |
@@ -949,12 +949,12 @@ Internet-Draft      Anchorless mobility through hICN           July 2020
 
 
 
-Augé, et al.             Expires 8 January 2021                [Page 17]
+Auge, et al.             Expires 9 January 2021                [Page 17]
 
 Internet-Draft      Anchorless mobility through hICN           July 2020
 
 
-       C (radio link) AR1             AR2             GW          Internet
+       C (radio link) AR1             AR2             GW        Internet
        |               |               |               |              |
    1   |~~~~~~~~~~~~~~>|               |               |              |
        |  Interest     |~~~~~~~~~~~~~~~|~~~~~~~~~~~~~~>|              |
@@ -1005,30 +1005,30 @@ Internet-Draft      Anchorless mobility through hICN           July 2020
 
 
 
-Augé, et al.             Expires 8 January 2021                [Page 18]
+Auge, et al.             Expires 9 January 2021                [Page 18]
 
 Internet-Draft      Anchorless mobility through hICN           July 2020
 
 
-      C          WiFi          GW         LTE enB        PGW       Internet
-      |            |            |            |            |            |
-   1  |~~~~~~~~~~~>|            |            |            |            |
-      |            |~~~~~~~~~~~>|            |            |            |
-      |            |            |~~~~~~~~~~~~|~~~~~~~~~~~~|~~~~~~~~~~~>|
-      |            |            |            |            |            |
-      |            |            |<-----------|------------|------------|
-      |            |<-----------|            |            |            |
-      |<-----------|            |            |            |            |
-   2  |            X            |            |            |            |
-   3  |~~~~~~~~~~~~X~~~~~~~~~~~~|~~~~~~~~~~~>|            |            |
-      |            X            |            |~~~~~~~~~~~>|            |
-      |            X            |            |            |~~~~~~~~~~~>|
-      |            |            |            |            |            |
-      |            |            |            |            |<-----------|
-      |            |            |            |<-----------|            |
-      |<-----------|------------|------------|            |            |
-   4  |~~~~~~~~~~~>|...         |            |            |            |
-      |            |            |            |            |            |
+     C          WiFi          GW         LTE enB        PGW     Internet
+     |            |            |            |            |            |
+   1 |~~~~~~~~~~~>|            |            |            |            |
+     |            |~~~~~~~~~~~>|            |            |            |
+     |            |            |~~~~~~~~~~~~|~~~~~~~~~~~~|~~~~~~~~~~~>|
+     |            |            |            |            |            |
+     |            |            |<-----------|------------|------------|
+     |            |<-----------|            |            |            |
+     |<-----------|            |            |            |            |
+   2 |            X            |            |            |            |
+   3 |~~~~~~~~~~~~X~~~~~~~~~~~~|~~~~~~~~~~~>|            |            |
+     |            X            |            |~~~~~~~~~~~>|            |
+     |            X            |            |            |~~~~~~~~~~~>|
+     |            |            |            |            |            |
+     |            |            |            |            |<-----------|
+     |            |            |            |<-----------|            |
+     |<-----------|------------|------------|            |            |
+   4 |~~~~~~~~~~~>|...         |            |            |            |
+     |            |            |            |            |            |
 
                                   Figure 7
 
@@ -1061,7 +1061,7 @@ Internet-Draft      Anchorless mobility through hICN           July 2020
 
 
 
-Augé, et al.             Expires 8 January 2021                [Page 19]
+Auge, et al.             Expires 9 January 2021                [Page 19]
 
 Internet-Draft      Anchorless mobility through hICN           July 2020
 
@@ -1095,21 +1095,21 @@ Internet-Draft      Anchorless mobility through hICN           July 2020
    that case the relative distances on the vertical axis have not been
    respected here for readability.
 
-      C          WiFi          GW         LTE enB        PGW       Internet
-      |            |            |            |            |            |
-      |~~~~~~~~~~~~|~~~~~~~~~~~~|~~~~~~~~~~~>|            |            |
-      |~~~~~~~~~~~>|            |            |~~~~~~~~~~~>|~~~~~~~~~~~>|
-      |            |~~~~~~~~~~~>|            |            |            |
-      |            |            |~~~~~~~~~~~~|~~~~~~~~~~~~|~~~~~~~~~~~>|
-      |            |            |            |            |            |
-      |            |            |            |            |<-----------|
-      |            |            |            |<-----------|            |
-      |<-----------|------------|------------|            |            |
-      |            |            |<-----------|------------|------------|
-      |            |<-----------|            |            |            |
-      |<-----------|            |            |            |            |
-      |            |            |            |            |            |
-      |            |            |            |            |            |
+     C          WiFi          GW         LTE enB        PGW     Internet
+     |            |            |            |            |            |
+     |~~~~~~~~~~~~|~~~~~~~~~~~~|~~~~~~~~~~~>|            |            |
+     |~~~~~~~~~~~>|            |            |~~~~~~~~~~~>|~~~~~~~~~~~>|
+     |            |~~~~~~~~~~~>|            |            |            |
+     |            |            |~~~~~~~~~~~~|~~~~~~~~~~~~|~~~~~~~~~~~>|
+     |            |            |            |            |            |
+     |            |            |            |            |<-----------|
+     |            |            |            |<-----------|            |
+     |<-----------|------------|------------|            |            |
+     |            |            |<-----------|------------|------------|
+     |            |<-----------|            |            |            |
+     |<-----------|            |            |            |            |
+     |            |            |            |            |            |
+     |            |            |            |            |            |
 
    Fine grained control from the application allows fully exploiting
    available bandwidth, resulting in an aggregated throughput equal to
@@ -1117,7 +1117,7 @@ Internet-Draft      Anchorless mobility through hICN           July 2020
 
 
 
-Augé, et al.             Expires 8 January 2021                [Page 20]
+Auge, et al.             Expires 9 January 2021                [Page 20]
 
 Internet-Draft      Anchorless mobility through hICN           July 2020
 
@@ -1173,37 +1173,37 @@ Internet-Draft      Anchorless mobility through hICN           July 2020
 
 
 
-Augé, et al.             Expires 8 January 2021                [Page 21]
+Auge, et al.             Expires 9 January 2021                [Page 21]
 
 Internet-Draft      Anchorless mobility through hICN           July 2020
 
 
-   C         P         AR1        AR2        AR3         GW  X    Internet
-   |         |          |          |          |          |   X         |
-   |~~~~~~~~~|~~~~~~~~~~|~~~~~~~~~~|~~~~~~~~~>|          |   X         |
-   |         |          |          |          |~~~~~~~~~>|   X         |
-   |         |          |<~~~~~~~~~|~~~~~~~~~~|~~~~~~~~~~|   X         |
-   |         |<~~~~~~~~~|          |          |          |   X         |
-   |         |--------->|          |          |          |   X         |
-   |         |          |----------|----------|--------->|   X         |
-   |         |          |          |          |<---------|   X         |
-   |<--------|----------|----------|----------|          |   X         |
-   |         |          |          |          |          |   X         |
-   |         |..........-          |          |          |   X         |
-   |         |..........|..........+          |          |   X         |
-   |         |==========|=========>o          |          |   X   NO    |
-   |         | Update   |          |==========|=========>o   X TRAFFIC |
-   |         |          o<=========|==========|==========|   X         |
-   |         |          |          |          |          |   X         |
-   |~~~~~~~~~|~~~~~~~~~~|~~~~~~~~~~|~~~~~~~~~>|          |   X         |
-   |         |          |          |          |~~~~~~~~~>|   X         |
-   |         |          |          |<~~~~~~~~~|~~~~~~~~~~|   X         |
-   |         |<~~~~~~~~~|~~~~~~~~~~|          |          |   X         |
-   |         |----------|--------->|          |          |   X         |
-   |         |          |          |----------|--------->|   X         |
-   |         |          |          |          |<---------|   X         |
-   |<--------|----------|----------|----------|          |   X         |
-   |         |          |          |          |          |   X         |
+   C         P         AR1        AR2        AR3        GW  X   Internet
+   |         |          |          |          |          |  X         |
+   |~~~~~~~~~|~~~~~~~~~~|~~~~~~~~~~|~~~~~~~~~>|          |  X         |
+   |         |          |          |          |~~~~~~~~~>|  X         |
+   |         |          |<~~~~~~~~~|~~~~~~~~~~|~~~~~~~~~~|  X         |
+   |         |<~~~~~~~~~|          |          |          |  X         |
+   |         |--------->|          |          |          |  X         |
+   |         |          |----------|----------|--------->|  X         |
+   |         |          |          |          |<---------|  X         |
+   |<--------|----------|----------|----------|          |  X         |
+   |         |          |          |          |          |  X         |
+   |         |..........-          |          |          |  X         |
+   |         |..........|..........+          |          |  X         |
+   |         |==========|=========>o          |          |  X   NO    |
+   |         | Update   |          |==========|=========>o  X TRAFFIC |
+   |         |          o<=========|==========|==========|  X         |
+   |         |          |          |          |          |  X         |
+   |~~~~~~~~~|~~~~~~~~~~|~~~~~~~~~~|~~~~~~~~~>|          |  X         |
+   |         |          |          |          |~~~~~~~~~>|  X         |
+   |         |          |          |<~~~~~~~~~|~~~~~~~~~~|  X         |
+   |         |<~~~~~~~~~|~~~~~~~~~~|          |          |  X         |
+   |         |----------|--------->|          |          |  X         |
+   |         |          |          |----------|--------->|  X         |
+   |         |          |          |          |<---------|  X         |
+   |<--------|----------|----------|----------|          |  X         |
+   |         |          |          |          |          |  X         |
 
       Figure 9: Anchorless mobility in network disconnected from core
 
@@ -1229,7 +1229,7 @@ Internet-Draft      Anchorless mobility through hICN           July 2020
 
 
 
-Augé, et al.             Expires 8 January 2021                [Page 22]
+Auge, et al.             Expires 9 January 2021                [Page 22]
 
 Internet-Draft      Anchorless mobility through hICN           July 2020
 
@@ -1285,7 +1285,7 @@ Internet-Draft      Anchorless mobility through hICN           July 2020
 
 
 
-Augé, et al.             Expires 8 January 2021                [Page 23]
+Auge, et al.             Expires 9 January 2021                [Page 23]
 
 Internet-Draft      Anchorless mobility through hICN           July 2020
 
@@ -1302,13 +1302,11 @@ Internet-Draft      Anchorless mobility through hICN           July 2020
 
 9.1.  Normative References
 
-   [RFC3344]  Perkins, C., Ed., "IP Mobility Support for IPv4",
-              RFC 3344, DOI 10.17487/RFC3344, August 2002,
-              <https://www.rfc-editor.org/info/rfc3344>.
-
-   [RFC3775]  Johnson, D., Perkins, C., and J. Arkko, "Mobility Support
-              in IPv6", RFC 3775, DOI 10.17487/RFC3775, June 2004,
-              <https://www.rfc-editor.org/info/rfc3775>.
+   [RFC2275]  Wijnen, B., Presuhn, R., and K. McCloghrie, "View-based
+              Access Control Model (VACM) for the Simple Network
+              Management Protocol (SNMP)", RFC 2275,
+              DOI 10.17487/RFC2275, January 1998,
+              <https://www.rfc-editor.org/info/rfc2275>.
 
    [RFC3971]  Arkko, J., Ed., Kempf, J., Zill, B., and P. Nikander,
               "SEcure Neighbor Discovery (SEND)", RFC 3971,
@@ -1332,20 +1330,23 @@ Internet-Draft      Anchorless mobility through hICN           July 2020
               DOI 10.17487/RFC5909, July 2010,
               <https://www.rfc-editor.org/info/rfc5909>.
 
+   [RFC5944]  Perkins, C., Ed., "IP Mobility Support for IPv4, Revised",
+              RFC 5944, DOI 10.17487/RFC5944, November 2010,
+              <https://www.rfc-editor.org/info/rfc5944>.
+
    [RFC6115]  Li, T., Ed., "Recommendation for a Routing Architecture",
               RFC 6115, DOI 10.17487/RFC6115, February 2011,
               <https://www.rfc-editor.org/info/rfc6115>.
 
-   [RFC6301]  Zhu, Z., Wakikawa, R., and L. Zhang, "A Survey of Mobility
 
 
 
-
-Augé, et al.             Expires 8 January 2021                [Page 24]
+Auge, et al.             Expires 9 January 2021                [Page 24]
 
 Internet-Draft      Anchorless mobility through hICN           July 2020
 
 
+   [RFC6301]  Zhu, Z., Wakikawa, R., and L. Zhang, "A Survey of Mobility
               Support in the Internet", RFC 6301, DOI 10.17487/RFC6301,
               July 2011, <https://www.rfc-editor.org/info/rfc6301>.
 
@@ -1392,16 +1393,17 @@ Internet-Draft      Anchorless mobility through hICN           July 2020
               <http://www.ietf.org/internet-drafts/draft-herbert-
               intarea-ila-01.txt>.
 
-   [I-D.irtf-icnrg-mapme]
-              Auge, J., Carofiglio, G., Muscariello, L., and M.
 
 
 
-Augé, et al.             Expires 8 January 2021                [Page 25]
+
+Auge, et al.             Expires 9 January 2021                [Page 25]
 
 Internet-Draft      Anchorless mobility through hICN           July 2020
 
 
+   [I-D.irtf-icnrg-mapme]
+              Auge, J., Carofiglio, G., Muscariello, L., and M.
               Papalini, "MAP-Me : Managing Anchorless Mobility in
               Content Centric Networking", Work in Progress, Internet-
               Draft, draft-irtf-icnrg-mapme-05, 9 June 2020,
@@ -1431,32 +1433,12 @@ Internet-Draft      Anchorless mobility through hICN           July 2020
               <http://www.ietf.org/internet-drafts/draft-vonhugo-
               5gangip-ip-issues-03.txt>.
 
-   [KITE]     Zhang, Y., Zhang, H., and L. Zhang, "Kite",
-              DOI 10.1145/2660129.2660159, Proceedings of the 1st
-              international conference on Information-centric networking
-              - INC '14, 2014,
-              <https://doi.org/10.1145/2660129.2660159>.
-
    [MAPME]    Auge, J., Carofiglio, G., Grassi, G., Muscariello, L.,
               Pau, G., and X. Zeng, "MAP-Me: Managing Anchor-Less
               Producer Mobility in Content-Centric Networks",
               DOI 10.1109/tnsm.2018.2796720, IEEE Transactions on
               Network and Service Management Vol. 15, pp. 596-610, June
               2018, <https://doi.org/10.1109/tnsm.2018.2796720>.
-
-   [ravindran20175g]
-              Ravindran, R., Chakraborti, A., Amin, S., Azgin, A., and
-              G. Wang, "5G-ICN: Delivering ICN Services over 5G Using
-              Network Slicing", DOI 10.1109/mcom.2017.1600938, IEEE
-              Communications Magazine Vol. 55, pp. 101-107, May 2017,
-              <https://doi.org/10.1109/mcom.2017.1600938>.
-
-
-
-Augé, et al.             Expires 8 January 2021                [Page 26]
-
-Internet-Draft      Anchorless mobility through hICN           July 2020
-
 
    [SEC]      Compagno, A., Zeng, X., Muscariello, L., Carofiglio, G.,
               and J. Augé, "Secure producer mobility in information-
@@ -1468,6 +1450,14 @@ Internet-Draft      Anchorless mobility through hICN           July 2020
    [SURVEY1]  Zhang, Y., Afanasyev, A., Burke, J., and L. Zhang, "A
               survey of mobility support in Named Data Networking",
               DOI 10.1109/infcomw.2016.7562050, 2016 IEEE Conference on
+
+
+
+Auge, et al.             Expires 9 January 2021                [Page 26]
+
+Internet-Draft      Anchorless mobility through hICN           July 2020
+
+
               Computer Communications Workshops (INFOCOM WKSHPS), April
               2016, <https://doi.org/10.1109/infcomw.2016.7562050>.
 
@@ -1476,12 +1466,6 @@ Internet-Draft      Anchorless mobility through hICN           July 2020
               EURASIP Journal on Wireless Communications and
               Networking Vol. 2016, September 2016,
               <https://doi.org/10.1186/s13638-016-0715-0>.
-
-   [SURVEYCC] Ren, Y., Li, J., Shi, S., Li, L., Wang, G., and B. Zhang,
-              "Congestion control in named data networking - A survey",
-              DOI 10.1016/j.comcom.2016.04.017, Computer
-              Communications Vol. 86, pp. 1-11, July 2016,
-              <https://doi.org/10.1016/j.comcom.2016.04.017>.
 
    [SURVEYICN]
               Tyson, G., Sastry, N., Rimac, I., Cuevas, R., and A.
@@ -1492,28 +1476,16 @@ Internet-Draft      Anchorless mobility through hICN           July 2020
               Applications - NoM '12, 2012,
               <https://doi.org/10.1145/2248361.2248363>.
 
-   [TS23.501] "Technical Specification Group Services and System
-              Aspects; System Architecture for the 5G System (Rel.15)",
-              n.d..
-
    [TS29.274] "3GPP Evolved Packet System (EPS); Evolved General Packet
               Radio Service (GPRS) Tunnelling Protocol for Control plane
               (GTPv2-C); Stage 3", n.d..
 
 Authors' Addresses
 
-   Jordan Augé
+   Jordan Auge
    Cisco Systems
    11, rue Camille Desmoulins
    92130 Issy-les-Moulineaux
-
-
-
-Augé, et al.             Expires 8 January 2021                [Page 27]
-
-Internet-Draft      Anchorless mobility through hICN           July 2020
-
-
    France
 
    Email: augjorda@cisco.com
@@ -1533,6 +1505,14 @@ Internet-Draft      Anchorless mobility through hICN           July 2020
    11, rue Camille Desmoulins
    92130 Issy-les-Moulineaux
    France
+
+
+
+
+Auge, et al.             Expires 9 January 2021                [Page 27]
+
+Internet-Draft      Anchorless mobility through hICN           July 2020
+
 
    Email: lumuscar@cisco.com
 
@@ -1565,4 +1545,24 @@ Internet-Draft      Anchorless mobility through hICN           July 2020
 
 
 
-Augé, et al.             Expires 8 January 2021                [Page 28]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Auge, et al.             Expires 9 January 2021                [Page 28]

@@ -2,38 +2,36 @@
 
 
 
-DMM Working Group                                                J. Augé
+DMM Working Group                                                J. Auge
 Internet-Draft                                             G. Carofiglio
 Intended status: Informational                            L. Muscariello
-Expires: 8 January 2021                                      M. Papalini
+Expires: 9 January 2021                                      M. Papalini
                                                                    Cisco
-                                                             7 July 2020
+                                                             8 July 2020
 
 
    Anchorless mobility management through hICN (hICN-AMM): Deployment
                                 options
-           draft-auge-dmm-hicn-mobility-deployment-options-03
+           draft-auge-dmm-hicn-mobility-deployment-options-04
 
 Abstract
 
-   A novel mobility management approach is described in
-   [I-D.auge-dmm-hicn-mobility], that leverages routable location-
-   independent identifiers (IDs) and an Information-Centric Networking
-   (ICN) communication model integrated in IPv6, also referred to as
-   Hybrid ICN (hICN) [I-D.muscariello-intarea-hicn].
+   A novel mobility management approach has been proposed, that
+   leverages routable location-independent identifiers (IDs) and an
+   Information-Centric Networking (ICN) communication model integrated
+   in IPv6, also referred to as Hybrid ICN (hICN).  In virtue of its
+   anchorless property, we denote this approach as hICN-AMM (hICN
+   Anchorless Mobility Management) hereinafter.
 
    Such approach belongs to the category of pure ID-based mobility
    management schemes whose objective is (i) to overcome the limitations
    of traditional locator-based solutions like Mobile IP, (ii) to remove
    the need for a global mapping system as the one required by locator-
-   identifier separation solutions like LISP
-   [I-D.ietf-lisp-introduction] or ILA [I-D.herbert-intarea-ila].
+   identifier separation solutions like LISP or ILA.
 
    ID-based networking as proposed by ICN architectures allows to
    disentangle forwarding operations from changes of network location,
-   hence removing tunnels and user plane or control plane anchors.  In
-   virtue of its anchorless property, we denote this approach as hICN-
-   AMM (hICN Anchorless Mobility Management) hereinafter.
+   hence removing tunnels and user plane or control plane anchors.
 
    This document discusses hICN-AMM deployment options and related
    tradeoffs in terms of cost/benefits.  Particular attention is devoted
@@ -49,24 +47,23 @@ Status of This Memo
 
    Internet-Drafts are working documents of the Internet Engineering
    Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at https://datatracker.ietf.org/drafts/current/.
 
 
 
 
-Augé, et al.             Expires 8 January 2021                 [Page 1]
+Auge, et al.             Expires 9 January 2021                 [Page 1]
 
 Internet-Draft      hICN mobility: deployment options          July 2020
 
-
-   working documents as Internet-Drafts.  The list of current Internet-
-   Drafts is at https://datatracker.ietf.org/drafts/current/.
 
    Internet-Drafts are draft documents valid for a maximum of six months
    and may be updated, replaced, or obsoleted by other documents at any
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 8 January 2021.
+   This Internet-Draft will expire on 9 January 2021.
 
 Copyright Notice
 
@@ -87,34 +84,35 @@ Table of Contents
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   3
    2.  Overview of a mobile access network and the 5G
            architecture  . . . . . . . . . . . . . . . . . . . . . .   4
-   3.  Transparent integration (option #1) . . . . . . . . . . . . .   7
+   3.  Transparent integration (option #1) . . . . . . . . . . . . .   6
      3.1.  MEC deployment (option #1a) . . . . . . . . . . . . . . .   7
      3.2.  hICN deployment as a UPF (option #1b) . . . . . . . . . .  10
-     3.3.  Summary . . . . . . . . . . . . . . . . . . . . . . . . .  12
+     3.3.  Summary . . . . . . . . . . . . . . . . . . . . . . . . .  11
    4.  "Integrated" approaches: data-plane alternatives to GTP-U
-           (option #2) . . . . . . . . . . . . . . . . . . . . . . .  12
-     4.1.  hICN insertion at N9 interface only (option #2a)  . . . .  13
+           (option #2) . . . . . . . . . . . . . . . . . . . . . . .  11
+     4.1.  hICN insertion at N9 interface only (option #2a)  . . . .  12
      4.2.  hICN deployment at both N9 and N3 interfaces (option
            #2b)  . . . . . . . . . . . . . . . . . . . . . . . . . .  14
      4.3.  Control plane considerations  . . . . . . . . . . . . . .  16
    5.  Deployment considerations . . . . . . . . . . . . . . . . . .  16
-     5.1.  hICN in a slice . . . . . . . . . . . . . . . . . . . . .  17
+     5.1.  hICN in a slice . . . . . . . . . . . . . . . . . . . . .  16
      5.2.  End-to-end deployment . . . . . . . . . . . . . . . . . .  17
-     5.3.  Network-contained deployment  . . . . . . . . . . . . . .  18
+     5.3.  Network-contained deployment  . . . . . . . . . . . . . .  17
      5.4.  Alternative data planes: joint hICN/SRv6 deployment . . .  18
-   6.  Summary . . . . . . . . . . . . . . . . . . . . . . . . . . .  19
+   6.  Summary . . . . . . . . . . . . . . . . . . . . . . . . . . .  18
    7.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  20
      7.1.  Normative References  . . . . . . . . . . . . . . . . . .  20
      7.2.  Informative References  . . . . . . . . . . . . . . . . .  20
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  21
 
 
 
-Augé, et al.             Expires 8 January 2021                 [Page 2]
+
+
+Auge, et al.             Expires 9 January 2021                 [Page 2]
 
 Internet-Draft      hICN mobility: deployment options          July 2020
 
-
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  22
 
 1.  Introduction
 
@@ -162,16 +160,16 @@ Internet-Draft      hICN mobility: deployment options          July 2020
 
    Additional benefits brought by ICN communication model include:
 
+   *  the flexibility of multi-source/multi-path connectionless pull-
+      based transport.  An example is the native support for consumer
 
 
 
-Augé, et al.             Expires 8 January 2021                 [Page 3]
+Auge, et al.             Expires 9 January 2021                 [Page 3]
 
 Internet-Draft      hICN mobility: deployment options          July 2020
 
 
-   *  the flexibility of multi-source/multi-path connectionless pull-
-      based transport.  An example is the native support for consumer
       mobility, i.e. the transparent emission of data requests over
       multiple and varying available network interfaces during node
       mobility;
@@ -204,44 +202,29 @@ Internet-Draft      hICN mobility: deployment options          July 2020
    backhaul and core network segments.  In the rest of this document, we
    assume an IPv6-based network.
 
+                    , - ,              , - ,              , - ,
+   Cell site    , '       ' ,      , '       ' ,      , '       ' ,
+       __     ,               ,__,               ,__,              ,
+    __/ A\   ,                /X/|                /X/|               ,
+   / A\__/  __     IP edge    |_|/  IP backhaul   |_|/    IP core    __
+   \__/ A\ /X/|               , ,                 , ,               /X/|
+   / A\__/ |_|/    network    ,__     network     ,__     network   |_|/
+   \__/ A\  |,                /X/|                /X/|               |
+      \__/  | ,               |_|/,               |_|/,              |
+            |   ,          , ' |   ,          , '' |   ,          , '|
+            |     ' - ,  '     |     ' - ,  '      |     ' -  , '    |
+          +-+-+              +-+-+               +-+-+             +-+-+
+          |   |              |   |               |   |             |   |
+          |DDC|              |DDC|               |DDC|             |DDC|
+          |   |              |   |               |   |             |   |
+          +---+              +---+               +---+             +---+
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Augé, et al.             Expires 8 January 2021                 [Page 4]
+Auge, et al.             Expires 9 January 2021                 [Page 4]
 
 Internet-Draft      hICN mobility: deployment options          July 2020
 
-
-                    , - ,              , - ,              , - ,
-   Cell site    , '       ' ,      , '       ' ,      , '       ' ,
-       __     ,               ,__,                ,__,               ,
-    __/ A\   ,                /X/|                /X/|                ,
-   / A\__/  __     IP edge    |_|/  IP backhaul   |_|/    IP core     __
-   \__/ A\ /X/|               , ,                 , ,                /X/|
-   / A\__/ |_|/    network    ,__     network     ,__     network    |_|/
-   \__/ A\  |,                /X/|                /X/|                |
-      \__/  | ,               |_|/,               |_|/,              ,|
-            |   ,          , ' |   ,          , '' |   ,          , ' |
-            |     ' - ,  '     |     ' - ,  '      |     ' - ,  '     |
-          +-+-+              +-+-+               +-+-+              +-+-+
-          |   |              |   |               |   |              |   |
-          |DDC|              |DDC|               |DDC|              |DDC|
-          |   |              |   |               |   |              |   |
-          +---+              +---+               +---+              +---+
 
         Figure 1: Overview of a typical mobile network architecture
 
@@ -261,26 +244,19 @@ Internet-Draft      hICN mobility: deployment options          July 2020
    | NSSF  | |  NRF  | |  DSF  | |  UDM  | |  NEF  | |  PCF  | |  AUSF |
    +---+---+ +---+---+ +---+---+ +---+---+ +---+---+ +---+---+ +---+---+
        |         |         |         |         |         |         |
-   ----+------+--+---------+---------+-------+-+---------+---------+-----
+   ----+------+--+---------+---------+-------+-+---------+---------+----
               |                              |
      +--------+---------+          +---------+--------+      MOBILITY
      |        AMF       |          |        SMF       |     MANAGEMENT
      +-+--------------+-+          +++--------------+-+
        |              |              |              |        control
        | N1           | N2           | N4           | N4      plane
-    ...|..............|..............|..............|....................
+    ...|..............|..............|..............|...................
        |              |              |              |       user plane
        |              |              |              |
    +---+---+      +---+---+  N3  +---+---+  N9  +---+---+  N6  +-------+
    |  UE   +------+  gNB  +------+  UPF  +------+  UPF  +------+  DN   |
    +-------+      +-------+      +---+---+      +-------+      +-------+
-
-
-
-Augé, et al.             Expires 8 January 2021                 [Page 5]
-
-Internet-Draft      hICN mobility: deployment options          July 2020
-
 
                     Figure 2: 5G reference architecture
 
@@ -297,6 +273,15 @@ Internet-Draft      hICN mobility: deployment options          July 2020
       particular, UPFs serve as Layer 2 and Layer 3 anchors respectively
       in the RAN, and at the interface with the DN (to advertise IP
       prefixes).  The interfaces between gNB and UPF (N3), and in-
+
+
+
+
+Auge, et al.             Expires 9 January 2021                 [Page 5]
+
+Internet-Draft      hICN mobility: deployment options          July 2020
+
+
       between UPFs (N9) are those where GTP tunnels are currently
       established, and where there are opportunities for optimization.
 
@@ -311,32 +296,6 @@ Internet-Draft      hICN mobility: deployment options          July 2020
    inefficiencies due to the transport of all mobile traffic up to the
    anchor in the core (N6), the latter preventing convergence with non-
    3GPP network accesses.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Augé, et al.             Expires 8 January 2021                 [Page 6]
-
-Internet-Draft      hICN mobility: deployment options          July 2020
-
 
        UE            5G-AN        N3         UPF        N9   UPF    N6
                                   |                     |            |
@@ -371,6 +330,14 @@ Internet-Draft      hICN mobility: deployment options          July 2020
    already brings advantages over the baseline architecture.  We
    consider two cases: a) hICN-AMM deployment within Mobile Edge
    Computing (MEC) platforms, exploiting the local breakout capabilities
+
+
+
+Auge, et al.             Expires 9 January 2021                 [Page 6]
+
+Internet-Draft      hICN mobility: deployment options          July 2020
+
+
    of 5G networks, b) hICN-AMM deployment as User Plane Function (UPF)
    inside mobile user plane.
 
@@ -385,15 +352,6 @@ Internet-Draft      hICN mobility: deployment options          July 2020
 
    In the hICN-AMM case, this function is used to realize the hICN
    punting function described in [I-D.muscariello-intarea-hicn], i.e. to
-
-
-
-
-Augé, et al.             Expires 8 January 2021                 [Page 7]
-
-Internet-Draft      hICN mobility: deployment options          July 2020
-
-
    identify hICN traffic (Interest and Data packets) and forward it to
    the local MEC hICN instance.
 
@@ -401,24 +359,24 @@ Internet-Draft      hICN mobility: deployment options          July 2020
    that option #1a shares similarities with the deployment approach for
    ID/Loc solutions proposed in [I-D.homma-dmm-5gs-id-loc-coexistence].
 
-     +------------------+          +------------------+
-     |        AMF       |          |        SMF       |
-     +-+--------------+-+          +++--------------+-+
-       |              |             .|              |
-       | N1           | N2       N4 .| N4           | N4
-       |              |             .|              |
-   +---+---+      +---+---+  N3  +---+---+  N9  +---+---+  N6  +-------+
-   |  UE   +------+  gNB  +------+ UL/CL +------+  UPF  +------+  DN   |
-   +-------+      +-------+      +---+---+      +-------+      +-------+
-                                    .|
-                                    .| N9
-                                    .|                            _
-                                 +--++---+  N9  +-------+  MEC  _( )___
-                                 |  UPF  +------+   DN  +------(  hICN )_
-                                 +-------+      +-------+      (_________)
-                                    ^               ^              ^
-                                    |_______________|              |
-                                      local breakout        hICN insertion
+     +-----------------+          +------------------+
+     |        AMF      |          |        SMF       |
+     +-+-------------+-+          +++--------------+-+
+       |             |             .|              |
+       | N1          | N2       N4 .| N4           | N4
+       |             |             .|              |
+   +---+--+     +---+---+  N3  +---+---+  N9  +---+---+  N6  +-------+
+   |  UE  +-----+  gNB  +------+ UL/CL +------+  UPF  +------+  DN   |
+   +------+     +-------+      +---+---+      +-------+      +-------+
+                                  .|
+                                  .| N9
+                                  .|                            _
+                               +--++---+  N9  +-------+  MEC  _( )___
+                               |  UPF  +------+   DN  +------(  hICN )_
+                               +-------+      +-------+      (_________)
+                                  ^               ^              ^
+                                  |_______________|              |
+                                    local breakout        hICN insertion
 
                       Figure 4: hICN insertion in MEC
 
@@ -428,6 +386,13 @@ Internet-Draft      hICN mobility: deployment options          July 2020
    congestion control which may be leveraged for efficient low-latency
    content distribution, especially in presence of consumer mobility.
    Let us analyze more in details such advantages.
+
+
+
+Auge, et al.             Expires 9 January 2021                 [Page 7]
+
+Internet-Draft      hICN mobility: deployment options          July 2020
+
 
    *Pro: Benefits of edge caching*
 
@@ -442,14 +407,6 @@ Internet-Draft      hICN mobility: deployment options          July 2020
    based transport model enables request aggregation removing traffic
    redundancy and facilitates the use of dynamically discovered sources.
    This is the case of requests directly satisfied from locally buffered
-
-
-
-Augé, et al.             Expires 8 January 2021                 [Page 8]
-
-Internet-Draft      hICN mobility: deployment options          July 2020
-
-
    temporary copies.  In this way, hICN implicitly realizes
    opportunistic multicast distribution of popular content with benefits
    for improved users' QoE for services such as VoD or live streaming as
@@ -482,14 +439,25 @@ Internet-Draft      hICN mobility: deployment options          July 2020
    as a lost packet would be fast retransmitted directly from local hICN
    instance.
 
+
+
+
+
+
+
+Auge, et al.             Expires 9 January 2021                 [Page 8]
+
+Internet-Draft      hICN mobility: deployment options          July 2020
+
+
    tunnelled non-3GPP radio
-   (e.g. WiFi)   +------+  N3
-          +------+ N3IWF+-------+                         hICN
-         /       +------+        \                          +
-        /                         \                         |
-   +---+---+     +-------+ N3 +---+---+ N9 +---+---+ N6 +---+---+
-   |  UE   +-----+  gNB  +----+ UL/CL +----+  UPF  +----+  DN   +---+ hICN
-   +-------+     +-------+    +---+---+    +-------+    +-------+
+   (eg. WiFi)  +------+  N3
+          +----+ N3IWF+-------+                         hICN
+         /     +------+        \                          +
+        /                       \                         |
+   +---+---+   +-------+ N3 +---+---+ N9 +---+---+ N6 +---+---+
+   |  UE   +---+  gNB  +----+ UL/CL +----+  UPF  +----+  DN   +---+ hICN
+   +-------+   +-------+    +---+---+    +-------+    +-------+
 
       Figure 5: Example of a UE connection to two local radio accesses
 
@@ -498,14 +466,6 @@ Internet-Draft      hICN mobility: deployment options          July 2020
    A specific feature of hICN transport is to control the use of
    multiple path/sources of content at the same time, for instance
    caches located at the edge of different fixed/mobile network
-
-
-
-Augé, et al.             Expires 8 January 2021                 [Page 9]
-
-Internet-Draft      hICN mobility: deployment options          July 2020
-
-
    accesses.  The consumer is able to use both network accesses in
    parallel adapting load-balancing on a per-packet granularity, based
    on network conditions in order to exploit the full aggregated
@@ -517,13 +477,13 @@ Internet-Draft      hICN mobility: deployment options          July 2020
    behind each radio access.
 
    tunnelled non-3GPP radio
-   (e.g. WiFi)  +-------+ N3 +-------+ N9 +-------+ N6 +-------+
-          +-----+ N3IWF +----| UL/CL +----+  UPF  +----+  DN   +----+ hICN
-         /      +-------+    +-------+    +-------+    +-------+
+   (eg. WiFi) +-------+ N3 +-------+ N9 +-------+ N6 +-------+
+          +---+ N3IWF +----| UL/CL +----+  UPF  +----+  DN   +----+ hICN
+         /    +-------+    +-------+    +-------+    +-------+
         /
-   +---+---+    +-------+ N3 +-------+ N9 +---+---+ N6 +---+---+
-   |  UE   +----+  gNB  +----+ UL/CL +----+  UPF  +----+  DN   +----+ hICN
-   +-------+    +-------+    +---+---+    +-------+    +-------+
+   +---+---+  +-------+ N3 +-------+ N9 +---+---+ N6 +---+---+
+   |  UE   +--+  gNB  +----+ UL/CL +----+  UPF  +----+  DN   +----+ hICN
+   +-------+  +-------+    +---+---+    +-------+    +-------+
 
                Figure 6: Multi-source communication with hICN
 
@@ -538,6 +498,14 @@ Internet-Draft      hICN mobility: deployment options          July 2020
 
    *Con: Loss of 3GPP control plane*
 
+
+
+
+Auge, et al.             Expires 9 January 2021                 [Page 9]
+
+Internet-Draft      hICN mobility: deployment options          July 2020
+
+
    More generally, traffic in between forwarders in the MEC will be out
    of reach for the mobile core.  At the time of this writing, MEC
    interfaces are not well standardized; slicing and QoS functions will
@@ -550,17 +518,6 @@ Internet-Draft      hICN mobility: deployment options          July 2020
    Figure 7.  This solution has the advantage of preserving the
    interface with the 3GPP control plane, including support for slicing
    or QoS.
-
-
-
-
-
-
-
-Augé, et al.             Expires 8 January 2021                [Page 10]
-
-Internet-Draft      hICN mobility: deployment options          July 2020
-
 
      +------------------+          +------------------+
      |        AMF       |          |        SMF       |
@@ -597,36 +554,29 @@ Internet-Draft      hICN mobility: deployment options          July 2020
 
    We illustrate the latter case in Figure 8, where an hICN UPF is
    deployed as the first UPF following the WiFi access. hICN UPF can
+
+
+
+Auge, et al.             Expires 9 January 2021                [Page 10]
+
+Internet-Draft      hICN mobility: deployment options          July 2020
+
+
    exploit network buffers to realize loss detection and recovery of the
    packet transiting on the unreliable radio access, thus offering
    superior performance for WiFi traffic with respect to a traditional
    end-to-end recovery approach.  Such feature could be fundamental for
    low-latency reliable services.
 
-
-
-
-
-
-
-
-
-
-
-Augé, et al.             Expires 8 January 2021                [Page 11]
-
-Internet-Draft      hICN mobility: deployment options          July 2020
-
-
-                                +-- Loss Detection and Recovey
-                                V
-                +-------+ N3 +-------+
-          +-----+ N3IWF +----| hICN  |
-         /      +-------+    +---+---+
-        /                     N9 |
-   +---+---+    +-------+ N3 +---+---+ N9 +---+---+ N6 +---+---+
-   |  UE   +----+  gNB  +----+  UPF  +----+  UPF  +----+  DN   +----+ hICN
-   +-------+    +-------+    +---+---+    +-------+    +-------+
+                               +-- Loss Detection and Recovey
+                               V
+               +-------+ N3 +-------+
+          +----+ N3IWF +----| hICN  |
+         /     +-------+    +---+---+
+        /                    N9 |
+   +---+---+   +-------+ N3 +---+---+ N9 +---+---+ N6 +---+---+
+   |  UE   +---+  gNB  +----+  UPF  +----+  UPF  +----+  DN   +---+ hICN
+   +-------+   +-------+    +---+---+    +-------+    +-------+
 
          Figure 8: In-network loss detection and recovery with hICN
 
@@ -660,19 +610,17 @@ Internet-Draft      hICN mobility: deployment options          July 2020
    forwarding information is stored/updated in routers' FIBs according
    to the hICN-AMM approach.
 
-   We remind that an hICN data plane does not require the presence of a
-   mapping system nor the enablement of all routers, since hICN traffic
-   is transparently forwarded by regular hICN-unaware IP routers.
 
 
 
-
-
-
-Augé, et al.             Expires 8 January 2021                [Page 12]
+Auge, et al.             Expires 9 January 2021                [Page 11]
 
 Internet-Draft      hICN mobility: deployment options          July 2020
 
+
+   We remind that an hICN data plane does not require the presence of a
+   mapping system nor the enablement of all routers, since hICN traffic
+   is transparently forwarded by regular hICN-unaware IP routers.
 
 4.1.  hICN insertion at N9 interface only (option #2a)
 
@@ -700,6 +648,32 @@ Internet-Draft      hICN mobility: deployment options          July 2020
 
                    Figure 9: Replacement of N9 interface
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Auge, et al.             Expires 9 January 2021                [Page 12]
+
+Internet-Draft      hICN mobility: deployment options          July 2020
+
+
        UE            5G-AN        N3         UPF        N9   UPF    N6
                                   |                     |            |
    +--------+                     |                     |            |
@@ -721,14 +695,6 @@ Internet-Draft      hICN mobility: deployment options          July 2020
    |        | |        |   L1   |-|-|   L1   |   L1   |-|-|   L1   | |
    +--------+ +-----------------+ | +-----------------+ | +--------+ |
                                   |                     |            |
-
-
-
-
-Augé, et al.             Expires 8 January 2021                [Page 13]
-
-Internet-Draft      hICN mobility: deployment options          July 2020
-
 
           Figure 10: Replacement of N9 interface - Protocol layers
 
@@ -756,6 +722,14 @@ Internet-Draft      hICN mobility: deployment options          July 2020
 
    *Low state and signaling overhead*
 
+
+
+
+Auge, et al.             Expires 9 January 2021                [Page 13]
+
+Internet-Draft      hICN mobility: deployment options          July 2020
+
+
    Unlike traditional 3GPP GTP-based mobility management, hICN-AMM does
    not involve signaling/ additional state to be maintained to handle
    static consumers/producers or mobile consumers.  Forwarding updates
@@ -776,16 +750,6 @@ Internet-Draft      hICN mobility: deployment options          July 2020
    RAN and the first UPF (N3 interface).  It is illustrated in Figure 12
    and Figure 13.
 
-
-
-
-
-
-Augé, et al.             Expires 8 January 2021                [Page 14]
-
-Internet-Draft      hICN mobility: deployment options          July 2020
-
-
      +------------------+          +------------------+
      |        AMF       |          |        SMF       |
      +-+--------------+-+          +-+--------------+-+
@@ -800,6 +764,27 @@ Internet-Draft      hICN mobility: deployment options          July 2020
                               hICN insertion
 
                Figure 12: Replacement of N3 and N9 interfaces
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Auge, et al.             Expires 9 January 2021                [Page 14]
+
+Internet-Draft      hICN mobility: deployment options          July 2020
+
 
        UE            5G-AN        N3         UPF        N9   UPF    N6
                                   |                     |            |
@@ -834,14 +819,6 @@ Internet-Draft      hICN mobility: deployment options          July 2020
    other non-3GPP accesses (and related management and monitoring
    tools).
 
-
-
-
-Augé, et al.             Expires 8 January 2021                [Page 15]
-
-Internet-Draft      hICN mobility: deployment options          July 2020
-
-
    *State and signaling reduction*
 
    A direct consequence is the extension to N3 of the property of hICN-
@@ -857,6 +834,14 @@ Internet-Draft      hICN mobility: deployment options          July 2020
    The advantage can be significant in the case of dense deployments
    scenarios: here hICN-AMM makes possible to isolate the core network
    from local edge mobility (a design objective of 5G mobile
+
+
+
+Auge, et al.             Expires 9 January 2021                [Page 15]
+
+Internet-Draft      hICN mobility: deployment options          July 2020
+
+
    architecture), while still permitting distributed selection of
    ingress UPFs, and load-balancing of traffic across them.
 
@@ -886,18 +871,6 @@ Internet-Draft      hICN mobility: deployment options          July 2020
    allows the rest of the infrastructure to remain unmodified, and to
    leverage existing management and monitoring tools.
 
-
-
-
-
-
-
-
-Augé, et al.             Expires 8 January 2021                [Page 16]
-
-Internet-Draft      hICN mobility: deployment options          July 2020
-
-
 5.1.  hICN in a slice
 
    The use of hICN does not impose any specific slicing of the network
@@ -918,6 +891,13 @@ Internet-Draft      hICN mobility: deployment options          July 2020
    caches deployed in locations aggregating a sufficient number of users
    to be effective.
 
+
+
+Auge, et al.             Expires 9 January 2021                [Page 16]
+
+Internet-Draft      hICN mobility: deployment options          July 2020
+
+
 5.2.  End-to-end deployment
 
    Deployment of the hICN stack in the endpoints is the preferred
@@ -932,27 +912,6 @@ Internet-Draft      hICN mobility: deployment options          July 2020
    Android, Linux, macOS and Windows.  The second one targets high-
    performance routers and servers, and leverages the VPP technology
    [VPP].
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Augé, et al.             Expires 8 January 2021                [Page 17]
-
-Internet-Draft      hICN mobility: deployment options          July 2020
-
 
 5.3.  Network-contained deployment
 
@@ -981,6 +940,20 @@ Internet-Draft      hICN mobility: deployment options          July 2020
    not modified, which may allow the network to have visibility of the
    source and/or destination identifiers.
 
+
+
+
+
+
+
+
+
+
+Auge, et al.             Expires 9 January 2021                [Page 17]
+
+Internet-Draft      hICN mobility: deployment options          July 2020
+
+
 5.4.  Alternative data planes: joint hICN/SRv6 deployment
 
    hICN is designed to operate inside an IPv6 network by means of an
@@ -1000,15 +973,6 @@ Internet-Draft      hICN mobility: deployment options          July 2020
    dedicated section of this document, namely "underlay" management
    (fast reroute, etc.), service chaining or fine-grained TE, for
    instance.
-
-
-
-
-
-Augé, et al.             Expires 8 January 2021                [Page 18]
-
-Internet-Draft      hICN mobility: deployment options          July 2020
-
 
    In addition, it allows extending the reach of hICN on regular IP
    routers with SRv6 functionality.  One realization being to create
@@ -1039,6 +1003,13 @@ Internet-Draft      hICN mobility: deployment options          July 2020
    proxies or direct insertion in user devices as the technology gets
    adopted and deployed.
 
+
+
+Auge, et al.             Expires 9 January 2021                [Page 18]
+
+Internet-Draft      hICN mobility: deployment options          July 2020
+
+
    While a full deployment is recommended to make efficient use of
    available network resources, it is still possible to opt for a
    partial or phased deployment, with the associated tradeoffs that we
@@ -1052,54 +1023,48 @@ Internet-Draft      hICN mobility: deployment options          July 2020
    through proxies, (None) no hICN function, the traffic is purely
    forwarded using endpoint identifiers rather than content identifiers.
 
+                                        +-----------------------+------+
+                      hICN penetration: |       UE      | Proxy | None |
+     Benefit:        Deployment option: | 1a 1b | 2a 2b |   2b  |  2b  |
+   +------------------------------------+-------+-------+-------+------+
+   | Additional state for static cons.  | Y  Y  | Y  N  |   N   |  N   |
+   | Additional state for static prod.  | Y  Y  | Y  N  |   N   |  N   |
+   | Additional state for mobile cons.  | Y  Y  | Y  N  |   N   |  N   |
+   | Additional state for mobile prod.  | Y  Y  | Y  N  |   N   |  N   |
+   +------------------------------------+-------+-------+-------+------+
+   | Signalization for static consumer  | Y  Y  | N  N  |   N   |  N   |
+   | Signalization for static producer  | Y  Y  | N  N  |   N   |  N   |
+   | Signalization for mobile consumer  | Y  Y  | N  N  |   N   |  N   |
+   | Signalization for mobile producer  | Y  Y  | Y  Y  |   Y   |  Y   |
+   +------------------------------------+-------+-------+-------+------+
+   | Removed tunnel/encap overhead      | N  N  | P  Y  |   Y   |  Y   |
+   | Preserve perf. of ongoing flows    | N  N  | Y  Y  |   Y   |  Y   |
+   +------------------------------------+-------+-------+-------+------+
+   | Local offload                      | P  N  | Y  Y  |   Y   |  Y   |
+   | Anchorless for UP                  | N  N  | Y  Y  |   Y   |  Y   |
+   | Anchorless for CP                  | N  N  | Y  Y  |   Y   |  Y   |
+   | Dynamic egress UPF selection       | N  N  | Y  Y  |   Y   |  Y   |
+   | Dynamic ingress UPF selection      | N  N  | N  Y  |   Y   |  Y   |
+   +------------------------------------+-------+-------+-------+------+
+   | Edge caching : low-latency         | Y  Y  | Y  Y  |   P   |  N   |
+   | Edge caching : multicast           | Y  Y  | Y  Y  |   P   |  N   |
+   | Seamless mobility across het. RAT  | Y  Y  | Y  Y  |   Y   |  P   |
+   | Multi-homing : bw aggregation      | Y  Y  | Y  Y  |   Y   |  P   |
+   | Multi-source                       | Y  Y  | Y  Y  |   Y   |  N   |
+   | In-network assistance              | N  Y  | Y  Y  |   P   |  N   |
+   +------------------------------------+-------+-------+-------+------+
+   | Integration with 3GPP CP           | N  Y  | Y  Y  |   Y   |  Y   |
+   +------------------------------------+-------+-------+-------+------+
+
+   LEGEND: (Y) Yes - (N) No - (P) Partial
 
 
 
 
-
-
-
-
-
-Augé, et al.             Expires 8 January 2021                [Page 19]
+Auge, et al.             Expires 9 January 2021                [Page 19]
 
 Internet-Draft      hICN mobility: deployment options          July 2020
 
-
-                                          +-----------------------+------+
-                        hICN penetration: |       UE      | Proxy | None |
-     Benefit:          Deployment option: | 1a 1b | 2a 2b |   2b  |  2b  |
-   +--------------------------------------+-------+-------+-------+------+
-   | Additional state for static consumer | Y  Y  | Y  N  |   N   |  N   |
-   | Additional state for static producer | Y  Y  | Y  N  |   N   |  N   |
-   | Additional state for mobile consumer | Y  Y  | Y  N  |   N   |  N   |
-   | Additional state for mobile producer | Y  Y  | Y  N  |   N   |  N   |
-   +--------------------------------------+-------+-------+-------+------+
-   | Signalization for static consumer    | Y  Y  | N  N  |   N   |  N   |
-   | Signalization for static producer    | Y  Y  | N  N  |   N   |  N   |
-   | Signalization for mobile consumer    | Y  Y  | N  N  |   N   |  N   |
-   | Signalization for mobile producer    | Y  Y  | Y  Y  |   Y   |  Y   |
-   +--------------------------------------+-------+-------+-------+------+
-   | Removed tunnel/encap overhead        | N  N  | P  Y  |   Y   |  Y   |
-   | Preserve perf. of flows in progress  | N  N  | Y  Y  |   Y   |  Y   |
-   +--------------------------------------+-------+-------+-------+------+
-   | Local offload                        | P  N  | Y  Y  |   Y   |  Y   |
-   | Anchorless for UP                    | N  N  | Y  Y  |   Y   |  Y   |
-   | Anchorless for CP                    | N  N  | Y  Y  |   Y   |  Y   |
-   | Dynamic egress UPF selection         | N  N  | Y  Y  |   Y   |  Y   |
-   | Dynamic ingress UPF selection        | N  N  | N  Y  |   Y   |  Y   |
-   +--------------------------------------+-------+-------+-------+------+
-   | Edge caching : low-latency           | Y  Y  | Y  Y  |   P   |  N   |
-   | Edge caching : multicast             | Y  Y  | Y  Y  |   P   |  N   |
-   | Seamless mobility across het. RAT    | Y  Y  | Y  Y  |   Y   |  P   |
-   | Multi-homing ; Bandwidth aggregation | Y  Y  | Y  Y  |   Y   |  P   |
-   | Multi-source                         | Y  Y  | Y  Y  |   Y   |  N   |
-   | In-network assistance                | N  Y  | Y  Y  |   P   |  N   |
-   +--------------------------------------+-------+-------+-------+------+
-   | Integration with 3GPP CP             | N  Y  | Y  Y  |   Y   |  Y   |
-   +--------------------------------------+-------+-------+-------+------+
-
-   LEGEND: (Y) Yes - (N) No - (P) Partial
 
                                  Figure 14
 
@@ -1115,13 +1080,6 @@ Internet-Draft      hICN mobility: deployment options          July 2020
 
 7.2.  Informative References
 
-
-
-Augé, et al.             Expires 8 January 2021                [Page 20]
-
-Internet-Draft      hICN mobility: deployment options          July 2020
-
-
    [CICN]     io, Linux Foundation fd., "CICN project", 2018.
 
    [I-D.auge-dmm-hicn-mobility]
@@ -1131,13 +1089,6 @@ Internet-Draft      hICN mobility: deployment options          July 2020
               6 January 2020, <http://www.ietf.org/internet-drafts/
               draft-auge-dmm-hicn-mobility-03.txt>.
 
-   [I-D.herbert-intarea-ila]
-              Herbert, T. and P. Lapukhov, "Identifier-locator
-              addressing for IPv6", Work in Progress, Internet-Draft,
-              draft-herbert-intarea-ila-01, 5 March 2018,
-              <http://www.ietf.org/internet-drafts/draft-herbert-
-              intarea-ila-01.txt>.
-
    [I-D.homma-dmm-5gs-id-loc-coexistence]
               Homma, S., Kawakami, K., Akhavain, A., Rodriguez-Natal,
               A., and R. Shekhar, "Co-existence of 3GPP 5GS and
@@ -1146,13 +1097,6 @@ Internet-Draft      hICN mobility: deployment options          July 2020
               coexistence-03, 23 April 2019, <http://www.ietf.org/
               internet-drafts/draft-homma-dmm-5gs-id-loc-coexistence-
               03.txt>.
-
-   [I-D.ietf-lisp-introduction]
-              Cabellos-Aparicio, A. and D. Saucez, "An Architectural
-              Introduction to the Locator/ID Separation Protocol
-              (LISP)", Work in Progress, Internet-Draft, draft-ietf-
-              lisp-introduction-13, 2 April 2015, <http://www.ietf.org/
-              internet-drafts/draft-ietf-lisp-introduction-13.txt>.
 
    [I-D.ietf-spring-segment-routing]
               Filsfils, C., Previdi, S., Ginsberg, L., Decraene, B.,
@@ -1173,7 +1117,7 @@ Internet-Draft      hICN mobility: deployment options          July 2020
 
 
 
-Augé, et al.             Expires 8 January 2021                [Page 21]
+Auge, et al.             Expires 9 January 2021                [Page 20]
 
 Internet-Draft      hICN mobility: deployment options          July 2020
 
@@ -1207,7 +1151,7 @@ Internet-Draft      hICN mobility: deployment options          July 2020
 
 Authors' Addresses
 
-   Jordan Augé
+   Jordan Auge
    Cisco Systems
    11, rue Camille Desmoulins
    92130 Issy-les-Moulineaux
@@ -1229,7 +1173,7 @@ Authors' Addresses
 
 
 
-Augé, et al.             Expires 8 January 2021                [Page 22]
+Auge, et al.             Expires 9 January 2021                [Page 21]
 
 Internet-Draft      hICN mobility: deployment options          July 2020
 
@@ -1285,4 +1229,4 @@ Internet-Draft      hICN mobility: deployment options          July 2020
 
 
 
-Augé, et al.             Expires 8 January 2021                [Page 23]
+Auge, et al.             Expires 9 January 2021                [Page 22]

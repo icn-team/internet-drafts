@@ -5,26 +5,24 @@
 <meta content="Common,Latin" name="scripts">
 <meta content="initial-scale=1.0" name="viewport">
 <title>Anchorless mobility management through hICN (hICN-AMM): Deployment options</title>
-<meta content="Jordan Augé" name="author">
+<meta content="Jordan Auge" name="author">
 <meta content="Giovanna Carofiglio" name="author">
 <meta content="Luca Muscariello" name="author">
 <meta content="Michele Papalini" name="author">
 <meta content="
-       A novel mobility management approach is described in  ,
-that leverages routable location-independent identifiers (IDs) and an
-Information-Centric Networking (ICN) communication model integrated in IPv6,
-also referred to as Hybrid ICN (hICN)  . 
+       A novel mobility management approach has been proposed, that leverages routable
+location-independent identifiers (IDs) and an Information-Centric Networking
+(ICN) communication model integrated in IPv6, also referred to as Hybrid ICN
+(hICN). In virtue of its anchorless property, we denote this approach as
+hICN-AMM (hICN Anchorless Mobility Management) hereinafter. 
        Such approach belongs to the category of pure ID-based mobility management
 schemes whose objective is (i) to overcome the limitations of traditional
 locator-based solutions like Mobile IP, (ii)
 to remove the need for a global mapping system as the one required by
-locator-identifier separation solutions like LISP
-  or ILA  . 
+locator-identifier separation solutions like LISP or ILA. 
        ID-based networking as proposed by ICN architectures allows to disentangle
 forwarding operations from changes of network location, hence removing tunnels
-and user plane or control plane anchors. In virtue of its anchorless property,
-we denote this approach as hICN-AMM (hICN Anchorless Mobility Management)
-hereinafter. 
+and user plane or control plane anchors. 
        This document discusses hICN-AMM deployment options and related tradeoffs in
 terms of cost/benefits. Particular attention is devoted to the insertion in the
 recently proposed 5G Service Based Architecture under study at 3GPP where
@@ -33,7 +31,7 @@ tunnel-based mobility architecture through GTP-U.
     " name="description">
 <meta content="xml2rfc 2.40.1" name="generator">
 <meta content="Anchorless mobility" name="keyword">
-<meta content="draft-auge-dmm-hicn-mobility-deployment-options-03" name="ietf.draft">
+<meta content="draft-auge-dmm-hicn-mobility-deployment-options-04" name="ietf.draft">
 <link href="draft-auge-dmm-hicn-mobility-deployment-options.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
 <style type="text/css">@import url('https://martinthomson.github.io/i-d-template/fonts.css');
@@ -836,8 +834,8 @@ table.left {
 <td class="right">July 2020</td>
 </tr></thead>
 <tfoot><tr>
-<td class="left">Augé, et al.</td>
-<td class="center">Expires 8 January 2021</td>
+<td class="left">Auge, et al.</td>
+<td class="center">Expires 9 January 2021</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -847,19 +845,19 @@ table.left {
 <dt class="label-workgroup">Workgroup:</dt>
 <dd class="workgroup">DMM Working Group</dd>
 <dt class="label-internet-draft">Internet-Draft:</dt>
-<dd class="internet-draft">draft-auge-dmm-hicn-mobility-deployment-options-03</dd>
+<dd class="internet-draft">draft-auge-dmm-hicn-mobility-deployment-options-04</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2020-07-07" class="published">7 July 2020</time>
+<time datetime="2020-07-08" class="published">8 July 2020</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2021-01-08">8 January 2021</time></dd>
+<dd class="expires"><time datetime="2021-01-09">9 January 2021</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
-      <div class="author-name">J. Augé</div>
+      <div class="author-name">J. Auge</div>
 <div class="org">Cisco</div>
 </div>
 <div class="author">
@@ -880,21 +878,19 @@ table.left {
 <h1 id="title">Anchorless mobility management through hICN (hICN-AMM): Deployment options</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="section-abstract-1">A novel mobility management approach is described in <span>[<a href="#I-D.auge-dmm-hicn-mobility" class="xref">I-D.auge-dmm-hicn-mobility</a>]</span>,
-that leverages routable location-independent identifiers (IDs) and an
-Information-Centric Networking (ICN) communication model integrated in IPv6,
-also referred to as Hybrid ICN (hICN) <span>[<a href="#I-D.muscariello-intarea-hicn" class="xref">I-D.muscariello-intarea-hicn</a>]</span>.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-1">A novel mobility management approach has been proposed, that leverages routable
+location-independent identifiers (IDs) and an Information-Centric Networking
+(ICN) communication model integrated in IPv6, also referred to as Hybrid ICN
+(hICN). In virtue of its anchorless property, we denote this approach as
+hICN-AMM (hICN Anchorless Mobility Management) hereinafter.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 <p id="section-abstract-2">Such approach belongs to the category of pure ID-based mobility management
 schemes whose objective is (i) to overcome the limitations of traditional
 locator-based solutions like Mobile IP, (ii)
 to remove the need for a global mapping system as the one required by
-locator-identifier separation solutions like LISP
-<span>[<a href="#I-D.ietf-lisp-introduction" class="xref">I-D.ietf-lisp-introduction</a>]</span> or ILA <span>[<a href="#I-D.herbert-intarea-ila" class="xref">I-D.herbert-intarea-ila</a>]</span>.<a href="#section-abstract-2" class="pilcrow">¶</a></p>
+locator-identifier separation solutions like LISP or ILA.<a href="#section-abstract-2" class="pilcrow">¶</a></p>
 <p id="section-abstract-3">ID-based networking as proposed by ICN architectures allows to disentangle
 forwarding operations from changes of network location, hence removing tunnels
-and user plane or control plane anchors. In virtue of its anchorless property,
-we denote this approach as hICN-AMM (hICN Anchorless Mobility Management)
-hereinafter.<a href="#section-abstract-3" class="pilcrow">¶</a></p>
+and user plane or control plane anchors.<a href="#section-abstract-3" class="pilcrow">¶</a></p>
 <p id="section-abstract-4">This document discusses hICN-AMM deployment options and related tradeoffs in
 terms of cost/benefits. Particular attention is devoted to the insertion in the
 recently proposed 5G Service Based Architecture under study at 3GPP where
@@ -920,7 +916,7 @@ tunnel-based mobility architecture through GTP-U.<a href="#section-abstract-4" c
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 8 January 2021.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 9 January 2021.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1097,20 +1093,20 @@ IPv6-based network.<a href="#section-2-1" class="pilcrow">¶</a></p>
 <pre>
                  , - ,              , - ,              , - ,
 Cell site    , '       ' ,      , '       ' ,      , '       ' ,
-    __     ,               ,__,                ,__,               ,
- __/ A\   ,                /X/|                /X/|                ,
-/ A\__/  __     IP edge    |_|/  IP backhaul   |_|/    IP core     __
-\__/ A\ /X/|               , ,                 , ,                /X/|
-/ A\__/ |_|/    network    ,__     network     ,__     network    |_|/
-\__/ A\  |,                /X/|                /X/|                |
-   \__/  | ,               |_|/,               |_|/,              ,|
-         |   ,          , ' |   ,          , '' |   ,          , ' |
-         |     ' - ,  '     |     ' - ,  '      |     ' - ,  '     |
-       +-+-+              +-+-+               +-+-+              +-+-+
-       |   |              |   |               |   |              |   |
-       |DDC|              |DDC|               |DDC|              |DDC|
-       |   |              |   |               |   |              |   |
-       +---+              +---+               +---+              +---+
+    __     ,               ,__,               ,__,              ,
+ __/ A\   ,                /X/|                /X/|               ,
+/ A\__/  __     IP edge    |_|/  IP backhaul   |_|/    IP core    __
+\__/ A\ /X/|               , ,                 , ,               /X/|
+/ A\__/ |_|/    network    ,__     network     ,__     network   |_|/
+\__/ A\  |,                /X/|                /X/|               |
+   \__/  | ,               |_|/,               |_|/,              |
+         |   ,          , ' |   ,          , '' |   ,          , '|
+         |     ' - ,  '     |     ' - ,  '      |     ' -  , '    |
+       +-+-+              +-+-+               +-+-+             +-+-+
+       |   |              |   |               |   |             |   |
+       |DDC|              |DDC|               |DDC|             |DDC|
+       |   |              |   |               |   |             |   |
+       +---+              +---+               +---+             +---+
 </pre>
 </div>
 <figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
@@ -1134,14 +1130,14 @@ planes. <a href="#fig-5g-sba" class="xref">Figure 2</a> gives the traditional re
 | NSSF  | |  NRF  | |  DSF  | |  UDM  | |  NEF  | |  PCF  | |  AUSF |
 +---+---+ +---+---+ +---+---+ +---+---+ +---+---+ +---+---+ +---+---+
     |         |         |         |         |         |         |
-----+------+--+---------+---------+-------+-+---------+---------+-----
+----+------+--+---------+---------+-------+-+---------+---------+----
            |                              |
   +--------+---------+          +---------+--------+      MOBILITY
   |        AMF       |          |        SMF       |     MANAGEMENT
   +-+--------------+-+          +++--------------+-+
     |              |              |              |        control
     | N1           | N2           | N4           | N4      plane
- ...|..............|..............|..............|....................
+ ...|..............|..............|..............|...................
     |              |              |              |       user plane
     |              |              |              |
 +---+---+      +---+---+  N3  +---+---+  N9  +---+---+  N6  +-------+
@@ -1244,24 +1240,24 @@ solutions proposed in <span>[<a href="#I-D.homma-dmm-5gs-id-loc-coexistence" cla
 <figure id="figure-4">
           <div class="artwork art-text alignLeft" id="section-3.1-4.1">
 <pre>
-  +------------------+          +------------------+
-  |        AMF       |          |        SMF       |
-  +-+--------------+-+          +++--------------+-+
-    |              |             .|              |
-    | N1           | N2       N4 .| N4           | N4
-    |              |             .|              |
-+---+---+      +---+---+  N3  +---+---+  N9  +---+---+  N6  +-------+
-|  UE   +------+  gNB  +------+ UL/CL +------+  UPF  +------+  DN   |
-+-------+      +-------+      +---+---+      +-------+      +-------+
-                                 .|
-                                 .| N9
-                                 .|                            _
-                              +--++---+  N9  +-------+  MEC  _( )___
-                              |  UPF  +------+   DN  +------(  hICN )_
-                              +-------+      +-------+      (_________)
-                                 ^               ^              ^
-                                 |_______________|              |
-                                   local breakout        hICN insertion
+  +-----------------+          +------------------+
+  |        AMF      |          |        SMF       |
+  +-+-------------+-+          +++--------------+-+
+    |             |             .|              |
+    | N1          | N2       N4 .| N4           | N4
+    |             |             .|              |
++---+--+     +---+---+  N3  +---+---+  N9  +---+---+  N6  +-------+
+|  UE  +-----+  gNB  +------+ UL/CL +------+  UPF  +------+  DN   |
++------+     +-------+      +---+---+      +-------+      +-------+
+                               .|
+                               .| N9
+                               .|                            _
+                            +--++---+  N9  +-------+  MEC  _( )___
+                            |  UPF  +------+   DN  +------(  hICN )_
+                            +-------+      +-------+      (_________)
+                               ^               ^              ^
+                               |_______________|              |
+                                 local breakout        hICN insertion
 </pre>
 </div>
 <figcaption><a href="#figure-4" class="selfRef">Figure 4</a>:
@@ -1310,13 +1306,13 @@ packet would be fast retransmitted directly from local hICN instance.<a href="#s
           <div class="artwork art-text alignLeft" id="section-3.1-14.1">
 <pre>
 tunnelled non-3GPP radio
-(e.g. WiFi)   +------+  N3
-       +------+ N3IWF+-------+                         hICN
-      /       +------+        \                          +
-     /                         \                         |
-+---+---+     +-------+ N3 +---+---+ N9 +---+---+ N6 +---+---+
-|  UE   +-----+  gNB  +----+ UL/CL +----+  UPF  +----+  DN   +---+ hICN
-+-------+     +-------+    +---+---+    +-------+    +-------+
+(eg. WiFi)  +------+  N3
+       +----+ N3IWF+-------+                         hICN
+      /     +------+        \                          +
+     /                       \                         |
++---+---+   +-------+ N3 +---+---+ N9 +---+---+ N6 +---+---+
+|  UE   +---+  gNB  +----+ UL/CL +----+  UPF  +----+  DN   +---+ hICN
++-------+   +-------+    +---+---+    +-------+    +-------+
 </pre>
 </div>
 <figcaption><a href="#figure-5" class="selfRef">Figure 5</a>:
@@ -1339,13 +1335,13 @@ radio access.<a href="#section-3.1-17" class="pilcrow">¶</a></p>
           <div class="artwork art-text alignLeft" id="section-3.1-18.1">
 <pre>
 tunnelled non-3GPP radio
-(e.g. WiFi)  +-------+ N3 +-------+ N9 +-------+ N6 +-------+
-       +-----+ N3IWF +----| UL/CL +----+  UPF  +----+  DN   +----+ hICN
-      /      +-------+    +-------+    +-------+    +-------+
+(eg. WiFi) +-------+ N3 +-------+ N9 +-------+ N6 +-------+
+       +---+ N3IWF +----| UL/CL +----+  UPF  +----+  DN   +----+ hICN
+      /    +-------+    +-------+    +-------+    +-------+
      /
-+---+---+    +-------+ N3 +-------+ N9 +---+---+ N6 +---+---+
-|  UE   +----+  gNB  +----+ UL/CL +----+  UPF  +----+  DN   +----+ hICN
-+-------+    +-------+    +---+---+    +-------+    +-------+
++---+---+  +-------+ N3 +-------+ N9 +---+---+ N6 +---+---+
+|  UE   +--+  gNB  +----+ UL/CL +----+  UPF  +----+  DN   +----+ hICN
++-------+  +-------+    +---+---+    +-------+    +-------+
 </pre>
 </div>
 <figcaption><a href="#figure-6" class="selfRef">Figure 6</a>:
@@ -1417,15 +1413,15 @@ could be fundamental for low-latency reliable services.<a href="#section-3.2-8" 
 <figure id="figure-8">
           <div class="artwork art-text alignLeft" id="section-3.2-9.1">
 <pre>
-                             +-- Loss Detection and Recovey
-                             V
-             +-------+ N3 +-------+
-       +-----+ N3IWF +----| hICN  |
-      /      +-------+    +---+---+
-     /                     N9 |
-+---+---+    +-------+ N3 +---+---+ N9 +---+---+ N6 +---+---+
-|  UE   +----+  gNB  +----+  UPF  +----+  UPF  +----+  DN   +----+ hICN
-+-------+    +-------+    +---+---+    +-------+    +-------+
+                            +-- Loss Detection and Recovey
+                            V
+            +-------+ N3 +-------+
+       +----+ N3IWF +----| hICN  |
+      /     +-------+    +---+---+
+     /                    N9 |
++---+---+   +-------+ N3 +---+---+ N9 +---+---+ N6 +---+---+
+|  UE   +---+  gNB  +----+  UPF  +----+  UPF  +----+  DN   +---+ hICN
++-------+   +-------+    +---+---+    +-------+    +-------+
 </pre>
 </div>
 <figcaption><a href="#figure-8" class="selfRef">Figure 8</a>:
@@ -1805,38 +1801,38 @@ purely forwarded using endpoint identifiers rather than content identifiers.<a h
 <figure id="figure-14">
         <div class="artwork art-text alignLeft" id="section-6-5.1">
 <pre>
-                                       +-----------------------+------+
-                     hICN penetration: |       UE      | Proxy | None |
-  Benefit:          Deployment option: | 1a 1b | 2a 2b |   2b  |  2b  |
-+--------------------------------------+-------+-------+-------+------+
-| Additional state for static consumer | Y  Y  | Y  N  |   N   |  N   |
-| Additional state for static producer | Y  Y  | Y  N  |   N   |  N   |
-| Additional state for mobile consumer | Y  Y  | Y  N  |   N   |  N   |
-| Additional state for mobile producer | Y  Y  | Y  N  |   N   |  N   |
-+--------------------------------------+-------+-------+-------+------+
-| Signalization for static consumer    | Y  Y  | N  N  |   N   |  N   |
-| Signalization for static producer    | Y  Y  | N  N  |   N   |  N   |
-| Signalization for mobile consumer    | Y  Y  | N  N  |   N   |  N   |
-| Signalization for mobile producer    | Y  Y  | Y  Y  |   Y   |  Y   |
-+--------------------------------------+-------+-------+-------+------+
-| Removed tunnel/encap overhead        | N  N  | P  Y  |   Y   |  Y   |
-| Preserve perf. of flows in progress  | N  N  | Y  Y  |   Y   |  Y   |
-+--------------------------------------+-------+-------+-------+------+
-| Local offload                        | P  N  | Y  Y  |   Y   |  Y   |
-| Anchorless for UP                    | N  N  | Y  Y  |   Y   |  Y   |
-| Anchorless for CP                    | N  N  | Y  Y  |   Y   |  Y   |
-| Dynamic egress UPF selection         | N  N  | Y  Y  |   Y   |  Y   |
-| Dynamic ingress UPF selection        | N  N  | N  Y  |   Y   |  Y   |
-+--------------------------------------+-------+-------+-------+------+
-| Edge caching : low-latency           | Y  Y  | Y  Y  |   P   |  N   |
-| Edge caching : multicast             | Y  Y  | Y  Y  |   P   |  N   |
-| Seamless mobility across het. RAT    | Y  Y  | Y  Y  |   Y   |  P   |
-| Multi-homing ; Bandwidth aggregation | Y  Y  | Y  Y  |   Y   |  P   |
-| Multi-source                         | Y  Y  | Y  Y  |   Y   |  N   |
-| In-network assistance                | N  Y  | Y  Y  |   P   |  N   |
-+--------------------------------------+-------+-------+-------+------+
-| Integration with 3GPP CP             | N  Y  | Y  Y  |   Y   |  Y   |
-+--------------------------------------+-------+-------+-------+------+
+                                     +-----------------------+------+
+                   hICN penetration: |       UE      | Proxy | None |
+  Benefit:        Deployment option: | 1a 1b | 2a 2b |   2b  |  2b  |
++------------------------------------+-------+-------+-------+------+
+| Additional state for static cons.  | Y  Y  | Y  N  |   N   |  N   |
+| Additional state for static prod.  | Y  Y  | Y  N  |   N   |  N   |
+| Additional state for mobile cons.  | Y  Y  | Y  N  |   N   |  N   |
+| Additional state for mobile prod.  | Y  Y  | Y  N  |   N   |  N   |
++------------------------------------+-------+-------+-------+------+
+| Signalization for static consumer  | Y  Y  | N  N  |   N   |  N   |
+| Signalization for static producer  | Y  Y  | N  N  |   N   |  N   |
+| Signalization for mobile consumer  | Y  Y  | N  N  |   N   |  N   |
+| Signalization for mobile producer  | Y  Y  | Y  Y  |   Y   |  Y   |
++------------------------------------+-------+-------+-------+------+
+| Removed tunnel/encap overhead      | N  N  | P  Y  |   Y   |  Y   |
+| Preserve perf. of ongoing flows    | N  N  | Y  Y  |   Y   |  Y   |
++------------------------------------+-------+-------+-------+------+
+| Local offload                      | P  N  | Y  Y  |   Y   |  Y   |
+| Anchorless for UP                  | N  N  | Y  Y  |   Y   |  Y   |
+| Anchorless for CP                  | N  N  | Y  Y  |   Y   |  Y   |
+| Dynamic egress UPF selection       | N  N  | Y  Y  |   Y   |  Y   |
+| Dynamic ingress UPF selection      | N  N  | N  Y  |   Y   |  Y   |
++------------------------------------+-------+-------+-------+------+
+| Edge caching : low-latency         | Y  Y  | Y  Y  |   P   |  N   |
+| Edge caching : multicast           | Y  Y  | Y  Y  |   P   |  N   |
+| Seamless mobility across het. RAT  | Y  Y  | Y  Y  |   Y   |  P   |
+| Multi-homing : bw aggregation      | Y  Y  | Y  Y  |   Y   |  P   |
+| Multi-source                       | Y  Y  | Y  Y  |   Y   |  N   |
+| In-network assistance              | N  Y  | Y  Y  |   P   |  N   |
++------------------------------------+-------+-------+-------+------+
+| Integration with 3GPP CP           | N  Y  | Y  Y  |   Y   |  Y   |
++------------------------------------+-------+-------+-------+------+
 
 LEGEND: (Y) Yes - (N) No - (P) Partial
 </pre>
@@ -1870,15 +1866,9 @@ LEGEND: (Y) Yes - (N) No - (P) Partial
 <dt id="I-D.auge-dmm-hicn-mobility">[I-D.auge-dmm-hicn-mobility]</dt>
 <dd>
 <span class="refAuthor">Auge, J.</span><span class="refAuthor">, Carofiglio, G.</span><span class="refAuthor">, Muscariello, L.</span><span class="refAuthor">, and M. Papalini</span>, <span class="refTitle">"Anchorless mobility through hICN"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-auge-dmm-hicn-mobility-03</span>, <time datetime="2020-01-06">6 January 2020</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-auge-dmm-hicn-mobility-03.txt">http://www.ietf.org/internet-drafts/draft-auge-dmm-hicn-mobility-03.txt</a>&gt;</span>. </dd>
-<dt id="I-D.herbert-intarea-ila">[I-D.herbert-intarea-ila]</dt>
-<dd>
-<span class="refAuthor">Herbert, T.</span><span class="refAuthor"> and P. Lapukhov</span>, <span class="refTitle">"Identifier-locator addressing for IPv6"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-herbert-intarea-ila-01</span>, <time datetime="2018-03-05">5 March 2018</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-herbert-intarea-ila-01.txt">http://www.ietf.org/internet-drafts/draft-herbert-intarea-ila-01.txt</a>&gt;</span>. </dd>
 <dt id="I-D.homma-dmm-5gs-id-loc-coexistence">[I-D.homma-dmm-5gs-id-loc-coexistence]</dt>
 <dd>
 <span class="refAuthor">Homma, S.</span><span class="refAuthor">, Kawakami, K.</span><span class="refAuthor">, Akhavain, A.</span><span class="refAuthor">, Rodriguez-Natal, A.</span><span class="refAuthor">, and R. Shekhar</span>, <span class="refTitle">"Co-existence of 3GPP 5GS and Identifier-Locator Separation Architecture"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-homma-dmm-5gs-id-loc-coexistence-03</span>, <time datetime="2019-04-23">23 April 2019</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-homma-dmm-5gs-id-loc-coexistence-03.txt">http://www.ietf.org/internet-drafts/draft-homma-dmm-5gs-id-loc-coexistence-03.txt</a>&gt;</span>. </dd>
-<dt id="I-D.ietf-lisp-introduction">[I-D.ietf-lisp-introduction]</dt>
-<dd>
-<span class="refAuthor">Cabellos-Aparicio, A.</span><span class="refAuthor"> and D. Saucez</span>, <span class="refTitle">"An Architectural Introduction to the Locator/ID Separation Protocol (LISP)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-lisp-introduction-13</span>, <time datetime="2015-04-02">2 April 2015</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-ietf-lisp-introduction-13.txt">http://www.ietf.org/internet-drafts/draft-ietf-lisp-introduction-13.txt</a>&gt;</span>. </dd>
 <dt id="I-D.ietf-spring-segment-routing">[I-D.ietf-spring-segment-routing]</dt>
 <dd>
 <span class="refAuthor">Filsfils, C.</span><span class="refAuthor">, Previdi, S.</span><span class="refAuthor">, Ginsberg, L.</span><span class="refAuthor">, Decraene, B.</span><span class="refAuthor">, Litkowski, S.</span><span class="refAuthor">, and R. Shakir</span>, <span class="refTitle">"Segment Routing Architecture"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-spring-segment-routing-15</span>, <time datetime="2018-01-25">25 January 2018</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-ietf-spring-segment-routing-15.txt">http://www.ietf.org/internet-drafts/draft-ietf-spring-segment-routing-15.txt</a>&gt;</span>. </dd>
@@ -1909,7 +1899,7 @@ LEGEND: (Y) Yes - (N) No - (P) Partial
 <a href="#name-authors-addresses" class="section-name selfRef">Authors' Addresses</a>
       </h2>
 <address class="vcard">
-        <div dir="auto" class="left"><span class="fn nameRole">Jordan Augé</span></div>
+        <div dir="auto" class="left"><span class="fn nameRole">Jordan Auge</span></div>
 <div dir="auto" class="left"><span class="org">Cisco Systems</span></div>
 <div dir="auto" class="left"><span class="street-address">11, rue Camille Desmoulins</span></div>
 <div dir="auto" class="left">
