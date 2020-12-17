@@ -10,20 +10,25 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - name: 'checkout'
+    - name: 'Checkout'
       uses: actions/checkout@v2
-    - name: 'docker hub login'
+    - name: 'Docker hub login'
       uses: azure/docker-login@v1
       with:
           login-server: hub.docker.com
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-    - name: 'build internet drafts'
+    - name: 'Build and store container image'
+      shell: bash
+      run: |
+        docker build -t icnteam/internet-drafts:latest .
+        docker push icnteam/internet-drafts:latest  
+    - name: 'Build internet drafts'
       shell: bash
       run: |
         docker run -v $PWD:/workspace icnteam/internet-drafts:latest bash -c "cd /workspace; make; make pdf"
         mkdir -p public; cp -f *.pdf *.html *.txt *.png public/
-    - name: Deploy
+    - name: 'Deploy GH pages'
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GH_TOKEN }}

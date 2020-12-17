@@ -64,6 +64,8 @@ ICN functions. Moreover, the current design is tightly integrated into IPv6 to
 allow easy interconnection to IPv6 networks with the additional design objective
 to exploit existing IPv6 protocols as much as possible as they are, or extend
 them where needed.
+For the sake of deployability in the shorter term we have also introduced a 
+mechanism to make hICN work in IPv4.
 
 --- middle
 
