@@ -19,10 +19,15 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
     - name: 'Build and store container image'
-      shell: bash
-      run: |
-        docker build -t icnteam/internet-drafts:latest .
-        docker push icnteam/internet-drafts:latest  
+    - uses: actions/checkout@master
+    - name: Create Image and Publish to Registry
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: icnteam/internet-drafts:latest
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        registry: registry.hub.docker.com
+        dockerfile: Dockerfile
     - name: 'Build internet drafts'
       shell: bash
       run: |
