@@ -19,7 +19,6 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
     - name: Create Image and Publish to Registry
-    - uses: actions/checkout@master
       uses: elgohr/Publish-Docker-Github-Action@master
       with:
         name: icnteam/internet-drafts:latest
