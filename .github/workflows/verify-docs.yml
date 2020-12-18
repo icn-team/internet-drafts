@@ -15,4 +15,6 @@ jobs:
     - name: 'Build internet drafts'
       shell: bash
       run: |
+        mkdir a
+        ls
         docker run -v $PWD:/workspace icnteam/internet-drafts:latest bash -c "cd /workspace; make; make pdf"
