@@ -10,15 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - name: 'checkout'
+    - name: 'Checkout'
       uses: actions/checkout@v2
-    - name: 'docker hub login'
-      uses: azure/docker-login@v1
-      with:
-          login-server: hub.docker.com
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_PASSWORD }}
-    - name: 'build internet drafts'
+    - name: 'Build internet drafts'
       shell: bash
       run: |
         docker run -v $PWD:/workspace icnteam/internet-drafts:latest bash -c "cd /workspace; make; make pdf"
